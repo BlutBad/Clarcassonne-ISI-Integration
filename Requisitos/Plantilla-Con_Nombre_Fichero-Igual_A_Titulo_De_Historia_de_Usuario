@@ -1,10 +1,31 @@
 Título:
 
 
-Como un <actor/stakeholder>j
+Como un <actor/stakeholder>
+*jugador
+*administrador
+*invitado
+*expulsado
 
 
 Para que  ...
 
 
 Quiero poder ...
+
+** Requisitos no funcionales
+
+*Versión gratis mas publicidad
+*Se deberían programar partidas
+*Hay modo visor
+*cada ves q un usuario haga algo quiero registrarlo
+*En 2D
+*Integrable con otros juegos
+*Documentacion para plataforma y cada juego
+*Multiplataforma: html5 y movil
+*Numero de usuarios
+*Ley de protección de datos
+
+** Requisitos funcionales
+*Mecanismos de gestion de tiempo y expulsion de jugadores
+*Congelación de partida para recuperarlas, control de versiones
