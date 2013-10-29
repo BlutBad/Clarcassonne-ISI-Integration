@@ -9,4 +9,8 @@ Observador: Usuario que no juega en la partida, pero puede entrar en ella para v
 =======
 Espectador/Guest: usuario registrado o no en la plataforma de juegos que observa una partida
 Administrador/Admin: Persona responsable de la administración del juego
+<<<<<<< HEAD
 >>>>>>> 6314783deb2f4412d2454c25cc69a014a78e6989
+=======
+CFA: Correcto funcionamiento de la aplicación.
+>>>>>>> c2cd5d9722b42c3dec0c7bafd573ffaf8289073a
