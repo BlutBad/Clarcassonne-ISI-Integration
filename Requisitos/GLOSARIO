@@ -9,6 +9,7 @@ Jugador: usuario en una partida en curso
 IA: inteligencia artificial, encargada de simular a un jugador en una partida
 Invitado: Jugador que ha sido invitado para poder jugar una nueva partida.
 Lento: Jugador que tarda más del tiempo correspondido para mover una nueva ficha.
+Jugones: Aquellos usuarios que les interesa jugar sin ayudas o sin puntuaciones.
 Observador: Usuario que no juega en la partida, pero puede entrar en ella para verla.
 Espectador/Guest: usuario registrado o no en la plataforma de juegos que observa una partida
 Administrador/Admin: Persona responsable de la administración del juego
