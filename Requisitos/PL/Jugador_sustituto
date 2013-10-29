@@ -1,0 +1,9 @@
+Título: Jugador sustituto
+
+Como Cliente
+
+
+Para CFA.
+
+
+Cuando un jugador es expulsado de una partida por pasivo, un nuevo jugador reserva entrará en la partida sustituyendo a este jugador expulsado, empezando en el mismo estado de partida en el que lo dejo el jugador expulsado.
