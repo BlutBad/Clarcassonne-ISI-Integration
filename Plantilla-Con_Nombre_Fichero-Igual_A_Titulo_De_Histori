@@ -1,0 +1,49 @@
+Título: CARCASSONE ISI
+
+
+Como un <actor/stakeholder>j
+
+Observador
+Administrador
+
+
+Para que  ...
+
+
+Quiero poder ...
+  Tutorial
+  Carcassonne básico
+  jugar 4 usuarios máximo.
+  que los jugadores se registren 
+  jugadores con el roll de observador
+  Un jugador puede jugar varias partidas simultaneas
+  juego gratuito -> con publicidad
+  Hay que poder crear torneos
+  Guardar puntuaciones y actividad de los usuarios
+  Juego bidimensional
+  HTML5 Movil y pc
+  Buscar fichas sin copiright carcasone
+  Cambiar el nombre
+  Sistema de expulsion para turnos largos, quiza con sustitutos
+  Se puedan guardar partidas
+  Registro de partidas
+  Comunicaciones con char, audio e idealmente video. 
+  Todas las edades.
+  Que se pueda jugar con bots
+  Invitar a partidas o a la plataforma por redes sociales. 
+  Ayuda colocación de fichas. 
+  Ayuda colocación de figuras.
+  Puntuaciones instatnaeas
+  Alejar 
+  Conocimineto de las fichas restantes
+  Historial de movimiento 
+  
+    
+Por definir...
+  ¿Pueden jugar jugadores sin registrarse? ---> ley de protección de datos. 
+  programacion de las partidas
+  ¿Quien genera los torneos?
+  Penalización por que te expulsen en el ranking
+  ¿ratón o teclado?
+  Partidas en tiempo no real
+  
