@@ -1,9 +1,13 @@
 Abreviaturas, Acrónimos, Definiciones
 =====================================
 
+
+Cliente es la persona que paga al creador del juego, y que posteriormente quiere ganar dinero.
+
 Usuario: persona registrada en la plataforma de juegos
 Jugador: usuario en una partida en curso
 IA: inteligencia artificial, encargada de simular a un jugador en una partida
+
 Observador: Usuario que no juega en la partida, pero puede entrar en ella para verla.
 Espectador/Guest: usuario registrado o no en la plataforma de juegos que observa una partida
 Administrador/Admin: Persona responsable de la administración del juego
@@ -12,3 +16,4 @@ CFA: Correcto funcionamiento de la aplicación.
 Sistema: Parte automatizada de la Plataforma que controla el servidor.
 
 NOMBRE DEL JUEGO: Carsonline
+
