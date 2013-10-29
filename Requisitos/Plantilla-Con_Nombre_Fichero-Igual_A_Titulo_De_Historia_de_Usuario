@@ -2,10 +2,13 @@ Título:
 
 
 Como un <actor/stakeholder>
+<<<<<<< HEAD
 *jugador
 *administrador
 *invitado
 *expulsado
+=======
+>>>>>>> 4349e45ae1fcc5886a15489ec26d85c9c34b3da6
 
 
 Para que  ...
