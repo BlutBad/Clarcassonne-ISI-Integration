@@ -6,6 +6,5 @@ Para poder llevar un recuento en los servidores de las partidas totales que pode
 
 Requisitos:Deben jugarse el máximo número de partidas que se deban soportar.Para ello habrá que calcular la capacidad de los servidores, y las partidas que se podrá dar soporte al cliente.
 
-
-
 Estimacion: 5
+Prioridad: 10
