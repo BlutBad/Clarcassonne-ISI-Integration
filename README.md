@@ -1,4 +1,4 @@
-Plataforma_Juegos_ISI_13_14
+Plataforma_Juegos
 ===========================
 
 Grupo LowerLayers: 
@@ -6,4 +6,10 @@ Grupo LowerLayers:
 Miguel Hidalgo Perez, Jonathan Laguna Ciudad, Adrian Pizarro Serrano, Yanaisa Gonzalez Benko, Vicente 
 
 
-Plataforma de juegos.
+URL:
+
+*tutorial github: pcottle.github.io/learnGitBranching
+*MongoDb: http://try.mongodb.org/
+*Proyecto pivotal tracker: https://www.pivotaltracker.com/s/projects/950770
+*Meteor Documentation: http://docs.meteor.com/
+*Meteor: http://www.meteor.com/main
