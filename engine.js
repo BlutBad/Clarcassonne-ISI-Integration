@@ -56,7 +56,7 @@ var n_fichas = { //72
 
 var lista=[];
 
-var TableroJuego = new function(){
+var Tablero = new function(){
 
 
 	this.huecos=[];
@@ -64,24 +64,26 @@ var TableroJuego = new function(){
 	this.iniciar = function(){
 	
 
-				for(x=0;x<10;x++){        //de 10 a 10 para probar (144)
-					for(y=0;y<10;y++){
-						this.huecos.push( new ObjetoHueco(x,y, new ObjetoFicha()));
-					}	
-				}
+	  for(x=0;x<10;x++){        //de 10 a 10 para probar (144)
+		  for(y=0;y<10;y++){
+			  this.huecos.push( new ObjetoFicha(x,y));
+		  }	
+	  }
 	}
+		    
+	}
+	
 
 };
 
-var ObjetoHueco= function(x,y,ficha){
-	this.x=x;
-	this.y=y;
-	this.ficha=ficha;
-}
-
 
 var ObjetoFicha= function(){
-	this.lleno=3;
+
+	this.x=x;
+	this.y=y;
+
+
+	this.lleno=false;
 	
 	this.tipo;
 
@@ -97,7 +99,7 @@ var ObjetoFicha= function(){
 
 
 $(function() {
-TableroJuego.iniciar();
-var cosa=TableroJuego.huecos[2].ficha.lleno;
+Tablero.iniciar();
+var cosa=Tablero.huecos[5].lleno;
 alert(cosa);
 });
