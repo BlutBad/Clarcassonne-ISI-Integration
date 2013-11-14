@@ -64,11 +64,9 @@ var TableroJuego = new function(){
 	this.iniciar = function(){
 	
 
-				for(x=0;x<144;x++){
-					for(y=0;y<144;y++){
+				for(x=0;x<10;x++){        //de 10 a 10 para probar (144)
+					for(y=0;y<10;y++){
 						this.huecos.push( new ObjetoHueco(x,y, new ObjetoFicha()));
-						console.log(x);
-						console.log(y);
 					}	
 				}
 	}
