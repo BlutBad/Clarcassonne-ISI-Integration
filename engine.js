@@ -22,7 +22,7 @@ var Tiposfichas = {
     Ciudad1lcruze: {Izq: "Rue", Der: "Rue", Arr: "Tierra", Abaj: "Rue", Escudo: 0},//3
     Ciudad1ll: { Izq: "Tierra", Der: "Campo", Arr: "Tierra", Abaj: "Campo", Escudo: 0},//2
     Ciudad1l: {Izq: "Campo", Der: "Campo", Arr: "Tierra", Abaj: "Campo", Escudo: 0},//5
-	 Tcruze:   {Izq: "Rue", Der: "Rue", Arr: "Campo", Abaj: "Rue", Escudo: 0}//4
+	Tcruze:   {Izq: "Rue", Der: "Rue", Arr: "Campo", Abaj: "Rue", Escudo: 0}//4
 };
 
 
@@ -50,7 +50,7 @@ var n_fichas = { //72
     Ciudad1lcruze: 3,
     Ciudad1ll: 2,
     Ciudad1l: 5,
-	 Tcruze: 4
+	Tcruze: 4
 };
 
 
@@ -58,22 +58,15 @@ var lista=[];
 
 var Tablero = new function(){
 
-
 	this.huecos=[];
 
 	this.iniciar = function(){
-	
-
 	  for(x=0;x<10;x++){        //de 10 a 10 para probar (144)
 		  for(y=0;y<10;y++){
 			  this.huecos.push( new ObjetoFicha(x,y));
 		  }	
 	  }
 	}
-		    
-	}
-	
-
 };
 
 
@@ -99,7 +92,7 @@ var ObjetoFicha= function(){
 
 
 $(function() {
-Tablero.iniciar();
-var cosa=Tablero.huecos[5].lleno;
-alert(cosa);
+    Tablero.iniciar();
+    var cosa=Tablero.huecos[5].lleno;
+    alert(cosa);
 });
