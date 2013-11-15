@@ -6,7 +6,7 @@
 	{{loginButtons align='right'}}
 	<h1>Plataforma LL</h1>
 	{{> welcome}}
-	<IMG SRC="angrybirds.jpg">
+	<IMG id = "imagen" SRC="angrybirds.jpg">
 	
 </body>
 
