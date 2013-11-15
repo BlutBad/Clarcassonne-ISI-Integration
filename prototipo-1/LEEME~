@@ -35,4 +35,4 @@ Crear un Prototipo en  meteor
 ===========================================
 
 1. meteor create <nombre>
-2. rm <inicial del nombre>* 
+2. rm <inicial del nombre>*

@@ -1,10 +1,12 @@
 html{
 	margin: auto;
 	font-family: verdana, sans-serif;
+        background-color: #2E2E2E;
+        color: white;
 }
 
 .login-buttons-dropdown-align-right{
-	margin-left: 50%;
+	float: right;
 	font-size:150%;
 	font-weight:bold;
 	color: #08088A;
