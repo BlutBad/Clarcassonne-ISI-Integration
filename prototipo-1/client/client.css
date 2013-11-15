@@ -1,0 +1,11 @@
+html{
+	margin: auto;
+	font-family: verdana, sans-serif;
+}
+
+.login-buttons-dropdown-align-right{
+	margin-left: 50%;
+	font-size:150%;
+	font-weight:bold;
+	color: #08088A;
+}

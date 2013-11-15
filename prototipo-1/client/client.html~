@@ -1,0 +1,14 @@
+<head>
+	<title>Plataforma LL</title>
+</head>
+
+<body>
+	{{loginButtons align='right'}}<br>
+	<h1>Plataforma LL</h1>
+	{{> welcome}}
+
+</body>
+
+<template name="welcome">
+	<p> Welcome to LowerLayers Games! </p>
+</template>
