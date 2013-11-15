@@ -3,7 +3,7 @@ Plataforma_Juegos
 
 Grupo LowerLayers: 
 
-Miguel Hidalgo Perez, Jonathan Laguna Ciudad, Adrian Pizarro Serrano, Yanaisa Gonzalez Benko, Vicente 
+Miguel Hidalgo Pérez, Jonathan Laguna Ciudad, Adrián Pizarro Serrano, Yanaisa González Benko, Vicente Giménez García
 
 
 URL:
