@@ -1,0 +1,33 @@
+Subir a GitHub
+================
+
+cd prototipo-1
+
+git pull origin master
+
+git add client  // porque si no se te añade todo lo de meteor que son 500 MB
+
+git commit -m "" 
+
+git push origin master
+
+
+----------------------
+
+Iniciar meteor
+==============
+
+cd prototipo-1
+
+meteor
+
+
+-------------------------
+Para que funcione el login con los usuarios:
+===========================================
+
+meteor add accounts-password
+
+meteor add accounts-ui
+
+
