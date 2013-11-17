@@ -1,0 +1,20 @@
+<!-- BEGIN: Template -->
+
+<!-- Begin: Templates Chat global -->
+<template name="msgs_gbl">
+	<h1>Chat global</h1>
+	<div id="msgs">
+		{{#each msgs}}
+		<p class="users">{{user}}:</p>
+		<p class="msg">{{msg}}</p>
+		<br> {{/each}}
+	</div>
+</template>
+
+<template name="input">
+	<div id="wr_msg">
+		Mensaje: <input type="text" id="msg"> <input type="button"
+			id="sendmsg" value="Enviar">
+	</div>
+</template>
+<!-- End: Templates Chat -->
