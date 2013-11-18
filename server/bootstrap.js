@@ -2,18 +2,18 @@
 Meteor.startup(function () {
   if (Menu.find().count() === 0) {
     var data = [
-      {name: "Casa",
+      {name: "Juegos",
        contents: []
       },
-      {name: "Clan",
+      {name: "Ranking",
        contents: []
       },
       {name: "Torneos",
        contents: []
       },
-      {name: "etc",
+      {name: "Comunidad",
         contents: []
-       },
+      },
     ];
 
     var timestamp = (new Date()).getTime();
