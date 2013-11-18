@@ -11,9 +11,10 @@
 
     <div id="container">
         <div id="coin-slider">
-            <IMG  SRC="angrybirds.jpg" border="8">
-            <IMG  SRC="carcassonne.jpg" border="8">
-            <IMG  SRC="alieninvasion.png" border="8">
+            <a> <IMG  SRC="angrybirds.jpg" border="8"> </a>
+            <a> <IMG  SRC="carcassonne.jpg" border="8"> </a>
+            <a> <IMG  SRC="alieninvasion.png" border="8"> </a>
+            
         </div>
     </div>
 
@@ -23,3 +24,6 @@
 <template name="welcome">
 	<p> Welcome to LowerLayers Games! </p>
 </template>
+
+
+

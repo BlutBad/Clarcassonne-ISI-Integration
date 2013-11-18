@@ -4,7 +4,9 @@
 //	alert("bienvenido");
 //});
 
-$('#coin-slider').coinslider({ width: 500,height:200 });
+$(document).ready(function() {
+		$('#coin-slider').coinslider({ width: 500, height:500 });
+	});
 
 
 Template.loginButtons.events({
