@@ -17,14 +17,14 @@ Meteor.users.find().observe({
 	changed: function(user) {
 
 		if (usersLoaded) {
-
-			console.log("New user created: ", user);
-			Meteor.Collection("users").insert({name: names[i], score: randomNum()});
+			
+			console.log("New user changed: ", user.username);
+			//Meteor.Collection("users").insert({name: names[i], score: randomNum()});
 		}
 
 	}
 	
-	changed
+
 });
 
 Accounts.ui.config({
