@@ -61,16 +61,21 @@ var Tablero = new function(){
 	this.huecos=[];
 
 	this.iniciar = function(){
-	  for(x=0;x<10;x++){        //de 10 a 10 para probar (144)
-		  for(y=0;y<10;y++){
+	  for(var x=0;x<10;x++){        //de 10 a 10 para probar (144)
+		  for(var y=0;y<10;y++){
 			  this.huecos.push( new ObjetoFicha(x,y));
 		  }	
 	  }
 	}
+	
+	this.buscarxcord = function(ox,oy){
+	  return ( _.find(this.huecos,function(obj){return (obj.x==ox && obj.y==oy)}));  
+	}
+	
 };
 
 
-var ObjetoFicha= function(){
+var ObjetoFicha= function(x,y){
 
 	this.x=x;
 	this.y=y;
@@ -93,6 +98,6 @@ var ObjetoFicha= function(){
 
 $(function() {
     Tablero.iniciar();
-    var cosa=Tablero.huecos[5].lleno;
-    alert(cosa);
+    var cosa = Tablero.buscarxcord(2,5);
+    alert(cosa.lleno);
 });
