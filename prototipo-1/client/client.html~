@@ -6,7 +6,17 @@
 	{{loginButtons align='right'}}
 	<h1>Plataforma LL</h1>
 	{{> welcome}}
-	<IMG id = "imagen" SRC="angrybirds.jpg">
+	<!--<IMG id = "imagen" SRC="angrybirds.jpg" border="8">-->
+	
+
+    <div id="container">
+        <div id="coin-slider">
+            <IMG  SRC="angrybirds.jpg" border="8">
+            <IMG  SRC="carcassonne.jpg" border="8">
+            <IMG  SRC="alieninvasion.png" border="8">
+        </div>
+    </div>
+
 	
 </body>
 

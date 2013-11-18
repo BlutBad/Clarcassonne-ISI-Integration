@@ -9,14 +9,15 @@ html{
 	float: right;
 	font-size:150%;
 	font-weight:bold;
-	color: #08088A;
+	color: white;
 }
 
-#imagen{
+/*#imagen{
 
-
+        width: 40%;
+        height: 40%; 
 
 
 
 }
-
+*/

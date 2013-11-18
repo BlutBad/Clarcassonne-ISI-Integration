@@ -4,6 +4,8 @@
 //	alert("bienvenido");
 //});
 
+$('#coin-slider').coinslider({ width: 500,height:200 });
+
 
 Template.loginButtons.events({
 	'click': function () {

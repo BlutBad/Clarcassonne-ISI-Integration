@@ -5,7 +5,7 @@
 //});
 
 
-loginButtons.events({
+Template.loginButtons.events({
 	'click': function () {
 		alert("as");
 	}
