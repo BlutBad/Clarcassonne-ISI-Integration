@@ -61,43 +61,60 @@ var Tablero = new function(){
 	this.huecos=[];
 
 	this.iniciar = function(){
+	  var i=0;
 	  for(var x=0;x<10;x++){        //de 10 a 10 para probar (144)
 		  for(var y=0;y<10;y++){
-			  this.huecos.push( new ObjetoFicha(x,y));
+			  this.huecos.push( new ObjetoFicha(x,y,i));
+			  i++;
 		  }	
 	  }
 	}
 	
-	this.buscarxcord = function(ox,oy){
+	this.buscarxcoor = function(ox,oy){
 	  return ( _.find(this.huecos,function(obj){return (obj.x==ox && obj.y==oy)}));  
+	}
+	
+	this.colocarficha = function(ficha,ox,oy){
+	  var hueco = Tablero.buscarxcoor(ox,oy);
+	    
+	  if (!hueco.lleno){
+	  
+	    ficha.x=ox;
+	    ficha.y=oy;
+	    ficha.i=hueco.i;	  
+	    this.huecos[hueco.i]=ficha;
+      this.huecos[hueco.i].lleno=true;    
+	  }
+	  else {return -1};
 	}
 	
 };
 
 
-var ObjetoFicha= function(x,y){
 
-	this.x=x;
-	this.y=y;
+var ObjetoFicha= function(x,y,i,tipofich){
+
+  this.i=i; //nos indica la posición real en la lista tablero
+	this.x=x; // x e y nos indican la posición 
+	this.y=y; // ficticia en el tablero virtual
 
 
 	this.lleno=false;
 	
-	this.tipo;
-
-	this.arriba;
-	this.abajo;
-	this.izda;
-	this.derecha;
-
-	this.escudo;
+	this.tipo=tipofich;
 	
+  if (tipofich){
+    
+	  this.arriba = Tiposfichas[this.tipo].Arr;
+	  this.abajo = Tiposfichas[this.tipo].Abaj;
+	  this.izda = Tiposfichas[this.tipo].Izq;
+	  this.derecha = Tiposfichas[this.tipo].Der;
+
+	  this.escudo=Tiposfichas[this.tipo].Escudo;
+  }
 	this.encaja;
 } 
 
 
-$(function() {
-    Tablero.iniciar();
-    var cosa = Tablero.buscarxcord(2,5);
-    alert(cosa.lleno);
-});
+
+
