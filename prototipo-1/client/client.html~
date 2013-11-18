@@ -3,10 +3,9 @@
 </head>
 
 <body>
-	{{loginButtons align='right'}}
+	{{loginButtons align=''}}
 	<h1>Plataforma LL</h1>
 	{{> welcome}}
-	<!--<IMG id = "imagen" SRC="angrybirds.jpg" border="8">-->
 	
 
     <div id="container">

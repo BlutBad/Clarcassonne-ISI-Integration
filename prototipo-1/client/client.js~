@@ -1,22 +1,36 @@
-//user = "adri";
-//password = "123456";
-//$("#login-buttons-password").click(function(){
-//	alert("bienvenido");
-//});
+
+var usersLoaded = false;
 
 $(document).ready(function() {
-		$('#coin-slider').coinslider({ width: 1000,height:1000 });
+		$('#coin-slider').coinslider({ width: 500, height:500 });
 	});
+ 
 
+Meteor.subscribe("users", function () {
 
-Template.loginButtons.events({
-	'click': function () {
-		alert("as");
+	usersLoaded = true;
+
+});
+
+Meteor.users.find().observe({
+ 
+	added: function(user) {
+
+		if (usersLoaded) {
+
+			console.log("New user created: ", user);
+
+		}
+
 	}
+
 });
 
 Accounts.ui.config({
-
+	
 	passwordSignupFields: "USERNAME_AND_OPTIONAL_EMAIL"
 
 });
+
+
+
