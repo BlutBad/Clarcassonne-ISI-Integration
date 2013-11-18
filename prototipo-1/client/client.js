@@ -3,8 +3,11 @@ var usersLoaded = false;
 
 $(document).ready(function() {
 		$('#coin-slider').coinslider({ width: 500, height:500 });
-	});
- 
+});
+
+Template.userstemp.users = function(){
+	return Meteor.users.find({},{sort:{username:1}});
+} 
 
 Meteor.subscribe("users", function () {
 
@@ -17,13 +20,21 @@ Meteor.users.find().observe({
 	changed: function(user) {
 
 		if (usersLoaded) {
+
+			//console.log("New user created: ", user);
 			
-			console.log("New user changed: ", user.username);
-			//Meteor.Collection("users").insert({name: names[i], score: randomNum()});
+			//Al iniciar sesion
+			$("#container").children().hide();
+
+			//Al desloguearte
+			$("#container #tabs,#container #users").fadeIn();
+
+			/*$(function() {
+				$('#tabs').tabs();
+			});*/
 		}
 
 	}
-	
 
 });
 
@@ -32,6 +43,3 @@ Accounts.ui.config({
 	passwordSignupFields: "USERNAME_AND_OPTIONAL_EMAIL"
 
 });
-
-
-
