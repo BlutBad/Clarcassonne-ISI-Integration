@@ -5,10 +5,13 @@ html{
         color: white;
 }
 
-.login-buttons-dropdown-align-right{
+
+#div-login-button{
 	float: right;
-	font-size:150%;
-	font-weight:bold;
+	position: fixed;
+	right: 10%;
+	font-size:120%;
+
 	color: white;
 }
 
