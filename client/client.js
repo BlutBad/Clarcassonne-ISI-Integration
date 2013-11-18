@@ -28,4 +28,23 @@ Template.main_menu.events({
     // De otra manera apuntar nuevo id del tag seleccionado
       Session.set('current_menu', this.name);}
     }
+
 });
+
+// --- Begin: Chat Global ---
+
+Template.gblmsgs.msgs = function() {
+  return Global_msgs.find({},{sort: {time: -1}});
+};
+
+Template.wrmsg.events = {
+  'click input#sendmsg': function() {
+    var user = this.user;
+    var msg = $('input#msg');
+    if (msg.val() != '') {
+        Global_msgs.insert({user:user, msg:msg.val(), time:Date.now});
+        msg.val('');
+      }
+    }
+};
+// --- End: Chat Global ---
