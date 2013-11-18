@@ -22,7 +22,7 @@ var Tiposfichas = {
     Ciudad1lcruze: {Izq: "Rue", Der: "Rue", Arr: "Tierra", Abaj: "Rue", Escudo: 0},//3
     Ciudad1ll: { Izq: "Tierra", Der: "Campo", Arr: "Tierra", Abaj: "Campo", Escudo: 0},//2
     Ciudad1l: {Izq: "Campo", Der: "Campo", Arr: "Tierra", Abaj: "Campo", Escudo: 0},//5
-	Tcruze:   {Izq: "Rue", Der: "Rue", Arr: "Campo", Abaj: "Rue", Escudo: 0}//4
+	  Tcruze:   {Izq: "Rue", Der: "Rue", Arr: "Campo", Abaj: "Rue", Escudo: 0}//4
 };
 
 
@@ -50,7 +50,7 @@ var n_fichas = { //72
     Ciudad1lcruze: 3,
     Ciudad1ll: 2,
     Ciudad1l: 5,
-	Tcruze: 4
+	  Tcruze: 4
 };
 
 
@@ -79,20 +79,24 @@ var Tablero = new function(){
 	    
 	  if (!hueco.lleno){
 	  
+	    //primero rellenamos las coordenadas de la ficha
 	    ficha.x=ox;
 	    ficha.y=oy;
 	    ficha.i=hueco.i;	  
+	    //la colocamos en el tablero
 	    this.huecos[hueco.i]=ficha;
-      this.huecos[hueco.i].lleno=true;    
+	    //ponemos el hueco del tablero como lleno
+      this.huecos[hueco.i].lleno=true;  
+      return 1;  
 	  }
-	  else {return -1};
+	  else {return 0};
 	}
 	
 };
 
 
 
-var ObjetoFicha= function(x,y,i,tipofich){
+var ObjetoFicha= function(x,y,i,tipoficha){
 
   this.i=i; //nos indica la posición real en la lista tablero
 	this.x=x; // x e y nos indican la posición 
@@ -101,9 +105,9 @@ var ObjetoFicha= function(x,y,i,tipofich){
 
 	this.lleno=false;
 	
-	this.tipo=tipofich;
+	this.tipo=tipoficha;
 	
-  if (tipofich){
+  if (this.tipo){
     
 	  this.arriba = Tiposfichas[this.tipo].Arr;
 	  this.abajo = Tiposfichas[this.tipo].Abaj;
