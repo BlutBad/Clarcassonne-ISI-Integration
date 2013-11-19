@@ -21,4 +21,24 @@ Meteor.startup(function () {
       var list_id = Menu.insert({name: data[i].name});
     }
   }
+
+  if (Menu_user.find().count() === 0) {
+    var data = [
+      {name: "Mi perfil",
+       contents: []
+      },
+      {name: "Mi clan",
+       contents: []
+      },
+      {name: "Configuración de mi cuenta",
+       contents: []
+      }, 
+    ];
+
+    var timestamp = (new Date()).getTime();
+    for (var i = 0; i < data.length; i++) {
+      var list_id = Menu_user.insert({name: data[i].name});
+    }
+  }
 });
+
