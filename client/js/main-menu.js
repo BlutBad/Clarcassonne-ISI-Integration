@@ -4,11 +4,6 @@ Template.main_menu.main_menu = function() {
   return Menu.find({});
 };
 
-//Si el objeto seleccionado es el torrneos, mostramos info de los torneos
-Template.torneos.show = function() {
-  return Session.get('current_menu') == 'Torneos';
-};
-
 
 // La variable {{current}} tiene asosido un id, donde esta puesta, si esos ides
 // son iguales entonce el class del menu es selected, sale en azul, si no lo es, nada
@@ -30,25 +25,3 @@ Template.main_menu.events({
     }
 
 });
-
-// --- Begin: Chat Global ---
-
-Template.gblmsgs.msgs = function() {
-  return Global_msgs.find({},{sort: {time: -1}});
-};
-
-Template.wrmsg.events = {
-  'click input#sendmsg': function() {
-    if (Meteor.user()) {
-      var user = Meteor.user().emails[0].address;
-    } else {
-      var user = 'Unknown';
-    }
-    var msg = $('input#msg');
-    if (msg.val() != '') {
-        Global_msgs.insert({user:user, msg:msg.val(), time:Date.now});
-        msg.val('');
-      }
-    }
-};
-// --- End: Chat Global ---
