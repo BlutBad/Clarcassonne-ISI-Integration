@@ -4,5 +4,5 @@
 
 
 Template.torneos.show = function() {
-  return Session.get('current_menu') == 'Torneos';
+  return Session.get('current_stage') == 'Torneos';
 };

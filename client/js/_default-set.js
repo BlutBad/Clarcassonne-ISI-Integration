@@ -1,3 +1,3 @@
 
 
-Session.set('current_menu', 'Dashboard');
+Session.set('current_stage', 'Dashboard');
