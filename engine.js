@@ -59,6 +59,7 @@ var lista=[];
 var Tablero = new function(){
 
 	this.huecos=[];
+	this.candidatos=[];
 
 	this.iniciar = function(){
 	  var i=0;
@@ -87,10 +88,30 @@ var Tablero = new function(){
 	    this.huecos[hueco.i]=ficha;
 	    //ponemos el hueco del tablero como lleno
       this.huecos[hueco.i].lleno=true;  
+      
+      
+      /////// borramos el hueco de la lista de candidatos
+      var pos = this.candidatos.indexOf( ( _.find(this.candidatos,function(obj){return (obj.x==ox-1 && obj.y==oy)})));
+      pos > -1 && this.candidatos.splice( pos,1 );
+  
+      
+      ////// añadimos futuribles huecos posibles a la lista candidatos
+      if (!Tablero.buscarxcoor(ox-1,oy).lleno){this.candidatos.push({x:ox-1,y:oy})};
+      if (!Tablero.buscarxcoor(ox+1,oy).lleno){this.candidatos.push({x:ox+1,y:oy})};
+      if (!Tablero.buscarxcoor(ox,oy-1).lleno){this.candidatos.push({x:ox,y:oy-1})};
+      if (!Tablero.buscarxcoor(ox,oy+1).lleno){this.candidatos.push({x:ox,y:oy+1})};
+      
+      alert(this.candidatos[0].x);
       return 1;  
 	  }
 	  else {return 0};
 	}
+	
+	this.buscarCandidatos = function(ficha){
+	  
+	}
+	
+
 	
 };
 

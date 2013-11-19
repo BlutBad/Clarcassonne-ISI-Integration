@@ -28,6 +28,8 @@ $(function() {
     console.log(check.i,check.tipo,check.arriba,check.abajo,check.izda,check.derecha,check.escudo);
 
 
-
+    var nuevaficha2 = new ObjetoFicha(0,0,0,"Ciudad2lE");
+    
+    Tablero.buscarCandidatos(nuevaficha2);
 
 });
