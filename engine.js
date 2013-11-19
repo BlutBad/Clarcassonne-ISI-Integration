@@ -127,7 +127,11 @@ var Tablero = new function(){
       if (!Tablero.buscarxcoor(ox+1,oy).lleno){this.candidatos.push({x:ox+1,y:oy})};
       if (!Tablero.buscarxcoor(ox,oy-1).lleno){this.candidatos.push({x:ox,y:oy-1})};
       if (!Tablero.buscarxcoor(ox,oy+1).lleno){this.candidatos.push({x:ox,y:oy+1})};
+<<<<<<< HEAD
 
+=======
+      
+>>>>>>> 9245c7bbe1df249747dd927d662b053bca82b51e
       return 1;  
 	  }
 	  else {return 0};
@@ -174,6 +178,14 @@ var ObjetoFicha= function(x,y,i,tipoficha){
 	  this.escudo=Tiposfichas[this.tipo].Escudo;
   }
 	this.encaja;
+
+  this.girar=function(){
+	var aux= this.arriba;
+	this.arriba=this.derecha;
+	this.derecha=this.abajo;
+	this.abajo=this.izda;
+	this.izda=aux;
+  }
 } 
 
 

@@ -16,6 +16,9 @@ $(function() {
     var nuevaficha = new ObjetoFicha(0,0,0,"Ciudad1l2crect");
     //comprobamos que los parámetros se han rellenado
     console.log(nuevaficha.tipo,nuevaficha.arriba,nuevaficha.abajo,nuevaficha.izda,nuevaficha.derecha,nuevaficha.escudo);
+    //comprobamos si la ficha ha girado
+    nuevaficha.girar();
+    console.log(nuevaficha.tipo,nuevaficha.arriba,nuevaficha.abajo,nuevaficha.izda,nuevaficha.derecha,nuevaficha.escudo);
     
     //La colocamos en el tablero
     
