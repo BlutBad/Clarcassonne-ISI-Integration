@@ -5,22 +5,21 @@ html{
         color: white;
 }
 
-.login-buttons-dropdown-align-right{
-	position:absolute;
-	right:90%
-	font-size:140%;
+
+#div-login-button{
+	float: right;
+	position: fixed;
+	right: 10%;
+	font-size:120%;
+
 	color: white;
 }
 
-/*#imagen{
-
-        width: 40%;
-        height: 40%; 
-
-
+#coin-slider{
+	background-repeat: no-repeat;
 
 }
-*/
+
 .coin-slider { overflow: hidden; zoom: 1; position: relative; }
 .coin-slider a{ text-decoration: none; outline: none; border: none; }
 

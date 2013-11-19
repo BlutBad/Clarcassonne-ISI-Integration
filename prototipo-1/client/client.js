@@ -19,6 +19,11 @@ Meteor.subscribe("users", function () {
 
 });
 
+$(function() {
+	$('#tabs').tabs();
+});
+
+
 Meteor.users.find().observe({
  
 	changed: function(user) {
@@ -33,9 +38,7 @@ Meteor.users.find().observe({
 			//Al desloguearte
 			$("#container #tabs,#container #users").fadeIn();
 
-			/*$(function() {
-				$('#tabs').tabs();
-			});*/
+			
 		}
 
 	}

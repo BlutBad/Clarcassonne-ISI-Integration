@@ -10,7 +10,7 @@ Template.userstemp.users = function(){
 }
 
 Template.welcome.myuser = function(){
-	return Meteor.users.find({"_id": Meteor.userId()}).limit(1);
+	return Meteor.users.find({"_id": Meteor.userId()});
 } 
 
 Meteor.subscribe("users", function () {
@@ -18,6 +18,11 @@ Meteor.subscribe("users", function () {
 	usersLoaded = true;
 
 });
+
+$(function() {
+	$('#tabs').tabs();
+});
+
 
 Meteor.users.find().observe({
  
