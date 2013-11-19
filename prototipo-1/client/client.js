@@ -2,7 +2,7 @@
 var usersLoaded = false;
 
 $(document).ready(function() {
-		$('#coin-slider').coinslider({ width: 500, height:500 });
+		$('#coin-slider').coinslider({ width: 800, height:400 });
 });
 
 Template.userstemp.users = function(){

@@ -38,9 +38,7 @@ Meteor.users.find().observe({
 			//Al desloguearte
 			$("#container #tabs,#container #users").fadeIn();
 
-			/*$(function() {
-				$('#tabs').tabs();
-			});*/
+			
 		}
 
 	}
