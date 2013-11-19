@@ -23,35 +23,23 @@
 		<!-- END: Top -->
 
 		<div id="main">
-			<div id="main-content">
-
-				<!-- BEGIN: Header -->
-				<div id="header">
-
-					<a href="" id="logo"> <img src="images/logo.png" alt="ISI Pakistan" /></a>
-
-					{{> main_menu}}
-
-					<div id="header-graphic"></div>
-
-				</div>
-				<!-- END: Header -->
-
-			</div>
+			
+			{{>menu}}
 
 			<!-- BEGIN: Body -->
 
 			<!-- BEGIN: Chat Global -->
 			<div id="gbl-chat">
- 	  			{{> gblmsgs}}
-  				{{> wrmsg}}
+				{{> chat}}
   			</div>
 			<!-- END: Chat Global -->
 
 			<!-- END: Body -->
-			
+			{{> dashboard}}
 			{{> torneos}}			
-			
+			{{> juegos}}
+			{{> ranking}}
+			{{> comunidad}}	
 		</div>
 	</div>
 
