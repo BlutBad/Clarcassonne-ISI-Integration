@@ -22,10 +22,14 @@ html{
         height:400;
         margin: auto;
         border: 8px solid #848484; 
-        box-shadow: 5px 5px 5px #1C1C1C;
+        box-shadow: 10px 10px 5px #1C1C1C;
+        transition: border-color 1s;
 
 }
+#coin-slider:hover {
+    border-color: #000000;
 
+}
 
 
 
