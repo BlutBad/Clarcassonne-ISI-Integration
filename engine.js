@@ -22,9 +22,10 @@ var Tiposfichas = {
     Ciudad1lcruze: {Izq: "Rue", Der: "Rue", Arr: "Tierra", Abaj: "Rue", Escudo: 0},//3
     Ciudad1ll: { Izq: "Tierra", Der: "Campo", Arr: "Tierra", Abaj: "Campo", Escudo: 0},//2
     Ciudad1l: {Izq: "Campo", Der: "Campo", Arr: "Tierra", Abaj: "Campo", Escudo: 0},//5
-	  Tcruze:   {Izq: "Rue", Der: "Rue", Arr: "Campo", Abaj: "Rue", Escudo: 0}//4
+	Tcruze:   {Izq: "Rue", Der: "Rue", Arr: "Campo", Abaj: "Rue", Escudo: 0}//4
 };
 
+var totalFichas = 72;
 
 var n_fichas = { //72
     Rrecta: 8,
@@ -50,9 +51,35 @@ var n_fichas = { //72
     Ciudad1lcruze: 3,
     Ciudad1ll: 2,
     Ciudad1l: 5,
-	  Tcruze: 4
+	Tcruze: 4,
 };
 
+var fichas = [ //72
+    'Rrecta',
+    'Rcurva',
+    'Catedral',
+    'Posada',
+    'Ccruze',
+    'CiudadE',
+    'Ciudad3lc',
+    'Ciudad3lcE',
+    'Ciudad3l',
+    'Ciudad3lE',
+    'Ciudad2lc',
+    'Ciudad2lcE',
+    'Ciudad2l',
+    'Ciudad2lE',
+    'CiudadPuerta',
+    'CiudadPuertaE',
+    'Ciudadext',
+    'Ciudad1l2crect',
+    'Ciudadcurvder',
+    'Ciudadcurvizq',
+    'Ciudad1lcruze',
+    'Ciudad1ll',
+    'Ciudad1l',
+	'Tcruze',
+];
 
 var lista=[];
 
@@ -100,18 +127,27 @@ var Tablero = new function(){
       if (!Tablero.buscarxcoor(ox+1,oy).lleno){this.candidatos.push({x:ox+1,y:oy})};
       if (!Tablero.buscarxcoor(ox,oy-1).lleno){this.candidatos.push({x:ox,y:oy-1})};
       if (!Tablero.buscarxcoor(ox,oy+1).lleno){this.candidatos.push({x:ox,y:oy+1})};
-      
-      alert(this.candidatos[0].x);
+
       return 1;  
 	  }
 	  else {return 0};
 	}
 	
-	this.buscarCandidatos = function(ficha){
+/*	this.buscarCandidatos = function(ficha){
 	  
-	}
+	}*/
 	
-
+    // Funcion de robar una ficha aleatoria
+    this.robarFicha = function(){
+      var rand = fichas[Math.floor(Math.random() *fichas.length)];
+      console.log("ficha robada: ",rand);
+      console.log("numero de esa ficha: ",n_fichas[rand]);
+      n_fichas[rand] = n_fichas[rand]-1;
+      console.log("numero de esa ficha actual: ",n_fichas[rand]);
+      totalFichas--;
+      console.log("Total de fichas: ",totalFichas);
+      return(Tiposfichas[rand]);
+    }
 	
 };
 

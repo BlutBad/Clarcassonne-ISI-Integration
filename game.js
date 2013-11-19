@@ -30,6 +30,9 @@ $(function() {
 
     var nuevaficha2 = new ObjetoFicha(0,0,0,"Ciudad2lE");
     
-    Tablero.buscarCandidatos(nuevaficha2);
+//    Tablero.buscarCandidatos(nuevaficha2);
+
+    var robar = new Tablero.robarFicha();
+    console.log("objeto tipo de ficha: ",robar);
 
 });
