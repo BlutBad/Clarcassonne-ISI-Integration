@@ -8,13 +8,14 @@ Template.user_menu.user_menu = function() {
 // La variable {{current}} tiene asosido un id, donde esta puesta, si esos ides
 // son iguales entonce el class del menu es selected, sale en azul, si no lo es, nada
 Template.user_menu.current = function() {
-  return Session.equals('current_stage', this.name) ? 'current' : '';
+  return Session.equals('current_stage', this.name) ? 'user-menu-current' : '';
 };
 
 Template.user_menu.events({
   // Si esta pulsado el boton del raton sobre alguno de los menus
   // Si estas pinchando sobre el mismo tag que ya esta seleccionado
   'mousedown li' : function() {
+    console.log(this.name);
     // Si estas pinchando sobre el mismo tag que ya esta seleccionado
     if (Session.equals('current_stage', this.name)){
     // Poner lo a null, es decir celeccionar por defecto

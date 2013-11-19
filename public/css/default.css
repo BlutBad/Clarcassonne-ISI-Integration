@@ -7,6 +7,11 @@ body {
 	color: #000;
 }
 
+.user-menu-current{
+	color:green;
+}
+
+
 .login-buttons-dropdown-align-right{
 		float:right;
 }
