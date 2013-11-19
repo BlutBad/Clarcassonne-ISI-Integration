@@ -10,6 +10,7 @@ Jugador6 = {nombre: "Marcos" , color: "morado", puntos:50};
 startGame = function() {
 	Game.setBoard(0,new Background());
 	Game.setBoard(1,new Jugadores());
+	Game.setBoard(2,new Rejilla());
     
 };
 
@@ -34,7 +35,7 @@ Background = function() {
     }
 
     this.step = function(dt) { }
-}
+};
 
 Jugadores = function() {
    
@@ -71,8 +72,30 @@ Jugadores = function() {
      
 
 
-}
+};
 
+Rejilla =  function(){
+	
+	this.draw =function(ctx){
+	ctx.save();
+	for(var x=0; x<=800; x=x+100){
+		ctx.moveTo(x,0);
+		ctx.lineTo(x,500);
+	};
+	
+	for(var y=0; y<=500; y=y+100){
+		ctx.moveTo(0,y);
+		ctx.lineTo(800,y);
+	};
+
+	ctx.strokeStyle ="#190B07";
+	ctx.stroke();
+	ctx.restore();
+	
+	}
+	this.step= function(dt){};
+
+}; 
 
 $(function() {
     Game.initialize("game",sprites,startGame);
