@@ -1,0 +1,5 @@
+Meteor.publish("users", function() {
+ 	console.log(Meteor.userId);
+	return Meteor.users.find();
+
+});
