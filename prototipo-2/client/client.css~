@@ -15,12 +15,20 @@ html{
 	color: white;
 }
 
+
 #coin-slider{
-	background-repeat: no-repeat;
+
+        width: 800;
+        height:400;
+        margin: auto;
+        border: 8px solid #848484; 
+        box-shadow: 5px 5px 5px #1C1C1C;
 
 }
 
-.coin-slider { overflow: hidden; zoom: 1; position: relative; }
+
+
+.coin-slider { overflow: hidden; zoom: 1; position: relative;   }
 .coin-slider a{ text-decoration: none; outline: none; border: none; }
 
 .cs-buttons { font-size: 0px; padding: 10px; float: left; }

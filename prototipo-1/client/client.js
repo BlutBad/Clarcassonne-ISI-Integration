@@ -16,13 +16,11 @@ Template.welcome.myuser = function(){
 Meteor.subscribe("users", function () {
 
 	usersLoaded = true;
-
 });
 
 $(function() {
 	$('#tabs').tabs();
 });
-
 
 Meteor.users.find().observe({
  
@@ -36,17 +34,12 @@ Meteor.users.find().observe({
 			$("#container").children().hide();
 
 			//Al desloguearte
-			$("#container #tabs,#container #users").fadeIn();
-
-			
+			$("#container #tabs,#container #users").fadeIn();			
 		}
-
 	}
-
 });
 
 Accounts.ui.config({
 	
 	passwordSignupFields: "USERNAME_AND_OPTIONAL_EMAIL"
-
 });
