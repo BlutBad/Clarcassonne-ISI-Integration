@@ -33,12 +33,12 @@
 	
 		<!-- estructura de pestañas -->
 		<ul>
-			<li><a href="#usuarios">Usuarios</a></li>
+			<li><a href="#amigos">Amigos</a></li>
 			<li><a href="#juegos">Juegos</a></li>
 		</ul>
 		
 		<!-- se respeta el nombre para indicar el contenido de cada pestaña -->
-		<div id="usuarios"></div>
+		<div id="amigos"></div>
       <div id="juegos"></div>
 		
 	</div>
