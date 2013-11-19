@@ -8,6 +8,33 @@ Jugador5 = {nombre: "Lucia"  , color: "gris", puntos:40};
 Jugador6 = {nombre: "Marcos" , color: "morado", puntos:50};
 
 startGame = function() {
+	SpriteSheet.load({
+	    	Rrecta: { sx: 0, sy: 0, w:100, h: 100, frames: 1 },
+        	Rcurva: { sx: -100, sy: 400, w: 100, h: 100, frames: 1 },
+       		Catedral: { sx: 0, sy: 500, w: 100, h: 100, frames: 1 },
+        	Posada: { sx: 0, sy: 400, w: 100, h: 100, frames: 1 },
+        	Ccruze: { sx: 0, sy: 200, w: 100, h: 100, frames: 1 },
+        	CiudadE: { sx: 100, sy: 0, w: 100, h: 100, frames: 1 },
+        	Ciudad3lc: { sx: 400, sy: 0, w: 100, h: 100, frames: 1 },
+        	Ciudad3lcE: { sx: 300, sy: 0, w: 100, h: 100, frames: 1 },
+        	Ciudad3l: { sx: 300, sy: 100, w: 100, h: 100, frames: 1 },
+        	Ciudad3lE: { sx: 100, sy: 100, w: 100, h: 100, frames: 1 },
+        	Ciudad2lc: { sx: 200, sy: 200, w: 100, h: 100, frames: 1 },
+        	Ciudad2lcE: { sx: 100, sy: 200, w: 100, h: 100, frames: 1 },
+        	Ciudad2l: { sx: 300, sy: 300, w: 100, h: 100, frames: 1 },
+        	Ciudad2lE: { sx: 100, sy: 400, w: 100, h: 100, frames: 1 },
+        	CiudadPuerta: { sx: 400, sy: 400, w: 100, h: 100, frames: 1 },
+        	CiudadPuertaE: { sx: 300, sy: 400, w: 100, h: 100, frames: 1 },
+        	Ciudadext: { sx: 300, sy: 500, w: 100, h: 100, frames: 1 },
+        	Ciudad1l2crect: { sx: 500, sy: 0, w: 100, h: 100, frames: 1 },
+        	Ciudadcurvder: { sx: 500, sy: 100, w: 100, h: 100, frames: 1 },
+        	Ciudadcurvizq: { sx: 500, sy: 200, w: 100, h: 100, frames: 1 },
+        	Ciudad1lcruze: { sx: 500, sy: 300, w: 100, h: 100, frames: 1 },
+        	Ciudad1ll: { sx: 800, sy: 200, w: 100, h: 100, frames: 1 },
+        	Ciudad1l: { sx: 800, sy: 300, w: 100, h: 100, frames: 1 },
+        	Tcruze: { sx: 800, sy: 500, w: 100, h: 100, frames: 1 },
+    	});
+    	
 	Game.setBoard(0,new Background());
 	Game.setBoard(1,new Jugadores());
 	Game.setBoard(2,new Rejilla());
@@ -26,11 +53,17 @@ Background = function() {
 			} 
 			
 			// prueba de pintar sprites (ELIMINAR EN SEGUNDA VERSION)
-			var img2 = new Image();
+			/*var img2 = new Image();
 				img2.src = 'images/sprites.png';
 				img2.onload = function() {
 				ctx.drawImage(img2,    40, 40, 720,   420);
-   		}
+   				}*/
+   				
+   			var img3 = new Image();
+				img3.src = 'images/sprites.png';
+				img3.onload = function() {
+				SpriteSheet.draw(ctx, "Ciudad3lE", 0, 0, 3);
+   				}
    		
     }
 
