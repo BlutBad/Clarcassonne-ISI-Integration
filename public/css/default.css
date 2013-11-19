@@ -7,6 +7,9 @@ body {
 	color: #000;
 }
 
+.login-buttons-dropdown-align-right{
+		float:right;
+}
 /**** Link Styles ****/
 a:link,a:visited {
 	color: #2FA694;
