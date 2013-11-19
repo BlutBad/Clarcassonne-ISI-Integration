@@ -39,7 +39,11 @@ Template.gblmsgs.msgs = function() {
 
 Template.wrmsg.events = {
   'click input#sendmsg': function() {
-    var user = this.user;
+    if (Meteor.user()) {
+      var user = Meteor.user().emails[0].address;
+    } else {
+      var user = 'Unknown';
+    }
     var msg = $('input#msg');
     if (msg.val() != '') {
         Global_msgs.insert({user:user, msg:msg.val(), time:Date.now});
