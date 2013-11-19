@@ -9,7 +9,7 @@
 	<div id="div-login-button">{{loginButtons}}</div>
 	<h1>Plataforma LL</h1>
 	<p> Welcome to LowerLayers Games! </p>
-
+	{{> welcome}}
     <div id="container">
         {{> coin}}
 			{{> tabstemp}}
@@ -49,5 +49,13 @@
 		{{# each users}}
 				{{username}}
 		{{/each}}
+		
 	</div>
+</template>
+
+<template name="welcome">
+	USUARIO:
+	{{# each myuser}}
+		<b>{{username}}</b>
+	{{/each}}
 </template>

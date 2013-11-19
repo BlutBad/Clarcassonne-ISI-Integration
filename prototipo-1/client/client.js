@@ -7,6 +7,10 @@ $(document).ready(function() {
 
 Template.userstemp.users = function(){
 	return Meteor.users.find({},{sort:{username:1}});
+}
+
+Template.welcome.myuser = function(){
+	return Meteor.users.find({"_id": Meteor.userId()});
 } 
 
 Meteor.subscribe("users", function () {
