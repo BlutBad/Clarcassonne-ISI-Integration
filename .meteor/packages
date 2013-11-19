@@ -7,3 +7,10 @@ standard-app-packages
 autopublish
 insecure
 preserve-inputs
+accounts-base
+accounts-facebook
+accounts-github
+accounts-twitter
+accounts-google
+accounts-ui
+bootstrap
