@@ -35,4 +35,6 @@ $(function() {
     
     Tablero.buscarCandidatos(nuevaficha2);
 
+    console.log(nuevaficha2.encajaCon);
+
 });

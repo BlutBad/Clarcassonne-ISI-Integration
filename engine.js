@@ -107,7 +107,49 @@ var Tablero = new function(){
 	}
 	
 	this.buscarCandidatos = function(ficha){
-	  
+	    var pieza;
+ 	    var hueco;
+	    var encaja=true;
+
+	    for(i=0; i<this.candidatos.length; i++){
+		for(j=0; j<4; j++){
+			encaja=true;
+			pieza=this.candidatos[i];
+			hueco= this.buscarxcoor(pieza.x-1,pieza.y);
+			if (hueco.lleno){
+				if (!(hueco.derecha == ficha.izda)){
+			 	    encaja=false;
+				}
+			}
+
+			hueco= this.buscarxcoor(pieza.x,pieza.y-1);
+			if (hueco.lleno){
+				if (!(hueco.abajo == ficha.arriba)){
+			 	    encaja=false;
+				}
+			}
+
+			hueco= this.buscarxcoor(pieza.x+1,pieza.y);
+			if (hueco.lleno){
+				if (!(hueco.izda == ficha.derecha)){
+			 	    encaja=false;
+				}
+			}
+
+			hueco= this.buscarxcoor(pieza.x,pieza.y+1);
+			if (hueco.lleno){
+				if (!(hueco.arriba == ficha.abajo)){
+			 	    encaja=false;
+				}
+			}
+			if (encaja){
+				ficha.encajaCon.push(pieza);
+				alert(ficha.encajaCon);
+			}
+			ficha.girar();
+		}
+		
+	    }
 	}
 	
 
@@ -136,7 +178,7 @@ var ObjetoFicha= function(x,y,i,tipoficha){
 
 	  this.escudo=Tiposfichas[this.tipo].Escudo;
   }
-	this.encaja;
+	this.encajaCon=[];
 
   this.girar=function(){
 	var aux= this.arriba;
