@@ -1,8 +1,13 @@
 
+Template.menu.rendered = function() {}
+
+
+
 //Mostramos la lista de menus
 Template.main_menu.main_menu = function() {
   return Menu.find({});
 };
+
 
 
 // La variable {{current}} tiene asosido un id, donde esta puesta, si esos ides
@@ -14,11 +19,13 @@ Template.main_menu.current = function() {
 Template.main_menu.events({
   // Si esta pulsado el boton del raton sobre alguno de los menus
   // Si estas pinchando sobre el mismo tag que ya esta seleccionado
+
   'mousedown li' : function() {
+    console.log(this.name);
     // Si estas pinchando sobre el mismo tag que ya esta seleccionado
     if (Session.equals('current_menu', this.name)){
     // Poner lo a null, es decir celeccionar por defecto
-      Session.set('current_menu', null);
+      Session.set('current_menu', 'Dashboard');
     }else{
     // De otra manera apuntar nuevo id del tag seleccionado
       Session.set('current_menu', this.name);}
