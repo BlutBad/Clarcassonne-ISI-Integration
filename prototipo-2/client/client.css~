@@ -1,8 +1,8 @@
 html{
 	margin: auto;
 	font-family: verdana, sans-serif;
-        background-color: #2E2E2E;
-        color: white;
+    background-color: #2E2E2E;
+    color: white;
 }
 
 
@@ -11,24 +11,28 @@ html{
 	position: fixed;
 	right: 10%;
 	font-size:120%;
+    color: white;
+    transition: color 1s;
 
-	color: white;
 }
 
+#div-login-button:hover {
+    color: #58ACFA;
+}
 
 #coin-slider{
 
-        width: 800;
-        height:400;
-        margin: auto;
-        border: 8px solid #848484; 
-        box-shadow: 10px 5px 5px #1C1C1C;
-        transition: border-color 1s;
+    width: 800;
+    height:400;
+    margin: auto;
+    border: 8px solid #848484; 
+    box-shadow: 10px 10px 5px #1C1C1C;
+    transition: border-color 1s;
 
 }
+
 #coin-slider:hover {
     border-color: #000000;
-
 }
 
 

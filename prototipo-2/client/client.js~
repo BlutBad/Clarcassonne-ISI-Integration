@@ -5,6 +5,7 @@ $(document).ready(function() {
 		$('#coin-slider').coinslider({ width: 800, height:400 });
 });
 
+
 Template.userstemp.users = function(){
 	return Meteor.users.find({},{sort:{username:1}});
 }
@@ -23,7 +24,6 @@ $(function() {
 	$('#tabs').tabs();
 });
 
-
 Meteor.users.find().observe({
  
 	changed: function(user) {
@@ -36,13 +36,9 @@ Meteor.users.find().observe({
 			$("#container").children().hide();
 
 			//Al desloguearte
-			$("#container #tabs,#container #users").fadeIn();
-
-			
+			$("#container #tabs,#container #users").fadeIn();		
 		}
-
 	}
-
 });
 
 Accounts.ui.config({
