@@ -1,45 +1,22 @@
 <template name="juegos"> {{#if show}}
-<h1>Juegos</h1>
-
-
-
-
-
-
 
 <div class="full-page">
-
-	<h3>Portfolio</h3>
-
-	<p>You can configure your portfolio page several different ways.
-		Below are two examples. The first demonstrates a full page layout
-		without a menu. Further down you can see an example which includes a
-		sub-navigation.</p>
-
-	<h4>Full page layout</h4>
+	<h3>Juegos disponibles en la plataforma</h3>
 
 	<div class="gallery">
+		{{#each juegos}}
+
 		<div class="gallery-item">
-			 <img  src="images/content/demo-only/portfolio/sample3-thumb.jpg"
-				class="gallery-image" alt="sample image" />
+				<p>{{name}}</p>
+			<img src="{{logo_src}}" class="gallery-image" alt="{{logo_alt}}" />
 			</a>
 			<div class="gallery-description">
-				<h5>Lorem Ipsum Dolor</h5>
-				<p>Sed molestie, neque sed felis nisl mi sed odio. Aliquam
-					mollis metus vel dolor amet nisi vehicula accumsan luctus a
-					pretium.</p>
-				<a href="#">More Information...</a>
+				<h5>{{title_desc}}</h5>
+				<p>{{description}}</p>
 			</div>
 		</div>
-
-
-{name: 'Alien Invasion',
-logo_src: '/images/games_logo/alieninvasion',
-logo_alt: 'Juega es este juego',
-title_desc: 'Titulo para la descripcion del juego'
-      },
-
-
-
-		{{/if}}
+		{{/each}}
+	</div>
+</div>
+	{{/if}}
 </template>

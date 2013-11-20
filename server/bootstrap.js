@@ -43,7 +43,7 @@ Meteor.startup(function () {
   
   if (Juegos.find().count() === 0) {
     var data = [
-{name: 'Alien Invasion',
+  {name: 'Alien Invasion',
   logo_src: '/images/games_logo/alieninvasion.jpg',
   logo_alt: 'Juega es este juego',
   title_desc: 'Titulo para la descripcion del juego',
@@ -63,10 +63,10 @@ Meteor.startup(function () {
       description: 'Descripcion del juego!'
       }
     ];
-
+  
 
     for (var i = 0; i < data.length; i++) {
-      var list_id = Juegos.insert({data[i]});
+      var list_id = Juegos.insert(data[i]);
     }
   }
 });
