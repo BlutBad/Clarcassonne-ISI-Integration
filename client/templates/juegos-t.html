@@ -1,13 +1,13 @@
 <template name="juegos"> {{#if show}}
 
 <div class="full-page">
-	<h3>Juegos disponibles en la plataforma</h3>
+	<h5>Juegos disponibles en la plataforma</h5>
 
 	<div class="gallery">
 		{{#each juegos}}
 
 		<div class="gallery-item">
-				<p>{{name}}</p>
+				<h3>{{name}}</h3>
 			<img src="{{logo_src}}" class="gallery-image" alt="{{logo_alt}}" />
 			</a>
 			<div class="gallery-description">
