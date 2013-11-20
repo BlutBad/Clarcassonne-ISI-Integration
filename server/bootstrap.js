@@ -40,5 +40,17 @@ Meteor.startup(function () {
       var list_id = Menu_user.insert({name: data[i].name});
     }
   }
+  
+  if (Juegos.find().count() === 0) {
+    var data = [
+      {name: 
+      },
+    ];
+
+
+    for (var i = 0; i < data.length; i++) {
+      var list_id = Juegos.insert({data[i]});
+    }
+  }
 });
 
