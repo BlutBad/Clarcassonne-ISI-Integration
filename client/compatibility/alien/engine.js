@@ -13,7 +13,7 @@
 
 
 
-var Game = new function() {
+Game = new function() {
   
 
 

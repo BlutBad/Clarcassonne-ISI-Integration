@@ -45,7 +45,7 @@ Meteor.startup(function() {
 
   if (Juegos.find().count() === 0) {
     var data = [ {
-      name : 'Alien Invasion',
+      name : 'AlienInvasion',
       logo_src : '/images/games_logo/alieninvasion.jpg',
       logo_alt : 'Juega es este juego',
       title_desc : 'Titulo para la descripcion del juego',
