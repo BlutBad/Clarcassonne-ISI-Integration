@@ -43,8 +43,25 @@ Meteor.startup(function () {
   
   if (Juegos.find().count() === 0) {
     var data = [
-      {name: 
-      },
+{name: 'Alien Invasion',
+  logo_src: '/images/games_logo/alieninvasion.jpg',
+  logo_alt: 'Juega es este juego',
+  title_desc: 'Titulo para la descripcion del juego',
+  description: 'Descripcion del juego!'
+  },
+  {name: 'Clarkasone',
+    logo_src: '/images/games_logo/clarkasone.jpg',
+    logo_alt: 'Juega es este juego',
+    title_desc: 'Titulo para la descripcion del juego',
+    description: 'Descripcion del juego!'
+    },
+    
+    {name: 'Froot war',
+      logo_src: '/images/games_logo/frootwars.jpg',
+      logo_alt: 'Juega es este juego',
+      title_desc: 'Titulo para la descripcion del juego',
+      description: 'Descripcion del juego!'
+      }
     ];
 
 
