@@ -25,3 +25,12 @@ Template.juegos.events({
 }
     
 });
+
+
+Template.alieninvasion.show = function() {
+  return Session.get('current_stage') == 'Alien Invasion';
+}
+
+Template.alieninvasion.rendered = function() {
+  Game.initialize("gamealien", sprites, startGame);
+}

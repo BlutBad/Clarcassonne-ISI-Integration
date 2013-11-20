@@ -7,7 +7,7 @@
 		{{#each juegos}}
 
 		<div class="gallery-item">
-				<h3>{{name}}</h3>
+			<h3>{{name}}</h3>
 			<img src="{{logo_src}}" class="gallery-image" alt="{{logo_alt}}" />
 			</a>
 			<div class="gallery-description">
@@ -18,5 +18,18 @@
 		{{/each}}
 	</div>
 </div>
-	{{/if}}
+
+
+{{>alieninvasion}}
+
+ {{/if}} 
+ 
+ </template>
+
+
+
+<template name="alieninvasion"> 
+{{#if show}}
+	<canvas id='gamealien' width='320' height='480'></canvas>
+{{/if}} 
 </template>
