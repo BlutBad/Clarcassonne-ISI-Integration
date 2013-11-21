@@ -27,14 +27,11 @@
 
 <template name="tabstemp">
 	<div id="tabs" >
-	
-		<!-- estructura de pestañas -->
 		<ul>
 			<li><a href="#amigos">Amigos</a></li>
 			<li><a href="#juegos">Juegos</a></li>
 		</ul>
 		
-		<!-- se respeta el nombre para indicar el contenido de cada pestaña -->
 		<div id="amigos"> {{> userstemp}} </div>
       <div id="juegos"></div>
 		
@@ -46,6 +43,17 @@
 		{{# each users}}
 				{{username}}
 		{{/each}}
-		
+		{{> input}}
+	   {{> messages}}
 	</div>
+</template>
+
+<template name="input">
+	<p> Message: <input type="text" id="message"></p>
+</template>
+
+<template name="messages">
+	{{#each messages}}
+		<strong>{{name}}:</strong>{{message}}
+	{{/each}}
 </template>

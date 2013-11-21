@@ -10,9 +10,6 @@ Meteor.startup(function () {
 });
 
 
-
-var usersLoaded = false;
-
 $(document).ready(function() {
 		$('#coin-slider').coinslider({ width: 800, height:400 });
 });
@@ -21,16 +18,9 @@ Template.userstemp.users = function(){
 	return Meteor.users.find({},{sort:{username:1}});
 }
 
-/*
-Template.welcome.myuser = function(){
-	return Meteor.users.find({"_id": Meteor.userId()});
-} 
-*/
-
+var usersLoaded = false;
 Meteor.subscribe("users", function () {
-
 	usersLoaded = true;
-
 });
 
 
@@ -50,24 +40,32 @@ $(function() {
 	$('#tabs').tabs();
 });
 
-/*
-Meteor.users.find().observe({
- 
-	changed: function(user) {
+// arreglar el chat
+Template.messages.messages=function(){
+	return Messages.find({},{sort: {time:-1}});
+}
 
-		if (usersLoaded) {
-
-			//console.log("New user created: ", user);
-			
-			//Al iniciar sesion
-			$("#container").children().hide();
-
-			//Al desloguearte
-			$("#container #tabs,#container #users").fadeIn();		
-		}
+Template.input.events = {
+	'keydown input#message':function(event){
+		if(event.which==13){
+			if (Meteor.user()){
+				var name = Meteor.user().username;
+			}else{
+				var name = 'Anonymous';
+			}
+			var message = $("#message");
+			if (message.val()!=''){
+				 Messages.insert({
+					name: name,
+					message: message.val(),
+					time: Date.now()
+				 });
+				message.val(''); //dejamos la caja de texto vacia
+			}
+		}	
 	}
-});
-*/
+}
+
 
 Accounts.ui.config({
 	
