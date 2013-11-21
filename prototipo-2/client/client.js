@@ -9,9 +9,11 @@ Template.userstemp.users = function(){
 	return Meteor.users.find({},{sort:{username:1}});
 }
 
+/*
 Template.welcome.myuser = function(){
 	return Meteor.users.find({"_id": Meteor.userId()});
 } 
+*/
 
 Meteor.subscribe("users", function () {
 
@@ -19,10 +21,24 @@ Meteor.subscribe("users", function () {
 
 });
 
+
+Deps.autorun(function () {
+		if(Meteor.userId()){
+			$('#container').children().hide();
+			$('#container #tabs').fadeIn();
+			$('#container #tabs #users').fadeIn();
+		} else {
+			$('#container').children().hide();
+			$('#slider').fadeIn();
+		}
+	}
+);
+
 $(function() {
 	$('#tabs').tabs();
 });
 
+/*
 Meteor.users.find().observe({
  
 	changed: function(user) {
@@ -39,6 +55,7 @@ Meteor.users.find().observe({
 		}
 	}
 });
+*/
 
 Accounts.ui.config({
 	
