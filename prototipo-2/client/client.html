@@ -5,6 +5,7 @@
 <body>
 	<div id="div-login-button">{{loginButtons}}</div>
 	<h1 id="titulo">Plataforma LL</h1>
+	{{> provisional}}
 	<p> Welcome to LowerLayers Games! </p>
     <div id="container">
         {{> cointemp}}
@@ -56,4 +57,11 @@
 	{{#each messages}}
 		<strong>{{name}}:</strong>{{message}}
 	{{/each}}
+</template>
+
+<template name="provisional">
+	LISTA CONECTADOS:
+	{{# each conectados}}
+		{{username}}
+	{{/ each}}
 </template>

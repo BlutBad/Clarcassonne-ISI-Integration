@@ -18,6 +18,10 @@ Template.userstemp.users = function(){
 	return Meteor.users.find({},{sort:{username:1}});
 }
 
+Template.provisional.conectados = function(){
+	return Meteor.users.find({"services.resume.loginTokens" : {$not : []}});
+}
+
 var usersLoaded = false;
 Meteor.subscribe("users", function () {
 	usersLoaded = true;
