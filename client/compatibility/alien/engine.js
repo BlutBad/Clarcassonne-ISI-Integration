@@ -70,11 +70,7 @@ Game = new function() {
 			}
 		});
 		
-		// Eventos del raton
-		$(window).click (function (event) {
-		  console.log(event.target)
-		  console.log(event)
-		});
+
 		
 	}
 
@@ -123,7 +119,7 @@ var SpriteSheet = new function() {
 		this.map = spriteData;
 		this.image = new Image();
 		this.image.onload = callback;
-		this.image.src = 'images/sprites.png';
+		this.image.src = '/images/sprites.png';
 	};
 
 	// Para dibujar sprites individuales en el contexto de canvas ctx

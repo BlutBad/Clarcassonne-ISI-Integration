@@ -11,6 +11,14 @@ body {
 	color:green;
 }
 
+.game{
+	width: 70%;
+	margin:auto;
+}
+
+canvas {
+	margin:auto;
+}
 
 .login-buttons-dropdown-align-right{
 		float:right;

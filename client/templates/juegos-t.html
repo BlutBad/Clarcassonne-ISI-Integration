@@ -1,33 +1,64 @@
 <template name="juegos"> {{#if show}}
+<div id="page">
+	<div id="page-top-gap"></div>
+	<div id="page-content">
 
-<div class="full-page">
-	<h5>Juegos disponibles en la plataforma</h5>
+		<!-- BEGIN: Page content -->
 
-	<div class="gallery">
-		{{#each juegos}}
 
-		<div class="gallery-item">
-			<h3>{{name}}</h3>
-			<img src="{{logo_src}}" class="gallery-image" alt="{{logo_alt}}" />
-			</a>
-			<div class="gallery-description">
-				<h5>{{title_desc}}</h5>
-				<p>{{description}}</p>
+		<div class="full-page">
+			<h5>Juegos disponibles en la plataforma</h5>
+
+			<div class="gallery">
+				{{#each juegos}}
+
+				<div class="gallery-item">
+					<h3>{{name}}</h3>
+					<img src="{{logo_src}}" class="gallery-image" alt="{{logo_alt}}" />
+					</a>
+					<div class="gallery-description">
+						<h5>{{title_desc}}</h5>
+						<p>{{description}}</p>
+					</div>
+				</div>
+				{{/each}}
 			</div>
 		</div>
-		{{/each}}
 	</div>
 </div>
 
-
-{{> alieninvasion}}
-
- {{/if}} 
- 
- </template>
+{{/if}}
 
 
 
-<template name="alieninvasion"> 
-	<canvas id='gamealien' width='320' height='480'></canvas>
+
+
+</template>
+
+
+
+<template name="gamecontainer">
+{{#if show}}
+<div id="page">
+	<div id="page-top-gap"></div>
+	<div id="page-content">
+
+		<div id="GameAlienInvasion" class="game">
+			<h1>AlienInvasion</h1>
+			<canvas id='gamealien' width='320' height='480'></canvas>
+		</div>
+
+		<div id="GameCarcassone" class="game">
+			<h1>GameCarcassone</h1>
+			<canvas id='GameCarcassoneCanvas' width='320' height='480'></canvas>
+		</div>
+
+		<div id="GameFrootWars" class="game">
+			<h1>GameFrootWars</h1>
+			<canvas id='GameFrootWarsCanvas' width='320' height='480'></canvas>
+		</div>
+	</div>
+</div>
+</div>
+{{/if}}  
 </template>
