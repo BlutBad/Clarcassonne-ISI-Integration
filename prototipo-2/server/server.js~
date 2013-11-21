@@ -1,5 +1,9 @@
-Meteor.publish("users", function() {
- 	console.log(Meteor.userId);
+Meteor.publish("users", function(loggeduser) {
+ 	
+	loggeduser=this.userId;
 	return Meteor.users.find();
 
 });
+
+
+
