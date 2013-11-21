@@ -1,3 +1,15 @@
+Meteor.startup(function () {
+	if(Meteor.userId()){
+			$('#container').children().hide();
+			$('#container #tabs').fadeIn();
+			$('#container #tabs #users').fadeIn();
+	} else {
+			$('#container').children().hide();
+			$('#slider').fadeIn();
+	}
+});
+
+
 
 var usersLoaded = false;
 

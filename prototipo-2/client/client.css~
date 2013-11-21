@@ -5,6 +5,10 @@ html{
     color: white;
 }
 
+#titulo{
+	-moz-text-shadow:2px 2px #2E9AFE;
+}
+
 
 #div-login-button{
 	float: right;
@@ -17,7 +21,7 @@ html{
 }
 
 #div-login-button:hover {
-    color: #5882FA;
+    color: #2E9AFE;
 }
 
 #coin-slider{
@@ -32,7 +36,7 @@ html{
 }
 
 #coin-slider:hover {
-    border-color:#5882FA;
+    border-color: #2E9AFE;
 }
 
 

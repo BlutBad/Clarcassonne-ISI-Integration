@@ -1,8 +1,5 @@
 <head>
 	<title>Plataforma LL</title>
-	<!-- reubicacion
-	<link rel="stylesheet" href="../../jquery-ui-1.10.3.custom/css/cupertino/jquery-ui-1.10.3.custom.css" />
-	<script src="../../jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.js"></script>-->
 </head>
 
 <body>
@@ -11,7 +8,7 @@
 	<p> Welcome to LowerLayers Games! </p>
     <div id="container">
         {{> cointemp}}
-			{{> tabstemp}}
+		{{> tabstemp}}
     </div>
 </body>
 
@@ -20,16 +17,16 @@
 
 <template name="cointemp">
 	<div id="slider">
-    <div id="coin-slider">
-        <IMG  SRC="angrybirds.jpg">
-        <IMG  SRC="carcassonne.jpg">
-        <IMG  SRC="alieninvasion.png">
-    </div>
+		<div id="coin-slider">
+		    <IMG  SRC="angrybirds.jpg">
+		    <IMG  SRC="carcassonne.jpg">
+		    <IMG  SRC="alieninvasion.png">
+		</div>
 	</div>
 </template>
 
 <template name="tabstemp">
-	<div id="tabs" style="display:none;">
+	<div id="tabs" >
 	
 		<!-- estructura de pestañas -->
 		<ul>
@@ -45,7 +42,7 @@
 </template>
 
 <template name="userstemp">
-	<div id="users" style="display:none;">
+	<div id="users" >
 		{{# each users}}
 				{{username}}
 		{{/each}}

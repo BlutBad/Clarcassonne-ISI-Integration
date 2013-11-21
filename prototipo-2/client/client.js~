@@ -1,8 +1,13 @@
 
+$('#container').children().hide();
+$('#container #tabs').fadeIn();
+$('#container #tabs #users').fadeIn();
+
+
 var usersLoaded = false;
 
 $(document).ready(function() {
-		$('#a').coinslider({ width: 800, height:400 });
+		$('#coin-slider').coinslider({ width: 800, height:400 });
 });
 
 Template.userstemp.users = function(){
@@ -29,7 +34,7 @@ Deps.autorun(function () {
 			$('#container #tabs #users').fadeIn();
 		} else {
 			$('#container').children().hide();
-			$('#a').fadeIn();
+			$('#slider').fadeIn();
 		}
 	}
 );
