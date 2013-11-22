@@ -8,11 +8,13 @@ Meteor.startup(function () {
 			$('#slider').fadeIn();
 	}
 });
-
-//Cargo el efecto slider
+//Cargo el efecto slider y pestañas
 $(document).ready(function() {
 		$('#coin-slider').coinslider({ width: 800, height:400 });
+		$('#tabs').tabs();
 });
+
+
 
 //Ordena los amigos alfabeticamente
 Template.userstemp.users = function(){
@@ -20,46 +22,47 @@ Template.userstemp.users = function(){
 }
 
 //Encuentra usuarios conectados
-Template.loguserstemp.conectados = function(){
+Template.loguserstemp.logusers = function(){
 	return Meteor.users.find({"services.resume.loginTokens" : {$not : []}});
 }
+
+//Encuentra juegos
+Template.gamestemp.games=function(){
+	return Games.find();
+}
+
+
+
 
 //Subscripcion a lista de usuarios
 var usersLoaded = false;
 Meteor.subscribe("users", function () {
 	usersLoaded = true;
 });
-
 //Subscripcion a lista de mensajes
 Meteor.subscribe("messages");
-
 //Subscripcion a lista de juegos
-Meteor.subscribe("juegos");
+Meteor.subscribe("games");
+
+
 
 //Cambios reactivos de la interfaz
 Deps.autorun(function () {
-	
 	//Carga mensajes del chat
-	Template.messages.messages=function(){
+	Template.messagestemp.messages=function(){
 		return Messages.find();
 	}
-
 	//Cambio lo que se muestra en la interfaz en funcion de la sesion
 	if(Meteor.userId()){
 		$('#container').children().hide();
 		$('#container #tabs').fadeIn();
-
 	}else{
 		$('#container').children().hide();
 		$('#slider').fadeIn();
 	}
-
 });
 
-//Cargo el sistema de pestañas de jqueryui
-$(function() {
-	$('#tabs').tabs();
-});
+
 
 //Inserta mensajes del chat
 Template.input.events = {
@@ -82,6 +85,8 @@ Template.input.events = {
 		}	
 	}
 }
+
+
 
 //Configuracion cuentas
 Accounts.ui.config({

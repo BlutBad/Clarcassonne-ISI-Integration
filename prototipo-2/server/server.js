@@ -10,4 +10,9 @@ Meteor.publish("messages", function() {
 
 });
 
+Meteor.publish("games", function() {
+ 	
+	return Games.find();
+
+});
 

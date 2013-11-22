@@ -6,11 +6,15 @@
 	<div id="div-login-button">{{loginButtons}}</div>
 	<h1 id="titulo">Plataforma LL</h1>
 	<p> Welcome to LowerLayers Games! </p>
-   <div id="container">
-   	{{> cointemp}}
+   	<div id="container">
+   		{{> cointemp}}
 		{{> tabstemp}}
-   </div>
+   	</div>
 </body>
+
+
+
+
 
 
 
@@ -33,9 +37,8 @@
 		</ul>
 		
 		<div id="amigos"> {{> userstemp}} </div>
-		<div id="chat"> {{> loguserstemp}}{{> input}}{{> messages}} </div>
-      <div id="juegos">{{> gamestemp}}</div>
-		
+		<div id="chat"> {{> loguserstemp}}{{> input}}{{> messagestemp}} </div>
+    	<div id="juegos">{{> gamestemp}}</div>
 	</div>
 </template>
 
@@ -51,7 +54,7 @@
 	<p> Mensaje: <input type="text" id="message"></p>
 </template>
 
-<template name="messages">
+<template name="messagestemp">
 	<div id="messages">
 		{{# each messages}}
 			<i>{{name}}: {{message}}</i></br>
@@ -61,7 +64,7 @@
 
 <template name="loguserstemp">
 	<div id="logusers">
-		{{# each conectados}}
+		{{# each logusers}}
 			{{username}}
 		{{/ each}}
 	</div>
@@ -70,7 +73,7 @@
 <template name="gamestemp">
 	<div id="games">
 		{{# each games}}
-			<p>{{game}}</p>
+			<p>{{name}}</p>
 		{{/ each}}
 	</div>
 </template>
