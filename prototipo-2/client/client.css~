@@ -1,4 +1,4 @@
-html{
+/*html{
 	margin: auto;
 	font-family: verdana, sans-serif;
     background-color: #2E2E2E;
@@ -6,7 +6,7 @@ html{
 }
 
 #titulo{
-	-moz-text-shadow:2px 2px #2E9AFE;
+	text-shadow:2px 2px #2E9AFE;
 }
 
 
@@ -23,7 +23,7 @@ html{
 #div-login-button:hover {
     color: #2E9AFE;
 }
-
+*/
 #coin-slider{
 
     width: 800;

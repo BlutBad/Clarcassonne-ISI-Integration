@@ -2,12 +2,12 @@ Meteor.startup(function () {
 	if(Meteor.userId()){
 			$('#container').children().hide();
 			$('#container #tabs').fadeIn();
-			$('#container #tabs #users').fadeIn();
 	} else {
 			$('#container').children().hide();
 			$('#slider').fadeIn();
 	}
 });
+
 
 
 $(document).ready(function() {
@@ -18,7 +18,7 @@ Template.userstemp.users = function(){
 	return Meteor.users.find({},{sort:{username:1}});
 }
 
-Template.provisional.conectados = function(){
+Template.loguserstemp.conectados = function(){
 	return Meteor.users.find({"services.resume.loginTokens" : {$not : []}});
 }
 
@@ -32,7 +32,7 @@ Deps.autorun(function () {
 		if(Meteor.userId()){
 			$('#container').children().hide();
 			$('#container #tabs').fadeIn();
-			$('#container #tabs #users').fadeIn();
+
 		} else {
 			$('#container').children().hide();
 			$('#slider').fadeIn();
@@ -46,7 +46,7 @@ $(function() {
 
 // arreglar el chat
 Template.messages.messages=function(){
-	return Messages.find({},{sort: {time:-1}});
+	return Messages.find();
 }
 
 Template.input.events = {

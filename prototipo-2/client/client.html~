@@ -29,11 +29,13 @@
 	<div id="tabs" >
 		<ul>
 			<li><a href="#amigos">Amigos</a></li>
+			<li><a href="#chat">Chat</a></li>
 			<li><a href="#juegos">Juegos</a></li>
 		</ul>
 		
 		<div id="amigos"> {{> userstemp}} </div>
-      <div id="juegos"></div>
+		<div id="chat"> {{> loguserstemp}}{{> input}}{{> messages}} </div>
+        <div id="juegos"></div>
 		
 	</div>
 </template>
@@ -41,10 +43,8 @@
 <template name="userstemp">
 	<div id="users" >
 		{{# each users}}
-				{{username}}
+				<p>{{username}}</p>
 		{{/each}}
-		{{> input}}
-	   {{> messages}}
 	</div>
 </template>
 
@@ -53,7 +53,17 @@
 </template>
 
 <template name="messages">
-	{{#each messages}}
-		<strong>{{name}}:</strong>{{message}}
-	{{/each}}
+	<div id="messages">
+		{{#each messages}}
+			<i>{{name}}:{{message}}</i></br>
+		{{/each}}
+	</div>
+</template>
+
+<template name="loguserstemp">
+	<div id="logusers">
+		{{# each conectados}}
+			{{username}}
+		{{/ each}}
+	</div>
 </template>
