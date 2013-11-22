@@ -24,7 +24,7 @@ $(function() {
 
 	Tablero.colocarficha(nuevaficha,5,5);
 
-	console.log("cierra camino: ",Tablero.cierraCamino(nuevaficha));
+
 
 	//comprobamos los parametros
 	var check= Tablero.buscarxcoor(5,5);
@@ -35,12 +35,15 @@ $(function() {
 
 	var nuevaficha2 = new ObjetoFicha(0,0,0,"Ciudad2lE");
 
-	//    Tablero.buscarCandidatos(nuevaficha2);
+	Tablero.buscarCandidatos(nuevaficha2);
+	console.log("encaja con:",nuevaficha2.encajaCon);
+
+
 
 	var robar = new Tablero.robarFicha();
 	console.log("objeto tipo de ficha: ",robar);
 
-	console.log(nuevaficha2.encajaCon);
+
 
 
 	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");

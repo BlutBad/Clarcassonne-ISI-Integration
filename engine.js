@@ -172,9 +172,8 @@ var Tablero = new function(){
 			 	    encaja=false;
 				}
 			}
-			if (encaja){
+			if (encaja && ficha.encajaCon.indexOf(pieza) == -1){
 				ficha.encajaCon.push(pieza);
-				alert(ficha.encajaCon);
 			}
 			ficha.girar();
 		}
@@ -238,7 +237,7 @@ var Tablero = new function(){
 };
 
 var ObjetoJugador = function(nombre,edad){
-	this.n_seguidores = 7;
+    this.n_seguidores = 7;
 	this.nombre = nombre;
 	this.edad = edad;
 	this.puntos = 0;
@@ -267,11 +266,11 @@ var ObjetoFicha= function(x,y,i,tipoficha){
 	this.encajaCon=[];
 
   this.girar=function(){  //Gira en el sentido contrario de las agujas del reloj
-	var aux= this.arriba;
-	this.arriba=this.derecha;
-	this.derecha=this.abajo;
-	this.abajo=this.izda;
-	this.izda=aux;
+	  var aux= this.arriba;
+	  this.arriba=this.derecha;
+	  this.derecha=this.abajo;
+	  this.abajo=this.izda;
+	  this.izda=aux;
   }
 } 
 
