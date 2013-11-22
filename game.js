@@ -10,15 +10,17 @@ $(function() {
 
 	//comprobamos que efectivamente la coordenada (5,5) es un hueco de ficha vacio. 
 	var centro = Tablero.buscarxcoor(5,5);
-	console.log(centro.lleno);
+	console.log("Tablero se inicia como lleno:",centro.lleno);
 
 	//creamos una nueva ficha de tipo Ciudad1l2crect (por ejemplo) sin coordenadas
 	var nuevaficha = new ObjetoFicha(0,0,0,"Ciudad1l2crect");
 	//comprobamos que los parámetros se han rellenado
-	console.log(nuevaficha.tipo,nuevaficha.arriba,nuevaficha.abajo,nuevaficha.izda,nuevaficha.derecha,nuevaficha.escudo);
+	console.log("ficha creada:",nuevaficha.tipo,nuevaficha.arriba,nuevaficha.abajo,
+	                          nuevaficha.izda,nuevaficha.derecha,nuevaficha.escudo);
 	//comprobamos si la ficha ha girado
 	nuevaficha.girar();
-	console.log(nuevaficha.tipo,nuevaficha.arriba,nuevaficha.abajo,nuevaficha.izda,nuevaficha.derecha,nuevaficha.escudo);
+	console.log("ficha girada:",nuevaficha.tipo,nuevaficha.arriba,nuevaficha.abajo,
+	                          nuevaficha.izda,nuevaficha.derecha,nuevaficha.escudo);
 
 	//La colocamos en el tablero
 
@@ -28,9 +30,9 @@ $(function() {
 
 	//comprobamos los parametros
 	var check= Tablero.buscarxcoor(5,5);
-	console.log(check.i,check.tipo,check.arriba,check.abajo,check.izda,check.derecha,check.escudo);
+	console.log("hueco lleno:",check.i,check.tipo,check.arriba,check.abajo,check.izda,check.derecha,check.escudo);
 	var check= Tablero.buscarxcoor(5,4);
-	console.log(check.i,check.tipo,check.arriba,check.abajo,check.izda,check.derecha,check.escudo);
+	console.log("huco vacio:",check.i,check.tipo,check.arriba,check.abajo,check.izda,check.derecha,check.escudo);
 
 
 	var nuevaficha2 = new ObjetoFicha(0,0,0,"Ciudad2lE");
@@ -45,18 +47,52 @@ $(function() {
 
 
 
-  //Prueba cierraCamino colocando ficha "cierracamino"
+  //Prueba cierraCamino colocando ficha "cierracamino" (no cruces)
+  Tablero.iniciar();
 	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
 	Tablero.colocarficha(nuevaficha,3,1);
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
 	Tablero.colocarficha(nuevaficha,3,2); 
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
 	Tablero.colocarficha(nuevaficha,3,3); 
-	var nuevaficha = new ObjetoFicha(0,0,0,"Ccruze");
+	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
+	nuevaficha.girar();
+	nuevaficha.girar();
 	Tablero.colocarficha(nuevaficha,3,4); 
 	console.log("cierra camino1: ",Tablero.cierraCamino(nuevaficha));
 	
+	//Prueba cierra camino con cruces
+
+	Tablero.iniciar();
+	                      //por arriba (cerrado)
+	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
+	Tablero.colocarficha(nuevaficha,5,3);
+	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
+	Tablero.colocarficha(nuevaficha,5,4); 
+		                      // por abajo (cerrado)
+	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
+	Tablero.colocarficha(nuevaficha,5,6); 
+	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
+	nuevaficha.girar();
+	nuevaficha.girar();
+	Tablero.colocarficha(nuevaficha,5,7);
+		                      // por la izda (cerrado)
+	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
+	nuevaficha.girar();
+	Tablero.colocarficha(nuevaficha,4,5);
+	                      // por la dcha (abierto)
+	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
+	nuevaficha.girar();
+	Tablero.colocarficha(nuevaficha,6,5); 
+
+ 
+	                      //en el centro (la que cierra)
+	var nuevaficha = new ObjetoFicha(0,0,0,"Ccruze");
+	Tablero.colocarficha(nuevaficha,5,5); 
+	Tablero.cierraCamino(nuevaficha);
+	
 	//Prueba cierraCamino colocando ficha intermedia
+	Tablero.iniciar();
 	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
 	Tablero.colocarficha(nuevaficha,8,1);
 	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");

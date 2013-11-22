@@ -85,7 +85,7 @@ var fichas = [ //72
 
 
 
-var lista=[];
+
 
 var Tablero = new function(){
 
@@ -94,6 +94,8 @@ var Tablero = new function(){
 
 	this.iniciar = function(){
 	  var i=0;
+	  this.huecos=[];
+	  this.candidatos=[];
 	  for(var x=0;x<10;x++){        //de 10 a 10 para probar (144)
 		  for(var y=0;y<10;y++){
 			  this.huecos.push( new ObjetoFicha(x,y,i));
@@ -263,9 +265,46 @@ var Tablero = new function(){
 							else {return false}
 			}
 			else{
-
-				  return recursiva(ficha);
+				  if (ficha.tipo=="Ccruze" || ficha.tipo=="Tcruze"){
 				  
+				      if (ficha.arriba=="Rue"){	
+									ficha2=Tablero.buscarxcoor(ficha.x,ficha.y-1);
+									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){
+									    console.log("cierra camino (cruce) por arriba"); 
+									}
+									else if(ficha2.lleno && recursiva(ficha2,"abajo")){
+									    console.log("cierra camino (cruce) por arriba");
+									} 	
+							}
+							if (ficha.abajo=="Rue"){
+									ficha2=Tablero.buscarxcoor(ficha.x,ficha.y+1);
+									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){
+									    console.log("cierra camino (cruce) por abajo")
+									}
+									else if(ficha2.lleno && recursiva(ficha2,"arriba")){
+									    console.log("cierra camino (cruce) por abajo")
+									}
+							}
+							if (ficha.izda=="Rue"){
+      						ficha2=Tablero.buscarxcoor(ficha.x-1,ficha.y);
+									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){
+									    console.log("cierra camino (cruce) por la izda")
+									}
+									else if(ficha2.lleno && recursiva(ficha2,"derecha")){
+									    console.log("cierra camino (cruce) por la izda")
+									}
+						  }
+							if (ficha.derecha=="Rue"){
+									ficha2=Tablero.buscarxcoor(ficha.x+1,ficha.y);
+									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){
+									    console.log("cierra camino (cruce) por la dcha")
+									}
+									else if(ficha2.lleno && recursiva(ficha2,"izquierda")){
+									    console.log("cierra camino (cruce) por la dcha")
+									}
+							}
+				  }
+				  else{return recursiva(ficha)}	  
 			}
 
 	}
@@ -273,7 +312,7 @@ var Tablero = new function(){
 };
 
 var ObjetoJugador = function(nombre,edad){
-    this.n_seguidores = 7;
+  this.n_seguidores = 7;
 	this.nombre = nombre;
 	this.edad = edad;
 	this.puntos = 0;
