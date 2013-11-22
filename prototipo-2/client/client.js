@@ -1,3 +1,4 @@
+//Muestro la pantalla inicial en funcion de si se ha logeado
 Meteor.startup(function () {
 	if(Meteor.userId()){
 			$('#container').children().hide();
@@ -8,26 +9,28 @@ Meteor.startup(function () {
 	}
 });
 
-
-
+//Cargo el efecto slider
 $(document).ready(function() {
 		$('#coin-slider').coinslider({ width: 800, height:400 });
 });
 
+//Ordena los amigos alfabeticamente
 Template.userstemp.users = function(){
 	return Meteor.users.find({},{sort:{username:1}});
 }
 
+//Encuentra usuarios conectados
 Template.loguserstemp.conectados = function(){
 	return Meteor.users.find({"services.resume.loginTokens" : {$not : []}});
 }
 
+//Subscripcion a lista de usarios
 var usersLoaded = false;
 Meteor.subscribe("users", function () {
 	usersLoaded = true;
 });
 
-
+//Cambios reactivos de la interfaz con la sesion
 Deps.autorun(function () {
 		if(Meteor.userId()){
 			$('#container').children().hide();
@@ -40,15 +43,17 @@ Deps.autorun(function () {
 	}
 );
 
+//Cargo el sistema de pestañas de jqueryui
 $(function() {
 	$('#tabs').tabs();
 });
 
-// arreglar el chat
+//Carga mensajes del chat
 Template.messages.messages=function(){
 	return Messages.find();
 }
 
+//Inserta mensajes del chat
 Template.input.events = {
 	'keydown input#message':function(event){
 		if(event.which==13){
@@ -70,9 +75,7 @@ Template.input.events = {
 	}
 }
 
-
+//Configuracion cuentas
 Accounts.ui.config({
-	
 	passwordSignupFields: "USERNAME_AND_OPTIONAL_EMAIL"
-
 });
