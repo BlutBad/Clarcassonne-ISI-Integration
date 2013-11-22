@@ -55,5 +55,19 @@ $(function() {
 	var nuevaficha = new ObjetoFicha(0,0,0,"Ccruze");
 	Tablero.colocarficha(nuevaficha,3,4); 
 	console.log("cierra camino: ",Tablero.cierraCamino(nuevaficha));
+	
+	
+	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
+	Tablero.colocarficha(nuevaficha,8,1);
+	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
+	nuevaficha.girar();
+	Tablero.colocarficha(nuevaficha,7,2);
+	var nuevaficha = new ObjetoFicha(0,0,0,"Rcurva");
+	nuevaficha.girar();
+	nuevaficha.girar();
+	nuevaficha.girar();
+	Tablero.colocarficha(nuevaficha,7,3);
+	//console.log("cierra camino: ",Tablero.cierraCamino(nuevaficha));
+	
 
 });

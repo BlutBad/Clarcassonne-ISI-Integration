@@ -53,7 +53,7 @@ var n_fichas = { //72
     Ciudad1lcruze: 3,
     Ciudad1ll: 2,
     Ciudad1l: 5,
-	Tcruze: 4,
+	  Tcruze: 4,
 };
 
 var fichas = [ //72
@@ -195,43 +195,54 @@ var Tablero = new function(){
 
 	this.cierraCamino = function(ficha){
 			var cierracamino = [
-				 'Ccruze',
+				  'Ccruze',
 					'Posada',
 					'Ciudad3lc',
 					'Ciudad3lcE',
 					'Ciudad1lcruze',
-				 'Tcruze',
+				  'Tcruze',
 			];
-			if (cierracamino.indexOf(ficha.tipo) == -1){return false}
-			else{
-					var cierra = false;
-					var recursiva = function(ficha,prohibido){
+			
+			var recursiva = function(ficha,prohibido){
 							if (ficha.arriba=="Rue" && prohibido!="arriba"){		
 									ficha2=Tablero.buscarxcoor(ficha.x,ficha.y-1);
-									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){cierra= true}
-									else{recursiva(ficha2,"abajo")}
+									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){return true}
+									else if(!ficha2.lleno){return false}
+									else {return recursiva(ficha2,"abajo")}
 							}
 							else if (ficha.abajo=="Rue" && prohibido!="abajo"){
 									ficha2=Tablero.buscarxcoor(ficha.x,ficha.y+1);
-									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){cierra= true}
-									else{recursiva(ficha2,"arriba")}
+									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){return true}
+									else if(!ficha2.lleno){return false}
+									else{return recursiva(ficha2,"arriba")}
 							}
 							else if (ficha.izda=="Rue" && prohibido!="izquierda"){
 
 									ficha2=Tablero.buscarxcoor(ficha.x-1,ficha.y);
-									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){cierra= true}
-									else{recursiva(ficha2,"derecha")}
+									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){return true}
+									else if(!ficha2.lleno){return false}
+									else{return recursiva(ficha2,"derecha")}
 							}
 							else if (ficha.derecha=="Rue" && prohibido!="derecha"){
 									ficha2=Tablero.buscarxcoor(ficha.x+1,ficha.y);
-									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){cierra= true}
-									else{recursiva(ficha2,"izquierda")}
+									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){return true}
+									else if(!ficha2.lleno){return false}
+									else{return recursiva(ficha2,"izquierda")}
 							}
 					
 				}
-				recursiva(ficha);
-				return cierra;
+			
+
+			
+			if (cierracamino.indexOf(ficha.tipo) == -1){
+			    return false;
 			}
+			else{
+
+				  return recursiva(ficha);
+				  
+			}
+
 	}
 	
 };
