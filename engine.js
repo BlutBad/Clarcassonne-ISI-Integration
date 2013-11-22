@@ -22,7 +22,7 @@ var Tiposfichas = {
     Ciudad1lcruze: {Izq: "Rue", Der: "Rue", Arr: "Tierra", Abaj: "Rue", Escudo: 0},//3
     Ciudad1ll: { Izq: "Tierra", Der: "Campo", Arr: "Tierra", Abaj: "Campo", Escudo: 0},//2
     Ciudad1l: {Izq: "Campo", Der: "Campo", Arr: "Tierra", Abaj: "Campo", Escudo: 0},//5
-	Tcruze:   {Izq: "Rue", Der: "Rue", Arr: "Campo", Abaj: "Rue", Escudo: 0},//4
+		Tcruze:   {Izq: "Rue", Der: "Rue", Arr: "Campo", Abaj: "Rue", Escudo: 0},//4
 };
 
 var Seguidores = ["Caballero","Ladron","Granjero","Monje"];
@@ -82,6 +82,8 @@ var fichas = [ //72
     'Ciudad1l',
 	'Tcruze',
 ];
+
+
 
 var lista=[];
 
@@ -191,11 +193,55 @@ var Tablero = new function(){
       console.log("Total de fichas: ",totalFichas);
       return(Tiposfichas[rand]);
     }
+
+	this.cierraCamino = function(ficha){
+			var cierracamino = [
+				 'Ccruze',
+					'Posada',
+					'Ciudad3lc',
+					'Ciudad3lcE',
+					'Ciudad1lcruze',
+				 'Tcruze',
+			];
+			if (cierracamino.indexOf(ficha.tipo) == -1){return false}
+			else{
+					var cierra = false;
+					var recursiva = function(ficha,prohibido){
+							if (ficha.arriba=="Rue" && prohibido!="arriba"){		
+									ficha2=Tablero.buscarxcoor(ficha.x,ficha.y-1);
+									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){cierra= true}
+									else{recursiva(ficha2,"abajo")}
+							}
+							else if (ficha.abajo=="Rue" && prohibido!="abajo"){
+									ficha2=Tablero.buscarxcoor(ficha.x,ficha.y+1);
+									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){cierra= true}
+									else{recursiva(ficha2,"arriba")}
+							}
+							else if (ficha.izda=="Rue" && prohibido!="izquierda"){
+
+									ficha2=Tablero.buscarxcoor(ficha.x-1,ficha.y);
+									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){cierra= true}
+									else{recursiva(ficha2,"derecha")}
+							}
+							else if (ficha.derecha=="Rue" && prohibido!="derecha"){
+									ficha2=Tablero.buscarxcoor(ficha.x+1,ficha.y);
+									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){cierra= true}
+									else{recursiva(ficha2,"izquierda")}
+							}
+					
+				}
+				recursiva(ficha);
+				return cierra;
+			}
+	}
 	
 };
 
-var ObjetoJugador = function(){
+var ObjetoJugador = function(nombre,edad){
 	this.n_seguidores = 7;
+	this.nombre = nombre;
+	this.edad = edad;
+	this.puntos = 0;
 };
 
 var ObjetoFicha= function(x,y,i,tipoficha){
@@ -220,7 +266,7 @@ var ObjetoFicha= function(x,y,i,tipoficha){
   }
 	this.encajaCon=[];
 
-  this.girar=function(){
+  this.girar=function(){  //Gira en el sentido contrario de las agujas del reloj
 	var aux= this.arriba;
 	this.arriba=this.derecha;
 	this.derecha=this.abajo;
