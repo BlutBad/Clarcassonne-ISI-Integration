@@ -24,28 +24,32 @@ Template.loguserstemp.conectados = function(){
 	return Meteor.users.find({"services.resume.loginTokens" : {$not : []}});
 }
 
-//Subscripcion a lista de usarios
+//Subscripcion a lista de usuarios
 var usersLoaded = false;
 Meteor.subscribe("users", function () {
 	usersLoaded = true;
 });
 
-
+//Subscripcion a lista de mensajes
 Meteor.subscribe("messages");
 
-//Cambios reactivos de la interfaz con la sesion
+//Subscripcion a lista de juegos
+Meteor.subscribe("juegos");
+
+//Cambios reactivos de la interfaz
 Deps.autorun(function () {
-		
+	
 	//Carga mensajes del chat
 	Template.messages.messages=function(){
-		//console.log(Messages.find());
 		return Messages.find();
 	}
+
+	//Cambio lo que se muestra en la interfaz en funcion de la sesion
 	if(Meteor.userId()){
 		$('#container').children().hide();
 		$('#container #tabs').fadeIn();
 
-	} else {
+	}else{
 		$('#container').children().hide();
 		$('#slider').fadeIn();
 	}
@@ -56,8 +60,6 @@ Deps.autorun(function () {
 $(function() {
 	$('#tabs').tabs();
 });
-
-
 
 //Inserta mensajes del chat
 Template.input.events = {

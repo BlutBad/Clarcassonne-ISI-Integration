@@ -49,13 +49,13 @@
 </template>
 
 <template name="input">
-	<p> Message: <input type="text" id="message"></p>
+	<p> Mensaje: <input type="text" id="message"></p>
 </template>
 
 <template name="messages">
 	<div id="messages">
-		{{#each messages}}
-			<i>{{name}}:{{message}}</i></br>
+		{{# each messages}}
+			<i>{{name}}: {{message}}</i></br>
 		{{/each}}
 	</div>
 </template>
