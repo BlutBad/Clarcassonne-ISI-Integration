@@ -231,11 +231,36 @@ var Tablero = new function(){
 							}
 					
 				}
-			
-
-			
-			if (cierracamino.indexOf(ficha.tipo) == -1){
-			    return false;
+				
+			if (cierracamino.indexOf(ficha.tipo) == -1){ //si la ficha no es cierracamino
+			        //tiene que cerrar camino por dos caminos distintos
+		          var cerrado=0;   //cerrado tendrá que ser 2
+			      
+			     	  if (ficha.arriba=="Rue"){		// si hay camino por arriba 
+									ficha2=Tablero.buscarxcoor(ficha.x,ficha.y-1);
+									//miramos la ficha siguiente, si está llena y cierra camino cerrado +1
+									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){cerrado++}
+									// si no, recorremos el camino con recursiva
+									else if(ficha2.lleno && recursiva(ficha2,"abajo")){cerrado++} 
+									
+							}
+							if (ficha.abajo=="Rue"){
+									ficha2=Tablero.buscarxcoor(ficha.x,ficha.y+1);
+									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){cerrado++}
+									else if(ficha2.lleno && recursiva(ficha2,"arriba")){cerrado++}
+							}
+							if (ficha.izda=="Rue"){
+      						ficha2=Tablero.buscarxcoor(ficha.x-1,ficha.y);
+									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){cerrado++}
+									else if(ficha2.lleno && recursiva(ficha2,"derecha")){cerrado++}
+							}
+							if (ficha.derecha=="Rue"){
+									ficha2=Tablero.buscarxcoor(ficha.x+1,ficha.y);
+									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){cerrado++}
+									else if(ficha2.lleno && recursiva(ficha2,"izquierda")){cerrado++}
+							}
+							if (cerrado == 2){return true}
+							else {return false}
 			}
 			else{
 

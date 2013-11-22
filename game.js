@@ -45,7 +45,7 @@ $(function() {
 
 
 
-
+  //Prueba cierraCamino colocando ficha "cierracamino"
 	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
 	Tablero.colocarficha(nuevaficha,3,1);
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
@@ -54,20 +54,24 @@ $(function() {
 	Tablero.colocarficha(nuevaficha,3,3); 
 	var nuevaficha = new ObjetoFicha(0,0,0,"Ccruze");
 	Tablero.colocarficha(nuevaficha,3,4); 
-	console.log("cierra camino: ",Tablero.cierraCamino(nuevaficha));
+	console.log("cierra camino1: ",Tablero.cierraCamino(nuevaficha));
 	
-	
+	//Prueba cierraCamino colocando ficha intermedia
 	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
 	Tablero.colocarficha(nuevaficha,8,1);
 	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
 	nuevaficha.girar();
-	Tablero.colocarficha(nuevaficha,7,2);
+	Tablero.colocarficha(nuevaficha,7,3);
+	ficha2=Tablero.buscarxcoor(7,3);
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rcurva");
 	nuevaficha.girar();
 	nuevaficha.girar();
 	nuevaficha.girar();
-	Tablero.colocarficha(nuevaficha,7,3);
-	//console.log("cierra camino: ",Tablero.cierraCamino(nuevaficha));
+	Tablero.colocarficha(nuevaficha,8,3);
+	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
+	Tablero.colocarficha(nuevaficha,8,2); 
+	console.log("cierra camino2: ",Tablero.cierraCamino(nuevaficha));
+	
 	
 
 });
