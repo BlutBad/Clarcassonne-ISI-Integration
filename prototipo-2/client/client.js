@@ -30,28 +30,34 @@ Meteor.subscribe("users", function () {
 	usersLoaded = true;
 });
 
+
+Meteor.subscribe("messages");
+
 //Cambios reactivos de la interfaz con la sesion
 Deps.autorun(function () {
-		if(Meteor.userId()){
-			$('#container').children().hide();
-			$('#container #tabs').fadeIn();
-
-		} else {
-			$('#container').children().hide();
-			$('#slider').fadeIn();
-		}
+		
+	//Carga mensajes del chat
+	Template.messages.messages=function(){
+		//console.log(Messages.find());
+		return Messages.find();
 	}
-);
+	if(Meteor.userId()){
+		$('#container').children().hide();
+		$('#container #tabs').fadeIn();
+
+	} else {
+		$('#container').children().hide();
+		$('#slider').fadeIn();
+	}
+
+});
 
 //Cargo el sistema de pestañas de jqueryui
 $(function() {
 	$('#tabs').tabs();
 });
 
-//Carga mensajes del chat
-Template.messages.messages=function(){
-	return Messages.find();
-}
+
 
 //Inserta mensajes del chat
 Template.input.events = {

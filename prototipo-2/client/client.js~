@@ -24,14 +24,18 @@ Template.loguserstemp.conectados = function(){
 	return Meteor.users.find({"services.resume.loginTokens" : {$not : []}});
 }
 
-//
+//Subscripcion a lista de usarios
 var usersLoaded = false;
 Meteor.subscribe("users", function () {
 	usersLoaded = true;
 });
 
+
+Meteor.subscribe("messages");
+
 //Cambios reactivos de la interfaz con la sesion
 Deps.autorun(function () {
+	//if(usersLoaded){
 		if(Meteor.userId()){
 			$('#container').children().hide();
 			$('#container #tabs').fadeIn();
@@ -40,8 +44,8 @@ Deps.autorun(function () {
 			$('#container').children().hide();
 			$('#slider').fadeIn();
 		}
-	}
-);
+	//}
+});
 
 //Cargo el sistema de pestañas de jqueryui
 $(function() {
@@ -50,6 +54,7 @@ $(function() {
 
 //Carga mensajes del chat
 Template.messages.messages=function(){
+	//console.log(Messages.find());
 	return Messages.find();
 }
 

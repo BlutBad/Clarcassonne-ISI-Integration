@@ -1,9 +1,13 @@
-Meteor.publish("users", function(loggeduser) {
+Meteor.publish("users", function() {
  	
-	loggeduser=this.userId;
 	return Meteor.users.find();
 
 });
 
+Meteor.publish("messages", function() {
+ 	
+	return Messages.find({}, {sort: {time:-1}});
+
+});
 
 

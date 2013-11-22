@@ -4,4 +4,10 @@ Meteor.publish("users", function() {
 
 });
 
+Meteor.publish("messages", function() {
+ 	
+	return Messages.find();
+
+});
+
 
