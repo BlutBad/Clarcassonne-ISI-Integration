@@ -22,8 +22,10 @@ var Tiposfichas = {
     Ciudad1lcruze: {Izq: "Rue", Der: "Rue", Arr: "Tierra", Abaj: "Rue", Escudo: 0},//3
     Ciudad1ll: { Izq: "Tierra", Der: "Campo", Arr: "Tierra", Abaj: "Campo", Escudo: 0},//2
     Ciudad1l: {Izq: "Campo", Der: "Campo", Arr: "Tierra", Abaj: "Campo", Escudo: 0},//5
-	Tcruze:   {Izq: "Rue", Der: "Rue", Arr: "Campo", Abaj: "Rue", Escudo: 0}//4
+	Tcruze:   {Izq: "Rue", Der: "Rue", Arr: "Campo", Abaj: "Rue", Escudo: 0},//4
 };
+
+var Seguidores = ["Caballero","Ladron","Granjero","Monje"];
 
 var totalFichas = 72;
 
@@ -127,17 +129,11 @@ var Tablero = new function(){
       if (!Tablero.buscarxcoor(ox+1,oy).lleno){this.candidatos.push({x:ox+1,y:oy})};
       if (!Tablero.buscarxcoor(ox,oy-1).lleno){this.candidatos.push({x:ox,y:oy-1})};
       if (!Tablero.buscarxcoor(ox,oy+1).lleno){this.candidatos.push({x:ox,y:oy+1})};
-<<<<<<< HEAD
-
-=======
-      
->>>>>>> 9245c7bbe1df249747dd927d662b053bca82b51e
       return 1;  
 	  }
 	  else {return 0};
 	}
 	
-<<<<<<< HEAD
 	this.buscarCandidatos = function(ficha){
 	    var pieza;
  	    var hueco;
@@ -183,12 +179,7 @@ var Tablero = new function(){
 		
 	    }
 	}
-=======
-/*	this.buscarCandidatos = function(ficha){
-	  
-	}*/
->>>>>>> 7f5f489c9af535d587af6f420c589650d6d2c3b1
-	
+
     // Funcion de robar una ficha aleatoria
     this.robarFicha = function(){
       var rand = fichas[Math.floor(Math.random() *fichas.length)];
@@ -203,7 +194,9 @@ var Tablero = new function(){
 	
 };
 
-
+var ObjetoJugador = function(){
+	this.n_seguidores = 7;
+};
 
 var ObjetoFicha= function(x,y,i,tipoficha){
 
