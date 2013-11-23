@@ -268,7 +268,7 @@ var Tablero = new function(){
 							else {return false}
 			}
 			else{
-				  if (ficha.tipo=="Ccruce" || ficha.tipo=="Tcruce" || ficha.tipo=="Ciudad3lc" || ficha.tipo=="Ciudad3lcE" || ficha.tipo=="Ciudad1lcruce"){
+				  if (ficha.tipo=="Ccruce" || ficha.tipo=="Tcruce"){
 				  
 				      if (ficha.arriba=="Rue"){	
 									ficha2=Tablero.buscarxcoor(ficha.x,ficha.y-1);
