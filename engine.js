@@ -53,7 +53,7 @@ var n_fichas = { //72
     Ciudad1lcruce: 3,
     Ciudad1ll: 2,
     Ciudad1l: 5,
-	  Tcruce: 4,
+	Tcruce: 4,
 };
 
 var fichas = [ //72
@@ -80,7 +80,7 @@ var fichas = [ //72
     'Ciudad1lcruce',
     'Ciudad1ll',
     'Ciudad1l',
-	  'Tcruce',
+	'Tcruce',
 ];
 
 
@@ -120,20 +120,20 @@ var Tablero = new function(){
 	    //la colocamos en el tablero
 	    this.huecos[hueco.i]=ficha;
 	    //ponemos el hueco del tablero como lleno
-      this.huecos[hueco.i].lleno=true;  
+        this.huecos[hueco.i].lleno=true;  
       
       
-      /////// borramos el hueco de la lista de candidatos
-      var pos = this.candidatos.indexOf( ( _.find(this.candidatos,function(obj){return (obj.x==ox-1 && obj.y==oy)})));
-      pos > -1 && this.candidatos.splice( pos,1 );
+        /////// borramos el hueco de la lista de candidatos
+        var pos = this.candidatos.indexOf( ( _.find(this.candidatos,function(obj){return (obj.x==ox-1 && obj.y==oy)})));
+        pos > -1 && this.candidatos.splice( pos,1 );
   
       
-      ////// añadimos futuribles huecos posibles a la lista candidatos
-      if (!Tablero.buscarxcoor(ox-1,oy).lleno){this.candidatos.push({x:ox-1,y:oy})};
-      if (!Tablero.buscarxcoor(ox+1,oy).lleno){this.candidatos.push({x:ox+1,y:oy})};
-      if (!Tablero.buscarxcoor(ox,oy-1).lleno){this.candidatos.push({x:ox,y:oy-1})};
-      if (!Tablero.buscarxcoor(ox,oy+1).lleno){this.candidatos.push({x:ox,y:oy+1})};
-      return 1;  
+        ////// añadimos futuribles huecos posibles a la lista candidatos
+        if (!Tablero.buscarxcoor(ox-1,oy).lleno){this.candidatos.push({x:ox-1,y:oy})};
+        if (!Tablero.buscarxcoor(ox+1,oy).lleno){this.candidatos.push({x:ox+1,y:oy})};
+        if (!Tablero.buscarxcoor(ox,oy-1).lleno){this.candidatos.push({x:ox,y:oy-1})};
+        if (!Tablero.buscarxcoor(ox,oy+1).lleno){this.candidatos.push({x:ox,y:oy+1})};
+        return 1;  
 	  }
 	  else {return 0};
 	}
@@ -144,72 +144,66 @@ var Tablero = new function(){
 	    var encaja=true;
 
 	    for(i=0; i<this.candidatos.length; i++){
-		for(j=0; j<4; j++){
-			encaja=true;
-			pieza=this.candidatos[i];
-			hueco= this.buscarxcoor(pieza.x-1,pieza.y);
-			if (hueco.lleno){
-				if (!(hueco.derecha == ficha.izda)){
-			 	    encaja=false;
-				}
-			}
+		    for(j=0; j<4; j++){
+			    encaja=true;
+			    pieza=this.candidatos[i];
+			    hueco= this.buscarxcoor(pieza.x-1,pieza.y);
+			    if (hueco.lleno){
+				    if (!(hueco.derecha == ficha.izda)){
+			     	    encaja=false;
+				    }
+			    }
 
-			hueco= this.buscarxcoor(pieza.x,pieza.y-1);
-			if (hueco.lleno){
-				if (!(hueco.abajo == ficha.arriba)){
-			 	    encaja=false;
-				}
-			}
+			    hueco= this.buscarxcoor(pieza.x,pieza.y-1);
+			    if (hueco.lleno){
+				    if (!(hueco.abajo == ficha.arriba)){
+			     	    encaja=false;
+				    }
+			    }
 
-			hueco= this.buscarxcoor(pieza.x+1,pieza.y);
-			if (hueco.lleno){
-				if (!(hueco.izda == ficha.derecha)){
-			 	    encaja=false;
-				}
-			}
+			    hueco= this.buscarxcoor(pieza.x+1,pieza.y);
+			    if (hueco.lleno){
+				    if (!(hueco.izda == ficha.derecha)){
+			     	    encaja=false;
+				    }
+			    }
 
-			hueco= this.buscarxcoor(pieza.x,pieza.y+1);
-			if (hueco.lleno){
-				if (!(hueco.arriba == ficha.abajo)){
-			 	    encaja=false;
-				}
-			}
-			if (encaja && ficha.encajaCon.indexOf(pieza) == -1){
-				ficha.encajaCon.push(pieza);
-			}
-			ficha.girar();
-		}
-		
+			    hueco= this.buscarxcoor(pieza.x,pieza.y+1);
+			    if (hueco.lleno){
+				    if (!(hueco.arriba == ficha.abajo)){
+			     	    encaja=false;
+				    }
+			    }
+			    if (encaja && ficha.encajaCon.indexOf(pieza) == -1){
+				    ficha.encajaCon.push(pieza);
+			    }
+			    ficha.girar();
+		    }
 	    }
 	}
 
     // Funcion de robar una ficha aleatoria
     this.robarFicha = function(){
-	  if(totalFichas == 0){return -1}
-      else{
-	      var n_rand = Math.floor(Math.random() *fichas.length);
-          var rand = fichas[n_rand];
-          if (n_fichas[rand] == 0)
-            Tablero.robarFicha();
-          else{
-              console.log("ficha robada: ",rand);
-              console.log("numero de esa ficha: ",n_fichas[rand]);
-              n_fichas[rand] = n_fichas[rand]-1;
-              console.log("numero de esa ficha actual: ",n_fichas[rand]);
-              totalFichas--;
-              console.log("Total de fichas: ",totalFichas);
-              return Tiposfichas[rand];
-          }
-      }
+        if(totalFichas == 0){return -1}
+	    var n_rand = Math.floor(Math.random() *fichas.length);
+        var rand = fichas[n_rand];
+        console.log("ficha robada: ",rand);
+        console.log("numero de esa ficha: ",n_fichas[rand]);
+        n_fichas[rand] = n_fichas[rand]-1;
+		if (n_fichas[rand] == 0){fichas.splice(n_rand,1)}
+        console.log("numero de esa ficha actual: ",n_fichas[rand]);
+        totalFichas--;
+        console.log("Total de fichas: ",totalFichas);
+        return Tiposfichas[rand];
     }
 
 	this.cierraCamino = function(ficha){
 			var cierracamino = [
 				  'Ccruce',
-					'Posada',
-					'Ciudad3lc',
-					'Ciudad3lcE',
-					'Ciudad1lcruce',
+				  'Posada',
+				  'Ciudad3lc',
+				  'Ciudad3lcE',
+				  'Ciudad1lcruce',
 				  'Tcruce',
 			];
 			
@@ -320,7 +314,7 @@ var Tablero = new function(){
 };
 
 var ObjetoJugador = function(nombre,edad){
-  this.n_seguidores = 7;
+    this.n_seguidores = 7;
 	this.nombre = nombre;
 	this.edad = edad;
 	this.puntos = 0;
@@ -328,7 +322,7 @@ var ObjetoJugador = function(nombre,edad){
 
 var ObjetoFicha= function(x,y,i,tipoficha){
 
-  this.i=i; //nos indica la posición real en la lista tablero
+    this.i=i; //nos indica la posición real en la lista tablero
 	this.x=x; // x e y nos indican la posición 
 	this.y=y; // ficticia en el tablero virtual
 
@@ -337,24 +331,25 @@ var ObjetoFicha= function(x,y,i,tipoficha){
 	
 	this.tipo=tipoficha;
 	
-  if (this.tipo){
-    
-	  this.arriba = Tiposfichas[this.tipo].Arr;
-	  this.abajo = Tiposfichas[this.tipo].Abaj;
-	  this.izda = Tiposfichas[this.tipo].Izq;
-	  this.derecha = Tiposfichas[this.tipo].Der;
+    if (this.tipo){
 
-	  this.escudo=Tiposfichas[this.tipo].Escudo;
-  }
-	this.encajaCon=[];
+        this.arriba = Tiposfichas[this.tipo].Arr;
+        this.abajo = Tiposfichas[this.tipo].Abaj;
+        this.izda = Tiposfichas[this.tipo].Izq;
+        this.derecha = Tiposfichas[this.tipo].Der;
 
-  this.girar=function(){  //Gira en el sentido contrario de las agujas del reloj
-	  var aux= this.arriba;
-	  this.arriba=this.derecha;
-	  this.derecha=this.abajo;
-	  this.abajo=this.izda;
-	  this.izda=aux;
-  }
+        this.escudo=Tiposfichas[this.tipo].Escudo;
+    }
+
+    this.encajaCon=[];
+
+    this.girar=function(){  //Gira en el sentido contrario de las agujas del reloj
+        var aux= this.arriba;
+        this.arriba=this.derecha;
+        this.derecha=this.abajo;
+        this.abajo=this.izda;
+        this.izda=aux;
+    }
 } 
 
 
