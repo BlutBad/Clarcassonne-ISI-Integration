@@ -194,7 +194,7 @@ var Tablero = new function(){
         console.log("numero de esa ficha actual: ",n_fichas[rand]);
         totalFichas--;
         console.log("Total de fichas: ",totalFichas);
-        return Tiposfichas[rand];
+        return rand;
     }
 
 	this.cierraCamino = function(ficha){
@@ -267,7 +267,7 @@ var Tablero = new function(){
 							else {return false}
 			}
 			else{
-				  if (ficha.tipo=="Ccruce" || ficha.tipo=="Tcruce"){
+				  if (ficha.tipo=="Ccruce" || ficha.tipo=="Tcruce" || ficha.tipo == "Ciudad1lcruce"){
 				  
 				      if (ficha.arriba=="Rue"){	
 									ficha2=Tablero.buscarxcoor(ficha.x,ficha.y-1);
