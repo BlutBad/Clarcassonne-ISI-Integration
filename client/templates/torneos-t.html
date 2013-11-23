@@ -3,10 +3,10 @@
 		<h3 class="post-title">Creación de torneos</h3> 
 		<input type="button" id="crear_torneo" value="Crear Torneos"> 
 		{{#if showCreateDialog}}
-	    	{{> createDialog}}
-	    {{else}} <!--para que salga debajo sino sale a un lado el boton crear_torneo-->
-    		<p></p>
-  		{{/if}}
+			{{> createDialog}}
+		{{else}} <!--para que salga debajo sino sale a un lado el boton crear_torneo-->
+			<p></p>
+		{{/if}}
 		<div class="two-thirds">
 			<div class="blog">
 				<div class="post-summary">
@@ -43,28 +43,32 @@
 
 <template name="createDialog">
 	<div class="mask"> </div>
-  		<div class="modal">
-    		<div class="modal-header">
-      			<button type="button" class="close cancel">&times;</button>
-      			<h3>Add Championship</h3>
-    		</div>	
-    		<div class="modal-body">
-      			{{#if error}}
-        			<div class="alert alert-error">{{error}}</div>
-      			{{/if}}
-      			<label>Title</label>
-      			<input type="text" class="title span5">
-      			<label>Date Start</label>
-      			<input type="text" class="date_start span5">
-      			<label>Date Finish</label>
-      			<input type="text" class="date_finish span5">
-      			<label>Description</label>
-      			<textarea class="description span5"></textarea>    
-    		</div>
-    		<div class="modal-footer">
-      			<a href="#" class="btn cancel">Cancel</a>
-      			<a href="#" class="btn btn-primary save">Add Championship</a>
-    		</div>
-  		</div>
-  	</div>
+		<div class="modal">
+			<div class="modal-header">
+				<button type="button" class="close cancel">&times;</button>
+				<h3>Add Championship</h3>
+			</div>	
+			<div class="modal-body">
+				{{#if error}}
+					<div class="alert alert-error">{{error}}</div>
+				{{/if}}
+				<label>Title</label>
+				<input type="text" id="title" class="title span5">
+				<label>Juego</label>
+				<input type="text" id="game" class="game span5">
+				<label>Date Start</label>
+				<input type="date" id="date_start" class="date_start span5">
+				<label>Date Finish</label>
+				<input type="date" id="date_finish" class="date_finish span5">
+				<label>Description</label>
+				<textarea id="description" class="description span5"></textarea> 
+				<label>Imagen</label>
+				<input type="file" id="pic" class="pic span5"><br>   
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn cancel">Cancel</a>
+				<a href="#" class="btn btn-primary save">Add Championship</a>
+			</div>
+		</div>
+	</div>
 </template>

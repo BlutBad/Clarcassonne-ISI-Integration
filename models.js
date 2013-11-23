@@ -11,3 +11,16 @@ Menu = new Meteor.Collection("menu");
 Menu_user = new Meteor.Collection("menu_user");
 
 Juegos = new Meteor.Collection("juegos");
+
+//Crear torneos
+/*campos para torneos: 
+	title
+	game
+	user_create
+	date_start
+	date_finish
+	description, 
+	pic
+	user_participant 
+*/
+Torneos= new Meteor.Collection("torneos");
