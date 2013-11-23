@@ -44,7 +44,14 @@ $(function() {
   //totalFichas= 0;
 	var robar = Tablero.robarFicha();
 	console.log("objeto tipo de ficha: ",robar);
+  var nuevaficha2 = new ObjetoFicha(0,0,0,robar);
+  
+  //La colocamos en el tablero
 
+	Tablero.colocarficha(nuevaficha2,7,5);
+	//comprobamos los parametros
+	var check= Tablero.buscarxcoor(7,5);
+	console.log("colocada ficha robada:",check.i,check.tipo,check.arriba,check.abajo,check.izda,check.derecha,check.escudo);
 
 
   //Prueba cierraCamino colocando ficha "cierracamino" (no cruces)
@@ -87,7 +94,7 @@ $(function() {
 
  
 	                      //en el centro (la que cierra)
-	var nuevaficha = new ObjetoFicha(0,0,0,"Ciudad1lcruce");
+	var nuevaficha = new ObjetoFicha(0,0,0,"Ccruce");
 	Tablero.colocarficha(nuevaficha,5,5); 
 	Tablero.cierraCamino(nuevaficha);
 	
@@ -108,6 +115,15 @@ $(function() {
 	Tablero.colocarficha(nuevaficha,8,2); 
 	console.log("cierra camino2: ",Tablero.cierraCamino(nuevaficha));
 	
-	
-
+	//Prueba error al colocar fichas que no encajan
+	Tablero.iniciar();
+	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
+	Tablero.colocarficha(nuevaficha,8,1);
+  var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
+  nuevaficha.girar();
+	console.log("si no encaja 0:",Tablero.colocarficha(nuevaficha,8,2)); //No deberia encajar ---> devuelve 0
+	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
+	console.log("si no encaja 0:",Tablero.colocarficha(nuevaficha,8,1)); //No deberia encajar ----> devuelve 0
+	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
+	console.log("si encaja 1:",Tablero.colocarficha(nuevaficha,8,2));              //Deberia encajar ----> devuelve 1
 });

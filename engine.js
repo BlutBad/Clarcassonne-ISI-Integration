@@ -110,8 +110,21 @@ var Tablero = new function(){
 	
 	this.colocarficha = function(ficha,ox,oy){
 	  var hueco = Tablero.buscarxcoor(ox,oy);
-	    
-	  if (!hueco.lleno){
+
+	  var encaja = function(){
+	    var bien = true;
+	    var fichaux = Tablero.buscarxcoor(ox,oy-1);
+	    if (fichaux.lleno && fichaux.abajo!=ficha.arriba){bien = false}
+	    fichaux = Tablero.buscarxcoor(ox,oy+1);
+	    if (fichaux.lleno && fichaux.arriba!=ficha.abajo){bien = false}
+	    fichaux = Tablero.buscarxcoor(ox-1,oy);
+	    if (fichaux.lleno && fichaux.derecha!=ficha.izda){bien = false}
+	    fichaux = Tablero.buscarxcoor(ox+1,oy);
+	    if (fichaux.lleno && fichaux.izda!=ficha.derecha){bien = false}
+	    return bien;
+	  }();
+	  
+	  if (!hueco.lleno && encaja){
 	  
 	    //primero rellenamos las coordenadas de la ficha
 	    ficha.x=ox;
