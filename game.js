@@ -41,7 +41,7 @@ $(function() {
 	console.log("encaja con:",nuevaficha2.encajaCon);
 
 
-
+	totalFichas= 0;
 	var robar = new Tablero.robarFicha();
 	console.log("objeto tipo de ficha: ",robar);
 
@@ -87,7 +87,7 @@ $(function() {
 
  
 	                      //en el centro (la que cierra)
-	var nuevaficha = new ObjetoFicha(0,0,0,"Ccruze");
+	var nuevaficha = new ObjetoFicha(0,0,0,"Ccruce");
 	Tablero.colocarficha(nuevaficha,5,5); 
 	Tablero.cierraCamino(nuevaficha);
 	

@@ -3,7 +3,7 @@ var Tiposfichas = {
     Rcurva: {Izq: "Rue", Der: "Campo", Arr: "Campo", Abaj: "Rue", Escudo: 0 }, //9
     Catedral: { Izq: "Campo", Der: "Campo", Arr: "Campo", Abaj: "Campo", Escudo: 0 }, //4
     Posada: {Izq: "Campo", Der: "Campo", Arr: "Campo", Abaj: "Rue", Escudo: 0  }, //2
-    Ccruze : { Izq: "Rue", Der: "Rue", Arr: "Rue", Abaj: "Rue", Escudo: 0  }, //1
+    Ccruce : { Izq: "Rue", Der: "Rue", Arr: "Rue", Abaj: "Rue", Escudo: 0  }, //1
     CiudadE: { Izq: "Tierra", Der: "Tierra", Arr: "Tierra", Abaj: "Tierra", Escudo: 1  }, //1
     Ciudad3lc: {Izq: "Tierra", Der: "Tierra", Arr: "Tierra", Abaj: "Rue", Escudo: 0  }, //1
     Ciudad3lcE: {Izq: "Tierra", Der: "Tierra", Arr: "Tierra", Abaj: "Rue", Escudo: 1  },//2
@@ -19,10 +19,10 @@ var Tiposfichas = {
     Ciudad1l2crect: {Izq: "Rue", Der: "Rue", Arr: "Tierra", Abaj: "Campo", Escudo: 0},//4
     Ciudadcurvder: {Izq: "Campo", Der: "Rue", Arr: "Tierra", Abaj: "Rue", Escudo: 0},//3
     Ciudadcurvizq: {Izq: "Rue", Der: "Campo", Arr: "Tierra", Abaj: "Rue", Escudo: 0},//3
-    Ciudad1lcruze: {Izq: "Rue", Der: "Rue", Arr: "Tierra", Abaj: "Rue", Escudo: 0},//3
+    Ciudad1lcruce: {Izq: "Rue", Der: "Rue", Arr: "Tierra", Abaj: "Rue", Escudo: 0},//3
     Ciudad1ll: { Izq: "Tierra", Der: "Campo", Arr: "Tierra", Abaj: "Campo", Escudo: 0},//2
     Ciudad1l: {Izq: "Campo", Der: "Campo", Arr: "Tierra", Abaj: "Campo", Escudo: 0},//5
-		Tcruze:   {Izq: "Rue", Der: "Rue", Arr: "Campo", Abaj: "Rue", Escudo: 0},//4
+		Tcruce:   {Izq: "Rue", Der: "Rue", Arr: "Campo", Abaj: "Rue", Escudo: 0},//4
 };
 
 var Seguidores = ["Caballero","Ladron","Granjero","Monje"];
@@ -34,7 +34,7 @@ var n_fichas = { //72
     Rcurva: 9,
     Catedral: 4,
     Posada: 2,
-    Ccruze : 1,
+    Ccruce : 1,
     CiudadE: 1,
     Ciudad3lc: 1,
     Ciudad3lcE: 2,
@@ -50,10 +50,10 @@ var n_fichas = { //72
     Ciudad1l2crect: 4,
     Ciudadcurvder: 3,
     Ciudadcurvizq:3,
-    Ciudad1lcruze: 3,
+    Ciudad1lcruce: 3,
     Ciudad1ll: 2,
     Ciudad1l: 5,
-	  Tcruze: 4,
+	  Tcruce: 4,
 };
 
 var fichas = [ //72
@@ -61,7 +61,7 @@ var fichas = [ //72
     'Rcurva',
     'Catedral',
     'Posada',
-    'Ccruze',
+    'Ccruce',
     'CiudadE',
     'Ciudad3lc',
     'Ciudad3lcE',
@@ -77,10 +77,10 @@ var fichas = [ //72
     'Ciudad1l2crect',
     'Ciudadcurvder',
     'Ciudadcurvizq',
-    'Ciudad1lcruze',
+    'Ciudad1lcruce',
     'Ciudad1ll',
     'Ciudad1l',
-	'Tcruze',
+	  'Tcruce',
 ];
 
 
@@ -191,7 +191,7 @@ var Tablero = new function(){
       console.log("ficha robada: ",rand);
       console.log("numero de esa ficha: ",n_fichas[rand]);
       n_fichas[rand] = n_fichas[rand]-1;
-			if (n_fichas[rand] == 0){n_fichas.splice(n_rand,1);}
+			if (n_fichas[rand] == 0){fichas.splice(n_rand,1)}
       console.log("numero de esa ficha actual: ",n_fichas[rand]);
       totalFichas--;
       console.log("Total de fichas: ",totalFichas);
@@ -200,12 +200,12 @@ var Tablero = new function(){
 
 	this.cierraCamino = function(ficha){
 			var cierracamino = [
-				  'Ccruze',
+				  'Ccruce',
 					'Posada',
 					'Ciudad3lc',
 					'Ciudad3lcE',
-					'Ciudad1lcruze',
-				  'Tcruze',
+					'Ciudad1lcruce',
+				  'Tcruce',
 			];
 			
 			var recursiva = function(ficha,prohibido){
@@ -268,7 +268,7 @@ var Tablero = new function(){
 							else {return false}
 			}
 			else{
-				  if (ficha.tipo=="Ccruze" || ficha.tipo=="Tcruze"){
+				  if (ficha.tipo=="Ccruce" || ficha.tipo=="Tcruce" || ficha.tipo=="Ciudad3lc" || ficha.tipo=="Ciudad3lcE" || ficha.tipo=="Ciudad1lcruce"){
 				  
 				      if (ficha.arriba=="Rue"){	
 									ficha2=Tablero.buscarxcoor(ficha.x,ficha.y-1);
