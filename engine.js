@@ -185,17 +185,22 @@ var Tablero = new function(){
 
     // Funcion de robar una ficha aleatoria
     this.robarFicha = function(){
-			if(totalFichas == 0){return -1}
-			var n_rand = Math.floor(Math.random() *fichas.length);
-      var rand = fichas[n_rand];
-      console.log("ficha robada: ",rand);
-      console.log("numero de esa ficha: ",n_fichas[rand]);
-      n_fichas[rand] = n_fichas[rand]-1;
-			if (n_fichas[rand] == 0){fichas.splice(n_rand,1)}
-      console.log("numero de esa ficha actual: ",n_fichas[rand]);
-      totalFichas--;
-      console.log("Total de fichas: ",totalFichas);
-      return Tiposfichas[rand];
+	  if(totalFichas == 0){return -1}
+      else{
+	      var n_rand = Math.floor(Math.random() *fichas.length);
+          var rand = fichas[n_rand];
+          if (n_fichas[rand] == 0)
+            Tablero.robarFicha();
+          else{
+              console.log("ficha robada: ",rand);
+              console.log("numero de esa ficha: ",n_fichas[rand]);
+              n_fichas[rand] = n_fichas[rand]-1;
+              console.log("numero de esa ficha actual: ",n_fichas[rand]);
+              totalFichas--;
+              console.log("Total de fichas: ",totalFichas);
+              return Tiposfichas[rand];
+          }
+      }
     }
 
 	this.cierraCamino = function(ficha){

@@ -41,7 +41,7 @@ $(function() {
 	console.log("encaja con:",nuevaficha2.encajaCon);
 
 
-	totalFichas= 0;
+//	totalFichas= 0;
 	var robar = new Tablero.robarFicha();
 	console.log("objeto tipo de ficha: ",robar);
 
