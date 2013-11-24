@@ -126,4 +126,13 @@ $(function() {
 	console.log("si no encaja 0:",Tablero.colocarficha(nuevaficha,8,1)); //No deberia encajar ----> devuelve 0
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
 	console.log("si encaja 1:",Tablero.colocarficha(nuevaficha,8,2));              //Deberia encajar ----> devuelve 1
+
+// Prueba la lista de seguidores.
+	Tablero.iniciar();
+	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
+	console.log("lista: ", Tablero.colocarseguidor(nuevaficha));
+	var nuevaficha = new ObjetoFicha(0,0,0,"Rcurva");
+	console.log("lista: ", Tablero.colocarseguidor(nuevaficha));
+	var nuevaficha = new ObjetoFicha(0,0,0,"Ccruce");
+	console.log("lista: ", Tablero.colocarseguidor(nuevaficha));
 });
