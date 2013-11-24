@@ -126,4 +126,27 @@ $(function() {
 	console.log("si no encaja 0:",Tablero.colocarficha(nuevaficha,8,1)); //No deberia encajar ----> devuelve 0
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
 	console.log("si encaja 1:",Tablero.colocarficha(nuevaficha,8,2));              //Deberia encajar ----> devuelve 1
+
+    //Prueba de cierra Castillo 1
+    Tablero.iniciar();
+    var nuevaficha = new ObjetoFicha(0,0,0,'Ciudad1l');
+    nuevaficha.girar();
+    nuevaficha.girar();
+    Tablero.colocarficha(nuevaficha,1,1);
+    var nuevaficha = new ObjetoFicha(0,0,0,'Ciudad1l');
+    Tablero.colocarficha(nuevaficha,1,2);
+    console.log("cierra castillo1: ",Tablero.cierraCastillo(nuevaficha));
+
+    //Prueba de cierra Castillo 2
+    Tablero.iniciar();
+    var nuevaficha = new ObjetoFicha(0,0,0,'Ciudad1l');
+    nuevaficha.girar();
+    Tablero.colocarficha(nuevaficha,2,1);
+    var nuevaficha = new ObjetoFicha(0,0,0,'Ciudad2l');
+    nuevaficha.girar();
+    nuevaficha.girar();
+    Tablero.colocarficha(nuevaficha,1,1);
+    var nuevaficha = new ObjetoFicha(0,0,0,'Ciudad1l');
+    Tablero.colocarficha(nuevaficha,1,2);
+    console.log("cierra castillo2: ",Tablero.cierraCastillo(nuevaficha));
 });

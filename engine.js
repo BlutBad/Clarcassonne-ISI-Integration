@@ -22,7 +22,7 @@ var Tiposfichas = {
     Ciudad1lcruce: {Izq: "Rue", Der: "Rue", Arr: "Tierra", Abaj: "Rue", Escudo: 0},//3
     Ciudad1ll: { Izq: "Tierra", Der: "Campo", Arr: "Tierra", Abaj: "Campo", Escudo: 0},//2
     Ciudad1l: {Izq: "Campo", Der: "Campo", Arr: "Tierra", Abaj: "Campo", Escudo: 0},//5
-		Tcruce:   {Izq: "Rue", Der: "Rue", Arr: "Campo", Abaj: "Rue", Escudo: 0},//4
+	Tcruce:   {Izq: "Rue", Der: "Rue", Arr: "Campo", Abaj: "Rue", Escudo: 0},//4
 };
 
 var Seguidores = ["Caballero","Ladron","Granjero","Monje"];
@@ -74,12 +74,12 @@ var fichas = [ //72
     'CiudadPuerta',
     'CiudadPuertaE',
     'Ciudadext',
-    'Ciudad1l2crect',
-    'Ciudadcurvder',
-    'Ciudadcurvizq',
-    'Ciudad1lcruce',
+    'Ciudad1l2crect', 
+    'Ciudadcurvder', 
+    'Ciudadcurvizq', 
+    'Ciudad1lcruce', 
     'Ciudad1ll',
-    'Ciudad1l',
+    'Ciudad1l', 
 	'Tcruce',
 ];
 
@@ -247,11 +247,11 @@ var Tablero = new function(){
 									else{return recursiva(ficha2,"izquierda")}
 							}
 					
-				}
+			}
 				
 			if (cierracamino.indexOf(ficha.tipo) == -1){ //si la ficha no es cierracamino
-			        //tiene que cerrar camino por dos caminos distintos
-		          var cerrado=0;   //cerrado tendrá que ser 2
+			          //tiene que cerrar camino por dos caminos distintos
+		              var cerrado=0;   //cerrado tendrá que ser 2
 			      
 			     	  if (ficha.arriba=="Rue"){		// si hay camino por arriba 
 									ficha2=Tablero.buscarxcoor(ficha.x,ficha.y-1);
@@ -260,24 +260,24 @@ var Tablero = new function(){
 									// si no, recorremos el camino con recursiva
 									else if(ficha2.lleno && recursiva(ficha2,"abajo")){cerrado++} 
 									
-							}
-							if (ficha.abajo=="Rue"){
+					  }
+					  if (ficha.abajo=="Rue"){
 									ficha2=Tablero.buscarxcoor(ficha.x,ficha.y+1);
 									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){cerrado++}
 									else if(ficha2.lleno && recursiva(ficha2,"arriba")){cerrado++}
-							}
-							if (ficha.izda=="Rue"){
-      						ficha2=Tablero.buscarxcoor(ficha.x-1,ficha.y);
+					  }
+					  if (ficha.izda=="Rue"){
+      				  ficha2=Tablero.buscarxcoor(ficha.x-1,ficha.y);
 									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){cerrado++}
 									else if(ficha2.lleno && recursiva(ficha2,"derecha")){cerrado++}
-							}
-							if (ficha.derecha=="Rue"){
+					  }
+					  if (ficha.derecha=="Rue"){
 									ficha2=Tablero.buscarxcoor(ficha.x+1,ficha.y);
 									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){cerrado++}
 									else if(ficha2.lleno && recursiva(ficha2,"izquierda")){cerrado++}
-							}
-							if (cerrado == 2){return true}
-							else {return false}
+					  }
+					  if (cerrado == 2){return true}
+					  else {return false}
 			}
 			else{
 				  if (ficha.tipo=="Ccruce" || ficha.tipo=="Tcruce" || ficha.tipo == "Ciudad1lcruce"){
@@ -290,8 +290,8 @@ var Tablero = new function(){
 									else if(ficha2.lleno && recursiva(ficha2,"abajo")){
 									    console.log("cierra camino (cruce) por arriba");
 									} 	
-							}
-							if (ficha.abajo=="Rue"){
+					  }
+					  if (ficha.abajo=="Rue"){
 									ficha2=Tablero.buscarxcoor(ficha.x,ficha.y+1);
 									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){
 									    console.log("cierra camino (cruce) por abajo")
@@ -299,17 +299,17 @@ var Tablero = new function(){
 									else if(ficha2.lleno && recursiva(ficha2,"arriba")){
 									    console.log("cierra camino (cruce) por abajo")
 									}
-							}
-							if (ficha.izda=="Rue"){
-      						ficha2=Tablero.buscarxcoor(ficha.x-1,ficha.y);
+					  }
+					  if (ficha.izda=="Rue"){
+      						        ficha2=Tablero.buscarxcoor(ficha.x-1,ficha.y);
 									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){
 									    console.log("cierra camino (cruce) por la izda")
 									}
 									else if(ficha2.lleno && recursiva(ficha2,"derecha")){
 									    console.log("cierra camino (cruce) por la izda")
 									}
-						  }
-							if (ficha.derecha=="Rue"){
+					  }
+					  if (ficha.derecha=="Rue"){
 									ficha2=Tablero.buscarxcoor(ficha.x+1,ficha.y);
 									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){
 									    console.log("cierra camino (cruce) por la dcha")
@@ -317,12 +317,104 @@ var Tablero = new function(){
 									else if(ficha2.lleno && recursiva(ficha2,"izquierda")){
 									    console.log("cierra camino (cruce) por la dcha")
 									}
-							}
+					  }
 				  }
 				  else{return recursiva(ficha)}	  
 			}
 
 	}
+
+    this.cierraCastillo = function(ficha){
+        var unlado = [
+            'Ciudad1l2crect', 
+            'Ciudadcurvder', 
+            'Ciudadcurvizq', 
+            'Ciudad1lcruce', 
+            'Ciudad1ll', // Aunque tenda dos lado con campo, son campos cerrados
+            'Ciudad1l', 
+        ];
+
+        var maslados = [
+            'CiudadE',
+            'Ciudad3lc',
+            'Ciudad3lcE',
+            'Ciudad3l',
+            'Ciudad3lE',
+            'Ciudad2lc',
+            'Ciudad2lcE',
+            'Ciudad2l',
+            'Ciudad2lE',
+            'CiudadPuerta',
+            'CiudadPuertaE',
+            'Ciudadext', 
+        ];
+
+        // Funcion cuando es solo un lado
+        var f_unlado = function(ficha, prohibido){
+            if (ficha.arriba == "Tierra" && prohibido != "arriba"){
+	            ficha2 = Tablero.buscarxcoor(ficha.x,ficha.y-1);
+		        if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){return true}
+                else if(ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){f_maslados(ficha2, 'abajo')}
+                else {return false}
+	        }
+	        else if (ficha.abajo == "Tierra" && prohibido != "abajo"){
+		        ficha2 = Tablero.buscarxcoor(ficha.x,ficha.y+1);
+		        if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){return true}
+                else if(ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){f_maslados(ficha2, 'arriba')}
+                else {return false}
+	        }
+	        else if (ficha.izda == "Tierra" && prohibido != "izquierda"){
+                
+		        ficha2 = Tablero.buscarxcoor(ficha.x-1,ficha.y);
+		        if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){return true}
+                else if(ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){f_maslados(ficha2, 'derecha')}
+                else {return false}
+
+	        }
+	        else if (ficha.derecha == "Tierra" && prohibido != "derecha"){
+		        ficha2 = Tablero.buscarxcoor(ficha.x+1,ficha.y);
+		        if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){return true}
+                else if(ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){f_maslados(ficha2, 'izquierda')}
+                else {return false}
+            }
+        }
+    
+        // Funcion para mas lados
+        var f_maslados = function(ficha, prohibido){
+            if (ficha.arriba == 'Tierra' && prohibido != 'arriba'){
+                ficha2 = Tablero.buscarxcoor(ficha.x, ficha.y-1);
+                if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){return true}
+                else if (ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){f_maslados(ficha2, 'abajo')}
+                else {return false}
+            }
+            if (ficha.abajo == 'Tierra' && prohibido != 'abajo'){
+                ficha2 = Tablero.buscarxcoor(ficha.x, ficha.y+1);
+                if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){return true}
+                else if (ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){f_maslados(ficha2, 'abajo')}
+                else {return false}
+            }
+            if (ficha.izda == 'Tierra' && prohibido != 'izquierda'){
+                ficha2 = Tablero.buscarxcoor(ficha.x-1, ficha.y);
+                if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){return true}
+                else if (ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){f_maslados(ficha2, 'derecha')}
+                else {return false}
+            }
+            if (ficha.derecha == 'Tierra' && prohibido != 'derecha'){
+                ficha2 = Tablero.buscarxcoor(ficha.x+1, ficha.y);
+                if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){
+                    alert("TRUE");
+                    return true}
+                else if (ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){f_maslados(ficha2, 'izquierda')}
+                else {return false}
+            }
+        }
+
+        if (unlado.indexOf(ficha.tipo) != -1)
+            return f_unlado(ficha, 'nada');
+        else if (maslados.indexOf(ficha.tipo) != -1)
+            return f_maslads(ficha, 'nada');                
+        else {return false}
+    }
 	
 };
 
