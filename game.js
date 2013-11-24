@@ -127,6 +127,7 @@ $(function() {
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
 	console.log("si encaja 1:",Tablero.colocarficha(nuevaficha,8,2));              //Deberia encajar ----> devuelve 1
 
+<<<<<<< HEAD
     //Prueba de cierra Castillo 1
     Tablero.iniciar();
     var nuevaficha = new ObjetoFicha(0,0,0,'Ciudad1l');
@@ -149,4 +150,14 @@ $(function() {
     var nuevaficha = new ObjetoFicha(0,0,0,'Ciudad1l');
     Tablero.colocarficha(nuevaficha,1,2);
     console.log("cierra castillo2: ",Tablero.cierraCastillo(nuevaficha));
+=======
+// Prueba la lista de seguidores.
+	Tablero.iniciar();
+	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
+	console.log("lista: ", Tablero.colocarseguidor(nuevaficha));
+	var nuevaficha = new ObjetoFicha(0,0,0,"Rcurva");
+	console.log("lista: ", Tablero.colocarseguidor(nuevaficha));
+	var nuevaficha = new ObjetoFicha(0,0,0,"Ccruce");
+	console.log("lista: ", Tablero.colocarseguidor(nuevaficha));
+>>>>>>> b4f635c9c713dbf574025c6b7e23341e31800372
 });

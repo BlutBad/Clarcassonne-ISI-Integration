@@ -210,6 +210,100 @@ var Tablero = new function(){
         return rand;
     }
 
+	this.colocarseguidor = function(ficha){
+		seguidor = [];
+		for (i=0;i<=8;i++){
+			if (i==0){
+				if(ficha.arriba == "Rue"){
+					seguidor.push("Ladron");					
+				}else if(ficha.arriba == "Ciudad"){
+					seguidor.push("Caballero");			
+				}else if(ficha.arriba == "Campo"){
+					seguidor.push("Granjero");
+				}else{
+					seguidor.push("");
+				}
+			}
+			if (i==1){
+				if(ficha.arriba == "Rue" && ficha.derecha == "Rue"){
+					seguidor.push("Granjero");					
+				}else if(ficha.arriba == "Ciudad" && ficha.derecha == "Rue"){
+					seguidor.push("Granjero");			
+				}else if(ficha.arriba == "Ciudad" && ficha.derecha == "Campo"){
+					seguidor.push("Granjero");	
+				}else{
+					seguidor.push("");
+				}
+			}
+			if (i==2){
+				if(ficha.derecha == "Rue"){
+					seguidor.push("Ladron");					
+				}else if(ficha.derecha == "Ciudad"){
+					seguidor.push("Caballero");			
+				}else if(ficha.derecha == "Campo"){
+					seguidor.push("Granjero");
+				}else{
+					seguidor.push("");
+				}
+			}
+			if (i==3){
+				if(ficha.derecha == "Rue"){
+					seguidor.push("Granjero");					
+				}else if(ficha.derecha == "Ciudad" && ficha.abajo == "Rue"){
+					seguidor.push("Granjero");			
+				}else{
+					seguidor.push("");
+				}
+			}
+			if (i==4){
+				if(ficha.abajo == "Rue"){
+					seguidor.push("Ladron");					
+				}else if(ficha.abajo == "Ciudad"){
+					seguidor.push("Caballero");			
+				}else if(ficha.abajo == "Campo"){
+					seguidor.push("Granjero");
+				}else{
+					seguidor.push("");
+				}
+			}
+			if (i==5){
+				if(ficha.abajo == "Rue"){
+					seguidor.push("Granjero");						
+				}else{
+					seguidor.push("");
+				}
+			}
+			if (i==6){
+				if(ficha.izda == "Rue"){
+					seguidor.push("Ladron");					
+				}else if(ficha.izda == "Ciudad"){
+					seguidor.push("Caballero");			
+				}else if(ficha.izda == "Campo"){
+					seguidor.push("Granjero");
+				}else{
+					seguidor.push("");
+				}
+			}
+			if (i==7){
+				if(ficha.izda == "Rue"){
+					seguidor.push("Granjero");						
+				}else{
+					seguidor.push("");
+				}
+			}
+			if (i==8){
+				if(ficha.abajo == "Rue" && ficha.izda == "Campo" && ficha.derecha == "Campo" && ficha.arriba == "Campo"){
+					seguidor.push("Monje");			
+				}else if(ficha.abajo == "Campo" && ficha.izda == "Campo" && ficha.derecha == "Campo" && ficha.arriba == "Campo"){			
+					seguidor.push("Monje");	
+				}else{
+					seguidor.push("");
+				}
+			}	
+		}
+		return seguidor;
+	}
+
 	this.cierraCamino = function(ficha){
 			var cierracamino = [
 				  'Ccruce',
