@@ -14,7 +14,17 @@ var openCreateDialog = function () {
 	Session.set("showCreateDialog", true);
 };
 
+
 Template.torneos.showCreateDialog = function () {
+	$(function() {
+    $( "input#date_finish" ).datepicker({
+      showOn: "button",
+      buttonImage: "public/images/icon-login.gif",
+      buttonImageOnly: true
+    });
+
+  });
+console.log("tu puta madre");
 	return Session.get("showCreateDialog");
 };
 
@@ -47,3 +57,13 @@ Template.createDialog.events({
 Template.createDialog.error = function () {
 	return Session.get("createError");
 };
+
+Template.torneos.torneo=function(){
+	return Torneos.find({});
+};
+
+Template.torneos.juegos=function(){
+	return Juegos.find({});
+};
+
+			

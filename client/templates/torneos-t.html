@@ -1,3 +1,4 @@
+
 <template name="torneos">
 	{{#if show}}
 		<h3 class="post-title">Creación de torneos</h3> 
@@ -7,10 +8,12 @@
 		{{else}} <!--para que salga debajo sino sale a un lado el boton crear_torneo-->
 			<p></p>
 		{{/if}}
+
 		<div class="two-thirds">
 			<div class="blog">
+		{{#each torneo}}
 				<div class="post-summary">
-					<h3 class="post-title">{{nombre_torneo}}</h3>
+					<h3 class="post-title">{{title}}</h3>
 					<div class="post-details">
 						<div class="post-date">
 							<span class="date">Fecha inicio: {{date_start}}</span>
@@ -24,14 +27,16 @@
 						<a href="#">Read More...</a>
 					</div>
 				</div>
+			{{/each}}
 			</div>
 		</div>
+		
 		<div class="one-third">
 			<h3>Juegos</h3>
 			<ul class="sub-navigation">
-				<li><a href="#">Clarcassone</a></li> 
-				<li><a href="#">AlienInvasion</a></li>
-				<li><a href="#">FrootWars</a></li>
+				{{#each juegos}}
+				<li><a href="#">{{name}}</a></li> 
+				{{/each}}
 			</ul>
 			<br/>		
 		</div>
@@ -55,11 +60,17 @@
 				<label>Title</label>
 				<input type="text" id="title" class="title span5">
 				<label>Juego</label>
-				<input type="text" id="game" class="game span5">
+				<select id="game" name="Juego">
+					<option selected value="0"> Elige una opción</option>
+					<option value="1">AlienInvasion</option> 
+					<option value="2">Clarcassone</option> 
+					<option value="3">Froot War</option>
+				 </select>
 				<label>Date Start</label>
-				<input type="date" id="date_start" class="date_start span5">
+				<input type="text" id="date_start" class="date_start span5">
 				<label>Date Finish</label>
-				<input type="date" id="date_finish" class="date_finish span5">
+				<input type="text" id="date_finish" class="date_finish span5">
+
 				<label>Description</label>
 				<textarea id="description" class="description span5"></textarea> 
 				<label>Imagen</label>
