@@ -16,7 +16,6 @@ var openCreateDialog = function () {
 
 
 Template.torneos.showCreateDialog = function () {
-
 	return Session.get("showCreateDialog");
 };
 
