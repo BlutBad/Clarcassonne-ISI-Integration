@@ -70,4 +70,36 @@ Meteor.startup(function() {
       var list_id = Juegos.insert(data[i]);
     }
   }
+
+  if (Torneos.find().count() === 0) {
+    var data = [ {
+      title : "Torneo AlienInvasion",
+      game : 'AlienInvasion',
+      date_start: "11/29/2013",
+      date_finish: "12/29/2013",
+      pic: '/images/games_logo/alieninvasion.jpg',
+      description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel'
+    }, 
+    {
+      title : "Torneo Clarcassone",
+      game : 'Clarcassone',
+      date_start: "11/29/2013",
+      date_finish: "12/29/2013",
+      pic: '/images/games_logo/clarkasone.jpg',
+      description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel'
+    },
+      
+    {
+      title : "Torneo Froot War",
+      game : 'Froot War',
+      date_start: "11/29/2013",
+      date_finish: "12/29/2013",
+      pic: '/images/games_logo/frootwars.jpg',
+      description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel'
+    } ];
+
+    for (var i = 0; i < data.length; i++) {
+      var list_id = Torneos.insert(data[i]);
+    }
+  }
 });
