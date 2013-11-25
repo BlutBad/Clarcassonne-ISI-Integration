@@ -16,15 +16,7 @@ var openCreateDialog = function () {
 
 
 Template.torneos.showCreateDialog = function () {
-	$(function() {
-    $( "input#date_finish" ).datepicker({
-      showOn: "button",
-      buttonImage: "public/images/icon-login.gif",
-      buttonImageOnly: true
-    });
 
-  });
-console.log("tu puta madre");
 	return Session.get("showCreateDialog");
 };
 
@@ -37,7 +29,7 @@ Template.createDialog.events({
 				var user_create = Meteor.user().profile.name;
 			};
 			var title = $('input#title');
-			var description = $('input#description');
+			var description = $('#description');
 			var date_start = $('input#date_start');
 			var date_finish = $('input#date_finish');
 			var game = $('input#game');
@@ -48,9 +40,26 @@ Template.createDialog.events({
 			Session.set("createError", "It needs a title and a description, or why bother?");
 		}
 	},
-	
 	'click .cancel': function () {
 		Session.set("showCreateDialog", false);
+	},
+	'click .date_start': function(){
+		$(function() {
+			$( "#date_start").datepicker({
+				showOn: "button",
+				buttonImage: "images/calendar.gif",
+				buttonImageOnly: true
+			});
+		});
+	},
+	'click .date_finish': function(){
+		$(function() {
+			$( "#date_finish").datepicker({
+				showOn: "button",
+				buttonImage: "images/calendar.gif",
+				buttonImageOnly: true
+			});
+		});
 	}
 });
 
