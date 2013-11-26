@@ -9,13 +9,9 @@
    	<div id="container">
    		{{> cointemp}}
 		{{> tabstemp}}
+		{{> friendsTemp}}
    	</div>
 </body>
-
-
-
-
-
 
 
 <template name="cointemp">
@@ -40,6 +36,25 @@
 		<div id="chat"> {{> loguserstemp}}{{> input}}{{> messagestemp}} </div>
     	<div id="juegos">{{> gamestemp}}</div>
 	</div>
+</template>
+
+<template name="friendsTemp">
+	
+		
+		<div id="accordion">
+			<h3>Amigos</h3>
+				<div>
+					<p>lista amigos</p>
+				</div>
+			<h3>Buscar</h3>
+				<div>
+					<p>Buscar</p>
+				</div>
+		</div>
+		<a id="friends" class="escondido" style="cursor:pointer;" >
+			Amigos
+		</a>
+	
 </template>
 
 <template name="userstemp">

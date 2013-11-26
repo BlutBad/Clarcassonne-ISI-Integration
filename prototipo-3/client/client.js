@@ -3,6 +3,7 @@ Meteor.startup(function () {
 	if(Meteor.userId()){
 			$('#container').children().hide();
 			$('#container #tabs').fadeIn();
+			$('#friends').fadeIn();
 	} else {
 			$('#container').children().hide();
 			$('#slider').fadeIn();
@@ -12,6 +13,25 @@ Meteor.startup(function () {
 $(document).ready(function() {
 		$('#coin-slider').coinslider({ width: 800, height:400 });
 		$('#tabs').tabs();
+		$(function() {
+			$("#accordion").accordion();
+		});
+		
+		$("#friends").css("top",$(window).height()-58);
+		$("#friends").css("left",$(window).width()-133);
+
+		$("#friends").click(function() {
+			if($("#friends").hasClass("escondido")){
+				$("#friends").removeClass();
+				$("#friends").addClass("mostrada");
+				$('#accordion').fadeIn();
+			}else{
+				$("#friends").removeClass();
+				$("#friends").addClass("escondido")
+				$('#accordion').hide();
+			}	
+			
+		});
 });
 
 
