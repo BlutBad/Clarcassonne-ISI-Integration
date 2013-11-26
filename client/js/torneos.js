@@ -42,16 +42,17 @@ Template.createDialog.events({
 	'click .cancel': function () {
 		Session.set("showCreateDialog", false);
 	},
-	'click .date_start': function(){
+	'click #date_start': function(){
 		$(function() {
 			$( "#date_start").datepicker({
 				showOn: "button",
 				buttonImage: "images/calendar.gif",
 				buttonImageOnly: true
+
 			});
 		});
 	},
-	'click .date_finish': function(){
+	'click #date_finish': function(){
 		$(function() {
 			$( "#date_finish").datepicker({
 				showOn: "button",
