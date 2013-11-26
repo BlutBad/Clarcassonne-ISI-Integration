@@ -115,6 +115,35 @@ $(function() {
 	Tablero.colocarficha(nuevaficha,8,2); 
 	console.log("cierra camino2: ",Tablero.cierraCamino(nuevaficha));
 	
+	//Prueba cierraCamino redondo, sin "cierracaminos"
+	Tablero.iniciar();	
+	var nuevaficha = new ObjetoFicha(0,0,0,"Rcurva");
+	Tablero.colocarficha(nuevaficha,5,5);
+	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
+	Tablero.colocarficha(nuevaficha,5,6);
+	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
+  nuevaficha.girar();
+  Tablero.colocarficha(nuevaficha,4,5);
+  var nuevaficha = new ObjetoFicha(0,0,0,"Rcurva");
+  nuevaficha.girar();
+	Tablero.colocarficha(nuevaficha,3,5);
+	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
+	Tablero.colocarficha(nuevaficha,3,6);
+	var nuevaficha = new ObjetoFicha(0,0,0,"Rcurva");
+	nuevaficha.girar();
+	nuevaficha.girar();
+	Tablero.colocarficha(nuevaficha,3,7);
+	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
+  nuevaficha.girar();
+  Tablero.colocarficha(nuevaficha,4,7);
+  var nuevaficha = new ObjetoFicha(0,0,0,"Rcurva");
+  nuevaficha.girar();
+	nuevaficha.girar();
+	nuevaficha.girar();
+	Tablero.colocarficha(nuevaficha,5,7);
+	console.log("cierra camino3: ",Tablero.cierraCamino(nuevaficha))	
+	
+	
 	//Prueba error al colocar fichas que no encajan
 	Tablero.iniciar();
 	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
@@ -139,7 +168,7 @@ $(function() {
     console.log("cierra castillo1: ",Tablero.cierraCastillo(nuevaficha));
 
     //Prueba de cierra Castillo 2
-<<<<<<< HEAD
+
     Tablero.iniciar();                                                      //      2       1
     var nuevaficha = new ObjetoFicha(0,0,0,'Ciudad1l');                     // --------------------
     nuevaficha.girar();                                                     // -       *-*        -
@@ -151,7 +180,7 @@ $(function() {
     var nuevaficha = new ObjetoFicha(0,0,0,'Ciudad1l');                     // -        -   
     Tablero.colocarficha(nuevaficha,1,2);                                   // ----------
     console.log("cierra castillo2: ",Tablero.cierraCastillo(nuevaficha));   //      3  
-=======
+
     Tablero.iniciar();
     var nuevaficha = new ObjetoFicha(0,0,0,'Ciudad1l');
     nuevaficha.girar();
@@ -163,7 +192,7 @@ $(function() {
     var nuevaficha = new ObjetoFicha(0,0,0,'Ciudad1l');
     Tablero.colocarficha(nuevaficha,1,2);
     console.log("cierra castillo2: ",Tablero.cierraCastillo(nuevaficha));
->>>>>>> 99bbfea5dea778dd59f640e2d5dc87950f233c96
+
 
 // Prueba la lista de seguidores.
 	Tablero.iniciar();

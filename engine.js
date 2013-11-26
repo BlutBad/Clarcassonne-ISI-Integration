@@ -313,30 +313,36 @@ var Tablero = new function(){
 				  'Ciudad1lcruce',
 				  'Tcruce',
 			];
+			var fichaorig = ficha;
 			
 			var recursiva = function(ficha,prohibido){
 							if (ficha.arriba=="Rue" && prohibido!="arriba"){		
 									ficha2=Tablero.buscarxcoor(ficha.x,ficha.y-1);
-									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){return true}
+									if (ficha2.x==fichaorig.x && ficha2.y==fichaorig.y){return true}
+									else if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){return true}
 									else if(!ficha2.lleno){return false}
 									else {return recursiva(ficha2,"abajo")}
 							}
 							else if (ficha.abajo=="Rue" && prohibido!="abajo"){
 									ficha2=Tablero.buscarxcoor(ficha.x,ficha.y+1);
-									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){return true}
+                  if (ficha2==undefined){console.log("error",ficha.x,ficha.y)};
+									if (ficha2.x==fichaorig.x && ficha2.y==fichaorig.y){return true}
+									else if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){return true}
 									else if(!ficha2.lleno){return false}
 									else{return recursiva(ficha2,"arriba")}
 							}
 							else if (ficha.izda=="Rue" && prohibido!="izquierda"){
 
 									ficha2=Tablero.buscarxcoor(ficha.x-1,ficha.y);
-									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){return true}
+									if (ficha2.x==fichaorig.x && ficha2.y==fichaorig.y){return true}
+									else if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){return true}
 									else if(!ficha2.lleno){return false}
 									else{return recursiva(ficha2,"derecha")}
 							}
 							else if (ficha.derecha=="Rue" && prohibido!="derecha"){
 									ficha2=Tablero.buscarxcoor(ficha.x+1,ficha.y);
-									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){return true}
+									if (ficha2.x==fichaorig.x && ficha2.y==fichaorig.y){return true}
+									else if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){return true}
 									else if(!ficha2.lleno){return false}
 									else{return recursiva(ficha2,"izquierda")}
 							}
