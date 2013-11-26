@@ -6,6 +6,7 @@ Template.juegos.juegos = function() {
 	return Juegos.find({});
 }
 
+
 Template.juegos.events({
 	'click img' : function() {
 		//console.log(this.name);
