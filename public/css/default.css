@@ -8,8 +8,18 @@ body {
 }
 
 .user-menu-current{
-	color:green;
+	background-color: rgba(0,0,199,0.3); /* Color de fondo sobre el boton */
 }
+
+#top-content ul li {  
+     display: inline;
+     padding: 2% 2%; /*Separar el texto*/ 
+ }  
+ 
+ #top-content ul li:hover { 
+     background-color: rgba(0,0,0,0.2); /* Color de fondo sobre el boton */
+     cursor: pointer; /* cambiar el aspecto del puntero */
+ } 
 
 .game{
 	width: 70%;
@@ -22,6 +32,10 @@ canvas {
 
 .login-buttons-dropdown-align-right{
 		float:right;
+}
+
+#login-buttons{
+	margin: 2%;
 }
 /**** Link Styles ****/
 a:link,a:visited {
@@ -345,13 +359,13 @@ h2.layout {
 }
 
 #logo img {
-	margin: 0 0; 
+	margin: 2% 0; 
 }
 
 #logo-footer {
 	float: right;
 	margin-top: -20px;
-	margin-bottom: -20px;
+	margin-bottom: 20px; 
 }
 
 /* design width and position */
@@ -468,6 +482,10 @@ h2.layout {
 	height: 337px;
 	margin-top: -4px;
 	overflow: hidden;
+}
+ 
+#torneos_container {
+	height: 1000px;
 }
 
 /* footer */
@@ -694,3 +712,5 @@ h2.layout {
 	background: transparent url("../images/spacer.gif") repeat 0 0;
 	cursor: pointer;
 }
+
+
