@@ -513,8 +513,23 @@ var Tablero = new function(){
             return f_maslados(ficha, 'nada');                
         else {return false}
     }
+
+    this.cierraClaustro = function(ficha){
+	var cierraclaustro = [
+		'Ccruce',
+		'Posada',
+		'Ciudad3lc',
+		'Ciudad3lcE',
+		'Ciudad1lcruce',
+		'Tcruce',
+		'Catedral',
+	];
+
+	if(ficha.tipo == "Catedral"){ return true }
 	
 };
+
+	
 
 var ObjetoJugador = function(nombre,edad){
     this.n_seguidores = 7;

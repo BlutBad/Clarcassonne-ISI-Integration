@@ -181,18 +181,12 @@ $(function() {
     Tablero.colocarficha(nuevaficha,1,2);                                   // ----------
     console.log("cierra castillo2: ",Tablero.cierraCastillo(nuevaficha));   //      3  
 
+    //Cierra Claustro con Catedral
     Tablero.iniciar();
-    var nuevaficha = new ObjetoFicha(0,0,0,'Ciudad1l');
-    nuevaficha.girar();
-    Tablero.colocarficha(nuevaficha,2,1);
-    var nuevaficha = new ObjetoFicha(0,0,0,'Ciudad2l');
-    nuevaficha.girar();
-    nuevaficha.girar();
-    Tablero.colocarficha(nuevaficha,1,1);
-    var nuevaficha = new ObjetoFicha(0,0,0,'Ciudad1l');
-    Tablero.colocarficha(nuevaficha,1,2);
-    console.log("cierra castillo2: ",Tablero.cierraCastillo(nuevaficha));
-
+	var nuevaficha = new ObjetoFicha(0,0,0,"Catedral");
+	Tablero.colocarficha(nuevaficha,3,1);
+	Tablero.colocarficha(nuevaficha,3,4); 
+	console.log("cierra claustro: ",Tablero.cierraClaustro(nuevaficha));
 
 // Prueba la lista de seguidores.
 	Tablero.iniciar();
