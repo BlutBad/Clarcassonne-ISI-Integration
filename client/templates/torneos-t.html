@@ -58,14 +58,15 @@
 					<div class="alert alert-error">{{error}}</div>
 				{{/if}}
 				<p>Title <input type="text" id="title" class="title span5"></p>
-				<p>Juego: 
-					<select id="game" name="Juego">
-						<option selected value="0"> Elige una opción</option>
-						<option value="1">AlienInvasion</option> 
-						<option value="2">Clarcassone</option> 
-						<option value="3">Froot War</option>
-					 </select>
-				</p>
+				<div class="ui-widget">
+				<label>Game: </label>
+ 					 <select id="game">
+  						  <option value="">Select one...</option>
+  						  <option value="AlienInvasion">AlienInvasion</option>
+  						  <option value="Clarcassone">Clarcassone</option>
+  						  <option value="FrootWar">FrootWar</option>
+  					</select>
+				</div>
 				<p>Date Start: <input type="text" id="date_start"></p>
 				<p>Date Finish: <input type="text" id="date_finish"></p>
 

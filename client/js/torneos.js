@@ -31,7 +31,7 @@ Template.createDialog.events({
 			var description = $('#description');
 			var date_start = $('input#date_start');
 			var date_finish = $('input#date_finish');
-			var game = $('input#game');
+			var game = $('#game');
 			var pic = $('input#pic');
 			Torneos.insert({title:title.val(), game: game.val(), user_create: user_create, date_start: date_start.val(), date_finish: date_finish.val(), description: description.val(), pic: pic.val() });
 			Session.set("showCreateDialog", false);
