@@ -1,5 +1,13 @@
 <template name="ranking">
 	{{#if show}}
 		<h1>Ranking</h1>
+		<ul>
+		<li type="circle"> | Game ID | USER ID | SCORE</li>
+		{{#each scores}}
+		
+			<li type="circle"> | {{gameId}} | {{userId}} | {{score}}</li>
+		</ul>
+		{{/each}}
+		
 	{{/if}}
 </template> 

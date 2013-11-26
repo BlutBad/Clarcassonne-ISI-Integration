@@ -24,3 +24,6 @@ Juegos = new Meteor.Collection("juegos");
 	user_participant 
 */
 Torneos= new Meteor.Collection("torneos");
+
+
+Ranking = new Meteor.Collection("ranking");
