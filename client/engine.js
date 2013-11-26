@@ -46,7 +46,7 @@
   
 
     // Gestión de la entrada (teclas para izda/derecha y disparo)
-    var KEY_CODES = { 37:'left', 39:'right', 32 :'fire', 66:'leftFireBall', 78:'rightFireBall' };
+    var KEY_CODES = { 37:'left', 39:'right', 38 :'up', 40:'down'};
     this.keys = {};
 
     this.setupInput = function() {
@@ -164,16 +164,22 @@
     //  en this.map, x e y en las que dibujarlo, y opcionalmente,
     //  frame para seleccionar el frame de un sprite que tenga varios
     //  como la explosion
-    this.draw = function(ctx,sprite,x,y,frame,z) {
+    this.draw = function(ctx,sprite,x,y,frame,rotation,z) {
     if(!z) z=1;
+    if(!rotation) rotation = 0;
 	var s = this.map[sprite];
 	if(!frame) frame = 0;
+	ctx.save();
+	ctx.translate(x,y);
+	ctx.translate(s.w/2, s.h/2);
+	ctx.rotate(rotation*Math.PI/180);
 	ctx.drawImage(this.image,
                       s.sx + frame * s.w, 
                       s.sy, 
                       s.w, s.h, 
-                      Math.floor(x), Math.floor(y),
+                      Math.floor(-s.w/2), Math.floor(-s.h/2),
                       s.w*z, s.h*z);
+   ctx.restore();
     };
 }
 
@@ -281,18 +287,20 @@
 	// Convertimos en un array args (1..)
 	var args = Array.prototype.slice.call(arguments,1);
 
-	for(var i=0, len=this.objects.length; i<len;i++) {
-	    var obj = this.objects[i];
-	    obj[funcName].apply(obj,args)
-	}
+		_(this.objects).forEach(function (obj) {
+			obj[funcName].apply(obj,args)
+		
+		})
     };
 
     // Devuelve el primer objeto de objects para el que func es true
     this.detect = function(func) {
-	for(var i = 0,val=null, len=this.objects.length; i < len; i++) {
-	    if(func.call(this.objects[i])) return this.objects[i];
-	}
-	return false;
+	var firstobject = _(this.objects).find(function (obj) { return func.call(obj)})
+    if (firstobject){
+    	return firstobject
+    }else{
+		return false;
+	 }
     };
 
     // Cuando Game.loop() llame a step(), hay que llamar al método
@@ -331,6 +339,18 @@
 	    }
 	});
     };
+    
+    this.translate = function (x,y) {
+    	_(this.objects).forEach(function (obj) {
+    		if (obj.type == "PiezaMapa") {
+				obj.x += 100*x;
+				obj.y += 100*y;
+			}
+		})
+    
+    }
+
+    
 
 
 };

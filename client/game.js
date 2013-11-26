@@ -70,11 +70,19 @@ Jugador4 = {nombre: "Ana"    , color: "verde", puntos:30};
 Jugador5 = {nombre: "Lucia"  , color: "gris", puntos:40};
 Jugador6 = {nombre: "Marcos" , color: "morado", puntos:50};
 
+
 startGame = function() {    
 	Game.setBoard(0,new Background());
 	Game.setBoard(1,new Jugadores());
-	Game.setBoard(2,new Rejilla());   
-	Game.setBoard(3,new PiezaMapa(2,2,'Rrecta'));
+	Game.setBoard(2,new Rejilla()); 
+	  
+	var board = new GameBoard();
+	board.add(new Scroll());
+	Game.setBoard(3,board);
+	
+	board.add(new PiezaMapa(2,2,'Rrecta',90));
+	
+	
 };
 
 
@@ -151,52 +159,91 @@ Rejilla =  function(){
 }; 
 
 PiezaMapa = function (cx,cy, sprite,rotate) {
-	this.x = 100*cx;
-	this.y = 100*cy;
+	this.x = 100*cx; // cx + scrollX
+	this.y = 100*cy; // cy + scrollY
+	this.rotation = rotate;
+	this.sprite = sprite;
+	this.type = 'PiezaMapa';
 	
 	this.draw = function (ctx) {
-		ctx.rotate(rotate*Math.PI/180);
-		SpriteSheet.draw(ctx,sprite,this.x,this.y,1);
+		if (this.y < 500 && this.y >= 0 && this.x >= 0 && this.x < 800) {
+			SpriteSheet.draw(ctx,this.sprite,this.x,this.y,1,this.rotation,1);
+		}
 	}
 	
 	this.step = function () { }
+	
 
 
 }
 
-/*Tablero = function() {
+
+
+Scroll = function() {
 	this.width = 140;
 	this.height = 140;
 	this.scrollx = 70;
 	this.scrolly = 70;
+	this.type = 'ScrollHandler';
 	
-	this.objects = [];
+	var up1 = false;
+	var up2 = false;
+	var up3 = false;
+	var up4 = false;
 	
-	
-	var up = false;
-	
-	this.draw = function (ctx) { }
+	this.draw = function (ctx) {
+		ctx.save();
+		for(var y=0; y<=400; y=y+100){
+			for(var x=0; x<=800; x=x+100){
+				ctx.fillText("(" + (this.scrollx+x/100) + ",",5+x,10+y);
+				ctx.fillText((this.scrolly+y/100) + ")",30+x,10+y);
+			};
+		};
+		
+		ctx.restore();
+	}
 	
 	this.step = function () {
-		if(!Game.keys['left']) up = true;
-		if(up && Game.keys['fire'] && this.reload < 0) {
-		 up = false;
-		 
-		 this.board
-	    // Esta pulsada la tecla de disparo y ya ha pasado el tiempo reload
-	    //Game.keys['fire'] = false;
-	    
-	    this.reload = this.reloadTime;
-
-	    // Se añaden al gameboard 2 misiles 
-	    this.board.add(new PlayerMissile(this.x,this.y+this.h/2));
-	    this.board.add(new PlayerMissile(this.x+this.w,this.y+this.h/2));
+		if(!Game.keys['left']) up1 = true;
+		if(up1 && Game.keys['left']) {
+			up1 = false;
+			if (this.scrollx != 0) {
+				this.scrollx -= 1;
+				this.board.translate(1,0);
+				
+			}
+		}
+		if(!Game.keys['right']) up2 = true;
+		if(up2 && Game.keys['right']) {
+			up2 = false;
+			if (this.scrollx != this.width) {
+				this.scrollx += 1;
+				this.board.translate(-1,0);
+				
+			}
+		}
+		if(!Game.keys['up']) up3 = true;
+		if(up3 && Game.keys['up']) {
+			up3 = false;
+			if (this.scrolly != 0) {
+				this.scrolly -= 1;
+				this.board.translate(0,1);
+				
+			}
+		}
+		if(!Game.keys['down']) up4 = true;
+		if(up4 && Game.keys['down']) {
+			up4 = false;
+			if (this.scrolly != this.height) {
+				this.scrolly += 1;
+				this.board.translate(0,-1);
+			}
 		}
 		
 	
 	}
 	
-}*/
+}
 
 $(function() {
     Game.initialize("game",sprites,startGame);
