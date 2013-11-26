@@ -33,6 +33,10 @@ canvas {
 .login-buttons-dropdown-align-right{
 		float:right;
 }
+
+#login-buttons{
+	margin: 2%;
+}
 /**** Link Styles ****/
 a:link,a:visited {
 	color: #2FA694;
@@ -355,13 +359,13 @@ h2.layout {
 }
 
 #logo img {
-	margin: 0 0; 
+	margin: 2% 0; 
 }
 
 #logo-footer {
 	float: right;
 	margin-top: -20px;
-	margin-bottom: -20px;
+	margin-bottom: 20px; 
 }
 
 /* design width and position */
@@ -478,6 +482,10 @@ h2.layout {
 	height: 337px;
 	margin-top: -4px;
 	overflow: hidden;
+}
+ 
+#torneos_container {
+	height: 1000px;
 }
 
 /* footer */

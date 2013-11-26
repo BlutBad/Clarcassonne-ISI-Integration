@@ -1,47 +1,45 @@
 
 <template name="torneos">
 	{{#if show}}
-		<h3 class="post-title">Creación de torneos</h3> 
-		<input type="button" id="crear_torneo" value="Crear Torneos"> 
-		{{#if showCreateDialog}}
-			{{> createDialog}}
-		{{else}} <!--para que salga debajo sino sale a un lado el boton crear_torneo-->
-			<p></p>
-		{{/if}}
+		<div id = "torneos_container">
+			<h1>Creación de torneos</h1>
+			<input type="button" id="crear_torneo" value="Crear Torneos"> 
+			{{#if showCreateDialog}}
+				{{> createDialog}}
+			{{else}} <!--para que salga debajo sino sale a un lado el boton crear_torneo-->
+				<p></p>
+			{{/if}} 
 
-		<div class="two-thirds">
-			<div class="blog">
-		{{#each torneo}}
-				<div class="post-summary">
-					<h3 class="post-title">{{title}}</h3>
-					<div class="post-details">
-						<div class="post-date">
-							<span class="date">Fecha inicio: {{date_start}}</span>
-							<span class="date">Fecha final: {{date_finish}}</span>
+			<div class="two-thirds">
+				<div class="blog">
+					{{#each torneo}}
+						<div class="post-summary">
+							<h3 class="post-title">{{title}}</h3>
+							<div class="post-details">
+								<div class="post-date">
+									<span class="date">Fecha inicio: {{date_start}}</span>
+									<span class="date">Fecha final: {{date_finish}}</span>
+								</div>
+								Posted by <a href="#">{{user_create}}</a> in <a href="#">{{game}}</a> |<a href="#"></a>
+							</div>
+							<img src="/images/content/demo-only/logo-browsers.jpg" {{banner}} class="post-image" alt="sample image" width="606" height="115" />
+							<div class="post-description">
+								<p>{{description}}</p>
+								<a href="#">Read More...</a>
+							</div>
 						</div>
-						Posted by <a href="#">{{user_create}}</a> in <a href="#">{{game}}</a> |<a href="#"></a>
-					</div>
-					<img src="/images/content/demo-only/logo-browsers.jpg" {{banner}} class="post-image" alt="sample image" width="606" height="115" />
-					<div class="post-description">
-						<p>{{description}}</p>
-						<a href="#">Read More...</a>
-					</div>
+					{{/each}}
 				</div>
-			{{/each}}
 			</div>
-		</div>
-		
-		<div class="one-third">
-			<h3>Juegos</h3>
-			<ul class="sub-navigation">
-				{{#each juegos}}
-				<li><a href="#">{{name}}</a></li> 
-				{{/each}}
-			</ul>
-			<br/>		
-		</div>
-		<!-- END: Page content -->			
-		<div class="clear"><!-- add to the end of each page to help extend container (or, optional: after a group of layout elements) --></div>
+			
+			<div class="one-third">
+				<h3>Juegos</h3>
+				<ul class="sub-navigation">
+					{{#each juegos}}
+						<li><a href="#">{{name}}</a></li> 
+					{{/each}}
+				</ul> 	
+			</div> 
 		</div>
 	{{/if}}
 </template> 
