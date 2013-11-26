@@ -1,5 +1,5 @@
 
-
-Session.set('current_stage', 'Dashboard');
-Session.set('load_game', null);
+//Default set de las variables de session
+Session.setDefault('current_stage', 'Dashboard');
+Session.setDefault('load_game', null);
 
