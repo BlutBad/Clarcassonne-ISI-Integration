@@ -34,8 +34,6 @@ $(document).ready(function() {
 		});
 });
 
-
-
 //Ordena los amigos alfabeticamente
 Template.userstemp.users = function(){
 	return Meteor.users.find({},{sort:{username:1}});
@@ -51,7 +49,15 @@ Template.gamestemp.games=function(){
 	return Games.find();
 }
 
+//Encuentra juegos
+Template.matchestemp.matches = function(){
+	return Matches.find();
+}
 
+//Carga mensajes del chat
+Template.messagestemp.messages=function(){
+	return Messages.find();
+}
 
 
 //Subscripcion a lista de usuarios
@@ -63,15 +69,13 @@ Meteor.subscribe("users", function () {
 Meteor.subscribe("messages");
 //Subscripcion a lista de juegos
 Meteor.subscribe("games");
-
+//Subscripcion a lista de partidas
+Meteor.subscribe("matches");
 
 
 //Cambios reactivos de la interfaz
 Deps.autorun(function () {
-	//Carga mensajes del chat
-	Template.messagestemp.messages=function(){
-		return Messages.find();
-	}
+
 	//Cambio lo que se muestra en la interfaz en funcion de la sesion
 	if(Meteor.userId()){
 		$('#container').children().hide();
@@ -106,7 +110,16 @@ Template.input.events = {
 	}
 }
 
-
+// Mostramos partidas
+Template.gamestemp.events = {
+	
+	'click a.linkgame':function(event){
+		
+		console.log($(this));
+		console.log($(this)[0].name);
+		$('a.linkgame').hide();
+	}
+}
 
 //Configuracion cuentas
 Accounts.ui.config({

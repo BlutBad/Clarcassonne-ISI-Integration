@@ -34,7 +34,7 @@
 		
 		<div id="amigos"> {{> userstemp}} </div>
 		<div id="chat"> {{> loguserstemp}}{{> input}}{{> messagestemp}} </div>
-    	<div id="juegos">{{> gamestemp}}</div>
+    	<div id="juegos">{{> gamestemp}} {{> matchestemp}}</div>
 	</div>
 </template>
 
@@ -51,7 +51,7 @@
 					<p>Buscar</p>
 				</div>
 		</div>
-		<a id="friends" class="escondido" href="javascript:void(0);" >
+		<a id="friends" class="escondido" style="cursor:pointer;" >
 			Amigos
 		</a>
 	
@@ -88,6 +88,14 @@
 <template name="gamestemp">
 	<div id="games">
 		{{# each games}}
+			<a href="#">{{name}}</a>
+		{{/ each}}
+	</div>
+</template>
+
+<template name="matchestemp">
+	<div id="matches">
+		{{# each matches}}
 			<p>{{name}}</p>
 		{{/ each}}
 	</div>

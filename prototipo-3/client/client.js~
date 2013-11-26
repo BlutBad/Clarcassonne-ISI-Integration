@@ -17,7 +17,8 @@ $(document).ready(function() {
 			$("#accordion").accordion();
 		});
 		
-		$("#friends").css("top",$(window).height()-58,"left",$(window).width()-133)		
+		$("#friends").css("top",$(window).height()-58);
+		$("#friends").css("left",$(window).width()-133);
 
 		$("#friends").click(function() {
 			if($("#friends").hasClass("escondido")){
@@ -32,8 +33,6 @@ $(document).ready(function() {
 			
 		});
 });
-
-
 
 //Ordena los amigos alfabeticamente
 Template.userstemp.users = function(){
@@ -50,7 +49,15 @@ Template.gamestemp.games=function(){
 	return Games.find();
 }
 
+//Encuentra juegos
+Template.matchestemp.matches = function(){
+	return Matches.find();
+}
 
+//Carga mensajes del chat
+Template.messagestemp.messages=function(){
+	return Messages.find();
+}
 
 
 //Subscripcion a lista de usuarios
@@ -67,10 +74,7 @@ Meteor.subscribe("games");
 
 //Cambios reactivos de la interfaz
 Deps.autorun(function () {
-	//Carga mensajes del chat
-	Template.messagestemp.messages=function(){
-		return Messages.find();
-	}
+
 	//Cambio lo que se muestra en la interfaz en funcion de la sesion
 	if(Meteor.userId()){
 		$('#container').children().hide();
@@ -105,7 +109,16 @@ Template.input.events = {
 	}
 }
 
-
+// Mostramos partidas
+Template.gamestemp.events = {
+	
+	'click a.linkgame':function(event){
+		
+		console.log($(this));
+		console.log($(this)[0].name);
+		$('a.linkgame').hide();
+	}
+}
 
 //Configuracion cuentas
 Accounts.ui.config({
