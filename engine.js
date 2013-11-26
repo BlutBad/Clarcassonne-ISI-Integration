@@ -424,8 +424,9 @@ var Tablero = new function(){
             'Ciudadcurvder', 
             'Ciudadcurvizq', 
             'Ciudad1lcruce', 
-            'Ciudad1ll', // Aunque tenda dos lado con campo, son campos cerrados
-            'Ciudad1l', 
+            'Ciudad1ll', // Aunque tenga dos lados con tierra, son cierra campos los dos lados
+            'Ciudad1l',
+            'Ciudadext' // Aunque tenga dos lados con tierra, son cierra campos los dos lados
         ];
 
         var maslados = [
@@ -439,8 +440,7 @@ var Tablero = new function(){
             'Ciudad2l',
             'Ciudad2lE',
             'CiudadPuerta',
-            'CiudadPuertaE',
-            'Ciudadext', 
+            'CiudadPuertaE'
         ];
 
         // Funcion cuando es solo un lado
@@ -448,27 +448,27 @@ var Tablero = new function(){
             if (ficha.arriba == "Tierra" && prohibido != "arriba"){
 	            ficha2 = Tablero.buscarxcoor(ficha.x,ficha.y-1);
 		        if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){return true}
-                else if(ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){f_maslados(ficha2, 'abajo')}
+                else if(ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){return f_maslados(ficha2, 'abajo')}
                 else {return false}
 	        }
 	        else if (ficha.abajo == "Tierra" && prohibido != "abajo"){
 		        ficha2 = Tablero.buscarxcoor(ficha.x,ficha.y+1);
 		        if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){return true}
-                else if(ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){f_maslados(ficha2, 'arriba')}
+                else if(ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){return f_maslados(ficha2, 'abajo')}
                 else {return false}
 	        }
 	        else if (ficha.izda == "Tierra" && prohibido != "izquierda"){
                 
 		        ficha2 = Tablero.buscarxcoor(ficha.x-1,ficha.y);
 		        if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){return true}
-                else if(ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){f_maslados(ficha2, 'derecha')}
+                else if(ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){return f_maslados(ficha2, 'derecha')}
                 else {return false}
 
 	        }
 	        else if (ficha.derecha == "Tierra" && prohibido != "derecha"){
 		        ficha2 = Tablero.buscarxcoor(ficha.x+1,ficha.y);
 		        if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){return true}
-                else if(ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){f_maslados(ficha2, 'izquierda')}
+                else if(ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){return f_maslados(ficha2, 'izquierda')}
                 else {return false}
             }
         }
@@ -478,27 +478,25 @@ var Tablero = new function(){
             if (ficha.arriba == 'Tierra' && prohibido != 'arriba'){
                 ficha2 = Tablero.buscarxcoor(ficha.x, ficha.y-1);
                 if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){return true}
-                else if (ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){f_maslados(ficha2, 'abajo')}
+                else if (ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){return f_maslados(ficha2, 'abajo')}
                 else {return false}
             }
             if (ficha.abajo == 'Tierra' && prohibido != 'abajo'){
                 ficha2 = Tablero.buscarxcoor(ficha.x, ficha.y+1);
                 if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){return true}
-                else if (ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){f_maslados(ficha2, 'abajo')}
+                else if (ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){return f_maslados(ficha2, 'abajo')}
                 else {return false}
             }
             if (ficha.izda == 'Tierra' && prohibido != 'izquierda'){
                 ficha2 = Tablero.buscarxcoor(ficha.x-1, ficha.y);
                 if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){return true}
-                else if (ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){f_maslados(ficha2, 'derecha')}
+                else if (ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){return f_maslados(ficha2, 'derecha')}
                 else {return false}
             }
             if (ficha.derecha == 'Tierra' && prohibido != 'derecha'){
                 ficha2 = Tablero.buscarxcoor(ficha.x+1, ficha.y);
-                if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){
-                    alert("TRUE");
-                    return true}
-                else if (ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){f_maslados(ficha2, 'izquierda')}
+                if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){return true}
+                else if (ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){return f_maslados(ficha2, 'izquierda')}
                 else {return false}
             }
         }
@@ -506,7 +504,7 @@ var Tablero = new function(){
         if (unlado.indexOf(ficha.tipo) != -1)
             return f_unlado(ficha, 'nada');
         else if (maslados.indexOf(ficha.tipo) != -1)
-            return f_maslads(ficha, 'nada');                
+            return f_maslados(ficha, 'nada');                
         else {return false}
     }
 	
