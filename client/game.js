@@ -21,49 +21,47 @@ sprites = {
         Ciudadcurvizq: { sx: 500, sy: 200, w: 100, h: 100, frames: 1 },
         Ciudad1lcruze: { sx: 500, sy: 300, w: 100, h: 100, frames: 1 },
         
-        ficha_roja: { sx: 1052, sy: 0, w: 49, h: 48, frames: 1 },
-        cura_rojo: { sx: 1101, sy: 0, w: 48.7, h: 48, frames: 1 },
-        caballero_rojo: { sx: 1150, sy: 0, w: 48.5, h: 48, frames: 1 },
-        granjero_rojo: { sx: 1198.5, sy: 0, w: 48.5, h: 48, frames: 1 },
-        ladron_rojo: { sx: 1246.5, sy: 0, w: 48.5, h: 48, frames: 1 },
+        ficha_roja: { sx: 1152, sy: 0, w: 48, h: 48, frames: 1 },
+        cura_rojo: { sx: 1200, sy: 0, w: 48, h: 48, frames: 1 },
+        caballero_rojo: { sx: 1248, sy: 0, w: 48, h: 48, frames: 1 },
+        granjero_rojo: { sx: 1296, sy: 0, w: 48, h: 48, frames: 1 },
+        ladron_rojo: { sx: 1344, sy: 0, w: 48, h: 48, frames: 1 },
         
-        ficha_azul: { sx: 1052, sy: 48, w: 49, h: 48, frames: 1 },
-        cura_azul: { sx: 1101, sy: 48, w: 48.7, h: 48, frames: 1 },
-        caballero_azul: { sx: 1150, sy: 48, w: 48.5, h: 48, frames: 1 },
-        granjero_azul: { sx: 1198.5, sy: 48, w: 48.5, h: 48, frames: 1 },
-        ladron_azul: { sx: 1246.5, sy: 48, w: 48.5, h: 48, frames: 1 },
+        ficha_azul: { sx: 1152, sy: 48, w: 48, h: 48, frames: 1 },
+        cura_azul: { sx: 1200, sy: 48, w: 48, h: 48, frames: 1 },
+        caballero_azul: { sx: 1248, sy: 48, w: 48, h: 48, frames: 1 },
+        granjero_azul: { sx: 1296, sy: 48, w: 48, h: 48, frames: 1 },
+        ladron_azul: { sx: 1344, sy: 48, w: 48, h: 48, frames: 1 },
         
-        ficha_amarillo: { sx: 1052, sy: 96, w: 49, h: 48, frames: 1 },
-        cura_amarillo: { sx: 1101, sy: 96, w: 48.7, h: 48, frames: 1 },
-        caballero_amarillo: { sx: 1150, sy: 96, w: 48.5, h: 48, frames: 1 },
-        granjero_amarillo: { sx: 1198.5, sy: 96, w: 48.5, h: 48, frames: 1 },
-        ladron_amarillo: { sx: 1246.5, sy: 96, w: 48.5, h: 48, frames: 1 },
+        ficha_amarillo: { sx: 1152, sy: 96, w: 48, h: 48, frames: 1 },
+        cura_amarillo: { sx: 1200, sy: 96, w: 48, h: 48, frames: 1 },
+        caballero_amarillo: { sx: 1248, sy: 96, w: 48, h: 48, frames: 1 },
+        granjero_amarillo: { sx: 1296, sy: 96, w: 48, h: 48, frames: 1 },
+        ladron_amarillo: { sx: 1344, sy: 96, w: 48, h: 48, frames: 1 },
         
-        ficha_verde: { sx: 1052, sy: 144, w: 49, h: 48, frames: 1 },
-        cura_verde: { sx: 1101, sy: 144, w: 48.7, h: 48, frames: 1 },
-        caballero_verde: { sx: 1150, sy: 144, w: 48.5, h: 48, frames: 1 },
-        granjero_verde: { sx: 1198.5, sy: 144, w: 48.5, h: 48, frames: 1 },
-        ladron_verde: { sx: 1246.5, sy: 144, w: 48.5, h: 48, frames: 1 },
+        ficha_verde: { sx: 1152, sy: 144, w: 48, h: 48, frames: 1 },
+        cura_verde: { sx: 1200, sy: 144, w: 48, h: 48, frames: 1 },
+        caballero_verde: { sx: 1248, sy: 144, w: 48, h: 48, frames: 1 },
+        granjero_verde: { sx: 1296, sy: 144, w: 48, h: 48, frames: 1 },
+        ladron_verde: { sx: 1344, sy: 144, w: 48, h: 48, frames: 1 },
         
-        ficha_gris: { sx: 1052, sy: 192, w: 49, h: 48, frames: 1 },
-        cura_gris: { sx: 1101, sy: 192, w: 48.7, h: 48, frames: 1 },
-        caballero_gris: { sx: 1150, sy: 192, w: 48.5, h: 48, frames: 1 },
-        granjero_gris: { sx: 1198.5, sy: 192, w: 48.5, h: 48, frames: 1 },
-        ladron_gris: { sx: 1246.5, sy: 192, w: 48.5, h: 48, frames: 1 },
+        ficha_gris: { sx: 1152, sy: 192, w: 48, h: 48, frames: 1 },
+        cura_gris: { sx: 1200, sy: 192, w: 48, h: 48, frames: 1 },
+        caballero_gris: { sx: 1248, sy: 192, w: 48, h: 48, frames: 1 },
+        granjero_gris: { sx: 1296, sy: 192, w: 48, h: 48, frames: 1 },
+        ladron_gris: { sx: 1344, sy: 192, w: 48, h: 48, frames: 1 },
         
-        ficha_rosa: { sx: 1052, sy: 240, w: 49, h: 48, frames: 1 },
-        cura_rosa: { sx: 1101, sy: 240, w: 48.7, h: 48, frames: 1 },
-        caballero_rosa: { sx: 1150, sy: 240, w: 48.5, h: 48, frames: 1 },
-        granjero_rosa: { sx: 1198.5, sy: 240, w: 48.5, h: 48, frames: 1 },
-        ladron_rosa: { sx: 1246.5, sy: 240, w: 48.5, h: 48, frames: 1 },
-
-
+        ficha_rosa: { sx: 1152, sy: 240, w: 48, h: 48, frames: 1 },
+        cura_rosa: { sx: 1200, sy: 240, w: 48, h: 48, frames: 1 },
+        caballero_rosa: { sx: 1248, sy: 240, w: 48, h: 48, frames: 1 },
+        granjero_rosa: { sx: 1296, sy: 240, w: 48, h: 48, frames: 1 },
+        ladron_rosa: { sx: 1344, sy: 240, w: 48, h: 48, frames: 1 },
 }
 
 var img = new Image();
 img.src = 'images/background.png';
 
-Jugador1 = {nombre: "Juanjo" , color: "rojo", puntos:0};
+Jugador1 = {nombre: "Carlos" , color: "rojo", puntos:0};
 Jugador2 = {nombre: "Mario"  , color: "azul", puntos:10};
 Jugador3 = {nombre: "Maria"  , color: "amarillo", puntos:20};
 Jugador4 = {nombre: "Ana"    , color: "verde", puntos:30};
@@ -82,24 +80,19 @@ startGame = function() {
 	
 	board.add(new PiezaMapa(2,2,'Rrecta',90));
 	
-	
+
 };
 
 
 // Se encarga de pintar el fondo del juego
 Background = function() {
-
     this.draw = function(ctx) {
-
-			ctx.drawImage(img, 0, 0);
-   		
+		ctx.drawImage(img, 0, 0);   		
     }
-
     this.step = function(dt) { }
 };
 
-Jugadores = function() {
-   
+Jugadores = function() {  
    this.draw = function(ctx){
      // ctx.beginPath();
       ctx.save();
@@ -126,8 +119,7 @@ Jugadores = function() {
       ctx.restore();
    
    }
-   
-   
+      
   this.step = function(dt) { }
    
      
@@ -135,9 +127,8 @@ Jugadores = function() {
 
 };
 
-Rejilla =  function(){
-	
-	this.draw =function(ctx){
+Rejilla =  function(){	
+	this.draw = function(ctx){
 	ctx.save();
 	for(var x=0; x<=800; x=x+100){
 		ctx.moveTo(x,0);
@@ -155,7 +146,6 @@ Rejilla =  function(){
 	
 	}
 	this.step= function(dt){};
-
 }; 
 
 PiezaMapa = function (cx,cy, sprite,rotate) {
@@ -172,9 +162,20 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 	}
 	
 	this.step = function () { }
+
+}
+
+
+seguidor = function (cx,cy, sprite,rotate) {
+	this.x = 100*cx;
+	this.y = 100*cy;
 	
-
-
+	this.draw = function (ctx) {
+		ctx.rotate(rotate*Math.PI/180);
+		SpriteSheet.draw(ctx,sprite,this.x,this.y,1);
+	}
+	
+	this.step = function () { }
 }
 
 
