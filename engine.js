@@ -216,7 +216,7 @@ var Tablero = new function(){
 			if (i==0){
 				if(ficha.arriba == "Rue"){
 					seguidor.push("Ladron");					
-				}else if(ficha.arriba == "Ciudad"){
+				}else if(ficha.arriba == "Tierra"){
 					seguidor.push("Caballero");			
 				}else if(ficha.arriba == "Campo"){
 					seguidor.push("Granjero");
@@ -227,9 +227,9 @@ var Tablero = new function(){
 			if (i==1){
 				if(ficha.arriba == "Rue" && ficha.derecha == "Rue"){
 					seguidor.push("Granjero");					
-				}else if(ficha.arriba == "Ciudad" && ficha.derecha == "Rue"){
+				}else if(ficha.arriba == "Tierra" && ficha.derecha == "Rue"){
 					seguidor.push("Granjero");			
-				}else if(ficha.arriba == "Ciudad" && ficha.derecha == "Campo"){
+				}else if(ficha.arriba == "Tierra" && ficha.derecha == "Campo"){
 					seguidor.push("Granjero");	
 				}else{
 					seguidor.push("");
@@ -238,7 +238,7 @@ var Tablero = new function(){
 			if (i==2){
 				if(ficha.derecha == "Rue"){
 					seguidor.push("Ladron");					
-				}else if(ficha.derecha == "Ciudad"){
+				}else if(ficha.derecha == "Tierra"){
 					seguidor.push("Caballero");			
 				}else if(ficha.derecha == "Campo"){
 					seguidor.push("Granjero");
@@ -249,7 +249,7 @@ var Tablero = new function(){
 			if (i==3){
 				if(ficha.derecha == "Rue"){
 					seguidor.push("Granjero");					
-				}else if(ficha.derecha == "Ciudad" && ficha.abajo == "Rue"){
+				}else if(ficha.derecha == "Tierra" && ficha.abajo == "Rue"){
 					seguidor.push("Granjero");			
 				}else{
 					seguidor.push("");
@@ -258,7 +258,7 @@ var Tablero = new function(){
 			if (i==4){
 				if(ficha.abajo == "Rue"){
 					seguidor.push("Ladron");					
-				}else if(ficha.abajo == "Ciudad"){
+				}else if(ficha.abajo == "Tierra"){
 					seguidor.push("Caballero");			
 				}else if(ficha.abajo == "Campo"){
 					seguidor.push("Granjero");
@@ -276,7 +276,7 @@ var Tablero = new function(){
 			if (i==6){
 				if(ficha.izda == "Rue"){
 					seguidor.push("Ladron");					
-				}else if(ficha.izda == "Ciudad"){
+				}else if(ficha.izda == "Tierra"){
 					seguidor.push("Caballero");			
 				}else if(ficha.izda == "Campo"){
 					seguidor.push("Granjero");

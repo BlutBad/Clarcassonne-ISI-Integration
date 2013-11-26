@@ -139,6 +139,7 @@ $(function() {
     console.log("cierra castillo1: ",Tablero.cierraCastillo(nuevaficha));
 
     //Prueba de cierra Castillo 2
+<<<<<<< HEAD
     Tablero.iniciar();                                                      //      2       1
     var nuevaficha = new ObjetoFicha(0,0,0,'Ciudad1l');                     // --------------------
     nuevaficha.girar();                                                     // -       *-*        -
@@ -150,6 +151,19 @@ $(function() {
     var nuevaficha = new ObjetoFicha(0,0,0,'Ciudad1l');                     // -        -   
     Tablero.colocarficha(nuevaficha,1,2);                                   // ----------
     console.log("cierra castillo2: ",Tablero.cierraCastillo(nuevaficha));   //      3  
+=======
+    Tablero.iniciar();
+    var nuevaficha = new ObjetoFicha(0,0,0,'Ciudad1l');
+    nuevaficha.girar();
+    Tablero.colocarficha(nuevaficha,2,1);
+    var nuevaficha = new ObjetoFicha(0,0,0,'Ciudad2l');
+    nuevaficha.girar();
+    nuevaficha.girar();
+    Tablero.colocarficha(nuevaficha,1,1);
+    var nuevaficha = new ObjetoFicha(0,0,0,'Ciudad1l');
+    Tablero.colocarficha(nuevaficha,1,2);
+    console.log("cierra castillo2: ",Tablero.cierraCastillo(nuevaficha));
+>>>>>>> 99bbfea5dea778dd59f640e2d5dc87950f233c96
 
 // Prueba la lista de seguidores.
 	Tablero.iniciar();
@@ -157,7 +171,7 @@ $(function() {
 	console.log("lista: ", Tablero.colocarseguidor(nuevaficha));
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rcurva");
 	console.log("lista: ", Tablero.colocarseguidor(nuevaficha));
-	var nuevaficha = new ObjetoFicha(0,0,0,"Ccruce");
+	var nuevaficha = new ObjetoFicha(0,0,0,"Ciudad1l2crect");
 	console.log("lista: ", Tablero.colocarseguidor(nuevaficha));
 
 });
