@@ -48,6 +48,7 @@ html{
 	text-align: center;
 	line-height: 50px;
 	border-radius:7px;
+	
 	background-color: #2E9AFE;
 	border: 4px solid #2E9AFE;
 	position: absolute;

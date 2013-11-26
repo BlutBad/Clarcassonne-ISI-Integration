@@ -6,7 +6,7 @@ html{
 }
 
 #titulo{
-	text-shadow:2px 2px #2E9AFE;
+	text-shadow: 0.1em 0.1em 0.1em #2E9AFE, 0.3em 0.2em 0.5em black;
 }
 
 
