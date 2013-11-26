@@ -164,7 +164,8 @@
     //  en this.map, x e y en las que dibujarlo, y opcionalmente,
     //  frame para seleccionar el frame de un sprite que tenga varios
     //  como la explosion
-    this.draw = function(ctx,sprite,x,y,frame) {
+    this.draw = function(ctx,sprite,x,y,frame,z) {
+    if(!z) z=1;
 	var s = this.map[sprite];
 	if(!frame) frame = 0;
 	ctx.drawImage(this.image,
@@ -172,7 +173,7 @@
                       s.sy, 
                       s.w, s.h, 
                       Math.floor(x), Math.floor(y),
-                      s.w, s.h);
+                      s.w*z, s.h*z);
     };
 }
 
