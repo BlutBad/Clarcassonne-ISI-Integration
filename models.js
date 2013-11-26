@@ -27,3 +27,12 @@ Torneos= new Meteor.Collection("torneos");
 
 
 Ranking = new Meteor.Collection("ranking");
+
+/*
+Ranking.insert({
+gameId : gameId,
+userId : this.userId,
+score : score
+});
+
+*/

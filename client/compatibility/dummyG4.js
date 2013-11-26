@@ -1,5 +1,6 @@
-dummyG4 = function(canvasElementId, sprite_data, callback) {
-	Game.initialize(canvasElementId, sprite_data, callback);
+dummyG4 = function(canvasElementId, sprite_data, callback, gameId) {
+
+	Game.initialize(canvasElementId, sprite_data, callback, gameId);
 	// Convenio de la plataforma
 
 	// id donde va estarcanvas
@@ -30,8 +31,11 @@ dummyG4 = function(canvasElementId, sprite_data, callback) {
 			// callback()
 
 		};
-		
+
 		startGame(this.ctx)
+
+		var result = Meteor.call('newScore', gameId, Math.floor(Random
+				.fraction() * 10) * 5);
 
 		function startGame(ctx) {
 			var canvas = document.getElementById('dummydiv');
@@ -57,7 +61,7 @@ dummyG4 = function(canvasElementId, sprite_data, callback) {
 				ctx.lineTo(45, 125);
 				ctx.lineWidth = 10;
 				ctx.closePath();
-			    ctx.strokeStyle = '#f0f0f0';
+				ctx.strokeStyle = '#f0f0f0';
 				ctx.stroke();
 			}
 		}

@@ -1,5 +1,6 @@
-dummyG2 = function(canvasElementId, sprite_data, callback) {
-	Game.initialize(canvasElementId, sprite_data, callback);
+dummyG2 = function(canvasElementId, sprite_data, callback, gameId) {
+
+	Game.initialize(canvasElementId, sprite_data, callback, gameId);
 	// Convenio de la plataforma
 
 	// id donde va estarcanvas
@@ -32,7 +33,12 @@ dummyG2 = function(canvasElementId, sprite_data, callback) {
 		};
 		
 		startGame(this.ctx)
-
+		
+		
+		var result = Meteor.call('newScore', gameId, Math.floor(Random
+				.fraction() * 10) * 5);
+		
+		
 		function startGame(ctx) {
 			var canvas = document.getElementById('dummydiv');
 

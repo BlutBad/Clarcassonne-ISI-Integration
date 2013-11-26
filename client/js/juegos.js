@@ -13,7 +13,7 @@ Template.juegos.events({
 		if (Session.equals('current_stage', this.name)) {
 			// Poner lo a null, es decir celeccionar por defecto
 			Session.set('current_stage', 'Juegos');
-			Session.set('load_game', null);
+			//Session.set('load_game', null);
 		} else {
 			// De otra manera apuntar nuevo id del tag seleccionado
 			Session.set('current_stage', this.name);
@@ -25,16 +25,22 @@ Template.juegos.events({
 
 var canvas;
 
+//la parte de cll parece un infierno, pero en el server no se conoce Session.
 Deps.autorun(function(c) {
 	//console.log(Session.get('load_game') + '("dummydiv", null, null)');
 	if (Session.get('load_game')) {
 		console.log(Session.get('load_game'));
+		
 		x = Session.get('load_game');
 		b = Juegos.findOne({wrapf:x});
-		$('#gamecontainer').show();
+		if (b._id == null){
+			console.log('Es null')
+		}
 		cll = Session.get('load_game') + '("dummydiv", null, null, "' +b._id+'")';
 		console.log(cll)
 		canvas = eval(cll);
+		
+		$('#gamecontainer').show();
 	} else {
 		canvas = null;
 		$('#gamecontainer').hide();
