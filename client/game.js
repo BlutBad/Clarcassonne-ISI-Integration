@@ -60,6 +60,9 @@ sprites = {
 
 }
 
+var img = new Image();
+img.src = 'images/background.png';
+
 Jugador1 = {nombre: "Juanjo" , color: "rojo", puntos:0};
 Jugador2 = {nombre: "Mario"  , color: "azul", puntos:10};
 Jugador3 = {nombre: "Maria"  , color: "amarillo", puntos:20};
@@ -71,6 +74,7 @@ startGame = function() {
 	Game.setBoard(0,new Background());
 	Game.setBoard(1,new Jugadores());
 	Game.setBoard(2,new Rejilla());   
+	Game.setBoard(3,new PiezaMapa(2,2,'Rrecta'));
 };
 
 
@@ -78,28 +82,8 @@ startGame = function() {
 Background = function() {
 
     this.draw = function(ctx) {
-			var img = new Image();
-			img.src = 'images/background.png';
-			img.onload = function(){
-				ctx.drawImage(img, 0, 0);
-			} 
-			
-			// prueba de pintar sprites (ELIMINAR EN SEGUNDA VERSION)
-			/*var img2 = new Image();
-				img2.src = 'images/sprites.png';
-				img2.onload = function() {
-				ctx.drawImage(img2,    40, 40, 720,   420);		    
-   		    }*/
-   		    var img3 = new Image();
-				img3.src = 'images/sprites.png';
-				img3.onload = function() {
-				SpriteSheet.draw(ctx, "Ciudad1lcruze", 0, 0, 3);
-   				}
-   		    var img4 = new Image();
-				img4.src = 'images/sprites.png';
-				img4.onload = function() {
-				SpriteSheet.draw(ctx, "ladron_rosa", 0, 0, 3);
-   				}
+
+			ctx.drawImage(img, 0, 0);
    		
     }
 
@@ -165,6 +149,54 @@ Rejilla =  function(){
 	this.step= function(dt){};
 
 }; 
+
+PiezaMapa = function (cx,cy, sprite,rotate) {
+	this.x = 100*cx;
+	this.y = 100*cy;
+	
+	this.draw = function (ctx) {
+		ctx.rotate(rotate*Math.PI/180);
+		SpriteSheet.draw(ctx,sprite,this.x,this.y,1);
+	}
+	
+	this.step = function () { }
+
+
+}
+
+/*Tablero = function() {
+	this.width = 140;
+	this.height = 140;
+	this.scrollx = 70;
+	this.scrolly = 70;
+	
+	this.objects = [];
+	
+	
+	var up = false;
+	
+	this.draw = function (ctx) { }
+	
+	this.step = function () {
+		if(!Game.keys['left']) up = true;
+		if(up && Game.keys['fire'] && this.reload < 0) {
+		 up = false;
+		 
+		 this.board
+	    // Esta pulsada la tecla de disparo y ya ha pasado el tiempo reload
+	    //Game.keys['fire'] = false;
+	    
+	    this.reload = this.reloadTime;
+
+	    // Se añaden al gameboard 2 misiles 
+	    this.board.add(new PlayerMissile(this.x,this.y+this.h/2));
+	    this.board.add(new PlayerMissile(this.x+this.w,this.y+this.h/2));
+		}
+		
+	
+	}
+	
+}*/
 
 $(function() {
     Game.initialize("game",sprites,startGame);
