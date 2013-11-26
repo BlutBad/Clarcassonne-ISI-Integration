@@ -11,23 +11,19 @@
 // Objeto singleton Game: se guarda una unica instancia del
 // constructor an�nimo en el objeto Game
 
-
-
 Game = new function() {
-  
-
-
-
 
 	// Inicializa el juego
 	this.initialize = function(canvasElementId, sprite_data, callback) {
 		this.canvas = document.getElementById(canvasElementId)
-		
-		
 
-          this.canvas.onselectstart = function () { return false; } // ie
-		this.canvas.onmousedown = function () { return false; } // mozilla
-		
+		this.canvas.onselectstart = function() {
+			return false;
+		} // ie
+		this.canvas.onmousedown = function() {
+			return false;
+		} // mozilla
+
 		this.width = this.canvas.width;
 		this.height = this.canvas.height;
 
@@ -69,9 +65,7 @@ Game = new function() {
 				return false;
 			}
 		});
-		
 
-		
 	}
 
 	// Bucle del juego

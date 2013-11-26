@@ -26,9 +26,11 @@ Template.main_menu.events({
     if (Session.equals('current_stage', this.name)){
     // Poner lo a null, es decir celeccionar por defecto
       Session.set('current_stage', 'Dashboard');
+      Session.set('load_game', null);
     }else{
     // De otra manera apuntar nuevo id del tag seleccionado
       Session.set('current_stage', this.name);}
+    	Session.set('load_game', null);
     }
 
 });
