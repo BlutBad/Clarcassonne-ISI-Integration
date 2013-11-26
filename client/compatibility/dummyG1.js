@@ -1,5 +1,6 @@
-dummyG1 = function(canvasElementId, sprite_data, callback) {
-	Game.initialize(canvasElementId, sprite_data, callback);
+dummyG1 = function(canvasElementId, sprite_data, callback,gameId) {
+
+	Game.initialize(canvasElementId, sprite_data, callback,gameId);
 	// Convenio de la plataforma
 
 	// id donde va estarcanvas
@@ -9,7 +10,7 @@ dummyG1 = function(canvasElementId, sprite_data, callback) {
 
 	Game = new function() {
 		// Inicializa el juego
-		this.initialize = function(canvasElementId, sprite_data, callback) {
+			this.initialize = function(canvasElementId, sprite_data, callback, gameId) {
 			this.canvas = document.getElementById(canvasElementId)
 
 			this.canvas.onselectstart = function() {
@@ -28,11 +29,17 @@ dummyG1 = function(canvasElementId, sprite_data, callback) {
 			}
 			//
 			// callback()
-
+			//this.newScore = newScore;
+			this.gameId = gameId;
+			
 		};
 		
 		startGame(this.ctx)
-
+		
+		var result = Meteor.call('newScore', gameId,Math.floor(Random.fraction() * 10) * 5);
+		
+		
+		
 		function startGame(ctx) {
 			var canvas = document.getElementById('dummydiv');
 
@@ -59,9 +66,13 @@ dummyG1 = function(canvasElementId, sprite_data, callback) {
 			    ctx.strokeStyle = '#ff00ff';
 				ctx.stroke();
 				
+				
 			
 			}
 		}
 	};
-
+	
+	
+	
+	
 };
