@@ -1,14 +1,17 @@
 
 <template name="torneos">
 	{{#if show}}
-		<h3 class="post-title">Creación de torneos</h3> 
-		<input type="button" id="crear_torneo" value="Crear Torneos"> 
+		{{#if currentUser}}
+			<h3 class="post-title">Creación de torneos</h3> 
+			<input type="button" id="crear_torneo" value="Crear Torneos"> 
+		{{else}}
+			<i>Sign in for create new championship.</i>
+		{{/if}}
 		{{#if showCreateDialog}}
 			{{> createDialog}}
 		{{else}} <!--para que salga debajo sino sale a un lado el boton crear_torneo-->
 			<p></p>
 		{{/if}}
-
 		<div class="two-thirds">
 			<div class="blog">
 		{{#each torneo}}
@@ -24,7 +27,13 @@
 					<img src="/images/content/demo-only/logo-browsers.jpg" {{banner}} class="post-image" alt="sample image" width="606" height="115" />
 					<div class="post-description">
 						<p>{{description}}</p>
-						<a href="#">Read More...</a>
+						<a href="#">Participantes</a>
+						{{#if currentUser}}
+							<input type="button" value="I'm going!"
+							class="btn btn-small rsvp_yes {{maybeChosen "yes"}}">
+						{{else}}
+							<i>Sign for add to this championship.</i>
+						{{/if}}				
 					</div>
 				</div>
 			{{/each}}
