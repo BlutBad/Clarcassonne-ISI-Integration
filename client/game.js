@@ -1,4 +1,64 @@
-sprites = {}
+sprites = {
+        Rrecta: { sx: 0, sy: 0, w:100, h: 100, frames: 1 },
+        Rcurva: { sx: -200, sy: 400, w: 100, h: 100, frames: 1 },
+        Catedral: { sx: -200, sy: 500, w: 100, h: 100, frames: 1 },
+        Posada: { sx: 0, sy: 400, w: 100, h: 100, frames: 1 },
+        Ccruze: { sx: 0, sy: 200, w: 100, h: 100, frames: 1 },
+        CiudadE: { sx: 100, sy: 0, w: 100, h: 100, frames: 1 },
+        Ciudad3lc: { sx: 400, sy: 0, w: 100, h: 100, frames: 1 },
+        Ciudad3lcE: { sx: 300, sy: 0, w: 100, h: 100, frames: 1 },
+        Ciudad3l: { sx: 300, sy: 100, w: 100, h: 100, frames: 1 },
+        Ciudad3lE: { sx: 100, sy: 100, w: 100, h: 100, frames: 1 },
+        Ciudad2lc: { sx: 200, sy: 200, w: 100, h: 100, frames: 1 },
+        Ciudad2lcE: { sx: 100, sy: 200, w: 100, h: 100, frames: 1 },
+        Ciudad2l: { sx: 300, sy: 300, w: 100, h: 100, frames: 1 },
+        Ciudad2lE: { sx: 100, sy: 400, w: 100, h: 100, frames: 1 },
+        CiudadPuerta: { sx: 400, sy: 400, w: 100, h: 100, frames: 1 },
+        CiudadPuertaE: { sx: 300, sy: 400, w: 100, h: 100, frames: 1 },
+        Ciudadext: { sx: 300, sy: 500, w: 100, h: 100, frames: 1 },
+        Ciudad1l2crect: { sx: 500, sy: 0, w: 100, h: 100, frames: 1 },
+        Ciudadcurvder: { sx: 500, sy: 100, w: 100, h: 100, frames: 1 },
+        Ciudadcurvizq: { sx: 500, sy: 200, w: 100, h: 100, frames: 1 },
+        Ciudad1lcruze: { sx: 500, sy: 300, w: 100, h: 100, frames: 1 },
+        
+        ficha_roja: { sx: 1052, sy: 0, w: 49, h: 48, frames: 1 },
+        cura_rojo: { sx: 1101, sy: 0, w: 48.7, h: 48, frames: 1 },
+        caballero_rojo: { sx: 1150, sy: 0, w: 48.5, h: 48, frames: 1 },
+        granjero_rojo: { sx: 1198.5, sy: 0, w: 48.5, h: 48, frames: 1 },
+        ladron_rojo: { sx: 1246.5, sy: 0, w: 48.5, h: 48, frames: 1 },
+        
+        ficha_azul: { sx: 1052, sy: 48, w: 49, h: 48, frames: 1 },
+        cura_azul: { sx: 1101, sy: 48, w: 48.7, h: 48, frames: 1 },
+        caballero_azul: { sx: 1150, sy: 48, w: 48.5, h: 48, frames: 1 },
+        granjero_azul: { sx: 1198.5, sy: 48, w: 48.5, h: 48, frames: 1 },
+        ladron_azul: { sx: 1246.5, sy: 48, w: 48.5, h: 48, frames: 1 },
+        
+        ficha_amarillo: { sx: 1052, sy: 96, w: 49, h: 48, frames: 1 },
+        cura_amarillo: { sx: 1101, sy: 96, w: 48.7, h: 48, frames: 1 },
+        caballero_amarillo: { sx: 1150, sy: 96, w: 48.5, h: 48, frames: 1 },
+        granjero_amarillo: { sx: 1198.5, sy: 96, w: 48.5, h: 48, frames: 1 },
+        ladron_amarillo: { sx: 1246.5, sy: 96, w: 48.5, h: 48, frames: 1 },
+        
+        ficha_verde: { sx: 1052, sy: 144, w: 49, h: 48, frames: 1 },
+        cura_verde: { sx: 1101, sy: 144, w: 48.7, h: 48, frames: 1 },
+        caballero_verde: { sx: 1150, sy: 144, w: 48.5, h: 48, frames: 1 },
+        granjero_verde: { sx: 1198.5, sy: 144, w: 48.5, h: 48, frames: 1 },
+        ladron_verde: { sx: 1246.5, sy: 144, w: 48.5, h: 48, frames: 1 },
+        
+        ficha_gris: { sx: 1052, sy: 192, w: 49, h: 48, frames: 1 },
+        cura_gris: { sx: 1101, sy: 192, w: 48.7, h: 48, frames: 1 },
+        caballero_gris: { sx: 1150, sy: 192, w: 48.5, h: 48, frames: 1 },
+        granjero_gris: { sx: 1198.5, sy: 192, w: 48.5, h: 48, frames: 1 },
+        ladron_gris: { sx: 1246.5, sy: 192, w: 48.5, h: 48, frames: 1 },
+        
+        ficha_rosa: { sx: 1052, sy: 240, w: 49, h: 48, frames: 1 },
+        cura_rosa: { sx: 1101, sy: 240, w: 48.7, h: 48, frames: 1 },
+        caballero_rosa: { sx: 1150, sy: 240, w: 48.5, h: 48, frames: 1 },
+        granjero_rosa: { sx: 1198.5, sy: 240, w: 48.5, h: 48, frames: 1 },
+        ladron_rosa: { sx: 1246.5, sy: 240, w: 48.5, h: 48, frames: 1 },
+
+
+}
 
 Jugador1 = {nombre: "Juanjo" , color: "rojo", puntos:0};
 Jugador2 = {nombre: "Mario"  , color: "azul", puntos:10};
@@ -7,38 +67,10 @@ Jugador4 = {nombre: "Ana"    , color: "verde", puntos:30};
 Jugador5 = {nombre: "Lucia"  , color: "gris", puntos:40};
 Jugador6 = {nombre: "Marcos" , color: "morado", puntos:50};
 
-startGame = function() {
-	SpriteSheet.load({
-	    	Rrecta: { sx: 0, sy: 0, w:100, h: 100, frames: 1 },
-        	Rcurva: { sx: -100, sy: 400, w: 100, h: 100, frames: 1 },
-       		Catedral: { sx: 0, sy: 500, w: 100, h: 100, frames: 1 },
-        	Posada: { sx: 0, sy: 400, w: 100, h: 100, frames: 1 },
-        	Ccruze: { sx: 0, sy: 200, w: 100, h: 100, frames: 1 },
-        	CiudadE: { sx: 100, sy: 0, w: 100, h: 100, frames: 1 },
-        	Ciudad3lc: { sx: 400, sy: 0, w: 100, h: 100, frames: 1 },
-        	Ciudad3lcE: { sx: 300, sy: 0, w: 100, h: 100, frames: 1 },
-        	Ciudad3l: { sx: 300, sy: 100, w: 100, h: 100, frames: 1 },
-        	Ciudad3lE: { sx: 100, sy: 100, w: 100, h: 100, frames: 1 },
-        	Ciudad2lc: { sx: 200, sy: 200, w: 100, h: 100, frames: 1 },
-        	Ciudad2lcE: { sx: 100, sy: 200, w: 100, h: 100, frames: 1 },
-        	Ciudad2l: { sx: 300, sy: 300, w: 100, h: 100, frames: 1 },
-        	Ciudad2lE: { sx: 100, sy: 400, w: 100, h: 100, frames: 1 },
-        	CiudadPuerta: { sx: 400, sy: 400, w: 100, h: 100, frames: 1 },
-        	CiudadPuertaE: { sx: 300, sy: 400, w: 100, h: 100, frames: 1 },
-        	Ciudadext: { sx: 300, sy: 500, w: 100, h: 100, frames: 1 },
-        	Ciudad1l2crect: { sx: 500, sy: 0, w: 100, h: 100, frames: 1 },
-        	Ciudadcurvder: { sx: 500, sy: 100, w: 100, h: 100, frames: 1 },
-        	Ciudadcurvizq: { sx: 500, sy: 200, w: 100, h: 100, frames: 1 },
-        	Ciudad1lcruze: { sx: 500, sy: 300, w: 100, h: 100, frames: 1 },
-        	Ciudad1ll: { sx: 800, sy: 200, w: 100, h: 100, frames: 1 },
-        	Ciudad1l: { sx: 800, sy: 300, w: 100, h: 100, frames: 1 },
-        	Tcruze: { sx: 800, sy: 500, w: 100, h: 100, frames: 1 },
-    	});
-    	
+startGame = function() {    
 	Game.setBoard(0,new Background());
 	Game.setBoard(1,new Jugadores());
-	Game.setBoard(2,new Rejilla());
-    
+	Game.setBoard(2,new Rejilla());   
 };
 
 
@@ -56,13 +88,17 @@ Background = function() {
 			/*var img2 = new Image();
 				img2.src = 'images/sprites.png';
 				img2.onload = function() {
-				ctx.drawImage(img2,    40, 40, 720,   420);
-   				}*/
-   				
-   			var img3 = new Image();
+				ctx.drawImage(img2,    40, 40, 720,   420);		    
+   		    }*/
+   		    var img3 = new Image();
 				img3.src = 'images/sprites.png';
 				img3.onload = function() {
-				SpriteSheet.draw(ctx, "Ciudad3lE", 0, 0, 3);
+				SpriteSheet.draw(ctx, "Ciudad1lcruze", 0, 0, 3);
+   				}
+   		    var img4 = new Image();
+				img4.src = 'images/sprites.png';
+				img4.onload = function() {
+				SpriteSheet.draw(ctx, "ladron_rosa", 0, 0, 3);
    				}
    		
     }
