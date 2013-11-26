@@ -8,7 +8,9 @@ Meteor.startup(function () {
 			$('#container').children().hide();
 			$('#slider').fadeIn();
 	}
+	$('#matches').hide();
 });
+
 //Cargo el efecto slider y pestañas
 $(document).ready(function() {
 		$('#coin-slider').coinslider({ width: 800, height:400 });
@@ -59,7 +61,6 @@ Template.messagestemp.messages=function(){
 	return Messages.find();
 }
 
-
 //Subscripcion a lista de usuarios
 var usersLoaded = false;
 Meteor.subscribe("users", function () {
@@ -69,8 +70,12 @@ Meteor.subscribe("users", function () {
 Meteor.subscribe("messages");
 //Subscripcion a lista de juegos
 Meteor.subscribe("games");
-//Subscripcion a lista de partidas
-Meteor.subscribe("matches");
+
+//Subscripción selectiva a la lista de partidas
+Deps.autorun(function () {
+	var current_game_id = Session.get("game_id")
+	Meteor.subscribe("matches", current_game_id);
+});
 
 
 //Cambios reactivos de la interfaz
@@ -110,14 +115,35 @@ Template.input.events = {
 	}
 }
 
-// Mostramos partidas
+// Abrimos sesión en uno de los juegos
 Template.gamestemp.events = {
-	
 	'click a.linkgame':function(event){
-		
-		console.log($(this));
-		console.log($(this)[0].name);
-		$('a.linkgame').hide();
+		Session.set('game_id', $(this)[0]._id);
+		$('#games').hide();
+		$('#matches').fadeIn();
+	}
+}
+
+
+Template.matchestemp.events = {
+	// Creamos una partida nueva en la base de datos
+	'keydown input#match_creator':function(event){
+		if(event.which==13){
+			if ($("#match_creator").val()!=''){
+				Matches.insert({
+					name: $("#match_creator").val(),
+					game_id: Session.get("game_id"),
+					created: new Date()
+				});
+				$("#match_creator").val('');
+			}
+		}
+	},
+	// Volvemos atrás para elegir otro juego
+	'click a#match_back':function(event){
+		Session.set('game_id', undefined);
+		$('#games').fadeIn();
+		$('#matches').hide();
 	}
 }
 

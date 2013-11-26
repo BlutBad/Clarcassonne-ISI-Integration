@@ -91,12 +91,19 @@
 			<a href="#" class="linkgame">{{name}}</a>
 		{{/ each}}
 	</div>
+
 </template>
 
 <template name="matchestemp">
 	<div id="matches">
-		{{# each matches}}
-			<p>{{name}}</p>
-		{{/ each}}
+		<table>
+			{{# each matches}}
+				<tr>
+					<td><a href="#">{{name}}</a></td><td> - {{created}}</td>
+				</tr>
+			{{/ each}}
+		</table>
+		<p> Nueva partida: <input type="text" id="match_creator"></p>
+		<p><a href="#" id="match_back">Atrás</a></p>
 	</div>
 </template>
