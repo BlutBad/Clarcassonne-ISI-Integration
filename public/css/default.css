@@ -8,8 +8,18 @@ body {
 }
 
 .user-menu-current{
-	color:green;
+    background-color: rgba(0,0,199,0.3); /* Color de fondo sobre el boton */
 }
+
+#top-content ul li {  
+    display: inline;
+    padding: 2% 2%; /*Separar el texto*/ 
+}  
+
+#top-content ul li:hover { 
+    background-color: rgba(0,0,0,0.2); /* Color de fondo sobre el boton */
+    cursor: pointer; /* cambiar el aspecto del puntero */
+} 
 
 .game{
 	width: 70%;
