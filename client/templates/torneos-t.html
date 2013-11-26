@@ -57,24 +57,20 @@
 				{{#if error}}
 					<div class="alert alert-error">{{error}}</div>
 				{{/if}}
-				<label>Title</label>
-				<input type="text" id="title" class="title span5">
-				<label>Juego</label>
-				<select id="game" name="Juego">
-					<option selected value="0"> Elige una opción</option>
-					<option value="1">AlienInvasion</option> 
-					<option value="2">Clarcassone</option> 
-					<option value="3">Froot War</option>
-				 </select>
-				<label>Date Start</label>
-				<input type="text" id="date_start" class="date_start span5">
-				<label>Date Finish</label>
-				<input type="text" id="date_finish" class="date_finish span5">
+				<p>Title <input type="text" id="title" class="title span5"></p>
+				<p>Juego: 
+					<select id="game" name="Juego">
+						<option selected value="0"> Elige una opción</option>
+						<option value="1">AlienInvasion</option> 
+						<option value="2">Clarcassone</option> 
+						<option value="3">Froot War</option>
+					 </select>
+				</p>
+				<p>Date Start: <input type="text" id="date_start"></p>
+				<p>Date Finish: <input type="text" id="date_finish"></p>
 
-				<label>Description</label>
-				<textarea id="description" class="description span5"></textarea> 
-				<label>Imagen</label>
-				<input type="file" id="pic" class="pic span5"><br>   
+				<p>Description: <textarea id="description" class="description span5"></textarea> </p>
+				<p>Imagen: <input type="file" id="pic" class="pic span5"><br></p>
 			</div>
 			<div class="modal-footer">
 				<a href="#" class="btn cancel">Cancel</a>
