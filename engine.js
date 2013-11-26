@@ -515,17 +515,32 @@ var Tablero = new function(){
     }
 
     this.cierraClaustro = function(ficha){
-	var cierraclaustro = [
-		'Ccruce',
-		'Posada',
-		'Ciudad3lc',
-		'Ciudad3lcE',
-		'Ciudad1lcruce',
-		'Tcruce',
-		'Catedral',
-	];
+	if((ficha.tipo == "Catedral") || (ficha.tipo == "Posada") ){
+		var rodeado=0;
+		ficha2 = Tablero.buscarxcoor(ficha.x+1, ficha.y);
+		if (ficha2.lleno){rodeado++}
+		ficha2 = Tablero.buscarxcoor(ficha.x-1, ficha.y);
+		if (ficha2.lleno){rodeado++}
+		ficha2 = Tablero.buscarxcoor(ficha.x, ficha.y+1);
+		if (ficha2.lleno){rodeado++}
+		ficha2 = Tablero.buscarxcoor(ficha.x, ficha.y-1);
+		if (ficha2.lleno){rodeado++}
+		ficha2 = Tablero.buscarxcoor(ficha.x+1, ficha.y+1);
+		if (ficha2.lleno){rodeado++}
+		ficha2 = Tablero.buscarxcoor(ficha.x+1, ficha.y-1);
+		if (ficha2.lleno){rodeado++}
+		ficha2 = Tablero.buscarxcoor(ficha.x-1, ficha.y+1);
+		if (ficha2.lleno){rodeado++}
+		ficha2 = Tablero.buscarxcoor(ficha.x-1, ficha.y-1);
+		if (ficha2.lleno){rodeado++}
 
-	if(ficha.tipo == "Catedral"){ return true }
+		if(rodeado==8){return true}
+		else{return false}
+
+	}else{
+	    return false
+	}
+    }
 	
 };
 
