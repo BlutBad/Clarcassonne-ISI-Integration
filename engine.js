@@ -515,7 +515,7 @@ var Tablero = new function(){
     }
 
     this.cierraClaustro = function(ficha){
-	if((ficha.tipo == "Catedral") || (ficha.tipo == "Posada") ){
+	var closeClaustro = function(ficha){
 		var rodeado=0;
 		ficha2 = Tablero.buscarxcoor(ficha.x+1, ficha.y);
 		if (ficha2.lleno){rodeado++}
@@ -536,10 +536,26 @@ var Tablero = new function(){
 
 		if(rodeado==8){return true}
 		else{return false}
-
-	}else{
-	    return false
 	}
+	
+	if ((ficha.tipo == "Catedral") || (ficha.tipo == "Posada")){return closeClaustro(ficha)}
+	ficha2 = Tablero.buscarxcoor(ficha.x+1, ficha.y);
+	if ((ficha2.tipo == "Catedral") || (ficha2.tipo == "Posada") ){return closeClaustro(ficha2)}
+	ficha2 = Tablero.buscarxcoor(ficha.x-1, ficha.y);
+	if ((ficha2.tipo == "Catedral") || (ficha2.tipo == "Posada") ){return closeClaustro(ficha2)}
+	ficha2 = Tablero.buscarxcoor(ficha.x, ficha.y+1);
+	if ((ficha2.tipo == "Catedral") || (ficha2.tipo == "Posada") ){return closeClaustro(ficha2)}
+	ficha2 = Tablero.buscarxcoor(ficha.x, ficha.y-1);
+	if ((ficha2.tipo == "Catedral") || (ficha2.tipo == "Posada") ){return closeClaustro(ficha2)}
+	ficha2 = Tablero.buscarxcoor(ficha.x+1, ficha.y+1);
+	if ((ficha2.tipo == "Catedral") || (ficha2.tipo == "Posada") ){return closeClaustro(ficha2)}
+	ficha2 = Tablero.buscarxcoor(ficha.x+1, ficha.y-1);
+	if ((ficha2.tipo == "Catedral") || (ficha2.tipo == "Posada") ){return closeClaustro(ficha2)}
+	ficha2 = Tablero.buscarxcoor(ficha.x-1, ficha.y+1);
+	if ((ficha2.tipo == "Catedral") || (ficha2.tipo == "Posada") ){return closeClaustro(ficha2)}
+ 	ficha2 = Tablero.buscarxcoor(ficha.x-1, ficha.y-1);
+	if ((ficha2.tipo == "Catedral") || (ficha2.tipo == "Posada") ){return closeClaustro(ficha2)}
+	else{return false}
     }
 	
 };

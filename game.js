@@ -184,8 +184,6 @@ $(function() {
     //Cierra Claustro con Catedral
     Tablero.iniciar();
     var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
-    Tablero.colocarficha(nuevaficha,4,5);
-    var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
     Tablero.colocarficha(nuevaficha,6,5);
     var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
     nuevaficha.girar(); 
@@ -208,7 +206,9 @@ $(function() {
     nuevaficha.girar(); 
     Tablero.colocarficha(nuevaficha,6,6);
     var nuevaficha = new ObjetoFicha(0,0,0,"Catedral");
-    Tablero.colocarficha(nuevaficha,5,5); 
+    Tablero.colocarficha(nuevaficha,5,5);  
+    var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
+    Tablero.colocarficha(nuevaficha,4,5);
     console.log("cierra claustro: ",Tablero.cierraClaustro(nuevaficha));
 
 // Prueba la lista de seguidores.
