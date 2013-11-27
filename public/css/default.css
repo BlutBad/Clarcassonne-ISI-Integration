@@ -756,21 +756,10 @@ tr {
 
 td { 
 	/* Behave  like a "row" */
-	border: none;
-	border-bottom: 1px solid #eee;  
-	width: 250px;
+	border: none; 
+	width: 215px;
 	text-align: center;
-}
-
-td:before { 
-	/* Now like a table header */
-	position: absolute;
-	/* Top/left values mimic padding */
-	top: 6px;
-	left: 6px; 
-	padding-right: 10px; 
-	white-space: nowrap;
-}
+} 
  
 table {  
 	border-collapse: collapse; 
@@ -799,5 +788,15 @@ td, th {
 	list-style: none;
 	font-weight: bold;
 	text-decoration: none;
+}
+
+#ranking_container {
+	float: left;
+	width: 60%;
+}
+
+.game_filter {
+	float: right;
+	width: 30%;
 }
 

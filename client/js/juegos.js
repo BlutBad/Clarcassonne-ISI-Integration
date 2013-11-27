@@ -30,15 +30,14 @@ var canvas;
 Deps.autorun(function(c) {
 	//console.log(Session.get('load_game') + '("dummydiv", null, null)');
 	if (Session.get('load_game')) {
-		console.log(Session.get('load_game'));
+		//console.log(Session.get('load_game'));
 		
 		x = Session.get('load_game');
 		b = Juegos.findOne({wrapf:x});
 		if (b._id == null){
 			console.log('Es null')
 		}
-		cll = Session.get('load_game') + '("dummydiv", null, null, "' +b._id+'")';
-		console.log(cll)
+		cll = Session.get('load_game') + '("dummydiv", null, null, "' +b._id+'")';  
 		canvas = eval(cll);
 		
 		$('#gamecontainer').show();

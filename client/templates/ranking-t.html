@@ -1,6 +1,16 @@
 <template name="ranking">
 	{{#if show}}
 		<h1>Ranking</h1> 
+
+		<div class="game_filter">
+			<h3>Filtrar ranking por juegos!</h3>
+			<ul class="sub-navigation">
+				{{#each juegos}}
+					<li><a href="#">{{name}}</a></li> 
+				{{/each}}
+			</ul> 	
+		</div> 
+		
 		<div id = "ranking_container">
 			<table>
 				<thead>
@@ -11,27 +21,18 @@
 					</tr>
 				</thead> 
 			</table>  
-			{{#each scores}}
+			{{#each scores}} 
 			<table>
 				<tbody>
 					<tr>
-						<td>{{gameId}}</td>
-						<td>{{userId}}</td>
+						<td>{{game}}</td>
+						<td>{{user}}</td>
 						<td>{{score}}</td> 
 					</tr>
 				</tbody>
 			</table>  
 		</div>
 		{{/each}}
-
-		<div class="game_filter">
-			<h3>Filtrar ranking por juegos!</h3>
-			<ul class="sub-navigation">
-				{{#each juegos}}
-					<li><a href="#">{{name}}</a></li> 
-				{{/each}}
-			</ul> 	
-		</div> 
 		
 	{{/if}}
 </template> 
