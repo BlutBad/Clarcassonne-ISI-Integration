@@ -56,7 +56,7 @@ a:hover,a:active {
 #header .main-menu li li a:link,#header .main-menu li li a:visited {
 	color: #999;
 	text-decoration: none;
-}
+} 
 
 /* scroll to top ^ */
 a.scroll-top {
@@ -351,6 +351,7 @@ h2.layout {
 
 .full-page {
 	margin: 0 0 0 22px;
+	height: auto;
 }
 
 /* logo */
@@ -714,4 +715,36 @@ h2.layout {
 	cursor: pointer;
 }
 
-
+#crear_torneo {
+	margin: 4% 7%;
+	cursor: pointer;  
+    float: right;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    color: #050505;
+    padding: 6px 20px;
+    background: -moz-linear-gradient(
+        top,
+        #f200ff 0%,
+        #ffbf00);
+    background: -webkit-gradient(
+        linear, left top, left bottom, 
+        from(#f200ff),
+        to(#ffbf00));
+    -moz-border-radius: 64px;
+    -webkit-border-radius: 64px;
+    border-radius: 64px;
+    border: 3px solid #472847;
+    -moz-box-shadow:
+        4px 3px 5px rgba(000,000,000,1),
+        inset 2px 0px 1px rgba(255,255,255,0.3);
+    -webkit-box-shadow:
+        4px 3px 5px rgba(000,000,000,1),
+        inset 2px 0px 1px rgba(255,255,255,0.3);
+    box-shadow:
+        4px 3px 5px rgba(000,000,000,1),
+        inset 2px 0px 1px rgba(255,255,255,0.3);
+    text-shadow:
+        -1px 1px 3px rgba(000,000,000,0.9),
+        0px 1px 0px rgba(255,255,255,0.2); 
+}
