@@ -61,6 +61,9 @@ sprites = {
 var img = new Image();
 img.src = 'images/background.png';
 
+var img2 = new Image();
+img2.src = 'images/abajo.png';
+
 Jugador1 = {nombre: "Carlos" , color: "ficha_roja", puntos:0, turno:0};
 Jugador2 = {nombre: "Mario"  , color: "ficha_azul", puntos:10, turno: 1};
 Jugador3 = {nombre: "Maria"  , color: "ficha_amarillo", puntos:20, turno: 0};
@@ -76,8 +79,9 @@ startGame = function() {
 	var board = new GameBoard();
 	board.add(new Scroll());
 	Game.setBoard(3,board);
-	
 	board.add(new PiezaMapa(2,2,'Rrecta',90));
+	Game.setBoard(5,new ficha_abajo());
+	
 	
 
 };
@@ -89,6 +93,16 @@ Background = function() {
 		ctx.drawImage(img, 0, 0);   		
     }
     this.step = function(dt) { }
+};
+
+// Se encarga de pintar la primera ficha boca abajo del juego
+ficha_abajo = function(cx,cy) {
+	
+    this.draw = function(ctx) {
+		ctx.drawImage(img2, 500, 500);   		
+    }
+    this.step = function(dt) { 
+	}
 };
 
 Jugadores = function() {  
