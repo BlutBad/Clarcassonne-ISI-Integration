@@ -25,7 +25,13 @@
 							<img src="/images/content/demo-only/logo-browsers.jpg" {{banner}} class="post-image" alt="sample image" width="606" height="115" />
 							<div class="post-description">
 								<p>{{description}}</p>
-								<a href="#">Read More...</a>
+								<a href="#">Participantes</a>
+								{{#if currentUser}}
+									<input type="button" value="I'm going!"
+									class="btn btn-small rsvp_yes {{maybeChosen "yes"}}">
+								{{else}}
+									<i>Sign for add to this championship.</i>
+								{{/if}}	
 							</div>
 						</div>
 					{{/each}}
