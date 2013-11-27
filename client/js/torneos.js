@@ -12,7 +12,7 @@ Template.torneos.events = {
 var openCreateDialog = function () {
 	Session.set("createError", null);
 	Session.set("showCreateDialog", true);
-};
+}; 
 
 
 Template.torneos.showCreateDialog = function () {

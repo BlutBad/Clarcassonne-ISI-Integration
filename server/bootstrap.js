@@ -18,7 +18,7 @@ Meteor.startup(function() {
 				var timestamp = (new Date()).getTime();
 				for (var i = 0; i < data.length; i++) {
 					var list_id = Menu.insert({
-						name : data[i].name
+						name : data[i].name 
 					});
 				}
 			}
@@ -119,7 +119,7 @@ Meteor.startup(function() {
 							game : 'Clarcassone',
 							date_start : "11/29/2013",
 							date_finish : "12/29/2013",
-							pic : '/images/games_logo/clarkasone.jpg',
+							pic : '/images/games_logo/clarkasone.png',
 							description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel'
 						},
 
