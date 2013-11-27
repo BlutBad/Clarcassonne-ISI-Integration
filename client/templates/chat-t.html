@@ -1,15 +1,31 @@
 <!-- BEGIN: Template -->
 
 <template name="chat">
-	<h1>Chat global</h1>
-  	{{> wrmsg}}
- 	{{> gblmsgs}}
+	
+  	<!-- {{> wrmsg}}
+ 	{{> gblmsgs}} -->
+ 	{{#if ver}}
+		<h1>Chat global</h1>
 
-</template>
+
+	<!-- BEGIN: Chat Global -->
+	<!-- <div id="gbl-chat">
+		{{> chat}}
+	</div> -->
+	<!-- END: Chat Global -->
+
+		
+	{{/if}}
+</template> 
 
 
-<!-- Begin: Templates Chat global -->
-<template name="gblmsgs">
+<!-- <template name="gchat">
+	<div id="gblchat">
+	</div>
+</template> -->
+
+<!-- Begin: Templates Chat global -->                                               
+<!-- <template name="gblmsgs">
 
 	<div id="msgs">
 		{{#each msgs}}
@@ -25,5 +41,5 @@
 		Mensaje: <input type="text" id="msg"> 
 		<input type="button" id="sendmsg" value="Enviar">
 	</div>
-</template>
+</template> -->
 <!-- End: Templates Chat -->
