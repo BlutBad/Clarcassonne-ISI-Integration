@@ -1,5 +1,5 @@
 <head>
-	<title>Plataforma LL</title>
+	<title>X-ADrian</title>
 </head>
 
 <body>
@@ -11,6 +11,7 @@
 		{{> tabstemp}}
 		{{> friendsTemp}}
    	</div>
+
 </body>
 
 
@@ -39,11 +40,12 @@
 </template>
 
 <template name="friendsTemp">
-	
 		
 		<div id="accordion">
 			<h3>Amigos</h3>
 				<div>
+					<p>lista amigos</p>
+					<p>lista amigos</p>
 					<p>lista amigos</p>
 				</div>
 			<h3>Buscar</h3>
@@ -104,6 +106,6 @@
 			{{/ each}}
 		</table>
 		<p> Nueva partida: <input type="text" id="match_creator"></p>
-		<p><a href="#">Atrás</a></p>
+		<p><a href="#" id="match_back">Atrás</a></p>
 	</div>
 </template>

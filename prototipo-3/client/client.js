@@ -20,7 +20,10 @@ $(document).ready(function() {
 		});
 		
 		$("#friends").css("top",$(window).height()-58);
-		$("#friends").css("left",$(window).width()-133);
+		$("#friends").css("left",$(window).width()-183);
+		$("#accordion").css("top",50);
+		$("#tabs").css("width",$(window).width()-200);
+		$("#accordion").css("left",$(window).width()-183);
 
 		$("#friends").click(function() {
 			if($("#friends").hasClass("escondido")){
@@ -85,6 +88,7 @@ Deps.autorun(function () {
 	if(Meteor.userId()){
 		$('#container').children().hide();
 		$('#container #tabs').fadeIn();
+		$('#friends').fadeIn();
 	}else{
 		$('#container').children().hide();
 		$('#slider').fadeIn();

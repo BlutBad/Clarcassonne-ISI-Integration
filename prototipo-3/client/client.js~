@@ -10,6 +10,7 @@ Meteor.startup(function () {
 	}
 	$('#matches').hide();
 });
+
 //Cargo el efecto slider y pestañas
 $(document).ready(function() {
 		$('#coin-slider').coinslider({ width: 800, height:400 });
@@ -19,7 +20,10 @@ $(document).ready(function() {
 		});
 		
 		$("#friends").css("top",$(window).height()-58);
-		$("#friends").css("left",$(window).width()-133);
+		$("#friends").css("left",$(window).width()-183);
+		$("#accordion").css("top",50);
+		$("#tabs").css("width",$(window).width()-200);
+		$("#accordion").css("left",$(window).width()-183);
 
 		$("#friends").click(function() {
 			if($("#friends").hasClass("escondido")){
