@@ -9,6 +9,8 @@ Meteor.startup(function () {
 			$('#slider').fadeIn();
 	}
 	$('#matches').hide();
+	$('#game').hide();
+   $('#messagecont,#messages').hide();
 });
 
 //Cargo el efecto slider y pestañas
@@ -143,11 +145,17 @@ Template.matchestemp.events = {
 			}
 		}
 	},
+	// Cargamos el juego
+	'click a.linkmatch':function(event){
+		$('#matches').hide();
+		$('#game').fadeIn();
+		$('#messagecont,#messages').fadeIn();
+	},
 	// Volvemos atrás para elegir otro juego
 	'click a#match_back':function(event){
 		Session.set('game_id', undefined);
-		$('#games').fadeIn();
 		$('#matches').hide();
+		$('#games').fadeIn();
 	}
 }
 

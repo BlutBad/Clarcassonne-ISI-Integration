@@ -29,13 +29,10 @@
 	<div id="tabs" >
 		<ul>
 			<li><a href="#amigos">Amigos</a></li>
-			<li><a href="#chat">Chat</a></li>
 			<li><a href="#juegos">Juegos</a></li>
 		</ul>
-		
 		<div id="amigos"> {{> userstemp}} </div>
-		<div id="chat"> {{> loguserstemp}}{{> input}}{{> messagestemp}} </div>
-    	<div id="juegos">{{> gamestemp}} {{> matchestemp}}</div>
+    	<div id="juegos">{{> gamestemp}} {{> matchestemp}} {{> input}} {{> messagestemp}} {{> canvastemp}}</div>
 	</div>
 </template>
 
@@ -68,7 +65,9 @@
 </template>
 
 <template name="input">
+	<div id="messagecont"
 	<p> Mensaje: <input type="text" id="message"></p>
+	</div>
 </template>
 
 <template name="messagestemp">
@@ -90,9 +89,7 @@
 <template name="gamestemp">
 	<div id="games">
 		{{# each games}}
-		        
 			<a style ="cursor:pointer;text-decoration:underline;" class="linkgame">{{name}}</a><br>
-			<IMG  SRC={{name}}><br>
 			<IMG  SRC={{name}}><br>
 		{{/ each}}
 	</div>
@@ -104,11 +101,15 @@
 		<table>
 			{{# each matches}}
 				<tr>
-					<td><a style ="cursor:pointer;text-decoration:underline;">{{name}}</a></td><td> - {{created}}</td>
+					<td><a style ="cursor:pointer;text-decoration:underline;" class="linkmatch">{{name}}</a></td><td> - {{created}}</td>
 				</tr>
 			{{/ each}}
 		</table>
 		<p> Nueva partida: <input type="text" id="match_creator"></p>
 		<p><a style ="cursor:pointer;text-decoration:underline;" id="match_back">Atrás</a></p>
 	</div>
+</template>
+
+<template name="canvastemp">
+	<canvas id='game' width='320' height='480'></canvas>
 </template>
