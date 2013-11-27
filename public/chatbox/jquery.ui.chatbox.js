@@ -11,7 +11,6 @@
  *
  */
 
-
 // TODO: implement destroy()
 (function($) {
     $.widget("ui.chatbox", {
