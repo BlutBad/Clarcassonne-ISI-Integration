@@ -31,7 +31,7 @@ Juegos = new Meteor.Collection("juegos");
 	user_create
 	date_start
 	date_finish
-	description, 
+	description,  
 	pic
 	user_participant 
 */

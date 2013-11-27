@@ -56,7 +56,7 @@ a:hover,a:active {
 #header .main-menu li li a:link,#header .main-menu li li a:visited {
 	color: #999;
 	text-decoration: none;
-}
+} 
 
 /* scroll to top ^ */
 a.scroll-top {
@@ -332,15 +332,13 @@ h2.layout {
 
 /* layouts styles */
 .one-third {
-	float: left;
-	width: 293px;
-	margin: 0 0 0 22px;
+	float: right; 
+	margin: 3% 10%;
 }
 
 .two-thirds {
-	float: left;
-	width: 608px;
-	margin: 0 0 0 22px;
+	float: left; 
+	margin-left: 3%;
 }
 
 .half-page {
@@ -351,6 +349,10 @@ h2.layout {
 
 .full-page {
 	margin: 0 0 0 22px;
+}
+
+#page-content{	
+	height: auto;
 }
 
 /* logo */
@@ -482,11 +484,7 @@ h2.layout {
 	height: 337px;
 	margin-top: -4px;
 	overflow: hidden;
-}
- 
-#torneos_container {
-	height: 1000px;
-}
+} 
 
 /* footer */
 #footer {
@@ -534,6 +532,11 @@ h2.layout {
 /* portfolio */
 .gallery {
 	margin-left: -22px;
+	height: auto;
+}
+
+.page-content {
+	height: auto;
 }
 
 .two-thirds .gallery {
@@ -713,4 +716,88 @@ h2.layout {
 	cursor: pointer;
 }
 
+#crear_torneo {
+	margin: 4% 7%;
+	cursor: pointer;  
+    float: right;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    color: #050505;
+    padding: 6px 20px;
+    background: -moz-linear-gradient(
+        top,
+        #f200ff 0%,
+        #ffbf00);
+    background: -webkit-gradient(
+        linear, left top, left bottom, 
+        from(#f200ff),
+        to(#ffbf00));
+    -moz-border-radius: 64px;
+    -webkit-border-radius: 64px;
+    border-radius: 64px;
+    border: 3px solid #472847;
+    -moz-box-shadow:
+        4px 3px 5px rgba(000,000,000,1),
+        inset 2px 0px 1px rgba(255,255,255,0.3);
+    -webkit-box-shadow:
+        4px 3px 5px rgba(000,000,000,1),
+        inset 2px 0px 1px rgba(255,255,255,0.3);
+    box-shadow:
+        4px 3px 5px rgba(000,000,000,1),
+        inset 2px 0px 1px rgba(255,255,255,0.3);
+    text-shadow:
+        -1px 1px 3px rgba(000,000,000,0.9),
+        0px 1px 0px rgba(255,255,255,0.2); 
+} 
+
+tr { 
+	border: 1px solid #ccc; 	
+}
+
+td { 
+	/* Behave  like a "row" */
+	border: none; 
+	width: 215px;
+	text-align: center;
+} 
+ 
+table {  
+	border-collapse: collapse; 
+}
+/* Zebra striping */
+tr:nth-of-type(odd) { 
+	background: #eee; 
+}
+th { 
+	background: #333; 
+	color: white; 
+	font-weight: bold; 
+	width: 250px;
+	text-align: center;
+}
+td, th { 
+	padding: 6px; 
+	border: 1px solid #ccc;  
+}
+
+#ranking_container {
+	margin: 5% 1%;
+}
+
+.sub-navigation, .game_filter {
+	list-style: none;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+#ranking_container {
+	float: left;
+	width: 60%;
+}
+
+.game_filter {
+	float: right;
+	text-align: center;
+	width: 30%;
+}
 
