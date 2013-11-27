@@ -1,21 +1,11 @@
-// --- Begin: Chat Global ---
 
-Template.gblmsgs.msgs = function() {
-  return Global_msgs.find({},{sort: {time: -1}});
-};
-
-Template.wrmsg.events = {
-  'click input#sendmsg': function() {
-    if (Meteor.user()) {
-      var user = Meteor.user().emails[0].address;
-    } else {
-      var user = 'Unknown';
+Template.gchat.rendered = function (){
+  $("#gblchat").chatbox({
+    id: "danny",
+    user: {key: "value"},
+    title: "test",
+    messageSent: function(id, user, msg){
+      $("#gblchat").chatbox("option", "boxManager").addMsg(id, msg);
     }
-    var msg = $('input#msg');
-    if (msg.val() != '') {
-        Global_msgs.insert({user:user, msg:msg.val(), time:Date.now});
-        msg.val('');
-      }
-    }
-};
-// --- End: Chat Global ---
+  });
+}
