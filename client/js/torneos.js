@@ -1,11 +1,14 @@
-
 Template.torneos.show = function() {
+	Session.set('sortBy', null);
 	return Session.get('current_stage') == 'Torneos';
 };
 
 Template.torneos.events = {
 	'click input#crear_torneo': function() {
 		openCreateDialog();
+	},
+	'click .sortBy': function () {
+		Session.set(this.name, true);
 	}
 };
 
@@ -19,6 +22,7 @@ Template.torneos.showCreateDialog = function () {
 	return Session.get("showCreateDialog");
 };
 
+
 Template.createDialog.events({
 	'click .save': function () {
 		if (Meteor.user()) {
@@ -31,7 +35,7 @@ Template.createDialog.events({
 			var description = $('#description');
 			var date_start = $('input#date_start');
 			var date_finish = $('input#date_finish');
-			var game = $('input#game');
+			var game = $('#game');
 			var pic = $('input#pic');
 			Torneos.insert({title:title.val(), game: game.val(), user_create: user_create, date_start: date_start.val(), date_finish: date_finish.val(), description: description.val(), pic: pic.val() });
 			Session.set("showCreateDialog", false);
@@ -48,7 +52,6 @@ Template.createDialog.events({
 				showOn: "button",
 				buttonImage: "images/calendar.gif",
 				buttonImageOnly: true
-
 			});
 		});
 	},
@@ -68,11 +71,21 @@ Template.createDialog.error = function () {
 };
 
 Template.torneos.torneo=function(){
-	return Torneos.find({});
+	var sortTorneos;
+	if (Session.get('AlienInvasion')) {
+		sortTorneos=Torneos.find({game: "AlienInvasion"});
+	} else if (Session.get('Clarkasone')){
+		sortTorneos=Torneos.find({game: "Clarcassone"});
+    } else if (Session.get('Froot war')){
+		sortTorneos=Torneos.find({game: "Froot War"});
+	}else{
+		sortTorneos=Torneos.find({});
+    };
+    return sortTorneos;
 };
 
 Template.torneos.juegos=function(){
 	return Juegos.find({});
 };
 
-			
+		
