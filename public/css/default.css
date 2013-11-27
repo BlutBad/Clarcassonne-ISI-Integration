@@ -351,6 +351,9 @@ h2.layout {
 
 .full-page {
 	margin: 0 0 0 22px;
+}
+
+#page-content{	
 	height: auto;
 }
 
@@ -747,4 +750,49 @@ h2.layout {
     text-shadow:
         -1px 1px 3px rgba(000,000,000,0.9),
         0px 1px 0px rgba(255,255,255,0.2); 
+} 
+
+tr { 
+	border: 1px solid #ccc; 	
+}
+
+td { 
+	/* Behave  like a "row" */
+	border: none;
+	border-bottom: 1px solid #eee;  
+	width: 250px;
+	text-align: center;
+}
+
+td:before { 
+	/* Now like a table header */
+	position: absolute;
+	/* Top/left values mimic padding */
+	top: 6px;
+	left: 6px; 
+	padding-right: 10px; 
+	white-space: nowrap;
+}
+ 
+table {  
+	border-collapse: collapse; 
+}
+/* Zebra striping */
+tr:nth-of-type(odd) { 
+	background: #eee; 
+}
+th { 
+	background: #333; 
+	color: white; 
+	font-weight: bold; 
+	width: 250px;
+	text-align: center;
+}
+td, th { 
+	padding: 6px; 
+	border: 1px solid #ccc;  
+}
+
+#ranking_container {
+	margin: 5% 1%;
 }
