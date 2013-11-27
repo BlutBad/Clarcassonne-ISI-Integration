@@ -14,37 +14,39 @@
 		{{/if}}
 		<div class="two-thirds">
 			<div class="blog">
-		{{#each torneo}}
-				<div class="post-summary">
-					<h3 class="post-title">{{title}}</h3>
-					<div class="post-details">
-						<div class="post-date">
-							<span class="date">Fecha inicio: {{date_start}}</span>
-							<span class="date">Fecha final: {{date_finish}}</span>
+				{{#each torneo}}
+					<div class="post-summary">
+						<h3 class="post-title">{{title}}</h3>
+						<div class="post-details">
+							<div class="post-date">
+								<span class="date">Fecha inicio: {{date_start}}</span>
+								<span class="date">Fecha final: {{date_finish}}</span>
+							</div>
+							Posted by <a href="#">{{user_create}}</a> in <a href="#">{{game}}</a> |<a href="#"></a>
 						</div>
-						Posted by <a href="#">{{user_create}}</a> in <a href="#">{{game}}</a> |<a href="#"></a>
+						<img src="/images/content/demo-only/logo-browsers.jpg" {{banner}} class="post-image" alt="sample image" width="606" height="115" />
+						<div class="post-description">
+							<p>{{description}}</p>
+							<a href="#">Participantes</a>
+							{{#if currentUser}}
+								<input type="button" value="I'm going!"
+								class="btn btn-small rsvp_yes {{maybeChosen "yes"}}">
+							{{else}}
+								<i>Sign for add to this championship.</i>
+							{{/if}}				
+						</div>
 					</div>
-					<img src="/images/content/demo-only/logo-browsers.jpg" {{banner}} class="post-image" alt="sample image" width="606" height="115" />
-					<div class="post-description">
-						<p>{{description}}</p>
-						<a href="#">Participantes</a>
-						{{#if currentUser}}
-							<input type="button" value="I'm going!"
-							class="btn btn-small rsvp_yes {{maybeChosen "yes"}}">
-						{{else}}
-							<i>Sign for add to this championship.</i>
-						{{/if}}				
-					</div>
-				</div>
-			{{/each}}
+				{{/each}}
+				<p></p>
 			</div>
 		</div>
 		
 		<div class="one-third">
-			<h3>Juegos</h3>
+			<h3>Torneos por Juegos</h3>
 			<ul class="sub-navigation">
 				{{#each juegos}}
-				<li><a href="#">{{name}}</a></li> 
+					<li class="{{juegos}}"><a href="#">
+					<input type="button" id="{{name}}" class="sortBy" value="{{name}}" /> </a></li>
 				{{/each}}
 			</ul>
 			<br/>		

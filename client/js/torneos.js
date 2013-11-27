@@ -1,11 +1,14 @@
-
 Template.torneos.show = function() {
+	Session.set('sortBy', null);
 	return Session.get('current_stage') == 'Torneos';
 };
 
 Template.torneos.events = {
 	'click input#crear_torneo': function() {
 		openCreateDialog();
+	},
+	'click .sortBy': function () {
+		Session.set(this.name, true);
 	}
 };
 
@@ -18,6 +21,7 @@ var openCreateDialog = function () {
 Template.torneos.showCreateDialog = function () {
 	return Session.get("showCreateDialog");
 };
+
 
 Template.createDialog.events({
 	'click .save': function () {
@@ -67,11 +71,21 @@ Template.createDialog.error = function () {
 };
 
 Template.torneos.torneo=function(){
-	return Torneos.find({});
+	var sortTorneos;
+	if (Session.get('AlienInvasion')) {
+		sortTorneos=Torneos.find({game: "AlienInvasion"});
+	} else if (Session.get('Clarkasone')){
+		sortTorneos=Torneos.find({game: "Clarcassone"});
+    } else if (Session.get('Froot war')){
+		sortTorneos=Torneos.find({game: "Froot War"});
+	}else{
+		sortTorneos=Torneos.find({});
+    };
+    return sortTorneos;
 };
 
 Template.torneos.juegos=function(){
 	return Juegos.find({});
 };
 
-			
+		
