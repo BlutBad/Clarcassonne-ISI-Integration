@@ -61,12 +61,11 @@ sprites = {
 var img = new Image();
 img.src = 'images/background.png';
 
-Jugador1 = {nombre: "Carlos" , color: "rojo", puntos:0};
-Jugador2 = {nombre: "Mario"  , color: "azul", puntos:10};
-Jugador3 = {nombre: "Maria"  , color: "amarillo", puntos:20};
-Jugador4 = {nombre: "Ana"    , color: "verde", puntos:30};
-Jugador5 = {nombre: "Lucia"  , color: "gris", puntos:40};
-Jugador6 = {nombre: "Marcos" , color: "morado", puntos:50};
+Jugador1 = {nombre: "Carlos" , color: "ficha_roja", puntos:0, turno:1};
+Jugador2 = {nombre: "Mario"  , color: "ficha_azul", puntos:10, turno: 0};
+Jugador3 = {nombre: "Maria"  , color: "ficha_amarillo", puntos:20, turno: 0};
+Jugador4 = {nombre: "Ana"    , color: "ficha_verde", puntos:30, turno: 0};
+
 
 
 startGame = function() {    
@@ -98,24 +97,23 @@ Jugadores = function() {
       ctx.save();
       ctx.fillStyle="rgb(255,255,0)";
       ctx.font="bold 25px Arial";
-      ctx.fillText(Jugador1.nombre,20,540);
-      ctx.fillText(Jugador2.nombre,150,540);
-      ctx.fillText(Jugador3.nombre,280,540);
-      ctx.fillText(Jugador4.nombre,410,540);
-      ctx.fillText(Jugador5.nombre,540,540);
-      ctx.fillText(Jugador6.nombre,670,540);
-      //ctx.fillText(Jugador1.color,20,540);
-      //ctx.fillText(Jugador2.color,150,540);
-      //ctx.fillText(Jugador3.color,280,540);
-      //ctx.fillText(Jugador4.color,410,540);
-      //ctx.fillText(Jugador5.color,540,540);
-      //ctx.fillText(Jugador6.color,670,540);
-      ctx.fillText(Jugador1.puntos,20,580);
-      ctx.fillText(Jugador2.puntos,150,580);
-      ctx.fillText(Jugador3.puntos,280,580);
-      ctx.fillText(Jugador4.puntos,410,580);
-      ctx.fillText(Jugador5.puntos,540,580);
-      ctx.fillText(Jugador6.puntos,670,580);
+      
+      ctx.fillText(Jugador1.nombre,45,540);
+      SpriteSheet.draw(ctx, Jugador1.color ,20,520,1,0,0.5);
+      ctx.fillText(Jugador1.puntos,50,570);
+      
+      ctx.fillText(Jugador2.nombre,175,540);
+      SpriteSheet.draw(ctx,Jugador2.color,150,520,1,0,0.5);
+      ctx.fillText(Jugador2.puntos,180,570);
+      
+      ctx.fillText(Jugador3.nombre,305,540);
+      SpriteSheet.draw(ctx,Jugador3.color,280,520,1,0,0.5);
+      ctx.fillText(Jugador3.puntos,310,570);
+      
+      ctx.fillText(Jugador4.nombre,435,540);
+      SpriteSheet.draw(ctx,Jugador4.color,410,520,1,0,0.5);
+      ctx.fillText(Jugador4.puntos,440,570);
+
       ctx.restore();
    
    }
