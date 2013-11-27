@@ -82,6 +82,11 @@ Deps.autorun(function () {
 	Meteor.subscribe("matches", current_game_id);
 });
 
+//Subscripción a la lista de jugadores en partidas
+Deps.autorun(function () {
+	Meteor.subscribe("plays");
+});
+
 
 //Cambios reactivos de la interfaz
 Deps.autorun(function () {
@@ -147,14 +152,22 @@ Template.matchestemp.events = {
 	},
 	// Cargamos el juego
 	'click a.linkmatch':function(event){
-		$('#matches').hide();
-		$('#game').fadeIn();
+
+		if(Plays.find({match_id : $(this)[0]._id}).count() < 5){  //Ojo porque hay que cambiar la limitación de jugadores (BBDD de juego)
+			Session.set('match_id', $(this)[0]._id);
+			$('#matches').hide();
+			$('#game').fadeIn();
+			$('#messagecont,#messages').fadeIn();
+			Plays.insert({match_id : Session.get('match_id'), user_id : Meteor.userId(), score : 0});
+		} else {
+			Session.set('match_id', undefined);
+			alert("Partida llena. Pruebe en otra partida.");
+		};
 	},
 	// Volvemos atrás para elegir otro juego
 	'click a#match_back':function(event){
 		Session.set('game_id', undefined);
 		$('#matches').hide();
-		$('#messagecont,#messages').fadeIn();
 		$('#games').fadeIn();
 	}
 }
