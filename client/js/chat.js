@@ -4,9 +4,6 @@
 //   return Global_msgs.find({},{sort: {time: -1}});
 // };
 
-Template.chat = function() {
-  return Session.get('var1') == 'ok';
-}
 
 // Template.wrmsg.events = {
 //   'click input#sendmsg': function() {
@@ -24,13 +21,15 @@ Template.chat = function() {
 // };
 
 // --------- Prueba 1
-// $(document).ready(function(){
-//   $("#gblchat").chatbox({
+
+
+// Meteor.startup(function () {
+//   $("#chat_div").chatbox({
 //     id: "danny",
 //     user: {key: "value"},
 //     title: "test",
 //     messageSent: function(id, user, msg){
-//       $("#gblchat").chatbox("option", "boxManager").addMsg(id, msg);
+//       $("#chat_div").chatbox("option", "boxManager").addMsg(id, msg);
 //     }
 //   });
 // });
