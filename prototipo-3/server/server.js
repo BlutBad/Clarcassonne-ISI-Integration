@@ -1,11 +1,11 @@
 
 // Crea las bases de datos de los juegos si no están creadas.
 Meteor.startup(function () {
-	if(Games.find({name:"Clarcassonne"}).count() === 0){
-		Games.insert({name:"Clarcassonne"});
-	};
-	if(Games.find({name:"Angry Birds"}).count() === 0){
-		Games.insert({name:"Angry Birds"});
+	if(Games.find().count() == 0){
+		
+		Games.insert({name:"Froot_Wars"});
+		Games.insert({name:"Alien_Invasion"});
+		Games.insert({name:"Clarcassonne"});	        
 	};
 });
 

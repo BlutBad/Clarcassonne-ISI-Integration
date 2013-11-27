@@ -90,7 +90,9 @@
 <template name="gamestemp">
 	<div id="games">
 		{{# each games}}
-			<a href="#" class="linkgame">{{name}}</a>
+		        
+			<a style ="cursor:pointer;text-decoration:underline;" class="linkgame">{{name}}</a><br>
+			<IMG  SRC={{name}}><br>
 		{{/ each}}
 	</div>
 
@@ -101,11 +103,11 @@
 		<table>
 			{{# each matches}}
 				<tr>
-					<td><a href="#">{{name}}</a></td><td> - {{created}}</td>
+					<td><a style ="cursor:pointer;text-decoration:underline;">{{name}}</a></td><td> - {{created}}</td>
 				</tr>
 			{{/ each}}
 		</table>
 		<p> Nueva partida: <input type="text" id="match_creator"></p>
-		<p><a href="#" id="match_back">Atrás</a></p>
+		<p><a style ="cursor:pointer;text-decoration:underline;" id="match_back">Atrás</a></p>
 	</div>
 </template>
