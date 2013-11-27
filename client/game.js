@@ -61,8 +61,8 @@ sprites = {
 var img = new Image();
 img.src = 'images/background.png';
 
-Jugador1 = {nombre: "Carlos" , color: "ficha_roja", puntos:0, turno:1};
-Jugador2 = {nombre: "Mario"  , color: "ficha_azul", puntos:10, turno: 0};
+Jugador1 = {nombre: "Carlos" , color: "ficha_roja", puntos:0, turno:0};
+Jugador2 = {nombre: "Mario"  , color: "ficha_azul", puntos:10, turno: 1};
 Jugador3 = {nombre: "Maria"  , color: "ficha_amarillo", puntos:20, turno: 0};
 Jugador4 = {nombre: "Ana"    , color: "ficha_verde", puntos:30, turno: 0};
 
@@ -95,21 +95,24 @@ Jugadores = function() {
    this.draw = function(ctx){
      // ctx.beginPath();
       ctx.save();
-      ctx.fillStyle="rgb(255,255,0)";
       ctx.font="bold 25px Arial";
       
+      ctx.fillStyle="rgb(255,255," + Jugador1.turno * 255 +")";
       ctx.fillText(Jugador1.nombre,45,540);
       SpriteSheet.draw(ctx, Jugador1.color ,20,520,1,0,0.5);
       ctx.fillText(Jugador1.puntos,50,570);
       
+      ctx.fillStyle="rgb(255,255," + Jugador2.turno * 255 +")";
       ctx.fillText(Jugador2.nombre,175,540);
       SpriteSheet.draw(ctx,Jugador2.color,150,520,1,0,0.5);
       ctx.fillText(Jugador2.puntos,180,570);
       
+      ctx.fillStyle="rgb(255,255," + Jugador3.turno * 255 +")";
       ctx.fillText(Jugador3.nombre,305,540);
       SpriteSheet.draw(ctx,Jugador3.color,280,520,1,0,0.5);
       ctx.fillText(Jugador3.puntos,310,570);
       
+      ctx.fillStyle="rgb(255,255," + Jugador4.turno * 255 +")";
       ctx.fillText(Jugador4.nombre,435,540);
       SpriteSheet.draw(ctx,Jugador4.color,410,520,1,0,0.5);
       ctx.fillText(Jugador4.puntos,440,570);
