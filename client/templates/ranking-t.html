@@ -23,6 +23,15 @@
 			</table>  
 		</div>
 		{{/each}}
+
+		<div class="game_filter">
+			<h3>Filtrar ranking por juegos!</h3>
+			<ul class="sub-navigation">
+				{{#each juegos}}
+					<li><a href="#">{{name}}</a></li> 
+				{{/each}}
+			</ul> 	
+		</div> 
 		
 	{{/if}}
 </template> 

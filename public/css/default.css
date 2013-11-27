@@ -332,15 +332,13 @@ h2.layout {
 
 /* layouts styles */
 .one-third {
-	float: left;
-	width: 293px;
-	margin: 0 0 0 22px;
+	float: right; 
+	margin: 3% 10%;
 }
 
 .two-thirds {
-	float: left;
-	width: 608px;
-	margin: 0 0 0 22px;
+	float: left; 
+	margin-left: 3%;
 }
 
 .half-page {
@@ -796,3 +794,10 @@ td, th {
 #ranking_container {
 	margin: 5% 1%;
 }
+
+.sub-navigation, .game_filter {
+	list-style: none;
+	font-weight: bold;
+	text-decoration: none;
+}
+
