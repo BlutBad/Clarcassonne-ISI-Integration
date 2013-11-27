@@ -482,11 +482,7 @@ h2.layout {
 	height: 337px;
 	margin-top: -4px;
 	overflow: hidden;
-}
- 
-#torneos_container {
-	height: 1000px;
-}
+} 
 
 /* footer */
 #footer {
@@ -534,6 +530,11 @@ h2.layout {
 /* portfolio */
 .gallery {
 	margin-left: -22px;
+	height: auto;
+}
+
+.page-content {
+	height: auto;
 }
 
 .two-thirds .gallery {
