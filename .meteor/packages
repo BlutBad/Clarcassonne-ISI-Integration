@@ -15,3 +15,7 @@ accounts-github
 accounts-google
 accounts-twitter
 bootstrap
+jquery
+jquery-history
+jquery-layout
+jquery-waypoints
