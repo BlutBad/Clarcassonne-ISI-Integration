@@ -91,6 +91,12 @@ Deps.autorun(function () {
 	Meteor.subscribe("matches", current_game_id);
 });
 
+//Subscripción selectiva a los mensajes de la sal
+Deps.autorun(function () {
+	var current_match_id = Session.get("match_id")
+	Meteor.subscribe("messages", current_match_id);
+});
+
 //Subscripción a la lista de jugadores en partidas
 Deps.autorun(function () {
 	Meteor.subscribe("plays");
@@ -127,7 +133,8 @@ Template.input.events = {
 				 Messages.insert({
 					name: name,
 					message: message.val(),
-					time: Date.now()
+					time: Date.now(),
+					match_id: Session.get('match_id')
 				 });
 				message.val(''); //dejamos la caja de texto vacia
 			}

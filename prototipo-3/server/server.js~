@@ -2,13 +2,13 @@
 // Crea las bases de datos de los juegos si no están creadas.
 Meteor.startup(function () {
 	if(Games.find({name:"Froot_Wars"}).count() == 0){
-		Games.insert({name:"Froot_Wars"});   
+		Games.insert({name:"Froot_Wars", players_max : 1});   
 	};
 	if(Games.find({name:"Alien_Invasion"}).count() == 0){
-		Games.insert({name:"Alien_Invasion"});
+		Games.insert({name:"Alien_Invasion", players_max : 1});
 	};
 	if(Games.find({name:"Clarcassonne"}).count() == 0){
-		Games.insert({name:"Clarcassonne"});
+		Games.insert({name:"Clarcassonne", players_max : 5});
 	};
 });
 
@@ -18,7 +18,7 @@ Meteor.publish("users", function() {
 
 });
 
-Meteor.publish("messages", function() {
+Meteor.publish("messages", function(current_match_id) {
  	
 	return Messages.find();
 

@@ -127,7 +127,8 @@ Template.input.events = {
 				 Messages.insert({
 					name: name,
 					message: message.val(),
-					time: Date.now()
+					time: Date.now(),
+					match_id: Session.get('match_id')
 				 });
 				message.val(''); //dejamos la caja de texto vacia
 			}
@@ -165,8 +166,7 @@ Template.matchestemp.events = {
 		if(Plays.find({match_id : $(this)[0]._id}).count() < lim){
 			Session.set('match_id', $(this)[0]._id);
 			$('#matches').hide();
-			$('#game').fadeIn();
-			$('#messagecont,#messages').fadeIn();
+			$('#roomcontainer').fadeIn();
 			Plays.insert({match_id : Session.get('match_id'), user_id : Meteor.userId(), score : 0});
 		} else {
 			Session.set('match_id', undefined);

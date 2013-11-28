@@ -18,9 +18,9 @@ Meteor.publish("users", function() {
 
 });
 
-Meteor.publish("messages", function() {
+Meteor.publish("messages", function(current_match_id) {
  	
-	return Messages.find();
+	return Messages.find({match_id: current_match_id});
 
 });
 
