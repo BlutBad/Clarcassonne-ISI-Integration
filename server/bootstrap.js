@@ -52,7 +52,7 @@ Meteor.startup(function() {
 					title_desc : 'Titulo para la descripcion del juego',
 					description : 'Descripcion del juego!'
 				}, {
-					name : 'Clarkasone',
+					name : 'Clarcassone',
 					wrapf : 'clarki',
 					logo_src : '/images/games_logo/clarkasone.jpg',
 					logo_alt : 'Juega es este juego',
@@ -61,7 +61,7 @@ Meteor.startup(function() {
 				},
 
 				{
-					name : 'Froot war',
+					name : 'Froot War',
 					wrapf : 'froowar',
 					logo_src : '/images/games_logo/frootwars.jpg',
 					logo_alt : 'Juega es este juego',

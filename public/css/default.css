@@ -328,6 +328,10 @@ h2.layout {
 	height: 40px;
 }
 
+#hidden {
+	visibility: hidden;
+}
+
 /**** Page Layout and Design Styles ****/
 
 /* layouts styles */
