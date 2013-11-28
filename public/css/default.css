@@ -719,8 +719,8 @@ h2.layout {
 	background: transparent url("../images/spacer.gif") repeat 0 0;
 	cursor: pointer;
 }
-
-#crear_torneo {
+ 
+#crear_torneo { 
 	margin: 4% 7%;
 	cursor: pointer;  
     float: right;
