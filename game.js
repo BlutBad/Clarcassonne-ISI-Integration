@@ -57,7 +57,8 @@ $(function() {
   //Prueba cierraCamino colocando ficha "cierracamino" (no cruces)
   Tablero.iniciar();
 	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
-	Tablero.colocarficha(nuevaficha,3,1);
+	var x=Tablero.colocarficha(nuevaficha,3,1);	
+	x.seguidores.push({t:"Ladron",n:4});  //le metemos ladron
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
 	Tablero.colocarficha(nuevaficha,3,2); 
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
@@ -67,7 +68,7 @@ $(function() {
 	nuevaficha.girar();
 	Tablero.colocarficha(nuevaficha,3,4); 
 	console.log("cierra camino1: ",Tablero.cierraCamino(nuevaficha));
-	
+
 	//Prueba cierra camino con cruces
 
 	Tablero.iniciar();
@@ -99,20 +100,22 @@ $(function() {
 	Tablero.cierraCamino(nuevaficha);
 	
 	//Prueba cierraCamino colocando ficha intermedia
-	Tablero.iniciar();
+  Tablero.iniciar();
 	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
 	Tablero.colocarficha(nuevaficha,8,1);
+
 	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
 	nuevaficha.girar();
 	Tablero.colocarficha(nuevaficha,7,3);
-	ficha2=Tablero.buscarxcoor(7,3);
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rcurva");
 	nuevaficha.girar();
 	nuevaficha.girar();
 	nuevaficha.girar();
-	Tablero.colocarficha(nuevaficha,8,3);
-	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
-	Tablero.colocarficha(nuevaficha,8,2); 
+	var Rcurva83= Tablero.colocarficha(nuevaficha,8,3);	
+	var lista= Tablero.colocarseguidor(Rcurva83);
+	Rcurva83.seguidores.push(lista[0]);
+	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta"); 
+	Tablero.colocarficha(nuevaficha,8,2);
 	console.log("cierra camino2: ",Tablero.cierraCamino(nuevaficha));
 	
 	//Prueba cierraCamino redondo, sin "cierracaminos"
@@ -120,13 +123,15 @@ $(function() {
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rcurva");
 	Tablero.colocarficha(nuevaficha,5,5);
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
-	Tablero.colocarficha(nuevaficha,5,6);
+	var x=Tablero.colocarficha(nuevaficha,5,6);
+	x.seguidores.push({t:"Ladron",n:4});  //le metemos ladron
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
   nuevaficha.girar();
   Tablero.colocarficha(nuevaficha,4,5);
   var nuevaficha = new ObjetoFicha(0,0,0,"Rcurva");
   nuevaficha.girar();
 	Tablero.colocarficha(nuevaficha,3,5);
+	console.log("lista: ", Tablero.colocarseguidor(nuevaficha)); // lista de seguidores
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
 	Tablero.colocarficha(nuevaficha,3,6);
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rcurva");
@@ -154,7 +159,7 @@ $(function() {
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
 	console.log("si no encaja 0:",Tablero.colocarficha(nuevaficha,8,1)); //No deberia encajar ----> devuelve 0
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
-	console.log("si encaja 1:",Tablero.colocarficha(nuevaficha,8,2));              //Deberia encajar ----> devuelve 1
+	console.log("si encaja objeto ficha:",Tablero.colocarficha(nuevaficha,8,2)); //Deberia encajar ----> devuelve la ficha colocada
 
 
     //Prueba de cierra Castillo 1
@@ -212,6 +217,7 @@ $(function() {
     nuevaficha.girar(); 
     Tablero.colocarficha(nuevaficha,7,6);
     var nuevaficha = new ObjetoFicha(0,0,0,"Catedral");
+    nuevaficha.seguidores.push({t:"Monje",n:8});
     Tablero.colocarficha(nuevaficha,5,5); 
     var nuevaficha = new ObjetoFicha(0,0,0,"Catedral");
     Tablero.colocarficha(nuevaficha,6,5); 
@@ -221,12 +227,18 @@ $(function() {
     
 
 // Prueba la lista de seguidores.
-	Tablero.iniciar();
-	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
+    Tablero.iniciar();
+	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
 	console.log("lista: ", Tablero.colocarseguidor(nuevaficha));
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rcurva");
 	console.log("lista: ", Tablero.colocarseguidor(nuevaficha));
-	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
+	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
+	Tablero.colocarficha(nuevaficha,5,5); 
 	console.log("lista: ", Tablero.colocarseguidor(nuevaficha));
-	
+
+
+// Prueba colocar seguidores en camino.
+  
 });
+
+
