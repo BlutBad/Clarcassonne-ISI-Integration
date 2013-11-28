@@ -716,15 +716,8 @@ h2.layout {
 	cursor: pointer;
 }
 
-#mostrar_ranking {
-	margin-right: 22%;
-}
-
-#crear_torneo {
+#crear_torneo{
 	margin: 4% 7%;
-}
-
-#crear_torneo, #mostrar_ranking {
 	cursor: pointer;  
     float: right;
     font-family: Arial, Helvetica, sans-serif;

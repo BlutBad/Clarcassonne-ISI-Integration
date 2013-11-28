@@ -8,7 +8,10 @@ Template.torneos.events = {
 		openCreateDialog();
 	},
 	'click .sortBy': function () {
-		Session.set(this.name, true);
+		Session.set("gametor", this.name);
+	},
+	'click #mostrar_torneos': function() {
+		Session.set("gametor", undefined);
 	}
 };
 
@@ -70,17 +73,13 @@ Template.createDialog.error = function () {
 	return Session.get("createError");
 };
 
-Template.torneos.torneo=function(){
-	var sortTorneos;
-	if (Session.get('AlienInvasion')) {
-		sortTorneos=Torneos.find({game: "AlienInvasion"});
-	} else if (Session.get('Clarkasone')){
-		sortTorneos=Torneos.find({game: "Clarcassone"});
-    } else if (Session.get('Froot war')){
-		sortTorneos=Torneos.find({game: "Froot War"});
-	}else{
-		sortTorneos=Torneos.find({});
-    };
+Template.torneos.torneo=function(){ 
+	game_session = Session.get("gametor");  
+	if (game_session == undefined) {
+		sortTorneos = Torneos.find({});
+	} else {
+		sortTorneos = Torneos.find({game: game_session});
+	}
     return sortTorneos;
 };
 
