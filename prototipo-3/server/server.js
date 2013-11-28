@@ -43,3 +43,9 @@ Meteor.publish("plays", function() {
 	return Plays.find();	
 
 });
+
+Meteor.users.allow({
+    update: function(userId, docs, fields, modifier) {
+        return true;
+    }
+});

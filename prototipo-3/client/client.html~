@@ -112,7 +112,9 @@
 </template>
 
 <template name="alientemp">
-	<canvas id='game' width='320' height='480'></canvas>
+	<div id="aliencontainer">
+		<canvas id='aliencanvas' width='320' height='480'></canvas>
+	</div>
 </template>
 
 <template name="roomgametemp">
