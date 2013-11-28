@@ -7,7 +7,10 @@ Template.torneos.events = {
 		openCreateDialog();
 	},
 	'click .sortBy': function () {
-		Session.set("game", this.name);
+		Session.set("gametor", this.name);
+	},
+	'click #mostrar_torneos': function() {
+		Session.set("gametor", undefined);
 	}
 };
 
@@ -70,8 +73,7 @@ Template.createDialog.error = function () {
 };
 
 Template.torneos.torneo=function(){ 
-	game_session = Session.get("game"); 
-	console.log(game_session)
+	game_session = Session.get("gametor");  
 	if (game_session == undefined) {
 		sortTorneos = Torneos.find({});
 	} else {
