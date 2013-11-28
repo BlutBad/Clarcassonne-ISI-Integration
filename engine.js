@@ -213,8 +213,13 @@ var Tablero = new function(){
 	this.colocarseguidor = function(ficha){
 		seguidor = [];
 		for (i=0;i<=8;i++){
-			if (i==0){
-				if(ficha.arriba == "Rue"){
+			if (i==0){	
+				fichacamsig=Tablero.buscarxcoor(ficha.x,ficha.y-1);
+				if (fichacamsig == undefined){tieneladron=[false,false]}
+				else if (fichacamsig.lleno){tieneladron = Tablero.cierraCamino(fichacamsig);alert("ENTRA")}
+				else if (!fichacamsig.lleno){tieneladron=[false,false]}
+
+				if(ficha.arriba == "Rue" || tieneladron[1] == false){
 					seguidor.push("Ladron");					
 				}else if(ficha.arriba == "Tierra"){
 					seguidor.push("Caballero");			
@@ -236,7 +241,12 @@ var Tablero = new function(){
 				}
 			}
 			if (i==2){
-				if(ficha.derecha == "Rue"){
+				fichacamsig=Tablero.buscarxcoor(ficha.x+1,ficha.y);
+				if (fichacamsig == undefined){tieneladron=[false,false]}
+				else if (fichacamsig.lleno){tieneladron = Tablero.cierraCamino(fichacamsig);}
+				else if (!fichacamsig.lleno){tieneladron=[false,false]}
+
+				if(ficha.derecha == "Rue" || tieneladron[1] == false){
 					seguidor.push("Ladron");					
 				}else if(ficha.derecha == "Tierra"){
 					seguidor.push("Caballero");			
@@ -256,7 +266,11 @@ var Tablero = new function(){
 				}
 			}
 			if (i==4){
-				if(ficha.abajo == "Rue"){
+				fichacamsig=Tablero.buscarxcoor(ficha.x,ficha.y+1);
+				if (fichacamsig == undefined){tieneladron=[false,false]}
+				else if (fichacamsig.lleno){tieneladron = Tablero.cierraCamino(fichacamsig);}
+				else if (!fichacamsig.lleno){tieneladron=[false,false]}
+				if(ficha.abajo == "Rue" || tieneladron[1] == false){
 					seguidor.push("Ladron");					
 				}else if(ficha.abajo == "Tierra"){
 					seguidor.push("Caballero");			
@@ -274,7 +288,11 @@ var Tablero = new function(){
 				}
 			}
 			if (i==6){
-				if(ficha.izda == "Rue"){
+				fichacamsig=Tablero.buscarxcoor(ficha.x-1,ficha.y);
+				if (fichacamsig == undefined){tieneladron=[false,false]}
+				else if (fichacamsig.lleno){tieneladron = Tablero.cierraCamino(fichacamsig);}
+				else if (!fichacamsig.lleno){tieneladron=[false,false]}
+				if(ficha.izda == "Rue" || tieneladron[1] == false){
 					seguidor.push("Ladron");					
 				}else if(ficha.izda == "Tierra"){
 					seguidor.push("Caballero");			
@@ -557,10 +575,10 @@ var Tablero = new function(){
 	if ((ficha2.tipo == "Catedral") || (ficha2.tipo == "Posada") ){return closeClaustro(ficha2)}
 	else{return false}
     }
-	
+
 };
 
-	
+
 
 var ObjetoJugador = function(nombre,edad){
     this.n_seguidores = 7;

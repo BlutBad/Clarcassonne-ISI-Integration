@@ -218,6 +218,7 @@ $(function() {
     var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
     Tablero.colocarficha(nuevaficha,4,5);
     console.log("cierra claustro: ",Tablero.cierraClaustro(nuevaficha));
+    
 
 // Prueba la lista de seguidores.
 	Tablero.iniciar();
@@ -225,7 +226,7 @@ $(function() {
 	console.log("lista: ", Tablero.colocarseguidor(nuevaficha));
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rcurva");
 	console.log("lista: ", Tablero.colocarseguidor(nuevaficha));
-	var nuevaficha = new ObjetoFicha(0,0,0,"Ciudad1l2crect");
+	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
 	console.log("lista: ", Tablero.colocarseguidor(nuevaficha));
-
+	
 });
