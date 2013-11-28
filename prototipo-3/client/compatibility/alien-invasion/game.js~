@@ -419,6 +419,6 @@ Explosion.prototype.step = function(dt) {
 
 
 $(function() {
-    Game.initialize("aliencanvas",sprites,startGame);
+    Game.initialize("game",sprites,startGame);
 });
 

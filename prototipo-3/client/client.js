@@ -9,8 +9,8 @@ Meteor.startup(function () {
 			$('#slider').fadeIn();
 	}
 	$('#matches').hide();
-	$('#game').hide();
-   $('#messagecont,#messages').hide();
+	$('#roomcontainer').hide();
+
 });
 
 //Cargo el efecto slider y pestañas
@@ -64,6 +64,15 @@ Template.matchestemp.matches = function(){
 //Carga mensajes del chat
 Template.messagestemp.messages=function(){
 	return Messages.find();
+}
+
+//Carga el nombre del juego
+Template.gamenametemp.gamename=function(){
+	var gameName = "None";
+	if(Games.findOne({_id: Session.get('game_id')})){
+		gameName = Games.findOne({_id: Session.get('game_id')}).name;
+	};
+	return gameName;
 }
 
 //Subscripcion a lista de usuarios
@@ -152,11 +161,11 @@ Template.matchestemp.events = {
 	},
 	// Cargamos el juego
 	'click a.linkmatch':function(event){
-		if(Plays.find({match_id : $(this)[0]._id}).count() < 5){  //Ojo porque hay que cambiar la limitación de jugadores (BBDD de juego)
+		var lim = Games.findOne({_id : $(this)[0].game_id}).players_max
+		if(Plays.find({match_id : $(this)[0]._id}).count() < lim){
 			Session.set('match_id', $(this)[0]._id);
 			$('#matches').hide();
-			$('#game').fadeIn();
-			$('#messagecont,#messages').fadeIn();
+			$('#roomcontainer').fadeIn();
 			Plays.insert({match_id : Session.get('match_id'), user_id : Meteor.userId(), score : 0});
 		} else {
 			Session.set('match_id', undefined);
@@ -170,6 +179,16 @@ Template.matchestemp.events = {
 		$('#games').fadeIn();
 	}
 }
+
+Template.roomgametemp.events = {
+	// Creamos una partida nueva en la base de datos
+	'click a#exitgame':function(event){
+		Session.set('match_id', undefined);
+		$('#roomcontainer').hide();
+		$('#matches').fadeIn();
+		console.log(Session.get('match_id'));
+	}
+};
 
 //Configuracion cuentas
 Accounts.ui.config({

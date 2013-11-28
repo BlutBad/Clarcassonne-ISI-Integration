@@ -54,9 +54,7 @@ html{
 	position: absolute;
 }
 
-#tabs{	
-	width: 100px;
-}
+
 
 #accordion{	
 	position: absolute;
@@ -68,6 +66,27 @@ html{
 	
 }
 
+#matcheslist{
+	background-color: white;
+	position: relative;
+	left: 20%;
+}
+
+#matcheslist td{
+	width: 400px;
+	height: 35px;
+	text-align: center;
+	background-color: #0077cc;
+	font-style: bold
+}
+
+#linktd:hover{
+	color: red;
+}
+
+#matcheslist a{
+	text-decoration: none; 
+}
 
 .coin-slider { overflow: hidden; zoom: 1; position: relative;   }
 .coin-slider a{ text-decoration: none; outline: none; border: none; }

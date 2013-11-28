@@ -38,8 +38,8 @@ Meteor.publish("matches", function(current_game_id) {
 });
 
 // Para cada cliente, publica la lista de jugadores de una partida en la que he abierto sesión.
-Meteor.publish("plays", function(current_match_id) {
+Meteor.publish("plays", function() {
 
-	return Plays.find({"match_id" : current_match_id});	
+	return Plays.find();	
 
 });

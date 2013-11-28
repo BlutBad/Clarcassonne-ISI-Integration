@@ -1,0 +1,6 @@
+canvas #aliencanvas {
+	background-color: blue;
+	margin: 1cm;
+	width: 480px;
+}
+	

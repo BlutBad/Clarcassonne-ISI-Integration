@@ -32,7 +32,7 @@
 			<li><a href="#juegos">Juegos</a></li>
 		</ul>
 		<div id="amigos"> {{> userstemp}} </div>
-    	<div id="juegos">{{> gamestemp}} {{> matchestemp}} {{> input}} {{> messagestemp}} {{> canvastemp}}</div>
+    	<div id="juegos">{{> gamestemp}} {{> matchestemp}} {{> roomgametemp}}</div>
 	</div>
 </template>
 
@@ -65,7 +65,7 @@
 </template>
 
 <template name="input">
-	<div id="messagecont"
+	<div id="messagecont">
 	<p> Mensaje: <input type="text" id="message"></p>
 	</div>
 </template>
@@ -98,6 +98,7 @@
 
 <template name="matchestemp">
 	<div id="matches">
+		{{> gamenametemp}}
 		<table>
 			{{# each matches}}
 				<tr>
@@ -110,6 +111,17 @@
 	</div>
 </template>
 
-<template name="canvastemp">
+<template name="alientemp">
 	<canvas id='game' width='320' height='480'></canvas>
+</template>
+
+<template name="roomgametemp">
+	<div id="roomcontainer">
+		<a href="#" id="exitgame"> Salir </a>
+		{{> input}} {{> messagestemp}} {{> alientemp}}
+	</div>
+</template>
+
+<template name="gamenametemp">
+	<h1>{{gamename}}</h1>
 </template>
