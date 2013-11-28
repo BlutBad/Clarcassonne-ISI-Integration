@@ -8,17 +8,9 @@
 			{{else}} <!--para que salga debajo sino sale a un lado el boton crear_torneo-->
 				<p></p>
 			{{/if}} 
-			<div class="one-third">
-				<h3>Juegos</h3>
-				<ul class="sub-navigation">
-					{{#each juegos}}
-						<li class="{{juegos}}"><a href="#">
-						<input type="button" id="{{name}}" class="sortBy" value="{{name}}" /> </a></li>
-					{{/each}}
-				</ul>         
-			</div> 
+			
 		</div>
-			<div class="two-thirds">
+			<div class="two-thirds"> 
 				<div class="blog">
 					{{#each torneo}}
 						<div class="post-summary">
@@ -38,7 +30,15 @@
 						</div>
 					{{/each}}
 				</div>
-			</div>                       
+			</div>   
+			<div class="one-third">
+				<h3>Juegos</h3>
+				<ul class="sub-navigation">
+					{{#each juegos}}
+						<li class="{{name}}"><a href="#">{{name}}</a></li>
+					{{/each}}
+				</ul>         
+			</div>                     
 			
 	{{/if}}
 </template> 

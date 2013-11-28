@@ -1,18 +1,18 @@
 <template name="ranking">
 	{{#if show}}
 		<h1>Ranking</h1> 
-
 		<div class="game_filter">
 			<h3>Filtrar ranking por juegos!</h3>
 			<ul class="sub-navigation">
 				{{#each juegos}}
-					<li><a href="#">{{name}}</a></li> 
+					<li class = "sortBy"><a href="#" class="{{_id}}">{{name}}</a></li> 
 				{{/each}}
 			</ul> 	
+		<input type="button" id="mostrar_ranking" value="Mostrar todos"> 
 		</div> 
 		
 		<div id = "ranking_container">
-			<table>
+			<table> 
 				<thead>
 					<tr>
 						<th>GAME</th>
