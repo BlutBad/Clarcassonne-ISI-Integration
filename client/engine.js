@@ -46,7 +46,7 @@
   
 
     // Gestión de la entrada (teclas para izda/derecha y disparo)
-    var KEY_CODES = { 37:'left', 39:'right', 38 :'up', 40:'down', 32:'sacar_ficha'};
+    var KEY_CODES = { 37:'left', 39:'right', 38 :'up', 40:'down', 32:'sacar_ficha', 27: 'back'};
     this.keys = {};
 
     this.setupInput = function() {
@@ -91,6 +91,8 @@
     // Son capas: se dibujan de menor num a mayor
     // Cada capa tiene que tener en su interfaz step() y draw()
     this.setBoard = function(num,board) { boards[num] = board; };
+    this.delBoard = function(num) { delete boards[num]; };
+    this.getBoard = function(num) { if (boards[num]) {return true;} else {return false;} };
 
 
 
@@ -342,7 +344,7 @@
     
     this.translate = function (x,y) {
     	_(this.objects).forEach(function (obj) {
-    		if (obj.type == "PiezaMapa") {
+    		if (obj.type == "PiezaMapa" || obj.type == "Seguidor") {
 				obj.x += 100*x;
 				obj.y += 100*y;
 			}
