@@ -209,34 +209,50 @@ var Tablero = new function(){
         console.log("Total de fichas: ",totalFichas);
         return rand;
     }
+
 	// Funcion que nos devuelve una lista donde podemos posicionar un seguidor dentro de una ficha.
 	this.colocarseguidor = function(ficha){
 		seguidor = [];
-				fichacamsig=Tablero.buscarxcoor(ficha.x,ficha.y-1);
+			var cruces = [
+				  'Ccruce',
+				  'Ciudad1lcruce',
+				  'Tcruce',
+			];
+
+				fichacamsig=Tablero.buscarxcoor(ficha.x,ficha.y-1); // ARRIBA
 				if (fichacamsig == undefined){tieneladron0 =[false,false]}
 				else if (fichacamsig.lleno){tieneladron0 = Tablero.cierraCamino(fichacamsig);}
 				else if (!fichacamsig.lleno){tieneladron0 =[false,false]}
 
-				fichacamsig=Tablero.buscarxcoor(ficha.x+1,ficha.y);
+				fichacamsig=Tablero.buscarxcoor(ficha.x+1,ficha.y); // DERECHA
 				if (fichacamsig == undefined){tieneladron1 =[false,false]}
 				else if (fichacamsig.lleno){tieneladron1 = Tablero.cierraCamino(fichacamsig);}
 				else if (!fichacamsig.lleno){tieneladron1 =[false,false]}
 
 				fichacamsig=Tablero.buscarxcoor(ficha.x,ficha.y+1);
-				if (fichacamsig == undefined){tieneladron2 =[false,false]}
+				if (fichacamsig == undefined){tieneladron2 =[false,false]} //ABAJO
 				else if (fichacamsig.lleno){tieneladron2 = Tablero.cierraCamino(fichacamsig);}
 				else if (!fichacamsig.lleno){tieneladron2 =[false,false]}
 
 				fichacamsig=Tablero.buscarxcoor(ficha.x-1,ficha.y);
-				if (fichacamsig == undefined){tieneladron3 =[false,false]}
+				if (fichacamsig == undefined){tieneladron3 =[false,false]} //IZQUIERDA
 				else if (fichacamsig.lleno){tieneladron3 = Tablero.cierraCamino(fichacamsig);}
 				else if (!fichacamsig.lleno){tieneladron3 =[false,false]}
 
 		for (i=0;i<=8;i++){
 
 			if (i==0){
-				if(ficha.arriba == "Rue" && tieneladron0[1] == false && tieneladron1[1] == false && tieneladron2[1] == false && tieneladron3[1] == false){
-					seguidor.push({t:"Ladron",n:i});					
+				
+				if(ficha.arriba == "Rue" ){
+						if (cruces.indexOf(ficha.tipo) != -1){ // Si la ficha es un cruce.
+							if (tieneladron0[1] == false){seguidor.push({t:"Ladron",n:i});}
+								
+						}else{
+							if(tieneladron0[1] == false && tieneladron1[1] == false && tieneladron2[1] == false && tieneladron3[1] == false){
+								seguidor.push({t:"Ladron",n:i});
+							}
+						}
+					
 				}else if(ficha.arriba == "Tierra"){
 					seguidor.push({t:"Caballero",n:i});			
 				}else if(ficha.arriba == "Campo"){
@@ -253,8 +269,15 @@ var Tablero = new function(){
 				}
 			}
 			if (i==2){
-				if(ficha.derecha == "Rue" && tieneladron0[1] == false && tieneladron1[1] == false && tieneladron2[1] == false && tieneladron3[1] == false){
-					seguidor.push({t:"Ladron",n:i});					
+				if(ficha.derecha == "Rue"){
+						if (cruces.indexOf(ficha.tipo) != -1){ // Si la ficha es un cruce.
+							if (tieneladron1[1] == false){seguidor.push({t:"Ladron",n:i});}
+								
+						}else{
+							if(tieneladron0[1] == false && tieneladron1[1] == false && tieneladron2[1] == false && tieneladron3[1] == false){
+								seguidor.push({t:"Ladron",n:i});
+							}
+						}				
 
 				}else if(ficha.derecha == "Tierra"){
 					seguidor.push({t:"Caballero",n:i});			
@@ -270,8 +293,15 @@ var Tablero = new function(){
 				}
 			}
 			if (i==4){
-				if(ficha.abajo == "Rue" && tieneladron0[1] == false && tieneladron1[1] == false && tieneladron2[1] == false && tieneladron3[1] == false){
-					seguidor.push({t:"Ladron",n:i});					
+				if(ficha.abajo == "Rue"){
+						if (cruces.indexOf(ficha.tipo) != -1){ // Si la ficha es un cruce.
+							if (tieneladron2[1] == false){seguidor.push({t:"Ladron",n:i});}
+								
+						}else{
+							if(tieneladron0[1] == false && tieneladron1[1] == false && tieneladron2[1] == false && tieneladron3[1] == false){
+								seguidor.push({t:"Ladron",n:i});
+							}
+						}						
 				}else if(ficha.abajo == "Tierra"){
 					seguidor.push({t:"Caballero",n:i});			
 				}else if(ficha.abajo == "Campo"){
@@ -284,8 +314,15 @@ var Tablero = new function(){
 				}
 			}
 			if (i==6){
-				if(ficha.izda == "Rue" && tieneladron0[1] == false && tieneladron1[1] == false && tieneladron2[1] == false && tieneladron3[1] == false){
-					seguidor.push({t:"Ladron",n:i});					
+				if(ficha.izda == "Rue"){
+						if (cruces.indexOf(ficha.tipo) != -1){ // Si la ficha es un cruce.
+							if (tieneladron3[1] == false){seguidor.push({t:"Ladron",n:i});}
+								
+						}else{
+							if(tieneladron0[1] == false && tieneladron1[1] == false && tieneladron2[1] == false && tieneladron3[1] == false){
+								seguidor.push({t:"Ladron",n:i});
+							}
+						}				
 				}else if(ficha.izda == "Tierra"){
 					seguidor.push({t:"Caballero",n:i});			
 				}else if(ficha.izda == "Campo"){
@@ -308,6 +345,7 @@ var Tablero = new function(){
 		return seguidor;
 	}
 
+//Funcion Cierra caminos.
 	this.cierraCamino = function(ficha){
 			var cierracamino = [
 				  'Ccruce',
@@ -528,6 +566,7 @@ var Tablero = new function(){
 			}
 
 	}
+
 
     this.cierraCastillo = function(ficha){
         var unlado = [

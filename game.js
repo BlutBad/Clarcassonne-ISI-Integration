@@ -234,19 +234,21 @@ $(function() {
 
 // Prueba la lista de seguidores.
     Tablero.iniciar();
-	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
+/*	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
 	console.log("lista: ", Tablero.colocarseguidor(nuevaficha));
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rcurva");
 	console.log("lista: ", Tablero.colocarseguidor(nuevaficha));
+*/
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
-	
-	//console.log("lista: ", Tablero.colocarseguidor(nuevaficha));
   var x=Tablero.colocarficha(nuevaficha,5,5);
 	x.seguidores.push({t:"Ladron",n:4});  //le metemos ladron
   nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");	
   Tablero.colocarficha(nuevaficha,5,6);
-	console.log("cierra camino4: ",Tablero.cierraCamino(nuevaficha))	
-	console.log("lista: ", Tablero.colocarseguidor(nuevaficha));
+	console.log("cierra camino4: ",Tablero.cierraCamino(nuevaficha));	
+	console.log("lista recta con ladron arriba: ", Tablero.colocarseguidor(nuevaficha));
+  nuevaficha = new ObjetoFicha(0,0,0,"Tcruce");	
+  Tablero.colocarficha(nuevaficha,5,4);
+	console.log("lista cruce con ladron arriba: ", Tablero.colocarseguidor(nuevaficha));
 
 // Prueba colocar seguidores en camino.
   
