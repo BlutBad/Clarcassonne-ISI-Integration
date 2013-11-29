@@ -148,6 +148,12 @@ $(function() {
 	Tablero.colocarficha(nuevaficha,5,7);
 	console.log("cierra camino3: ",Tablero.cierraCamino(nuevaficha))	
 	
+	//Prueba cierra camino sólo dos fichas
+	Tablero.iniciar();	
+	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
+	var x=Tablero.colocarficha(nuevaficha,5,5);
+	x.seguidores.push({t:"Ladron",n:4});  //le metemos ladron
+	console.log("cierra camino4: ",Tablero.cierraCamino(nuevaficha))	
 	
 	//Prueba error al colocar fichas que no encajan
 	Tablero.iniciar();
@@ -233,9 +239,14 @@ $(function() {
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rcurva");
 	console.log("lista: ", Tablero.colocarseguidor(nuevaficha));
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
-	Tablero.colocarficha(nuevaficha,5,5); 
+	
+	//console.log("lista: ", Tablero.colocarseguidor(nuevaficha));
+  var x=Tablero.colocarficha(nuevaficha,5,5);
+	x.seguidores.push({t:"Ladron",n:4});  //le metemos ladron
+  nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");	
+  Tablero.colocarficha(nuevaficha,5,6);
+	console.log("cierra camino4: ",Tablero.cierraCamino(nuevaficha))	
 	console.log("lista: ", Tablero.colocarseguidor(nuevaficha));
-
 
 // Prueba colocar seguidores en camino.
   

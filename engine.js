@@ -241,8 +241,6 @@ var Tablero = new function(){
 					seguidor.push({t:"Caballero",n:i});			
 				}else if(ficha.arriba == "Campo"){
 					seguidor.push({t:"Granjero",n:i});
-				}else{
-					seguidor.push({t:"",n:i});
 				}
 			}
 			if (i==1){
@@ -252,8 +250,6 @@ var Tablero = new function(){
 					seguidor.push({t:"Granjero",n:i});			
 				}else if(ficha.arriba == "Tierra" && ficha.derecha == "Campo"){
 					seguidor.push({t:"Granjero",n:i});	
-				}else{
-					seguidor.push({t:"",n:i});
 				}
 			}
 			if (i==2){
@@ -264,8 +260,6 @@ var Tablero = new function(){
 					seguidor.push({t:"Caballero",n:i});			
 				}else if(ficha.derecha == "Campo"){
 					seguidor.push({t:"Granjero",n:i});
-				}else{
-					seguidor.push({t:"",n:i});
 				}
 			}
 			if (i==3){
@@ -273,8 +267,6 @@ var Tablero = new function(){
 					seguidor.push({t:"Granjero",n:i});					
 				}else if(ficha.derecha == "Tierra" && ficha.abajo == "Rue"){
 					seguidor.push({t:"Granjero",n:i});			
-				}else{
-					seguidor.push({t:"",n:i});
 				}
 			}
 			if (i==4){
@@ -284,15 +276,11 @@ var Tablero = new function(){
 					seguidor.push({t:"Caballero",n:i});			
 				}else if(ficha.abajo == "Campo"){
 					seguidor.push({t:"Granjero",n:i});
-				}else{
-					seguidor.push({t:"",n:i});
 				}
 			}
 			if (i==5){
 				if(ficha.abajo == "Rue"){
 					seguidor.push({t:"Granjero",n:i});						
-				}else{
-					seguidor.push({t:"",n:i});
 				}
 			}
 			if (i==6){
@@ -302,15 +290,11 @@ var Tablero = new function(){
 					seguidor.push({t:"Caballero",n:i});			
 				}else if(ficha.izda == "Campo"){
 					seguidor.push({t:"Granjero",n:i});
-				}else{
-					seguidor.push({t:"",n:i});
 				}
 			}
 			if (i==7){
 				if(ficha.izda == "Rue"){
 					seguidor.push({t:"Granjero",n:i});						
-				}else{
-					seguidor.push({t:"",n:i});
 				}
 			}
 			if (i==8){
@@ -318,8 +302,6 @@ var Tablero = new function(){
 					seguidor.push({t:"Monje",n:i});			
 				}else if(ficha.abajo == "Campo" && ficha.izda == "Campo" && ficha.derecha == "Campo" && ficha.arriba == "Campo"){			
 					seguidor.push({t:"Monje",n:i});	
-				}else{
-					seguidor.push({t:"",n:i});
 				}
 			}	
 		}
@@ -356,11 +338,7 @@ var Tablero = new function(){
 									}
 									else if(!ficha2.lleno){return [true,hayladron]}
 									else {
-									    if (_.find(ficha2.seguidores,function(obj){return (obj.t=="Ladron")})){
-									    return recursiva(ficha2,"abajo",true)
-									    }else{
-									    return recursiva(ficha2,"abajo",false)
-									    }
+									    return recursiva(ficha2,"abajo",hayladron);
 									}
 							}
 							else if (ficha.abajo=="Rue" && prohibido!="abajo"){
@@ -374,11 +352,8 @@ var Tablero = new function(){
 									}
 									else if(!ficha2.lleno){return [true,hayladron]}
 									else {
-									    if (_.find(ficha2.seguidores,function(obj){return (obj.t=="Ladron")})){
-									    return recursiva(ficha2,"arriba",true)
-									    }else{
-									    return recursiva(ficha2,"arriba",false)
-									    }
+									    return recursiva(ficha2,"arriba",hayladron);
+									    
 									}
 							}
 							else if (ficha.izda=="Rue" && prohibido!="izquierda"){
@@ -392,11 +367,9 @@ var Tablero = new function(){
 									}
 									else if(!ficha2.lleno){return [true,hayladron]}
 									else {
-									    if (_.find(ficha.seguidores,function(obj){return (obj.t=="Ladron")})){
-									      return recursiva(ficha2,"derecha",true)
-									    }else{
-									      return recursiva(ficha2,"derecha",false)
-									    }
+									    
+									      return recursiva(ficha2,"derecha",hayladron);
+									    
 									}
 							}
 							else if (ficha.derecha=="Rue" && prohibido!="derecha"){
@@ -410,11 +383,9 @@ var Tablero = new function(){
 									}
 									else if(!ficha2.lleno){return [true,hayladron]}
 									else {
-									    if (_.find(ficha2.seguidores,function(obj){return (obj.t=="Ladron")})){
-									    return recursiva(ficha2,"izquierda",true)
-									    }else{
-									    return recursiva(ficha2,"izquierda",false)
-									    }
+									    
+									    return recursiva(ficha2,"izquierda",hayladron);
+									    
 									}
 							}
 					
@@ -425,6 +396,13 @@ var Tablero = new function(){
           //tiene que cerrar camino por dos caminos distintos
           var cerrado=0;   //cerrado tendrá que ser 2
           var ladron=0;     //comprueba los ladrones que haya en el camino
+          
+          var hayladron=false;
+              
+              
+          if (_.find(ficha.seguidores,function(obj){return (obj.t=="Ladron")})){
+              hayladron=true;
+          }
 	            
 	     	  if (ficha.arriba=="Rue"){		// si hay camino por arriba 
 							ficha2=Tablero.buscarxcoor(ficha.x,ficha.y-1);
@@ -437,7 +415,7 @@ var Tablero = new function(){
 							}
 							// si no, recorremos el camino con recursiva
 							else if(ficha2.lleno){
-							    var x= recursiva(ficha2,"abajo",false);
+							    var x= recursiva(ficha2,"abajo",hayladron);
 							    if (x[0]){cerrado++};
 							    if (x[1]){ladron++};
 							} 
@@ -452,7 +430,7 @@ var Tablero = new function(){
 							      }
 									}
 									else if(ficha2.lleno){
-							      var x= recursiva(ficha2,"arriba",false);
+							      var x= recursiva(ficha2,"arriba",hayladron);
 							      console.log('resultado',x);
 							      if (x[0]){cerrado++};
 							      if (x[1]){ladron++};
@@ -467,7 +445,7 @@ var Tablero = new function(){
 							      }
 									}
 									else if(ficha2.lleno){
-							      var x= recursiva(ficha2,"derecha",false);
+							      var x= recursiva(ficha2,"derecha",hayladron);
 							      if (x[0]){cerrado++};
 							      if (x[1]){ladron++};
 							    } 
@@ -481,16 +459,25 @@ var Tablero = new function(){
 							      }
 									}
 									else if(ficha2.lleno){
-							      var x= recursiva(ficha2,"izquierda",false);
+							      var x= recursiva(ficha2,"izquierda",hayladron);
 							      if (x[0]){cerrado++};
 							      if (x[1]){ladron++};
 							    } 
 					  }
-					  if (ladron>0){ladron = true}else{ladron=false}
+					  if (ladron>0 || hayladron){ladron = true}else{ladron=false}
 					  if (cerrado == 2){return [true,ladron]}
 					  else {return [false,ladron]}
 			}
 			else{
+			
+			    var hayladron=false;
+                
+                
+          if (_.find(ficha.seguidores,function(obj){return (obj.t=="Ladron")})){
+              hayladron=true;
+          }
+			
+			
 				  if (ficha.tipo=="Ccruce" || ficha.tipo=="Tcruce" || ficha.tipo == "Ciudad1lcruce"){
 				  
 				      if (ficha.arriba=="Rue"){	
@@ -498,7 +485,7 @@ var Tablero = new function(){
 									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){
 									    console.log("cierra camino (cruce) por arriba"); 
 									}
-									else if(ficha2.lleno && recursiva(ficha2,"abajo",false)[0]){
+									else if(ficha2.lleno && recursiva(ficha2,"abajo",hayladron)[0]){
 									    console.log("cierra camino (cruce) por arriba");
 									} 	
 					  }
@@ -507,7 +494,7 @@ var Tablero = new function(){
 									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){
 									    console.log("cierra camino (cruce) por abajo")
 									}
-									else if(ficha2.lleno && recursiva(ficha2,"arriba",false)[0]){
+									else if(ficha2.lleno && recursiva(ficha2,"arriba",hayladron)[0]){
 									    console.log("cierra camino (cruce) por abajo")
 									}
 					  }
@@ -516,7 +503,7 @@ var Tablero = new function(){
 									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){
 									    console.log("cierra camino (cruce) por la izda")
 									}
-									else if(ficha2.lleno && recursiva(ficha2,"derecha",false)[0]){
+									else if(ficha2.lleno && recursiva(ficha2,"derecha",hayladron)[0]){
 									    console.log("cierra camino (cruce) por la izda")
 									}
 					  }
@@ -525,12 +512,19 @@ var Tablero = new function(){
 									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){
 									    console.log("cierra camino (cruce) por la dcha")
 									}
-									else if(ficha2.lleno && recursiva(ficha2,"izquierda",false)[0]){
+									else if(ficha2.lleno && recursiva(ficha2,"izquierda",hayladron)[0]){
 									    console.log("cierra camino (cruce) por la dcha")
 									}
 					  }
 				  }
-				  else{return recursiva(ficha,"",false)}	  
+				  else{
+				    var hayladron=false;
+                
+                
+            if (_.find(ficha.seguidores,function(obj){return (obj.t=="Ladron")})){
+                hayladron=true;
+            }
+				    return recursiva(ficha,"",hayladron)}	  
 			}
 
 	}
