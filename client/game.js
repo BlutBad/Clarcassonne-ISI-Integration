@@ -64,6 +64,9 @@ img.src = 'images/background.png';
 var img2 = new Image();
 img2.src = 'images/abajo.png';
 
+var img3 = new Image();
+img3.src = 'images/flecharotacion.png';
+
 Jugador1 = {nombre: "Carlos" , color: "ficha_rojo", puntos:0, turno:0};
 Jugador2 = {nombre: "Mario"  , color: "ficha_azul", puntos:10, turno: 1};
 Jugador3 = {nombre: "Maria"  , color: "ficha_amarillo", puntos:20, turno: 0};
@@ -95,7 +98,7 @@ startGame = function() {
 	
 	Tablero = new GameBoard();
 	Game.setBoard(4,Tablero);
-	
+	Game.setBoard(6,new Flecharotacion());
 	Tablero.add(new PiezaMapa(75,73,'Rrecta',90));
 	Game.setBoard(5,new Ficha_abajo());
 	//Game.setBoard(6,new Set(new PiezaMapa(72,72,'Rrecta',0)));
@@ -129,6 +132,14 @@ Ficha_abajo = function(cx,cy) {
     	
     	this.step = function(dt) {}
 };
+
+Flecharotacion = function(){
+
+	 this.draw = function(ctx){
+		ctx.drawImage(img3,720,560); 
+	}
+	this.step = function(dt) { }
+}
 
 Jugadores = function() {  
    this.draw = function(ctx){
