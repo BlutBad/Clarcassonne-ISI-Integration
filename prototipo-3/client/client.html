@@ -44,7 +44,9 @@
 		
 		<div id="accordion">
 			<h3>Amigos</h3>
+				<div>
 				{{> listaAmigosTemp}}
+				</div>
 			<h3>Desconectados</h3>
 				<p>Futuros amigos desconectados</p>	
 			<h3>Buscar</h3>
@@ -145,7 +147,7 @@
 <template name="listaAmigosTemp">
 	<div id="listaAmigos">
 		{{# each listacompis}}
-			{{username}}
+			{{username}}<br>
 		{{/ each}}
 	</div>	
 </template>

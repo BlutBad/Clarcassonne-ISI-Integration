@@ -63,7 +63,7 @@ Template.gamestemp.games=function(){
 	return Games.find();
 }
 
-//Encuentra juegos
+//Encuentra partidas
 Template.matchestemp.matches = function(){
 	return Matches.find();
 }
@@ -100,7 +100,7 @@ Deps.autorun(function () {
 	Meteor.subscribe("matches", current_game_id);
 });
 
-//Subscripción selectiva a los mensajes de la sal
+//Subscripción selectiva a los mensajes de la sala
 Deps.autorun(function () {
 	var current_match_id = Session.get("match_id")
 	Meteor.subscribe("messages", current_match_id);
@@ -162,21 +162,17 @@ Template.input.events = {
 
 
 
-/*
+//Pinta lista de amigos, tiene que ser reactivo porque no esta disponible desde el comienzo
 Deps.autorun(function () {
-	if (Meteor.user().amigos)
-		misamigos=Meteor.user().amigos;
+	Template.listaAmigosTemp.listacompis = function(){
+		if (Meteor.user()){
+			if (Meteor.user().amigos!=undefined){
+				amigos=Meteor.user().amigos;
+				return Meteor.users.find({_id: {$in: amigos}});
+			}	
+		}	
+	}		
 });
-
-Template.listaAmigosTemp.listacompis = function(){
-	console.log(Meteor.userId());
-	console.log(Meteor.user().amigos);
-	//amigos=meteor.user().amigos;
-	//return Meteor.users.find({_id: {$in: amigos}});
-	//arrayprueba = ["QsgC7nX7NNhjZnYfn","idinventado"];
-	//return Meteor.users.find({_id: {$in: arrayprueba}});
-}
-*/
 
 
 
