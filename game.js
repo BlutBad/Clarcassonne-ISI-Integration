@@ -9,7 +9,7 @@ $(function() {
 	Tablero.iniciar();
 
 	//comprobamos que efectivamente la coordenada (5,5) es un hueco de ficha vacio. 
-	var centro = Tablero.buscarxcoor(5,5);
+/*	var centro = Tablero.buscarxcoor(5,5);
 	console.log("Tablero se inicia como lleno:",centro.lleno);
 
 	//creamos una nueva ficha de tipo Ciudad1l2crect (por ejemplo) sin coordenadas
@@ -148,12 +148,6 @@ $(function() {
 	Tablero.colocarficha(nuevaficha,5,7);
 	console.log("cierra camino3: ",Tablero.cierraCamino(nuevaficha))	
 	
-	//Prueba cierra camino sólo dos fichas
-	Tablero.iniciar();	
-	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
-	var x=Tablero.colocarficha(nuevaficha,5,5);
-	x.seguidores.push({t:"Ladron",n:4});  //le metemos ladron
-	console.log("cierra camino4: ",Tablero.cierraCamino(nuevaficha))	
 	
 	//Prueba error al colocar fichas que no encajan
 	Tablero.iniciar();
@@ -191,8 +185,41 @@ $(function() {
     var nuevaficha = new ObjetoFicha(0,0,0,'Ciudad1l');                     // -        -   
     Tablero.colocarficha(nuevaficha,1,2);                                   // ----------
     console.log("cierra castillo2: ",Tablero.cierraCastillo(nuevaficha));   //      3  
+*/
+    // Prueba de cierra Castillo 3
+    Tablero.iniciar();
+    var nuevaficha = new ObjetoFicha(0,0,0, 'Ciudad1l');
+    nuevaficha.girar();
+    Tablero.colocarficha(nuevaficha, 4,2);
+    var nuevaficha = new ObjetoFicha(0,0,0, 'Ciudad3l');
+    nuevaficha.girar();
+    nuevaficha.girar();
+    Tablero.colocarficha(nuevaficha, 3,2);
+    var nuevaficha = new ObjetoFicha(0,0,0, 'Ciudad2l');
+    nuevaficha.girar();
+    nuevaficha.girar();
+    Tablero.colocarficha(nuevaficha, 2,2);
+    var nuevaficha = new ObjetoFicha(0,0,0, 'Ciudad2l');
+    nuevaficha.girar();
+    nuevaficha.girar();
+    nuevaficha.girar();
+    Tablero.colocarficha(nuevaficha, 2,3);
+    var nuevaficha = new ObjetoFicha(0,0,0, 'CiudadE');
+    Tablero.colocarficha(nuevaficha, 3,3);
+    var nuevaficha = new ObjetoFicha(0,0,0, 'Ciudad1l');
+    nuevaficha.girar();
+    Tablero.colocarficha(nuevaficha, 4,3);
+    var nuevaficha = new ObjetoFicha(0,0,0, 'Ciudad2l');
+    nuevaficha.girar();
+    nuevaficha.girar();
+    nuevaficha.girar();
+    Tablero.colocarficha(nuevaficha, 3,4);
+    var nuevaficha = new ObjetoFicha(0,0,0, 'Ciudad1l');
+    nuevaficha.girar();
+    Tablero.colocarficha(nuevaficha, 4,4); 
+    console.log("cierra castillo3: ",Tablero.cierraCastillo(nuevaficha));
 
-    //Cierra Claustro con Catedral
+/*    //Cierra Claustro con Catedral
     Tablero.iniciar();
     var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
     Tablero.colocarficha(nuevaficha,7,5);
@@ -239,17 +266,12 @@ $(function() {
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rcurva");
 	console.log("lista: ", Tablero.colocarseguidor(nuevaficha));
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
-	
-	//console.log("lista: ", Tablero.colocarseguidor(nuevaficha));
-  var x=Tablero.colocarficha(nuevaficha,5,5);
-	x.seguidores.push({t:"Ladron",n:4});  //le metemos ladron
-  nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");	
-  Tablero.colocarficha(nuevaficha,5,6);
-	console.log("cierra camino4: ",Tablero.cierraCamino(nuevaficha))	
+	Tablero.colocarficha(nuevaficha,5,5); 
 	console.log("lista: ", Tablero.colocarseguidor(nuevaficha));
 
+
 // Prueba colocar seguidores en camino.
-  
+*/
 });
 
 
