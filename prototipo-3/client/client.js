@@ -3,6 +3,7 @@ Meteor.startup(function () {
 	if(Meteor.userId()){
 			$('#container').children().hide();
 			$('#container #tabs').fadeIn();
+			$('#container #chatTabs').fadeIn();
 			$('#friends').fadeIn();
 	} else {
 			$('#container').children().hide();
@@ -20,12 +21,18 @@ $(document).ready(function() {
 		$(function() {
 			$("#accordion").accordion();
 		});
+		 $(function() {
+			$( "#chatTabs" ).tabs({collapsible: true});
+		});
 		
-		$("#friends").css("top",$(window).height()-58);
-		$("#friends").css("left",$(window).width()-183);
-		$("#accordion").css("top",50);
-		$("#tabs").css("width",$(window).width()-200);
+		$("#friends").css("top",$(window).height()-57);
+		$("#friends").css("left",$(window).width()-181);
+		$("#accordion").css("top",10);
 		$("#accordion").css("left",$(window).width()-183);
+		$("#tabs").css("width",$(window).width()-200);
+		$("#chatTabs").css("width",$(window).width()-200);
+		$("#chatTabs").css("top",$(window).height()-148);
+
 
 		$("#friends").click(function() {
 			if($("#friends").hasClass("escondido")){
@@ -79,11 +86,13 @@ Template.gamenametemp.gamename=function(){
 var usersLoaded = false;
 Meteor.subscribe("users", function () {
 	usersLoaded = true;
+
 });
 //Subscripcion a lista de mensajes
 Meteor.subscribe("messages");
 //Subscripcion a lista de juegos
 Meteor.subscribe("games");
+
 
 //Subscripción selectiva a la lista de partidas
 Deps.autorun(function () {
@@ -110,12 +119,20 @@ Deps.autorun(function () {
 	if(Meteor.userId()){
 		$('#container').children().hide();
 		$('#container #tabs').fadeIn();
+		$('#container #chatTabs').fadeIn();
 		$('#friends').fadeIn();
 	}else{
 		$('#container').children().hide();
 		$('#slider').fadeIn();
 	}
 });
+
+
+
+
+
+
+
 
 
 
@@ -141,6 +158,30 @@ Template.input.events = {
 		}	
 	}
 }
+
+
+
+
+/*
+Deps.autorun(function () {
+	if (Meteor.user().amigos)
+		misamigos=Meteor.user().amigos;
+});
+
+Template.listaAmigosTemp.listacompis = function(){
+	console.log(Meteor.userId());
+	console.log(Meteor.user().amigos);
+	//amigos=meteor.user().amigos;
+	//return Meteor.users.find({_id: {$in: amigos}});
+	//arrayprueba = ["QsgC7nX7NNhjZnYfn","idinventado"];
+	//return Meteor.users.find({_id: {$in: arrayprueba}});
+}
+*/
+
+
+
+
+
 
 //Para buscar y añadir usuarios
 Template.friendsTemp.events = {
@@ -185,8 +226,7 @@ function searchUsers(user) {
 }
 
 function isAmigo (id) {
-	amigos = Meteor.user().amigos;
-
+	amigos = Meteor.user().amigos;		
 	if (amigos == undefined){
 		return false;
 	}
@@ -241,6 +281,15 @@ Template.gamestemp.events = {
 }
 
 
+
+
+
+
+
+
+
+
+
 Template.matchestemp.events = {
 	// Creamos una partida nueva en la base de datos
 	'keydown input#match_creator':function(event){
@@ -285,6 +334,16 @@ Template.roomgametemp.events = {
 		console.log(Session.get('match_id'));
 	}
 };
+
+
+
+
+
+
+
+
+
+
 
 //Configuracion cuentas
 Accounts.ui.config({
