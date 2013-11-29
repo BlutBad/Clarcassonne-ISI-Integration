@@ -102,6 +102,7 @@ startGame = function() {
 	Tablero.add(new PiezaMapa(75,73,'Rrecta',90));
 	Game.setBoard(5,new Ficha_abajo());
 	//Game.setBoard(6,new Set(new PiezaMapa(72,72,'Rrecta',0)));
+	
 };
 
 
@@ -120,20 +121,16 @@ Ficha_abajo = function(cx,cy) {
     	this.draw = function(ctx) {
 		ctx.drawImage(img2, 500, 500);
 		if (dibujar == true)
-		        SpriteSheet.draw(ctx,"Ciudad3lE",600,500,1);
+		        //SpriteSheet.draw(ctx,"Ciudad3lE",600,500,1);
 		        dibujar = false
 			
     	}
     	
     	this.step = function(dt) {
-    	       if(Game.keys['sacar_ficha']) 
-                        dibujar = true;
-    	                //
-		        //if(prueba && Game.keys['sacar_ficha']) {
-			//	prueba = false;
-				
-			//} 	
-    	
+    	       if(Game.keys['sacar_ficha']) {
+                        dibujar = true;	
+                        Game.setBoard(7,new PiezaMapa(76,74, "Ciudad3lE",90));
+               } 	
     	}
 };
 
