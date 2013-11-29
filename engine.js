@@ -391,7 +391,7 @@ var Tablero = new function(){
               
 							if (ficha.arriba=="Rue" && prohibido!="arriba"){		
 									ficha2=Tablero.buscarxcoor(ficha.x,ficha.y-1);
-									if (ficha2.x==fichaorig.x && ficha2.y==fichaorig.y){return true}
+									if (ficha2.x==fichaorig.x && ficha2.y==fichaorig.y){cerrado++; return true}
 									else if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){ 
 									  puntos++;
 									  ladron =_.find(ficha2.seguidores,function(obj){return (obj.t=="Ladron", obj.n==4)});
@@ -403,7 +403,7 @@ var Tablero = new function(){
 							}
 							else if (ficha.abajo=="Rue" && prohibido!="abajo"){
 									ficha2=Tablero.buscarxcoor(ficha.x,ficha.y+1);
-									if (ficha2.x==fichaorig.x && ficha2.y==fichaorig.y){return true}
+									if (ficha2.x==fichaorig.x && ficha2.y==fichaorig.y){cerrado++; return true}
 									else if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){
 									  puntos++;
 									  ladron =_.find(ficha2.seguidores,function(obj){return (obj.t=="Ladron", obj.n==0)});
@@ -415,7 +415,7 @@ var Tablero = new function(){
 							}
 							else if (ficha.izda=="Rue" && prohibido!="izquierda"){
 									ficha2=Tablero.buscarxcoor(ficha.x-1,ficha.y);
-									if (ficha2.x==fichaorig.x && ficha2.y==fichaorig.y){return true}
+									if (ficha2.x==fichaorig.x && ficha2.y==fichaorig.y){cerrado++; return true}
 									else if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){
 									  puntos++;
 									  ladron =_.find(ficha2.seguidores,function(obj){return (obj.t=="Ladron", obj.n==2)});
@@ -427,7 +427,7 @@ var Tablero = new function(){
 							}
 							else if (ficha.derecha=="Rue" && prohibido!="derecha"){
 									ficha2=Tablero.buscarxcoor(ficha.x+1,ficha.y);
-									if (ficha2.x==fichaorig.x && ficha2.y==fichaorig.y){return true}
+									if (ficha2.x==fichaorig.x && ficha2.y==fichaorig.y){cerrado++; return true}
 									else if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){
 									  puntos++;
 									  ladron =_.find(ficha2.seguidores,function(obj){return (obj.t=="Ladron", obj.n==6)});
@@ -451,7 +451,7 @@ var Tablero = new function(){
           if (ladron){jugadores.push(ladron.j)}
 
 	            
-	     	  if (ficha.arriba=="Rue"){		// si hay camino por arriba 
+	     	  if (ficha.arriba=="Rue" && cerrado<2){		// si hay camino por arriba 
 							ficha2=Tablero.buscarxcoor(ficha.x,ficha.y-1);
 							//miramos la ficha siguiente, si está llena y cierra camino cerrado +1
 							if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){
@@ -465,7 +465,7 @@ var Tablero = new function(){
 							else if(ficha2.lleno && recursiva(ficha2,"abajo")){cerrado++};							  
 									
 					  }
-					  if (ficha.abajo=="Rue"){
+					  if (ficha.abajo=="Rue" && cerrado<2){
 									ficha2=Tablero.buscarxcoor(ficha.x,ficha.y+1);
 									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){
 									  puntos++;
@@ -475,7 +475,7 @@ var Tablero = new function(){
 									}
 									else if(ficha2.lleno && recursiva(ficha2,"arriba")){cerrado++};
 					  }
-					  if (ficha.izda=="Rue"){
+					  if (ficha.izda=="Rue" && cerrado<2){
       				  ficha2=Tablero.buscarxcoor(ficha.x-1,ficha.y);
 									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){
 									  puntos++;
@@ -485,7 +485,7 @@ var Tablero = new function(){
 									}
 									else if(ficha2.lleno && recursiva(ficha2,"derecha")){cerrado++};			
 					  }
-					  if (ficha.derecha=="Rue"){
+					  if (ficha.derecha=="Rue" && cerrado<2){
 									ficha2=Tablero.buscarxcoor(ficha.x+1,ficha.y);
 									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){
 									  puntos++;
@@ -503,6 +503,7 @@ var Tablero = new function(){
                    jugador.puntos+=puntos;
                 });
             }
+            
 					  if (cerrado == 2){return [true,ladron]}
 					  
 					  else {return [false,ladron]}
