@@ -124,10 +124,10 @@ Ficha_abajo = function(cx,cy) {
     	this.draw = function(ctx) {
 		ctx.drawImage(img2, 500, 500);  
 		if(!Game.keys['sacar_ficha']) prueba = true;
-		if(prueba && Game.keys['sacar_ficha']) {
-			prueba = false;
-			SpriteSheet.draw(ctx,Ciudad3lE,200,300,1);
-		} 		
+			if(prueba && Game.keys['sacar_ficha']) {
+				prueba = false;
+				SpriteSheet.draw(ctx,"Ciudad3lE",600,500,1);
+			} 		
     	}
     	
     	this.step = function(dt) {}
