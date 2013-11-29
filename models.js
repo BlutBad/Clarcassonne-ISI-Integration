@@ -68,3 +68,10 @@ score : score
 });
 
 */
+
+//Apuntarse a torneos 
+/* campos para champuser:
+	id_user
+	id_torneo
+*/
+ChampUser = new Meteor.Collection("champuser");

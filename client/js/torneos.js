@@ -11,6 +11,17 @@ Template.torneos.events = {
 	},
 	'click #mostrar_torneos': function() {
 		Session.set("gametor", undefined);
+	},
+	'click .sign': function (){
+		//console.log(this._id);
+		//console.log(Meteor.user()._id);
+		if (!ChampUser.findOne({id_torneo: this._id, id_user: Meteor.user()._id})){
+			ChampUser.insert({id_torneo: this._id, id_user: Meteor.user()._id});
+		};
+	},
+	'click .participantes': function(){
+		//console.log(this._id);
+		Session.set("showParticipantes", this._id);
 	}
 };
 
@@ -19,9 +30,27 @@ var openCreateDialog = function () {
 	Session.set("showCreateDialog", true);
 }; 
 
- 
+
 Template.torneos.showCreateDialog = function () {
 	return Session.get("showCreateDialog");
+};
+
+Template.torneos.participantes= function(){
+	show_torneos = Session.get("showParticipantes");
+	//console.log(show_torneos);
+	champ = ChampUser.find({id_torneo: show_torneos});
+	champ = [];
+	champ.forEach(function(each) { 
+		console.log(each.id_user);
+		usu = {};  
+		//if (Meteor.user(each.id_user).username){
+			usu.usuarios= Meteor.user(each.id_user).profile.name; 
+			usu.game = Torneos.findOne({_id: each.id_torneo}).name
+		console.log(usu); 
+    	champ.push(usu);
+    	console.log(champ);
+    });  
+    return champ;
 };
 
 
@@ -86,4 +115,3 @@ Template.torneos.juegos=function(){
 	return Juegos.find({});
 };
 
-		
