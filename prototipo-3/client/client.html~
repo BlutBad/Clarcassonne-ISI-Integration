@@ -4,13 +4,17 @@
 
 <body>
 	<div id="div-login-button">{{loginButtons}}</div>
-	<h1 id="titulo" ><FONT Size="7">X-ADrian</FONT></h1>
-	<p> Welcome to X-ADrian Games! </p>
-   	<div id="container">
-   		{{> cointemp}}
+	<h1><FONT  id="titulo" Size="6">X-ADrian</FONT>
+		<FONT Size="2">&nbsp&nbsp&nbsp Welcome to X-ADrian platform</FONT>
+	</h1>
+	<div id="container">
+   	{{> cointemp}}
 		{{> tabstemp}}
 		{{> friendsTemp}}
+		{{> chatsTabsTemp}}
    	</div>
+
+   	
 
 </body>
 
@@ -28,10 +32,10 @@
 <template name="tabstemp">
 	<div id="tabs" >
 		<ul>
-			<li><a href="#amigos">Amigos</a></li>
+			<li><a href="#usuarios">Usuarios</a></li>
 			<li><a href="#juegos">Juegos</a></li>
 		</ul>
-		<div id="amigos"> {{> userstemp}} </div>
+		<div id="usuarios"> {{> userstemp}} </div>
     	<div id="juegos">{{> gamestemp}} {{> matchestemp}} {{> roomgametemp}}</div>
 	</div>
 </template>
@@ -40,14 +44,13 @@
 		
 		<div id="accordion">
 			<h3>Amigos</h3>
-				<div>
-					<p>lista amigos</p>
-					<p>lista amigos</p>
-					<p>lista amigos</p>
-				</div>
+				{{> listaAmigosTemp}}
+			<h3>Desconectados</h3>
+				<p>Futuros amigos desconectados</p>	
 			<h3>Buscar</h3>
 				<div>
-					<p>Buscar</p>
+					<input type="text" id="formSearch">
+					<input type="button" id="buttonSearch" value="Buscar"/>
 				</div>
 		</div>
 		<a id="friends" class="escondido" style="cursor:pointer;" >
@@ -56,17 +59,28 @@
 	
 </template>
 
+<template name="chatsTabsTemp">
+	<div id="chatTabs" >
+		<ul>
+			<li><a href="#nombrechat1">amigo1</a></li>
+			<li><a href="#nombrechat2">amigo2</a></li>
+		</ul>
+		<div id="nombrechat1"> <p>mensajes con amigo1</p> </div>
+		<div id="nombrechat2"> <p>mensajes con amigo2</p> </div>
+	</div>
+</template>
+
 <template name="userstemp">
 	<div id="users" >
 		{{# each users}}
-				<p>{{username}}</p>
+			<p>{{username}}</p>
 		{{/each}}
 	</div>
 </template>
 
 <template name="input">
 	<div id="messagecont">
-	<p> Mensaje: <input type="text" id="message"></p>
+		<p> Mensaje: <input type="text" id="message"></p>
 	</div>
 </template>
 
@@ -119,7 +133,7 @@
 
 <template name="roomgametemp">
 	<div id="roomcontainer">
-		<a href="#" id="exitgame"> Salir </a>
+		<a style ="cursor:pointer;text-decoration:underline;" id="exitgame"> Salir </a>
 		{{> input}} {{> messagestemp}} {{> alientemp}}
 	</div>
 </template>
@@ -127,3 +141,13 @@
 <template name="gamenametemp">
 	<h1>{{gamename}}</h1>
 </template>
+
+<template name="listaAmigosTemp">
+	<div id="listaAmigos">
+		{{# each listacompis}}
+			{{username}}
+		{{/ each}}
+	</div>	
+</template>
+
+

@@ -11,7 +11,7 @@ Meteor.startup(function () {
 	}
 	$('#matches').hide();
 	$('#roomcontainer').hide();
-
+	$('#aliencontainer').hide();
 });
 
 //Cargo el efecto slider y pestañas
@@ -304,13 +304,15 @@ Template.matchestemp.events = {
 			}
 		}
 	},
-	// Cargamos el juego
+	// Entramos en una partida
 	'click a.linkmatch':function(event){
 		var lim = Games.findOne({_id : $(this)[0].game_id}).players_max
 		if(Plays.find({match_id : $(this)[0]._id}).count() < lim){
 			Session.set('match_id', $(this)[0]._id);
 			$('#matches').hide();
 			$('#roomcontainer').fadeIn();
+			if (Games.findOne({_id : $(this)[0].game_id}).name=="Alien_Invasion")
+				$('#aliencontainer').show()
 			Plays.insert({match_id : Session.get('match_id'), user_id : Meteor.userId(), score : 0});
 		} else {
 			Session.set('match_id', undefined);
@@ -326,10 +328,11 @@ Template.matchestemp.events = {
 }
 
 Template.roomgametemp.events = {
-	// Creamos una partida nueva en la base de datos
+	// Salimos de una partida
 	'click a#exitgame':function(event){
 		Session.set('match_id', undefined);
 		$('#roomcontainer').hide();
+		$('#aliencontainer').hide();
 		$('#matches').fadeIn();
 		console.log(Session.get('match_id'));
 	}
