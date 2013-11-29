@@ -4,7 +4,7 @@ Template.ranking.show = function() {
 
 Template.ranking.scores = function() { 
 	idgame_session = Session.get("gamerank");
-	if (idgame_session == undefined) {
+	if (idgame_session == null) {
 		rankings = Ranking.find({});
 	} else {
 		rankings = Ranking.find({gameId: idgame_session})
@@ -26,7 +26,7 @@ Template.ranking.events = {
 		Session.set("gamerank", this._id); 
 	},
 	'click #mostrar_ranking': function() {
-		Session.set("gamerank", undefined);
+		Session.set("gamerank", null);
 	}
 }; 
 
