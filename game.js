@@ -9,7 +9,7 @@ $(function() {
 	Tablero.iniciar();
 
 	//comprobamos que efectivamente la coordenada (5,5) es un hueco de ficha vacio. 
-/*	var centro = Tablero.buscarxcoor(5,5);
+	var centro = Tablero.buscarxcoor(5,5);
 	console.log("Tablero se inicia como lleno:",centro.lleno);
 
 	//creamos una nueva ficha de tipo Ciudad1l2crect (por ejemplo) sin coordenadas
@@ -58,7 +58,7 @@ $(function() {
   Tablero.iniciar();
 	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
 	var x=Tablero.colocarficha(nuevaficha,3,1);	
-	x.seguidores.push({t:"Ladron",n:4});  //le metemos ladron
+	x.seguidores.push({t:"Ladron",n:4,j:1});  //le metemos ladron
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
 	Tablero.colocarficha(nuevaficha,3,2); 
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
@@ -66,7 +66,7 @@ $(function() {
 	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
 	nuevaficha.girar();
 	nuevaficha.girar();
-	Tablero.colocarficha(nuevaficha,3,4); 
+	var nuevaficha = Tablero.colocarficha(nuevaficha,3,4); 
 	console.log("cierra camino1: ",Tablero.cierraCamino(nuevaficha));
 
 	//Prueba cierra camino con cruces
@@ -97,7 +97,7 @@ $(function() {
 	                      //en el centro (la que cierra)
 	var nuevaficha = new ObjetoFicha(0,0,0,"Ccruce");
 	Tablero.colocarficha(nuevaficha,5,5); 
-	Tablero.cierraCamino(nuevaficha);
+	Tablero.cierraCamino(nuevaficha,1);
 	
 	//Prueba cierraCamino colocando ficha intermedia
   Tablero.iniciar();
@@ -124,7 +124,7 @@ $(function() {
 	Tablero.colocarficha(nuevaficha,5,5);
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
 	var x=Tablero.colocarficha(nuevaficha,5,6);
-	x.seguidores.push({t:"Ladron",n:4});  //le metemos ladron
+	x.seguidores.push({t:"Ladron",n:4,j:1});  //le metemos ladron
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
   nuevaficha.girar();
   Tablero.colocarficha(nuevaficha,4,5);
@@ -148,6 +148,14 @@ $(function() {
 	Tablero.colocarficha(nuevaficha,5,7);
 	console.log("cierra camino3: ",Tablero.cierraCamino(nuevaficha))	
 	
+
+	//Prueba cierra camino sólo dos fichas
+	Tablero.iniciar();	
+	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
+	var x=Tablero.colocarficha(nuevaficha,5,5);
+	x.seguidores.push({t:"Ladron",n:4,j:1});  //le metemos ladron
+	console.log("cierra camino4: ",Tablero.cierraCamino(nuevaficha))	
+
 	
 	//Prueba error al colocar fichas que no encajan
 	Tablero.iniciar();
@@ -185,7 +193,7 @@ $(function() {
     var nuevaficha = new ObjetoFicha(0,0,0,'Ciudad1l');                     // -        -   
     Tablero.colocarficha(nuevaficha,1,2);                                   // ----------
     console.log("cierra castillo2: ",Tablero.cierraCastillo(nuevaficha));   //      3  
-*/
+
     // Prueba de cierra Castillo 3
     Tablero.iniciar();
     var nuevaficha = new ObjetoFicha(0,0,0, 'Ciudadext');
@@ -221,7 +229,7 @@ $(function() {
     Tablero.colocarficha(nuevaficha, 4,4); 
     console.log("cierra castillo3: ",Tablero.cierraCastillo(nuevaficha));
 
-/*    //Cierra Claustro con Catedral
+    //Cierra Claustro con Catedral
     Tablero.iniciar();
     var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
     Tablero.colocarficha(nuevaficha,7,5);
@@ -261,20 +269,17 @@ $(function() {
     console.log("cierra claustro: ",Tablero.cierraClaustro(nuevaficha));
     
 
-// Prueba la lista de seguidores.
-    Tablero.iniciar();
-/*	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
+
+  // Prueba la lista de seguidores.
+  Tablero.iniciar();
+	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
 	console.log("lista: ", Tablero.colocarseguidor(nuevaficha));
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rcurva");
 	console.log("lista: ", Tablero.colocarseguidor(nuevaficha));
 
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
-
-	Tablero.colocarficha(nuevaficha,5,5); 
-	console.log("lista: ", Tablero.colocarseguidor(nuevaficha));
-
   var x=Tablero.colocarficha(nuevaficha,5,5);
-	x.seguidores.push({t:"Ladron",n:4});  //le metemos ladron
+	x.seguidores.push({t:"Ladron",n:4,j:1});  //le metemos ladron
   nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");	
   Tablero.colocarficha(nuevaficha,5,6);
 	console.log("cierra camino4: ",Tablero.cierraCamino(nuevaficha));	
@@ -284,8 +289,40 @@ $(function() {
 	console.log("lista cruce con ladron arriba: ", Tablero.colocarseguidor(nuevaficha));
 
 
-*/
-// Prueba colocar seguidores en camino.
+
+
+
+
+/////////////////////////// SIMULACRO PUNTUACIONES CAMINO
+
+
+  Tablero.listaJugadores.push(new ObjetoJugador("Paco",23,1));
+  Tablero.listaJugadores.push(new ObjetoJugador("Pepe",88,2));
+  Tablero.listaJugadores.push(new ObjetoJugador("Menganito",34,3));
+  Tablero.listaJugadores.push(new ObjetoJugador("Fulanito",12,4));
+
+  Obj=Tablero.listaJugadores;
+  console.log("PTS-  j1:",Obj[0].puntos," j2:",Obj[1].puntos," j3:",Obj[2].puntos," j4:",Obj[3].puntos);
+  
+  Tablero.iniciar();
+  Tablero.iniciar();
+	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
+	var x=Tablero.colocarficha(nuevaficha,3,1);	
+	x.seguidores.push({t:"Ladron",n:4,j:1});  //le metemos ladron
+	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
+	Tablero.colocarficha(nuevaficha,3,2); 
+	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
+	x = Tablero.colocarficha(nuevaficha,3,4); 
+	x.seguidores.push({t:"Ladron",n:0,j:2});  //le metemos ladron
+	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
+	nuevaficha.girar();
+	nuevaficha.girar();
+	var nuevaficha = Tablero.colocarficha(nuevaficha,3,5); 
+	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
+	Tablero.colocarficha(nuevaficha,3,3);
+	console.log("cierraCamino Puntos: ",Tablero.cierraCamino(nuevaficha,1));
+	
+	console.log("PTS-  j1:",Obj[0].puntos," j2:",Obj[1].puntos," j3:",Obj[2].puntos," j4:",Obj[3].puntos);
 
 });
 
