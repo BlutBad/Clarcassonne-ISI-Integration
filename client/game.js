@@ -97,7 +97,6 @@ startGame = function() {
 	Game.setBoard(4,Tablero);
 	
 	Tablero.add(new PiezaMapa(75,73,'Rrecta',90));
-	
 	Game.setBoard(5,new Ficha_abajo());
 	//Game.setBoard(6,new Set(new PiezaMapa(72,72,'Rrecta',0)));
 
@@ -118,11 +117,17 @@ Background = function() {
 // Se encarga de pintar la primera ficha boca abajo del juego
 Ficha_abajo = function(cx,cy) {
 	
-    this.draw = function(ctx) {
-		ctx.drawImage(img2, 500, 500);   		
-    }
-    this.step = function(dt) { 
-	}
+	var prueba = false;
+    	this.draw = function(ctx) {
+		ctx.drawImage(img2, 500, 500);  
+		if(!Game.keys['sacar_ficha']) prueba = true;
+		if(prueba && Game.keys['sacar_ficha']) {
+			prueba = false;
+			SpriteSheet.draw(ctx,Ciudad3lE,200,300,1);
+		} 		
+    	}
+    	
+    	this.step = function(dt) {}
 };
 
 Jugadores = function() {  
