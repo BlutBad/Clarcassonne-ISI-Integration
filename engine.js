@@ -91,7 +91,8 @@ var Tablero = new function(){
 
 	this.huecos=[];
 	this.candidatos=[];
-
+  this.listaJugadores=[];
+  
 	this.iniciar = function(){
 	  var i=0;
 	  this.huecos=[];
@@ -214,22 +215,22 @@ var Tablero = new function(){
 		seguidor = [];
 				fichacamsig=Tablero.buscarxcoor(ficha.x,ficha.y-1);
 				if (fichacamsig == undefined){tieneladron0 =[false,false]}
-				else if (fichacamsig.lleno){tieneladron0 = Tablero.cierraCamino(fichacamsig);}
+				else if (fichacamsig.lleno){tieneladron0 = Tablero.cierraCamino(fichacamsig,0);}
 				else if (!fichacamsig.lleno){tieneladron0 =[false,false]}
 
 				fichacamsig=Tablero.buscarxcoor(ficha.x+1,ficha.y);
 				if (fichacamsig == undefined){tieneladron1 =[false,false]}
-				else if (fichacamsig.lleno){tieneladron1 = Tablero.cierraCamino(fichacamsig);}
+				else if (fichacamsig.lleno){tieneladron1 = Tablero.cierraCamino(fichacamsig,0);}
 				else if (!fichacamsig.lleno){tieneladron1 =[false,false]}
 
 				fichacamsig=Tablero.buscarxcoor(ficha.x,ficha.y+1);
 				if (fichacamsig == undefined){tieneladron2 =[false,false]}
-				else if (fichacamsig.lleno){tieneladron2 = Tablero.cierraCamino(fichacamsig);}
+				else if (fichacamsig.lleno){tieneladron2 = Tablero.cierraCamino(fichacamsig,0);}
 				else if (!fichacamsig.lleno){tieneladron2 =[false,false]}
 
 				fichacamsig=Tablero.buscarxcoor(ficha.x-1,ficha.y);
 				if (fichacamsig == undefined){tieneladron3 =[false,false]}
-				else if (fichacamsig.lleno){tieneladron3 = Tablero.cierraCamino(fichacamsig);}
+				else if (fichacamsig.lleno){tieneladron3 = Tablero.cierraCamino(fichacamsig,0);}
 				else if (!fichacamsig.lleno){tieneladron3 =[false,false]}
 
 		for (i=0;i<=8;i++){
@@ -308,7 +309,7 @@ var Tablero = new function(){
 		return seguidor;
 	}
 
-	this.cierraCamino = function(ficha){
+	this.cierraCamino = function(ficha,flag){
 			var cierracamino = [
 				  'Ccruce',
 				  'Posada',
@@ -317,76 +318,65 @@ var Tablero = new function(){
 				  'Ciudad1lcruce',
 				  'Tcruce',
 			];
+			var jugadores=[];
 			var fichaorig = ficha;
+			var ladron;
+			var puntos=0;
 			
-			var recursiva = function(ficha,prohibido,ladron){
-              var hayladron=ladron;
+			var recursiva = function(ficha,prohibido){
+             
+              puntos++; 
               
-              
-              if (_.find(ficha.seguidores,function(obj){return (obj.t=="Ladron")})){
-                  hayladron=true;
-              }
+              ladron =_.find(ficha.seguidores,function(obj){return (obj.t=="Ladron")});
+              if (ladron){jugadores.push(ladron.j)}
               
 							if (ficha.arriba=="Rue" && prohibido!="arriba"){		
 									ficha2=Tablero.buscarxcoor(ficha.x,ficha.y-1);
-									if (ficha2.x==fichaorig.x && ficha2.y==fichaorig.y){return [true,hayladron]}
-									else if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){
-									  if (_.find(ficha2.seguidores,function(obj){return (obj.t=="Ladron", obj.n==4)})){
-									    return [true,true];
-									  }
-									  else return [true,hayladron]
+									if (ficha2.x==fichaorig.x && ficha2.y==fichaorig.y){return true}
+									else if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){ 
+									  puntos++;
+									  ladron =_.find(ficha2.seguidores,function(obj){return (obj.t=="Ladron", obj.n==4)});
+									  if (ladron){jugadores.push(ladron.j)}
+									  return true;
 									}
-									else if(!ficha2.lleno){return [true,hayladron]}
-									else {
-									    return recursiva(ficha2,"abajo",hayladron);
-									}
+									else if(!ficha2.lleno){return false}
+									else {return recursiva(ficha2,"abajo")}
 							}
 							else if (ficha.abajo=="Rue" && prohibido!="abajo"){
 									ficha2=Tablero.buscarxcoor(ficha.x,ficha.y+1);
-									if (ficha2.x==fichaorig.x && ficha2.y==fichaorig.y){return [true,hayladron]}
+									if (ficha2.x==fichaorig.x && ficha2.y==fichaorig.y){return true}
 									else if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){
-									  if (_.find(ficha2.seguidores,function(obj){return (obj.t=="Ladron", obj.n==0)})){
-									    return [true,true];
-									  }
-									  else return [true,hayladron]
+									  puntos++;
+									  ladron =_.find(ficha2.seguidores,function(obj){return (obj.t=="Ladron", obj.n==0)});
+									  if (ladron){jugadores.push(ladron.j)}
+									  return true;
 									}
-									else if(!ficha2.lleno){return [true,hayladron]}
-									else {
-									    return recursiva(ficha2,"arriba",hayladron);
-									    
-									}
+									else if(!ficha2.lleno){return false}
+									else {return recursiva(ficha2,"arriba")}
 							}
 							else if (ficha.izda=="Rue" && prohibido!="izquierda"){
 									ficha2=Tablero.buscarxcoor(ficha.x-1,ficha.y);
-									if (ficha2.x==fichaorig.x && ficha2.y==fichaorig.y){return [true,hayladron]}
+									if (ficha2.x==fichaorig.x && ficha2.y==fichaorig.y){return true}
 									else if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){
-									  if (_.find(ficha2.seguidores,function(obj){return (obj.t=="Ladron", obj.n==2)})){
-									    return [true,true];
-									  }
-									  else return [true,hayladron]
+									  puntos++;
+									  ladron =_.find(ficha2.seguidores,function(obj){return (obj.t=="Ladron", obj.n==2)});
+									  if (ladron){jugadores.push(ladron.j)}
+									  return true;
 									}
-									else if(!ficha2.lleno){return [true,hayladron]}
-									else {
-									    
-									      return recursiva(ficha2,"derecha",hayladron);
-									    
-									}
+									else if(!ficha2.lleno){return false}
+									else {return recursiva(ficha2,"derecha")}
 							}
 							else if (ficha.derecha=="Rue" && prohibido!="derecha"){
 									ficha2=Tablero.buscarxcoor(ficha.x+1,ficha.y);
-									if (ficha2.x==fichaorig.x && ficha2.y==fichaorig.y){return [true,hayladron]}
+									if (ficha2.x==fichaorig.x && ficha2.y==fichaorig.y){return true}
 									else if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){
-									  if (_.find(ficha2.seguidores,function(obj){return (obj.t=="Ladron", obj.n==6)})){
-									    return [true,true];
-									  }
-									  else return [true,hayladron]
+									  puntos++;
+									  ladron =_.find(ficha2.seguidores,function(obj){return (obj.t=="Ladron", obj.n==6)});
+									  if (ladron){jugadores.push(ladron.j)}
+									  return true;
 									}
-									else if(!ficha2.lleno){return [true,hayladron]}
-									else {
-									    
-									    return recursiva(ficha2,"izquierda",hayladron);
-									    
-									}
+									else if(!ficha2.lleno){return false}
+									else {return recursiva(ficha2,"izquierda")}
 							}
 					
 			}
@@ -395,136 +385,169 @@ var Tablero = new function(){
 			if (cierracamino.indexOf(ficha.tipo) == -1){ //si la ficha no es cierracamino
           //tiene que cerrar camino por dos caminos distintos
           var cerrado=0;   //cerrado tendrá que ser 2
-          var ladron=0;     //comprueba los ladrones que haya en el camino
+          puntos++;
           
-          var hayladron=false;
+          
               
               
-          if (_.find(ficha.seguidores,function(obj){return (obj.t=="Ladron")})){
-              hayladron=true;
-          }
+          ladron =_.find(ficha.seguidores,function(obj){return (obj.t=="Ladron")});
+          if (ladron){jugadores.push(ladron.j)}
 	            
 	     	  if (ficha.arriba=="Rue"){		// si hay camino por arriba 
 							ficha2=Tablero.buscarxcoor(ficha.x,ficha.y-1);
 							//miramos la ficha siguiente, si está llena y cierra camino cerrado +1
 							if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){
+							    puntos++;
 							    cerrado++;
-							    if (_.find(ficha2.seguidores,function(obj){return (obj.t=="Ladron", obj.n==4)})){
-							    ladron++;
-							    }
+								  ladron =_.find(ficha2.seguidores,function(obj){return (obj.t=="Ladron", obj.n==4)});
+								  if (ladron){jugadores.push(ladron.j)}
 							}
 							// si no, recorremos el camino con recursiva
-							else if(ficha2.lleno){
-							    var x= recursiva(ficha2,"abajo",hayladron);
-							    if (x[0]){cerrado++};
-							    if (x[1]){ladron++};
-							} 
+							else if(ficha2.lleno && recursiva(ficha2,"abajo")){cerrado++};							    
 									
 					  }
 					  if (ficha.abajo=="Rue"){
 									ficha2=Tablero.buscarxcoor(ficha.x,ficha.y+1);
 									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){
+									  puntos++;
 									  cerrado++;
-									  if (_.find(ficha2.seguidores,function(obj){return (obj.t=="Ladron", obj.n==0)})){
-							      ladron++;
-							      }
+									  ladron =_.find(ficha2.seguidores,function(obj){return (obj.t=="Ladron", obj.n==0)});
+								    if (ladron){jugadores.push(ladron.j)}
 									}
-									else if(ficha2.lleno){
-							      var x= recursiva(ficha2,"arriba",hayladron);
-							      console.log('resultado',x);
-							      if (x[0]){cerrado++};
-							      if (x[1]){ladron++};
-							    } 
+									else if(ficha2.lleno && recursiva(ficha2,"arriba")){cerrado++};
 					  }
 					  if (ficha.izda=="Rue"){
       				  ficha2=Tablero.buscarxcoor(ficha.x-1,ficha.y);
 									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){
-									  cerrado++
-									  if (_.find(ficha2.seguidores,function(obj){return (obj.t=="Ladron", obj.n==2)})){
-							      ladron++;
-							      }
+									  puntos++;
+									  cerrado++;
+									  ladron =_.find(ficha2.seguidores,function(obj){return (obj.t=="Ladron", obj.n==2)});
+								  if (ladron){jugadores.push(ladron.j)}
 									}
-									else if(ficha2.lleno){
-							      var x= recursiva(ficha2,"derecha",hayladron);
-							      if (x[0]){cerrado++};
-							      if (x[1]){ladron++};
-							    } 
+									else if(ficha2.lleno && recursiva(ficha2,"derecha")){cerrado++};
+							
 					  }
 					  if (ficha.derecha=="Rue"){
 									ficha2=Tablero.buscarxcoor(ficha.x+1,ficha.y);
 									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){
-									  cerrado++
-									  if (_.find(ficha2.seguidores,function(obj){return (obj.t=="Ladron", obj.n==6)})){
-							      ladron++;
-							      }
+									  puntos++;
+									  cerrado++;
+									  ladron =_.find(ficha2.seguidores,function(obj){return (obj.t=="Ladron", obj.n==6)});
+								    if (ladron){jugadores.push(ladron.j)}
 									}
-									else if(ficha2.lleno){
-							      var x= recursiva(ficha2,"izquierda",hayladron);
-							      if (x[0]){cerrado++};
-							      if (x[1]){ladron++};
-							    } 
+									else if(ficha2.lleno && recursiva(ficha2,"izquierda")){cerrado++};
 					  }
-					  if (ladron>0 || hayladron){ladron = true}else{ladron=false}
+					  if (jugadores.length>0){ladron = true}else{ladron=false}
+					  
+            if (flag==1 && cerrado ==2){
+                _.each(jugadores, function(num){
+                   var jugador= _.find(Tablero.listaJugadores,function(obj){return (obj.numero==num)});
+                   jugador.puntos+=puntos;
+                });
+            }
+            
 					  if (cerrado == 2){return [true,ladron]}
+					  
 					  else {return [false,ladron]}
 			}
 			else{
-			
-			    var hayladron=false;
-                
-                
-          if (_.find(ficha.seguidores,function(obj){return (obj.t=="Ladron")})){
-              hayladron=true;
-          }
-			
+			    
+		
 			
 				  if (ficha.tipo=="Ccruce" || ficha.tipo=="Tcruce" || ficha.tipo == "Ciudad1lcruce"){
+				  puntos++;
 				  
 				      if (ficha.arriba=="Rue"){	
 									ficha2=Tablero.buscarxcoor(ficha.x,ficha.y-1);
-									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){
+									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1 && flag==1){
+									    puntos++;
 									    console.log("cierra camino (cruce) por arriba"); 
+									    
+                       _.each(jugadores, function(num){
+                         var jugador= _.find(Tablero.listaJugadores,function(obj){return (obj.numero==num)});
+                         jugador.puntos+=puntos;
+                      });
+                      
+									    
 									}
-									else if(ficha2.lleno && recursiva(ficha2,"abajo",hayladron)[0]){
+									else if(ficha2.lleno && recursiva(ficha2,"abajo" && flag==1) && flag==1){
 									    console.log("cierra camino (cruce) por arriba");
+									    _.each(jugadores, function(num){
+                         var jugador= _.find(Tablero.listaJugadores,function(obj){return (obj.numero==num)});
+                         jugador.puntos+=puntos;
+                      });
 									} 	
 					  }
 					  if (ficha.abajo=="Rue"){
 									ficha2=Tablero.buscarxcoor(ficha.x,ficha.y+1);
-									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){
-									    console.log("cierra camino (cruce) por abajo")
+									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1 && flag==1){
+									    puntos++;
+									    console.log("cierra camino (cruce) por abajo");
+									    _.each(jugadores, function(num){
+                         var jugador= _.find(Tablero.listaJugadores,function(obj){return (obj.numero==num)});
+                         jugador.puntos+=puntos;
+                      });
 									}
-									else if(ficha2.lleno && recursiva(ficha2,"arriba",hayladron)[0]){
-									    console.log("cierra camino (cruce) por abajo")
+									else if(ficha2.lleno && recursiva(ficha2,"arriba") && flag==1){
+									    console.log("cierra camino (cruce) por abajo");
+									    _.each(jugadores, function(num){
+                         var jugador= _.find(Tablero.listaJugadores,function(obj){return (obj.numero==num)});
+                         jugador.puntos+=puntos;
+                      });
 									}
 					  }
 					  if (ficha.izda=="Rue"){
       						        ficha2=Tablero.buscarxcoor(ficha.x-1,ficha.y);
-									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){
-									    console.log("cierra camino (cruce) por la izda")
+									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1 && flag==1){
+									    puntos++;
+									    console.log("cierra camino (cruce) por la izda");
+									    _.each(jugadores, function(num){
+                         var jugador= _.find(Tablero.listaJugadores,function(obj){return (obj.numero==num)});
+                         jugador.puntos+=puntos;
+                      });
 									}
-									else if(ficha2.lleno && recursiva(ficha2,"derecha",hayladron)[0]){
-									    console.log("cierra camino (cruce) por la izda")
+									else if(ficha2.lleno && recursiva(ficha2,"derecha") && flag==1){
+									    console.log("cierra camino (cruce) por la izda");
+									    _.each(jugadores, function(num){
+                         var jugador= _.find(Tablero.listaJugadores,function(obj){return (obj.numero==num)});
+                         jugador.puntos+=puntos;
+                      });
 									}
 					  }
 					  if (ficha.derecha=="Rue"){
 									ficha2=Tablero.buscarxcoor(ficha.x+1,ficha.y);
-									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1){
-									    console.log("cierra camino (cruce) por la dcha")
+									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1 && flag==1){
+									    puntos++;
+									    console.log("cierra camino (cruce) por la dcha");
+									    _.each(jugadores, function(num){
+                         var jugador= _.find(Tablero.listaJugadores,function(obj){return (obj.numero==num)});
+                         jugador.puntos+=puntos;
+                      });
 									}
-									else if(ficha2.lleno && recursiva(ficha2,"izquierda",hayladron)[0]){
-									    console.log("cierra camino (cruce) por la dcha")
+									else if(ficha2.lleno && recursiva(ficha2,"izquierda") && flag==1){
+									    console.log("cierra camino (cruce) por la dcha");
+									    _.each(jugadores, function(num){
+                         var jugador= _.find(Tablero.listaJugadores,function(obj){return (obj.numero==num)});
+                         jugador.puntos+=puntos;
+                      });
 									}
 					  }
 				  }
 				  else{
-				    var hayladron=false;
-                
-                
-            if (_.find(ficha.seguidores,function(obj){return (obj.t=="Ladron")})){
-                hayladron=true;
+				    ladron =_.find(ficha.seguidores,function(obj){return (obj.t=="Ladron")});
+            if (ladron){jugadores.push(ladron.j)}
+            
+            
+				    var devuelve= recursiva(ficha,"");
+				    if (jugadores.length>0){ladron = true}else{ladron=false}
+            if (flag==1 && devuelve){
+                _.each(jugadores, function(num){
+                   var jugador= _.find(Tablero.listaJugadores,function(obj){return (obj.numero==num)});
+                   jugador.puntos+=puntos;
+                });
             }
-				    return recursiva(ficha,"",hayladron)}	  
+				    return [devuelve,ladron]	  
+				   }
 			}
 
 	}
@@ -673,12 +696,16 @@ var Tablero = new function(){
 
 
 
-var ObjetoJugador = function(nombre,edad){
-    this.n_seguidores = 7;
+var ObjetoJugador = function(nombre,edad,n_jugador){
+  this.numero=n_jugador;
+  this.n_seguidores = 7;
 	this.nombre = nombre;
 	this.edad = edad;
 	this.puntos = 0;
+	
 };
+
+
 
 var ObjetoFicha= function(x,y,i,tipoficha){
 
