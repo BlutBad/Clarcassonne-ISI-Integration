@@ -43,12 +43,14 @@
 <template name="friendsTemp">
 		
 		<div id="accordion">
-			<h3>Amigos</h3>
+			<h3>Conectados</h3>
 				<div>
-				{{> listaAmigosTemp}}
+				{{> listaAmigosOnlineTemp}}
 				</div>
 			<h3>Desconectados</h3>
-				<p>Futuros amigos desconectados</p>	
+				<div>
+				{{> listaAmigosOfflineTemp}}
+				</div>	
 			<h3>Buscar</h3>
 				<div>
 					<input type="text" id="formSearch">
@@ -144,9 +146,17 @@
 	<h1>{{gamename}}</h1>
 </template>
 
-<template name="listaAmigosTemp">
-	<div id="listaAmigos">
-		{{# each listacompis}}
+<template name="listaAmigosOnlineTemp">
+	<div id="listaAmigosOnline">
+		{{# each listaAmigosOnline}}
+			{{username}}<br>
+		{{/ each}}
+	</div>	
+</template>
+
+<template name="listaAmigosOfflineTemp">
+	<div id="listaAmigosOffline">
+		{{# each listaAmigosOffline}}
 			{{username}}<br>
 		{{/ each}}
 	</div>	

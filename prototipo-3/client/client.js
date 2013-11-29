@@ -162,17 +162,35 @@ Template.input.events = {
 
 
 
-//Pinta lista de amigos, tiene que ser reactivo porque no esta disponible desde el comienzo
+
+
+
+//Pinta lista de amigos conectados, tiene que ser reactivo porque no esta disponible desde el comienzo
 Deps.autorun(function () {
-	Template.listaAmigosTemp.listacompis = function(){
+	Template.listaAmigosOnlineTemp.listaAmigosOnline = function(){
 		if (Meteor.user()){
 			if (Meteor.user().amigos!=undefined){
 				amigos=Meteor.user().amigos;
-				return Meteor.users.find({_id: {$in: amigos}});
+				return Meteor.users.find({$and: [{_id: {$in: amigos}},{"services.resume.loginTokens" : {$not : []}}]});
 			}	
 		}	
 	}		
 });
+
+
+//Pinta lista de amigos desconectados, tiene que ser reactivo porque no esta disponible desde el comienzo
+Deps.autorun(function () {
+	Template.listaAmigosOfflineTemp.listaAmigosOffline = function(){
+		if (Meteor.user()){
+			if (Meteor.user().amigos!=undefined){
+				amigos=Meteor.user().amigos;
+				return Meteor.users.find({$and: [{_id: {$in: amigos}},{"services.resume.loginTokens" :  []}]});
+			}	
+		}	
+	}		
+});
+
+
 
 
 
