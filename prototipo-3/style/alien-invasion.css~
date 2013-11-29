@@ -1,6 +1,29 @@
-canvas #aliencanvas {
-	background-color: blue;
+/*
+body {
+	line-height: 1;
 	margin: 1cm;
-	width: 480px;
+}*/
+ol, ul {
+	list-style: none;
 }
-	
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+#tabs{
+	height:400px;
+}
+/* Give canvas a background */
+canvas {
+  background-color:black;
+}
