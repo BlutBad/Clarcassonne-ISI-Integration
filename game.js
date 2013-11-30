@@ -58,7 +58,7 @@ $(function() {
   Tablero.iniciar();
 	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
 	var x=Tablero.colocarficha(nuevaficha,3,1);	
-	x.seguidores.push({t:"Ladron",n:4,j:1});  //le metemos ladron
+	x.seguidores.push({t:"Ladron",n:4,j:1,f:x});  //le metemos ladron
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
 	Tablero.colocarficha(nuevaficha,3,2); 
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
@@ -124,7 +124,7 @@ $(function() {
 	Tablero.colocarficha(nuevaficha,5,5);
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
 	var x=Tablero.colocarficha(nuevaficha,5,6);
-	x.seguidores.push({t:"Ladron",n:4,j:1});  //le metemos ladron
+	x.seguidores.push({t:"Ladron",n:4,j:1,f:x});  //le metemos ladron
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
   nuevaficha.girar();
   Tablero.colocarficha(nuevaficha,4,5);
@@ -153,7 +153,7 @@ $(function() {
 	Tablero.iniciar();	
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
 	var x=Tablero.colocarficha(nuevaficha,5,5);
-	x.seguidores.push({t:"Ladron",n:4,j:1});  //le metemos ladron
+	x.seguidores.push({t:"Ladron",n:4,j:1,f:x});  //le metemos ladron
 	console.log("cierra camino4: ",Tablero.cierraCamino(nuevaficha))	
 
 	
@@ -277,7 +277,7 @@ $(function() {
 
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
   var x=Tablero.colocarficha(nuevaficha,5,5);
-	x.seguidores.push({t:"Ladron",n:4,j:1});  //le metemos ladron
+	x.seguidores.push({t:"Ladron",n:4,j:1,f:x});  //le metemos ladron
   nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");	
   Tablero.colocarficha(nuevaficha,5,6);
 	console.log("cierra camino4: ",Tablero.cierraCamino(nuevaficha));	
@@ -305,12 +305,12 @@ $(function() {
   Tablero.iniciar();
 	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
 	var x=Tablero.colocarficha(nuevaficha,3,1);	
-	x.seguidores.push({t:"Ladron",n:4,j:1});  //le metemos ladron
+	x.seguidores.push({t:"Ladron",n:4,j:1,f:x});  //le metemos ladron
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
 	Tablero.colocarficha(nuevaficha,3,2); 
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
 	x = Tablero.colocarficha(nuevaficha,3,4); 
-	x.seguidores.push({t:"Ladron",n:0,j:2});  //le metemos ladron
+	x.seguidores.push({t:"Ladron",n:0,j:2,f:x});  //le metemos ladron
 	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
 	nuevaficha.girar();
 	nuevaficha.girar();
@@ -329,13 +329,13 @@ $(function() {
   Tablero.listaJugadores.push(new ObjetoJugador("Fulanito",12,4));
 
   Obj=Tablero.listaJugadores;
-  console.log("PTS-  j1:",Obj[0].puntos," j2:",Obj[1].puntos," j3:",Obj[2].puntos," j4:",Obj[3].puntos);
+  console.log("PTS-  j1:",Obj[0].puntos,"-",Obj[0].n_seguidores," j2:",Obj[1].puntos," j3:",Obj[2].puntos," j4:",Obj[3].puntos);
     Tablero.iniciar();   
     var nuevaficha = new ObjetoFicha(0,0,0,"Rcurva");
     Tablero.colocarficha(nuevaficha,5,5);
     var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
     var x=Tablero.colocarficha(nuevaficha,5,6);
-    x.seguidores.push({t:"Ladron",n:4,j:1});  //le metemos ladron
+    x.seguidores.push({t:"Ladron",n:4,j:1,f:x});  //le metemos ladron
     var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
   nuevaficha.girar();
   Tablero.colocarficha(nuevaficha,4,5);
@@ -344,7 +344,7 @@ $(function() {
     Tablero.colocarficha(nuevaficha,3,5);
     var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
     var x = Tablero.colocarficha(nuevaficha,3,6);
-    x.seguidores.push({t:"Ladron",n:0,j:2});  //le metemos ladron
+    x.seguidores.push({t:"Ladron",n:0,j:2,f:x},{t:"Granja",n:3,j:2,f:x});  //le metemos ladron
     var nuevaficha = new ObjetoFicha(0,0,0,"Rcurva");
     nuevaficha.girar();
     nuevaficha.girar();
@@ -358,8 +358,10 @@ $(function() {
     nuevaficha.girar();
     Tablero.colocarficha(nuevaficha,5,7);
     console.log("cierra camino redondo: ",Tablero.cierraCamino(nuevaficha,1));
-    console.log("PTS-  j1:",Obj[0].puntos," j2:",Obj[1].puntos," j3:",Obj[2].puntos," j4:",Obj[3].puntos);
-
+    console.log("PTS-  j1:",Obj[0].puntos,"-",Obj[0].n_seguidores," j2:",Obj[1].puntos," j3:",Obj[2].puntos," j4:",Obj[3].puntos);
+  
+    console.log("cierra camino redondo repetido: ",Tablero.cierraCamino(nuevaficha,1));
+    console.log("PTS-  j1:",Obj[0].puntos,"-",Obj[0].n_seguidores," j2:",Obj[1].puntos," j3:",Obj[2].puntos," j4:",Obj[3].puntos);
 
 });
 
