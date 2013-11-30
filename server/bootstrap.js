@@ -46,29 +46,33 @@ Meteor.startup(function() {
 			if (Juegos.find().count() === 0) {
 				var data = [ {
 					name : 'AlienInvasion',
-					wrapf : 'alien',
+					wrapf : 'gameAlien.initialize("gamecanvasAlien",sprites,startGame)',
 					logo_src : '/images/games_logo/alieninvasion.jpg',
 					logo_alt : 'Juega es este juego',
 					title_desc : 'Titulo para la descripcion del juego',
-					description : 'Descripcion del juego!'
-				}, {
+					description : 'Descripcion del juego!',
+					idn: 'alien'
+				},
+				{
 					name : 'Clarcassone',
 					wrapf : 'clarki',
 					logo_src : '/images/games_logo/clarkasone.jpg',
 					logo_alt : 'Juega es este juego',
 					title_desc : 'Titulo para la descripcion del juego',
-					description : 'Descripcion del juego!'
+					description : 'Descripcion del juego!',
+					idn: ''
 				},
 
 				{
-					name : 'Froot War',
-					wrapf : 'froowar',
+					name : 'Frootik War',
+					wrapf : 'gameFroot.init()',
 					logo_src : '/images/games_logo/frootwars.jpg',
 					logo_alt : 'Juega es este juego',
 					title_desc : 'Titulo para la descripcion del juego',
-					description : 'Descripcion del juego!'
+					description : 'Descripcion del juego!',
+					idn: 'froot'
 				},
-
+/*
 				{
 					name : 'Dummy1',
 					wrapf : 'dummyG1',
@@ -97,7 +101,8 @@ Meteor.startup(function() {
 					logo_alt : 'Juega es este juego',
 					title_desc : 'Titulo para la descripcion del juego',
 					description : 'Descripcion del juego!'
-				}];
+				}
+				*/];
 
 				for (var i = 0; i < data.length; i++) {
 					var list_id = Juegos.insert(data[i]);

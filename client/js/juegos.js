@@ -51,7 +51,6 @@ Template.editGame.events({
 		var description = template.find("#description").value;
 		var wrapf = template.find("#wrapf").value;
 		console.log(name + ' ' + description);
-		wrapf
 		Juegos.update(gid, {
 			$set : {
 				name : name,
@@ -73,29 +72,53 @@ var canvas;
 
 // la parte de cll parece un infierno, pero en el server no se conoce Session.
 Deps.autorun(function(c) {
-	// console.log(Session.get('load_game') + '("dummydiv", null, null)');
 	if (Session.get('load_game')) {
-		// console.log(Session.get('load_game'));
-
 		x = Session.get('load_game');
-		b = Juegos.findOne({
+		gw = Juegos.findOne({
 			wrapf : x
 		});
-		if (b._id == null) {
-			console.log('Es null')
-		}
-		cll = Session.get('load_game') + '("dummydiv", null, null, "' + b._id
-				+ '")';
-		canvas = eval(cll);
+		
+		
+		Session.set('showGameIdn',gw.idn);
+		
 
 		$('#gamecontainer').show();
+		
+		Session.set("current_game",gw._id);
+		
+		
+	 eval(gw.wrapf);
 	} else {
+		Session.set('showGameIdn',null);
 		canvas = null;
 		$('#gamecontainer').hide();
-
 	}
 });
 
+var canvasAlien, canvasFroot;
 Template.gamecontainer.render = function() {
 	$('#gamecontainer').show();
 };
+
+
+
+Deps.autorun(function(c) {
+	if (Session.equals('showGameIdn','froot')) {
+		$('#gameFrootcontainer').show();
+	}else{
+		$('#gameFrootcontainer').hide();
+	}
+});
+
+
+Deps.autorun(function(c) {
+	if (Session.equals('showGameIdn','alien')) {
+		$('#gamecanvasAlien').show();
+	}else{
+		$('#gamecanvasAlien').hide();
+	}
+});
+
+
+
+
