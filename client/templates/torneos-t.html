@@ -15,19 +15,17 @@
 					{{#each torneo}}
 						<div class="post-summary">
 							<h3 class="post-title">{{title}}</h3>
-							<div class="post-details">
-								<div class="post-date">
-									<span class="date">Fecha inicio: {{date_start}}</span>
-									<span class="date">Fecha final: {{date_finish}}</span>
-								</div>
-								Posted by <a href="#">{{user_create}}</a> in <a href="#">{{game}}</a> |<a href="#"></a>
+							<div class="post-details"> 
+								<span class="date">Disponible desde {{date_start}}</span>
+								<span class="date">hasta {{date_finish}}</span> 
+								(creado por {{user_create}})
 							</div>
-							<img src="/images/content/demo-only/logo-browsers.jpg" {{banner}} class="post-image" alt="sample image" width="606" height="115" />
+							<img src={{pic}} {{banner}} class="post-image" alt="sample image" width="606" height="115" />
 							<div class="post-description">
 								<p>{{description}}</p>
 								<input type="button" class="participantes" value="Participantes">
 								{{#if currentUser}}
-									<input type="button" class="sign" value="I'm going!">
+									<input type="button" class="sign" value="Me apunto!">
 								{{else}}
 									<i>Sign for add to this championship.</i>
 								{{/if}}	
@@ -80,7 +78,7 @@
 				<p>Date Start: <input type="text" id="date_start"></p>
 				<p>Date Finish: <input type="text" id="date_finish"></p>
 				<p>Description: <textarea id="description" class="description span5"></textarea> </p>
-				<p>Imagen: <input type="file" id="pic" class="pic span5"><br></p>
+				<p>URL Imagen: <input type="text" id="pic"</p>
 			</div>
 			<div class="modal-footer">
 				<a href="#" class="btn cancel">Cancel</a>

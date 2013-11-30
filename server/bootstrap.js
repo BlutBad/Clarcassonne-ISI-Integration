@@ -64,7 +64,7 @@ Meteor.startup(function() {
 				},
 
 				{
-					name : 'Frootik War',
+					name : 'Froot Wars',
 					wrapf : 'gameFroot.init()',
 					logo_src : '/images/games_logo/frootwars.jpg',
 					logo_alt : 'Juega es este juego',
@@ -114,6 +114,7 @@ Meteor.startup(function() {
 						{
 							title : "Torneo AlienInvasion",
 							game : 'AlienInvasion',
+							user_create: 'pepito_grillo',
 							date_start : "11/29/2013",
 							date_finish : "12/29/2013",
 							pic : '/images/games_logo/alieninvasion.jpg',
@@ -122,6 +123,7 @@ Meteor.startup(function() {
 						{
 							title : "Torneo Clarcassone",
 							game : 'Clarcassone',
+							user_create: 'pepito_grillo',
 							date_start : "11/29/2013",
 							date_finish : "12/29/2013",
 							pic : '/images/games_logo/clarkasone.png',
@@ -131,6 +133,7 @@ Meteor.startup(function() {
 						{
 							title : "Torneo Froot War",
 							game : 'Froot War',
+							user_create: 'pepito_grillo',
 							date_start : "11/29/2013",
 							date_finish : "12/29/2013",
 							pic : '/images/games_logo/frootwars.jpg',
