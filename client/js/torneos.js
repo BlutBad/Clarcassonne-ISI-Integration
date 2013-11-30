@@ -64,7 +64,7 @@ Template.createDialog.events({
 			};
 			var title = $('input#title');
 			var description = $('#description');
-			var date_start = $('input#date_start');
+			var date_start = $('input#dafooterte_start');
 			var date_finish = $('input#date_finish');
 			var game = $('#game');
 			var pic = $('input#pic');
@@ -114,4 +114,8 @@ Template.torneos.torneo=function(){
 Template.torneos.juegos=function(){
 	return Juegos.find({});
 };
+
+Template.createDialog.juegos = function(){
+	return Juegos.find({});	
+}
 

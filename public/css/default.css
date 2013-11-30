@@ -353,11 +353,7 @@ h2.layout {
 
 .full-page {
 	margin: 0 0 0 22px;
-}
-
-#page-content{	
-	height: auto;
-}
+} 
 
 /* logo */
 #logo {
@@ -476,7 +472,7 @@ h2.layout {
 }
 
 #page-content {
-	min-height: 400px;
+	min-height: 1000px;
 	margin: 0 12px 0 11px;
 	padding: 15px 22px 0 0;
 	border-top: 10px solid #333;
@@ -803,5 +799,4 @@ td, th {
 	float: right;
 	text-align: center;
 	width: 30%;
-}
-
+}  

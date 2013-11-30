@@ -71,10 +71,10 @@
 				<p>Title <input type="text" id="title" class="title span5"></p>
 				<p>Juego: 
 					<select id="game" name="Juego">
-						<option selected value="0"> Elige una opción</option>
-						<option value="1">AlienInvasion</option> 
-						<option value="2">Clarcassone</option> 
-						<option value="3">Froot War</option>
+						<option selected value="elige"> Elige una opción</option>
+						{{#each juegos}}
+							<option value="{{name}}">{{name}}</option>  
+						{{/each}}
 					</select>
 				</p>
 				<p>Date Start: <input type="text" id="date_start"></p>
