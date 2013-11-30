@@ -72,7 +72,7 @@ Template.createDialog.events({
 				date_finish == '' | game == 'elige' | pic == '') {
 				Session.set("createError", "Please, complete all the fields"); 
 			} else if (!date_compare(date_start, date_finish)) {
-				Session.set("createError", "La fecha de inicio no puede ser antes que la de fin o que la de hoy"); 
+				Session.set("createError", "La fecha de inicio no puede ser después que la de fin o antes que la de hoy"); 
 			} else {
 				Torneos.insert({title:title, game: game, user_create: user_create, 
 					date_start: date_start, date_finish: date_finish, 
