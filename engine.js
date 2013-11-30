@@ -671,46 +671,67 @@ var Tablero = new function(){
 
         // Funcion cuando es solo un lado
         var f_unlado = function(ficha){
+            // Guardamos la coordenada actual
             pasado.push({x:ficha.x, y:ficha.y});
             console.log(ficha.tipo, ficha.x, ficha.y);
             if (ficha.arriba == "Tierra"){
+                // ficha2 es la ficha de la siguiente posicion
 	            ficha2 = Tablero.buscarxcoor(ficha.x,ficha.y-1);
+                // Cuando no esta en la lista de pasado
                 if(_.find(pasado ,function(obj){return (obj.x == ficha2.x && obj.y == ficha2.y)}) == undefined){
-		            if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){return f_unlado(ficha2)}
+		            if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){
+                        // Guardamos la siguiente ficha
+                        pasado.push({x:ficha2.x, y:ficha2.y});
+                        // volvemos a la ficha de atras
+                        return f_unlado(ficha);
+                    }
                     else if(ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){return f_maslados(ficha2)}
-                    else if(!ficha.lleno){return false}
+                    // Cuando la siguiente ficha esta vacio, devolvemos false
+                    else if(!ficha2.lleno){return false}
                 }
             }
 	        
 	        if (ficha.abajo == "Tierra"){
 		        ficha2 = Tablero.buscarxcoor(ficha.x,ficha.y+1);
                 if(_.find(pasado ,function(obj){return (obj.x == ficha2.x && obj.y == ficha2.y)}) == undefined){
-		            if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){return f_unlado(ficha2)}
+		            if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){
+                        pasado.push({x:ficha2.x, y:ficha2.y});
+                        return f_unlado(ficha);
+                    }
                     else if(ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){return f_maslados(ficha2)}
-                    else if(!ficha.lleno){return false}
+                    else if(!ficha2.lleno){return false}
                 }
             }
 	        
 	        if (ficha.izda == "Tierra"){
+                console.log("Izquierda");
 		        ficha2 = Tablero.buscarxcoor(ficha.x-1,ficha.y);
                 if(_.find(pasado ,function(obj){return (obj.x == ficha2.x && obj.y == ficha2.y)}) == undefined){
-		            if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){return f_unlado(ficha2)}
+		            if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){
+                        pasado.push({x:ficha2.x, y:ficha2.y});
+                        return f_unlado(ficha);
+                    }
                     else if(ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){return f_maslados(ficha2)}
-                    else if(!ficha.lleno){return false}
+                    else if(!ficha2.lleno){return false}
                 }
             }
 	        
 	        if (ficha.derecha == "Tierra"){
+                console.log("derecha");
 		        ficha2 = Tablero.buscarxcoor(ficha.x+1,ficha.y);
                 if(_.find(pasado ,function(obj){return (obj.x == ficha2.x && obj.y == ficha2.y)}) == undefined){
-		            if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){return f_unlado(ficha2)}
+		            if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){
+                        pasado.push({x:ficha2.x, y:ficha2.y});
+                        return f_unlado(ficha);
+                    }
                     else if(ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){return f_maslados(ficha2)}
-                    else if(!ficha.lleno){return false}
+                    else if(!ficha2.lleno){return false}
                 }
             }
 
+            // Volver hacia atrás cuando no puedes segir adelante.
             antes = pasado.indexOf(_.find(pasado ,function(obj){return (obj.x == ficha.x && obj.y == ficha.y)})) - 1;
-            console.log(antes);
+            // Cuando llegas al punto de inicio y la ciudad esta cerrada cuando devuelve -1.
             if (antes == -1)
                 return true;
             ficha3 = Tablero.buscarxcoor(pasado[antes].x, pasado[antes].y);
@@ -720,20 +741,32 @@ var Tablero = new function(){
     
         // Funcion para mas lados
         var f_maslados = function(ficha){
+            // Guardamos la ficha actual a la lista pasada
             pasado.push({x:ficha.x, y:ficha.y});
             console.log(ficha.tipo, ficha.x, ficha.y);
             if (ficha.arriba == 'Tierra'){
+                // ficha2 es la ficha de la siguiente posicion
                 ficha2 = Tablero.buscarxcoor(ficha.x, ficha.y-1);
+                // Cuando la ficha no esta dentro de la lista pasada
                 if(_.find(pasado ,function(obj){return (obj.x == ficha2.x && obj.y == ficha2.y)}) == undefined){
-                    if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){return f_unlado(ficha2)}
+                    // cuando la siguiente ficha es un cierra castillo
+                    if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){
+                        // guardamos la ficha2 en la lista de pasado
+                        pasado.push({x:ficha2.x, y:ficha2.y});
+                        // volvemos a la ficha de atras
+                        return f_unlado(ficha)}
+                    // Cuando la siguiente ficha tiene mas de un lado
                     else if (ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){return f_maslados(ficha2)}
+                    // Cuando la siguiente ficha esta vacion, devolvemos false
                     else if (!ficha2.lleno){return false}
                 }
             }
             if (ficha.abajo == 'Tierra'){
                 ficha2 = Tablero.buscarxcoor(ficha.x, ficha.y+1);
                 if(_.find(pasado ,function(obj){return (obj.x == ficha2.x && obj.y == ficha2.y)}) == undefined){
-                    if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){return f_unlado(ficha2)}
+                    if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){
+                        pasado.push({x:ficha2.x, y:ficha2.y});
+                        return f_unlado(ficha)}
                     else if (ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){return f_maslados(ficha2)}
                     else if (!ficha2.lleno){return false}
                 }
@@ -741,7 +774,9 @@ var Tablero = new function(){
             if (ficha.izda == 'Tierra'){
                 ficha2 = Tablero.buscarxcoor(ficha.x-1, ficha.y);
                 if(_.find(pasado ,function(obj){return (obj.x == ficha2.x && obj.y == ficha2.y)}) == undefined){
-                    if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){return f_unlado(ficha2)}
+                    if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){
+                        pasado.push({x:ficha2.x, y:ficha2.y});
+                        return f_unlado(ficha)}
                     else if (ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){return f_maslados(ficha2)}
                     else if (!ficha2.lleno){return false}
                 }
@@ -749,14 +784,17 @@ var Tablero = new function(){
             if (ficha.derecha == 'Tierra'){
                 ficha2 = Tablero.buscarxcoor(ficha.x+1, ficha.y);
                 if(_.find(pasado ,function(obj){return (obj.x == ficha2.x && obj.y == ficha2.y)}) == undefined){
-                    if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){return f_unlado(ficha2)}
+                    if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){
+                        pasado.push({x:ficha2.x, y:ficha2.y});
+                        return f_unlado(ficha)}
                     else if (ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){return f_maslados(ficha2)}
                     else if (!ficha2.lleno){return false}
                 }
             }
 
+            // Volver hacia atrás cuando no puedes segir adelante.
             antes = pasado.indexOf(_.find(pasado ,function(obj){return (obj.x == ficha.x && obj.y == ficha.y)})) - 1;
-            console.log(antes);
+            // Cuando llegas al punto de inicio y la ciudad esta cerrada cuando devuelve -1.
             if (antes == -1)
                 return true;
             ficha3 = Tablero.buscarxcoor(pasado[antes].x, pasado[antes].y);
@@ -764,7 +802,65 @@ var Tablero = new function(){
             else if (maslados.indexOf(ficha3.tipo) != -1){return f_maslados(ficha3)}
         }
 
-        if (unlado.indexOf(ficha.tipo) != -1)
+        // Cuando tenemos dos cierra castillos, primero ir a un lado y luego al otro
+        if (ficha.tipo == 'Ciudad1ll' || ficha.tipo == 'Ciudadext'){
+            var final = 0;
+            if (ficha.arriba == 'Tierra'){
+                // ficha2 es la siguiente ficha
+                ficha2 = Tablero.buscarxcoor(ficha.x, ficha.y-1);
+                // Cuando la siguiente ficha es un cierra castillo y eso cierra un castillo y sumamos 1
+                if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){
+                    final++;
+                }
+                // Cuando la siguiente ficha no es un cierra castillo
+                else if (ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){
+                    var final1 = f_maslados(ficha2);
+                    // si devuelve true es que cierra castillo y sumamos 1
+                    if (final1 == true)
+                        final++;
+                }
+            }
+            if (ficha.abajo == 'Tierra'){
+                ficha2 = Tablero.buscarxcoor(ficha.x, ficha.y+1);
+                if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){
+                    final++;
+                }
+                else if (ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){
+                    var final1 = f_maslados(ficha2);
+                    if (final1 == true)
+                        final++;
+                }
+            }
+            if (ficha.izda == 'Tierra'){
+                ficha2 = Tablero.buscarxcoor(ficha.x-1, ficha.y);
+                if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){
+                    final++;
+                }
+                else if (ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){
+                    var final1 = f_maslados(ficha2);
+                    if (final1 == true)
+                        final++;
+                }
+            }
+            if (ficha.derecha == 'Tierra'){
+                ficha2 = Tablero.buscarxcoor(ficha.x+1, ficha.y);
+                if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){
+                    final++;
+                }
+                else if (ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){
+                    var final1 = f_maslados(ficha2);
+                    if (final1 == true)
+                        final++;
+                }
+            }
+            // Cuando final es 2, esque cierra por los dos lados
+            if (final == 2)
+                return [true, true];
+            // Cuando final es 1, esque cierra por un lado y otro no
+            else if (final == 1)
+                return [true, false];
+        }
+        else if (unlado.indexOf(ficha.tipo) != -1)
             return f_unlado(ficha);
         else if (maslados.indexOf(ficha.tipo) != -1)
             return f_maslados(ficha);

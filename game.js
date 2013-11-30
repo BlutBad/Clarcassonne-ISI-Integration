@@ -196,8 +196,8 @@ $(function() {
 
     // Prueba de cierra Castillo 3
     Tablero.iniciar();
-    var nuevaficha = new ObjetoFicha(0,0,0, 'Ciudad1l');
-    nuevaficha.girar();
+    var nuevaficha = new ObjetoFicha(0,0,0, 'Ciudadext');
+//    nuevaficha.girar();
     Tablero.colocarficha(nuevaficha, 4,2);
     var nuevaficha = new ObjetoFicha(0,0,0, 'Ciudad3l');
     nuevaficha.girar();
@@ -224,6 +224,8 @@ $(function() {
     Tablero.colocarficha(nuevaficha, 3,4);
     var nuevaficha = new ObjetoFicha(0,0,0, 'Ciudad1l');
     nuevaficha.girar();
+    Tablero.colocarficha(nuevaficha, 5,4);
+    var nuevaficha = new ObjetoFicha(0,0,0, 'Ciudadext');
     Tablero.colocarficha(nuevaficha, 4,4); 
     console.log("cierra castillo3: ",Tablero.cierraCastillo(nuevaficha));
 
