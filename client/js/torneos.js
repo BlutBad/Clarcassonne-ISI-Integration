@@ -67,9 +67,9 @@ Template.createDialog.events({
 			var date_start = $('input#dafooterte_start').val();
 			var date_finish = $('input#date_finish').val();
 			var game = $('#game').val();
-			var pic = $('input#pic').val(); 
+			var pic = $('input#pic').val();  
 			if (title == '' | description == '' | date_start == '' |
-				date_finish == '' | game == '' | pic == '') {
+				date_finish == '' | game == 'elige' | pic == '') {
 				Session.set("createError", "Please, complete all the fields");
 			} else {
 				Torneos.insert({title:title, game: game, user_create: user_create, 
