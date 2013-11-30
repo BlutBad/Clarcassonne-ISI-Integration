@@ -64,13 +64,15 @@ Template.createDialog.events({
 			};
 			var title = $('input#title').val();
 			var description = $('#description').val();
-			var date_start = $('input#dafooterte_start').val();
+			var date_start = $('input#date_start').val();
 			var date_finish = $('input#date_finish').val();
 			var game = $('#game').val();
 			var pic = $('input#pic').val();  
 			if (title == '' | description == '' | date_start == '' |
 				date_finish == '' | game == 'elige' | pic == '') {
-				Session.set("createError", "Please, complete all the fields");
+				Session.set("createError", "Please, complete all the fields"); 
+			} else if (!date_compare(date_start, date_finish)) {
+				Session.set("createError", "La fecha de inicio no puede ser antes que la de fin o que la de hoy"); 
 			} else {
 				Torneos.insert({title:title, game: game, user_create: user_create, 
 					date_start: date_start, date_finish: date_finish, 
@@ -89,7 +91,8 @@ Template.createDialog.events({
 			$( "#date_start").datepicker({
 				showOn: "button",
 				buttonImage: "images/calendar.gif",
-				buttonImageOnly: true
+				buttonImageOnly: true,
+				dateFormat: "yy-mm-dd"
 			});
 		});
 	},
@@ -98,7 +101,8 @@ Template.createDialog.events({
 			$( "#date_finish").datepicker({
 				showOn: "button",
 				buttonImage: "images/calendar.gif",
-				buttonImageOnly: true
+				buttonImageOnly: true,
+				dateFormat: "yy-mm-dd"
 			});
 		});
 	}
@@ -124,5 +128,18 @@ Template.torneos.juegos=function(){
 
 Template.createDialog.juegos = function(){
 	return Juegos.find({});	
+}
+
+function date_compare (init, fin) { 
+	var inicio = Date.parse(init);  
+	var fin = Date.parse(fin); 
+	var now = new Date();
+	now_time = Date.parse(now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate());
+
+	if (inicio > fin | inicio < now_time) { 
+	    return false;
+	} else {
+		return true;
+	}
 }
 
