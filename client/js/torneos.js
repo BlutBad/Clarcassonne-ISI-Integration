@@ -62,16 +62,23 @@ Template.createDialog.events({
 			}else{
 				var user_create = Meteor.user().profile.name;
 			};
-			var title = $('input#title');
-			var description = $('#description');
-			var date_start = $('input#dafooterte_start');
-			var date_finish = $('input#date_finish');
-			var game = $('#game');
-			var pic = $('input#pic');
-			Torneos.insert({title:title.val(), game: game.val(), user_create: user_create, date_start: date_start.val(), date_finish: date_finish.val(), description: description.val(), pic: pic.val() });
-			Session.set("showCreateDialog", false);
+			var title = $('input#title').val();
+			var description = $('#description').val();
+			var date_start = $('input#dafooterte_start').val();
+			var date_finish = $('input#date_finish').val();
+			var game = $('#game').val();
+			var pic = $('input#pic').val(); 
+			if (title == '' | description == '' | date_start == '' |
+				date_finish == '' | game == '' | pic == '') {
+				Session.set("createError", "Please, complete all the fields");
+			} else {
+				Torneos.insert({title:title, game: game, user_create: user_create, 
+					date_start: date_start, date_finish: date_finish, 
+					description: description, pic: pic});
+				Session.set("showCreateDialog", false);
+			}
 		} else {
-			Session.set("createError", "It needs a title and a description, or why bother?");
+			Session.set("createError", "Sign for create this championship");
 		}
 	},
 	'click .cancel': function () {
