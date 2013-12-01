@@ -26,11 +26,13 @@ Template.torneos.torneo=function(){
 
 	show_torneos = Session.get("showParticipantes");   
 	champ = ChampUser.find({id_torneo: show_torneos}); 
-	sortTorneos.forEach(function(each) {  
-		champ.forEach(function(each2) {   
-			each.participantes = Meteor.user(each2.id_user).username;   
-		});
-    });    
+	console.log(champ);  
+	/*sortTorneos.forEach(function(each) {  
+		if (each._id == champ.id_torneo) {
+			each.participantes = Meteor.user(champ.id_user).username;  
+		} 
+		console.log(each);
+	}); */ 
 
 	sortTorneos.forEach(function(each3) {  
 		if (ChampUser.find({id_torneo: each3._id, id_user: Meteor.user()._id})) {   
