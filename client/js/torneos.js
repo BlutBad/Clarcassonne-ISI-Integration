@@ -2,6 +2,68 @@ Template.torneos.show = function() {
 	return Session.get('current_stage') == 'Torneos';
 };
 
+var openCreateDialog = function () {
+	Session.set("createError", null);
+	Session.set("showCreateDialog", true);
+}; 
+
+
+Template.torneos.showCreateDialog = function () {
+	return Session.get("showCreateDialog");
+}; 
+
+Template.createDialog.error = function () {
+	return Session.get("createError");
+};
+
+Template.torneos.torneo=function(){ 
+	game_session = Session.get("gametor");  
+	if (game_session == undefined) {
+		sortTorneos = Torneos.find({});
+	} else {
+		sortTorneos = Torneos.find({game: game_session});
+	}
+
+	selected = Session.get("selected_apunto");   
+	if (selected != undefined) {
+		selected.forEach(function(each){
+			$("#" + each).toggleClass("selected_apunto", "apunto");
+		}); 
+	}	
+
+	show_torneos = Session.get("showParticipantes");   
+	champ = ChampUser.find({id_torneo: show_torneos}); 
+	sortTorneos.forEach(function(each) { 
+			console.log(each)
+		champ.forEach(function(each2) {    
+			each.participantes = Meteor.user(each2.id_user).username;   
+		});
+    });    
+
+    return sortTorneos;
+}; 
+
+Template.torneos.juegos=function(){
+	return Juegos.find({});
+};
+
+Template.createDialog.juegos = function(){
+	return Juegos.find({});	
+}
+
+function date_compare (init, fin) { 
+	var inicio = Date.parse(init);  
+	var fin = Date.parse(fin); 
+	var now = new Date();
+	now_time = Date.parse(now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate());
+
+	if (inicio > fin | inicio < now_time) { 
+	    return false;
+	} else {
+		return true;
+	}
+}
+
 Template.torneos.events = {
 	'click input#crear_torneo': function() {
 		openCreateDialog();
@@ -22,45 +84,15 @@ Template.torneos.events = {
 		if (!_.contains(lista_apuntados, this._id)) { 
 			lista_apuntados.push(this._id);			
 		}
-		Session.set("selected_apunto", lista_apuntados);
+		Session.set("selected_apunto", lista_apuntados); 
 		if (!ChampUser.findOne({id_torneo: this._id, id_user: Meteor.user()._id})){ 
 			ChampUser.insert({id_torneo: this._id, id_user: Meteor.user()._id});
 		};
 	},
-	'click .participantes': function(){
-		//console.log(this._id);
+	'click .participantes': function(){   
 		Session.set("showParticipantes", this._id);
 	}
 };
-
-var openCreateDialog = function () {
-	Session.set("createError", null);
-	Session.set("showCreateDialog", true);
-}; 
-
-
-Template.torneos.showCreateDialog = function () {
-	return Session.get("showCreateDialog");
-};
-
-Template.torneos.participantes= function(){
-	show_torneos = Session.get("showParticipantes");
-	//console.log(show_torneos);
-	champ = ChampUser.find({id_torneo: show_torneos});
-	champ = [];
-	champ.forEach(function(each) { 
-		console.log(each.id_user);
-		usu = {};  
-		//if (Meteor.user(each.id_user).username){
-			usu.usuarios= Meteor.user(each.id_user).profile.name; 
-			usu.game = Torneos.findOne({_id: each.id_torneo}).name
-		console.log(usu); 
-    	champ.push(usu);
-    	console.log(champ);
-    });  
-    return champ;
-};
-
 
 Template.createDialog.events({
 	'click .save': function () {
@@ -115,46 +147,3 @@ Template.createDialog.events({
 		});
 	}
 });
-
-Template.createDialog.error = function () {
-	return Session.get("createError");
-};
-
-Template.torneos.torneo=function(){ 
-	game_session = Session.get("gametor");  
-	if (game_session == undefined) {
-		sortTorneos = Torneos.find({});
-	} else {
-		sortTorneos = Torneos.find({game: game_session});
-	}
-	selected = Session.get("selected_apunto");  
-			console.log(selected)
-	if (selected != undefined) {
-		selected.forEach(function(each){
-			$("#" + each).toggleClass("selected_apunto", "apunto");
-		}); 
-	}	
-    return sortTorneos;
-}; 
-
-Template.torneos.juegos=function(){
-	return Juegos.find({});
-};
-
-Template.createDialog.juegos = function(){
-	return Juegos.find({});	
-}
-
-function date_compare (init, fin) { 
-	var inicio = Date.parse(init);  
-	var fin = Date.parse(fin); 
-	var now = new Date();
-	now_time = Date.parse(now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate());
-
-	if (inicio > fin | inicio < now_time) { 
-	    return false;
-	} else {
-		return true;
-	}
-}
-
