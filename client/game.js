@@ -83,9 +83,9 @@ function getTurno () {
 
 function pasarTurno () {
 	if (Jugador1.turno == 1) { Jugador2.turno = 1; Jugador1.turno = 0;}
-	if (Jugador2.turno == 1) { Jugador3.turno = 1; Jugador2.turno = 0;}
-	if (Jugador3.turno == 1) { Jugador4.turno = 1; Jugador3.turno = 0;}
-	if (Jugador4.turno == 1) { Jugador1.turno = 1; Jugador4.turno = 0;}
+	else if (Jugador2.turno == 1) { Jugador3.turno = 1; Jugador2.turno = 0;}
+	else if (Jugador3.turno == 1) { Jugador4.turno = 1; Jugador3.turno = 0;}
+	else if (Jugador4.turno == 1) { Jugador1.turno = 1; Jugador4.turno = 0;}
 }
 
 
@@ -356,6 +356,7 @@ Set = function (PiezaMapa) {
 					Tablero.add(this.pieza);
 					Game.setBoard(6,Blank);
 					CurrentScroll.active = true;
+					pasarTurno();
 
 				}
 			}
@@ -404,6 +405,7 @@ Set = function (PiezaMapa) {
 				Tablero.add(new Seguidor (this.pieza.x/100,this.pieza.y/100,this.setSeguidorType(),this.optionx,this.optiony));
 				Game.setBoard(6,Blank);
 				CurrentScroll.active = true;
+				pasarTurno();
 				
 			}
 		}
