@@ -8,7 +8,7 @@
 		<FONT Size="2">&nbsp&nbsp&nbsp Welcome to X-ADrian platform</FONT>
 	</h1>
 	<div id="container">
-   	{{> cointemp}}
+   		{{> cointemp}}
 		{{> tabstemp}}
 		{{> friendsTemp}}
 		{{> chatsTabsTemp}}
@@ -66,11 +66,7 @@
 <template name="chatsTabsTemp">
 	<div id="chatTabs" >
 		<ul>
-			<li><a href="#nombrechat1">amigo1</a></li>
-			<li><a href="#nombrechat2">amigo2</a></li>
 		</ul>
-		<div id="nombrechat1"> <p>mensajes con amigo1</p> </div>
-		<div id="nombrechat2"> <p>mensajes con amigo2</p> </div>
 	</div>
 </template>
 
@@ -149,7 +145,9 @@
 <template name="listaAmigosOnlineTemp">
 	<div id="listaAmigosOnline">
 		{{# each listaAmigosOnline}}
+		<a style ="cursor:pointer;text-decoration:underline;" class="linkchat">
 			{{username}}<br>
+		</a>
 		{{/ each}}
 	</div>	
 </template>

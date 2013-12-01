@@ -42,7 +42,7 @@ html{
 }
 
 #friends {
-	width: 175px;
+	width: 176px;
 	height:	50px;
 	font-weight:bold;
 	text-align: center;
@@ -57,7 +57,12 @@ html{
 
 #chatTabs{
 	position: absolute;
+
 }
+
+
+
+
 
 
 #accordion{	
