@@ -22,26 +22,24 @@ Template.torneos.torneo=function(){
 		sortTorneos = Torneos.find({});
 	} else {
 		sortTorneos = Torneos.find({game: game_session});
-	}
-
-	selected = Session.get("selected_apunto");   
-	if (selected != undefined) {
-		selected.forEach(function(each){
-			$("#" + each).toggleClass("selected_apunto", "apunto");
-		}); 
 	}	
 
 	show_torneos = Session.get("showParticipantes");   
 	champ = ChampUser.find({id_torneo: show_torneos}); 
-	sortTorneos.forEach(function(each) { 
-			console.log(each)
-		champ.forEach(function(each2) {    
+	sortTorneos.forEach(function(each) {  
+		champ.forEach(function(each2) {   
 			each.participantes = Meteor.user(each2.id_user).username;   
 		});
     });    
 
-    return sortTorneos;
-}; 
+	sortTorneos.forEach(function(each3) {  
+		if (ChampUser.find({id_torneo: each3._id, id_user: Meteor.user()._id})) {   
+			$("#" + each3._id).addClass("selected_apunto");
+		}
+	});
+
+    return sortTorneos; 
+};  
 
 Template.torneos.juegos=function(){
 	return Juegos.find({});
@@ -74,22 +72,23 @@ Template.torneos.events = {
 	'click #mostrar_torneos': function() {
 		Session.set("gametor", undefined);
 	},
-	'click .apunto': function (){  
-		//console.log(this._id);
-		//console.log(Meteor.user()._id);
-		lista_apuntados = Session.get("selected_apunto");
-		if (lista_apuntados == undefined) {
-			lista_apuntados = [];
+	'click .apunto': function (){       
+		if (!ChampUser.findOne({id_torneo: this._id, id_user: Meteor.user()._id})) {  
+			ChampUser.insert({id_torneo: this._id, id_user: Meteor.user()._id});  
+			$("#" + this._id).switchClass("apunto", "selected_apunto");
+		} else {   
+			id_torneo_rm = ChampUser.findOne({id_torneo: this._id, id_user: Meteor.user()._id}); 
+			ChampUser.remove(id_torneo_rm._id); 
 		}
-		if (!_.contains(lista_apuntados, this._id)) { 
-			lista_apuntados.push(this._id);			
-		}
-		Session.set("selected_apunto", lista_apuntados); 
-		if (!ChampUser.findOne({id_torneo: this._id, id_user: Meteor.user()._id})){ 
-			ChampUser.insert({id_torneo: this._id, id_user: Meteor.user()._id});
-		};
 	},
-	'click .participantes': function(){   
+	'click .selected_apunto': function () { 
+		if (ChampUser.findOne({id_torneo: this._id, id_user: Meteor.user()._id})) {  
+			id_torneo_rm = ChampUser.findOne({id_torneo: this._id, id_user: Meteor.user()._id}); 
+			ChampUser.remove(id_torneo_rm._id);
+		}
+		$("#" + this._id).switchClass("selected_apunto", "apunto");	
+	},
+	'click #participantes': function(){   
 		Session.set("showParticipantes", this._id);
 	}
 };
