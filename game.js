@@ -7,7 +7,7 @@ $(function() {
 
 	//iniciamos el tablero
 	Tablero.iniciar();
-
+/*
 	//comprobamos que efectivamente la coordenada (5,5) es un hueco de ficha vacio. 
 	var centro = Tablero.buscarxcoor(5,5);
 	console.log("Tablero se inicia como lleno:",centro.lleno);
@@ -169,7 +169,7 @@ $(function() {
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
 	console.log("si encaja objeto ficha:",Tablero.colocarficha(nuevaficha,8,2)); //Deberia encajar ----> devuelve la ficha colocada
 
-
+*/
     //Prueba de cierra Castillo 1
     Tablero.iniciar();
     var nuevaficha = new ObjetoFicha(0,0,0,'Ciudad1l');
@@ -230,7 +230,7 @@ $(function() {
     console.log("cierra castillo3: ",Tablero.cierraCastillo(nuevaficha));
 
     //Cierra Claustro con Catedral
-    Tablero.iniciar();
+/*    Tablero.iniciar();
     var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
     Tablero.colocarficha(nuevaficha,7,5);
     var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
@@ -364,7 +364,7 @@ $(function() {
   
     console.log("cierra camino redondo repetido: ",Tablero.cierraCamino(nuevaficha,1));
     console.log("PTS-  j1:",Obj[0].puntos,"-",Obj[0].n_seguidores," j2:",Obj[1].puntos," j3:",Obj[2].puntos," j4:",Obj[3].puntos);
-
+*/
 });
 
 
