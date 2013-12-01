@@ -963,55 +963,64 @@ var Tablero = new function(){
         else {return false}
     }
 
+// Comprueba si tenemos un monje y si esta rodeado un claustro.
   this.cierraClaustro = function(ficha){
-
+		var puntos = 0;
                          
-		var closeClaustro = function(ficha){
-    	var haymonje;
-	    if (_.find(ficha.seguidores,function(obj){return (obj.t=="Monje")})){
- 		   	haymonje=true;
- 		   }
-			var rodeado=0;
-				ficha2 = Tablero.buscarxcoor(ficha.x+1, ficha.y);
-			if (ficha2.lleno){rodeado++}
-				ficha2 = Tablero.buscarxcoor(ficha.x-1, ficha.y);
-			if (ficha2.lleno){rodeado++}
-				ficha2 = Tablero.buscarxcoor(ficha.x, ficha.y+1);
-			if (ficha2.lleno){rodeado++}
-				ficha2 = Tablero.buscarxcoor(ficha.x, ficha.y-1);
-			if (ficha2.lleno){rodeado++}
-				ficha2 = Tablero.buscarxcoor(ficha.x+1, ficha.y+1);
-			if (ficha2.lleno){rodeado++}
-				ficha2 = Tablero.buscarxcoor(ficha.x+1, ficha.y-1);
-			if (ficha2.lleno){rodeado++}
-				ficha2 = Tablero.buscarxcoor(ficha.x-1, ficha.y+1);
-			if (ficha2.lleno){rodeado++}
-				ficha2 = Tablero.buscarxcoor(ficha.x-1, ficha.y-1);
-			if (ficha2.lleno){rodeado++}
+			var closeClaustro = function(ficha){
+		  	var haymonje = false;
+				puntos++;
+			  if (_.find(ficha.seguidores,function(obj){return (obj.t=="Monje")})){
+	 		   	haymonje=true;
+	 		   }
+				var rodeado=0;
+					ficha2 = Tablero.buscarxcoor(ficha.x+1, ficha.y);
+				if (ficha2.lleno){puntos++;rodeado++}
+					ficha2 = Tablero.buscarxcoor(ficha.x-1, ficha.y);
+				if (ficha2.lleno){puntos++;rodeado++}
+					ficha2 = Tablero.buscarxcoor(ficha.x, ficha.y+1);
+				if (ficha2.lleno){puntos++;rodeado++}
+					ficha2 = Tablero.buscarxcoor(ficha.x, ficha.y-1);
+				if (ficha2.lleno){puntos++;rodeado++}
+					ficha2 = Tablero.buscarxcoor(ficha.x+1, ficha.y+1);
+				if (ficha2.lleno){puntos++;rodeado++}
+					ficha2 = Tablero.buscarxcoor(ficha.x+1, ficha.y-1);
+				if (ficha2.lleno){puntos++;rodeado++}
+					ficha2 = Tablero.buscarxcoor(ficha.x-1, ficha.y+1);
+				if (ficha2.lleno){puntos++;rodeado++}		
+					ficha2 = Tablero.buscarxcoor(ficha.x-1, ficha.y-1);
+				if (ficha2.lleno){puntos++;rodeado++}
 
-		if(rodeado==8 && haymonje == true){return [true,haymonje,9]}
-		else{return [false,haymonje,0]}
-	}
+			if(rodeado==8 && haymonje == true){return [true,haymonje,puntos]}
+			else{return [false,haymonje,puntos]}
+		}
 	
-	if ((ficha.tipo == "Catedral") || (ficha.tipo == "Posada")){return closeClaustro(ficha)}
-	ficha2 = Tablero.buscarxcoor(ficha.x+1, ficha.y);
-	if ((ficha2.tipo == "Catedral") || (ficha2.tipo == "Posada") ){return closeClaustro(ficha2)}
-	ficha2 = Tablero.buscarxcoor(ficha.x-1, ficha.y);
-	if ((ficha2.tipo == "Catedral") || (ficha2.tipo == "Posada") ){return closeClaustro(ficha2)}
-	ficha2 = Tablero.buscarxcoor(ficha.x, ficha.y+1);
-	if ((ficha2.tipo == "Catedral") || (ficha2.tipo == "Posada") ){return closeClaustro(ficha2)}
-	ficha2 = Tablero.buscarxcoor(ficha.x, ficha.y-1);
-	if ((ficha2.tipo == "Catedral") || (ficha2.tipo == "Posada") ){return closeClaustro(ficha2)}
-	ficha2 = Tablero.buscarxcoor(ficha.x+1, ficha.y+1);
-	if ((ficha2.tipo == "Catedral") || (ficha2.tipo == "Posada") ){return closeClaustro(ficha2)}
-	ficha2 = Tablero.buscarxcoor(ficha.x+1, ficha.y-1);
-	if ((ficha2.tipo == "Catedral") || (ficha2.tipo == "Posada") ){return closeClaustro(ficha2)}
-	ficha2 = Tablero.buscarxcoor(ficha.x-1, ficha.y+1);
-	if ((ficha2.tipo == "Catedral") || (ficha2.tipo == "Posada") ){return closeClaustro(ficha2)}
- 	ficha2 = Tablero.buscarxcoor(ficha.x-1, ficha.y-1);
-	if ((ficha2.tipo == "Catedral") || (ficha2.tipo == "Posada") ){return closeClaustro(ficha2)}
-	else{return [false,false,0]}
-    }
+		if ((ficha.tipo == "Catedral") || (ficha.tipo == "Posada")){return closeClaustro(ficha)}
+		ficha2 = Tablero.buscarxcoor(ficha.x+1, ficha.y);
+		if ((ficha2.tipo == "Catedral") || (ficha2.tipo == "Posada") ){return closeClaustro(ficha2)}
+		ficha2 = Tablero.buscarxcoor(ficha.x-1, ficha.y);
+		if ((ficha2.tipo == "Catedral") || (ficha2.tipo == "Posada") ){return closeClaustro(ficha2)}
+		ficha2 = Tablero.buscarxcoor(ficha.x, ficha.y+1);
+		if ((ficha2.tipo == "Catedral") || (ficha2.tipo == "Posada") ){return closeClaustro(ficha2)}
+		ficha2 = Tablero.buscarxcoor(ficha.x, ficha.y-1);
+		if ((ficha2.tipo == "Catedral") || (ficha2.tipo == "Posada") ){return closeClaustro(ficha2)}
+		ficha2 = Tablero.buscarxcoor(ficha.x+1, ficha.y+1);
+		if ((ficha2.tipo == "Catedral") || (ficha2.tipo == "Posada") ){return closeClaustro(ficha2)}
+		ficha2 = Tablero.buscarxcoor(ficha.x+1, ficha.y-1);
+		if ((ficha2.tipo == "Catedral") || (ficha2.tipo == "Posada") ){return closeClaustro(ficha2)}
+		ficha2 = Tablero.buscarxcoor(ficha.x-1, ficha.y+1);
+		if ((ficha2.tipo == "Catedral") || (ficha2.tipo == "Posada") ){return closeClaustro(ficha2)}
+	 	ficha2 = Tablero.buscarxcoor(ficha.x-1, ficha.y-1);
+		if ((ficha2.tipo == "Catedral") || (ficha2.tipo == "Posada") ){return closeClaustro(ficha2)}
+		else{return [false,false,0]}
+  }
+
+//Coloca seguidores.
+
+	this.colocaSeguidor = function(ficha,seguidor,Objugador){
+		ficha.seguidores.push(seguidor);
+		Objugador.n_seguidores--;
+	}
 
 };
 

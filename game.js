@@ -230,7 +230,7 @@ $(function() {
     console.log("cierra castillo3: ",Tablero.cierraCastillo(nuevaficha));
 
     //Cierra Claustro con Catedral
-/*    Tablero.iniciar();
+    Tablero.iniciar();
     var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
     Tablero.colocarficha(nuevaficha,7,5);
     var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
@@ -262,14 +262,14 @@ $(function() {
     var nuevaficha = new ObjetoFicha(0,0,0,"Catedral");
     nuevaficha.seguidores.push({t:"Monje",n:8});
     Tablero.colocarficha(nuevaficha,5,5); 
-    var nuevaficha = new ObjetoFicha(0,0,0,"Catedral");
-    Tablero.colocarficha(nuevaficha,6,5); 
-    var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
-    Tablero.colocarficha(nuevaficha,4,5);
+//    var nuevaficha = new ObjetoFicha(0,0,0,"Catedral");
+//    Tablero.colocarficha(nuevaficha,6,5); 
+//    var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
+//    Tablero.colocarficha(nuevaficha,4,5);
     console.log("cierra claustro: ",Tablero.cierraClaustro(nuevaficha));
     
 
-
+/*
   // Prueba la lista de seguidores.
   Tablero.iniciar();
 	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
@@ -292,7 +292,7 @@ $(function() {
 
 
 
-
+*/
 /////////////////////////// SIMULACRO PUNTUACIONES CAMINO
 
 
@@ -337,7 +337,8 @@ $(function() {
     Tablero.colocarficha(nuevaficha,5,5);
     var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
     var x=Tablero.colocarficha(nuevaficha,5,6);
-    x.seguidores.push({t:"Ladron",n:4,j:1,f:x});  //le metemos ladron
+    Tablero.colocaSeguidor(x,{t:"Ladron",n:4,j:1,f:x},Obj[0]);
+    console.log("Coloca seguidor-->",Obj[0].n_seguidores,x.seguidores);  //le metemos ladron
     var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
   nuevaficha.girar();
   Tablero.colocarficha(nuevaficha,4,5);
@@ -356,7 +357,7 @@ $(function() {
   Tablero.colocarficha(nuevaficha,4,7);
   var nuevaficha = new ObjetoFicha(0,0,0,"Ccruce");
   nuevaficha.girar();
-<<<<<<< HEAD
+
     nuevaficha.girar();
     nuevaficha.girar();
     Tablero.colocarficha(nuevaficha,5,7);
@@ -365,7 +366,7 @@ $(function() {
   
     console.log("cierra camino redondo repetido: ",Tablero.cierraCamino(nuevaficha,1));
     console.log("PTS-  j1:",Obj[0].puntos,"-",Obj[0].n_seguidores," j2:",Obj[1].puntos," j3:",Obj[2].puntos," j4:",Obj[3].puntos);
-*/
+
 
   nuevaficha.girar();
   nuevaficha.girar();
