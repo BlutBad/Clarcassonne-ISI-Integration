@@ -12,10 +12,18 @@ Template.torneos.events = {
 	'click #mostrar_torneos': function() {
 		Session.set("gametor", undefined);
 	},
-	'click .sign': function (){
+	'click .apunto': function (){  
 		//console.log(this._id);
 		//console.log(Meteor.user()._id);
-		if (!ChampUser.findOne({id_torneo: this._id, id_user: Meteor.user()._id})){
+		lista_apuntados = Session.get("selected_apunto");
+		if (lista_apuntados == undefined) {
+			lista_apuntados = [];
+		}
+		if (!_.contains(lista_apuntados, this._id)) { 
+			lista_apuntados.push(this._id);			
+		}
+		Session.set("selected_apunto", lista_apuntados);
+		if (!ChampUser.findOne({id_torneo: this._id, id_user: Meteor.user()._id})){ 
 			ChampUser.insert({id_torneo: this._id, id_user: Meteor.user()._id});
 		};
 	},
@@ -119,8 +127,15 @@ Template.torneos.torneo=function(){
 	} else {
 		sortTorneos = Torneos.find({game: game_session});
 	}
+	selected = Session.get("selected_apunto");  
+			console.log(selected)
+	if (selected != undefined) {
+		selected.forEach(function(each){
+			$("#" + each).toggleClass("selected_apunto", "apunto");
+		}); 
+	}	
     return sortTorneos;
-};
+}; 
 
 Template.torneos.juegos=function(){
 	return Juegos.find({});

@@ -126,13 +126,13 @@ Meteor.startup(function() {
 							user_create: 'pepito_grillo',
 							date_start : "11/29/2013",
 							date_finish : "12/29/2013",
-							pic : '/images/games_logo/clarkasone.png',
+							pic : '/images/games_logo/clarkasone.jpg',
 							description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel'
 						},
 
 						{
 							title : "Torneo Froot War",
-							game : 'Froot War',
+							game : 'Froot Wars',
 							user_create: 'pepito_grillo',
 							date_start : "11/29/2013",
 							date_finish : "12/29/2013",

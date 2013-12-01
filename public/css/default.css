@@ -799,4 +799,8 @@ td, th {
 	float: right;
 	text-align: center;
 	width: 30%;
-}  
+}   
+
+.selected_apunto {
+	background-color: red;
+}

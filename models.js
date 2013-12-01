@@ -22,7 +22,7 @@ Menu = new Meteor.Collection("menu");
 //Menu de user -- {name: String}
 Menu_user = new Meteor.Collection("menu_user");
 
-Juegos = new Meteor.Collection("juegos");
+Juegos = new Meteor.Collection("juegos"); 
 
 
 Juegos.allow({
