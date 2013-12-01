@@ -520,10 +520,18 @@ var Tablero = new function(){
 				      Cerrado=undefined;
 				  
 				      if (ficha.arriba=="Rue"){	
+				          
+				          ladron =_.find(ficha.seguidores,function(obj){return (obj.t=="Ladron", obj.n==0)});
+                  if (ladron){jugadores.push(ladron.j)}
+				          
+				          
 									ficha2=Tablero.buscarxcoor(ficha.x,ficha.y-1);
 									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1 && flag==1){
 									    puntos++;
 									    console.log("cierra camino (cruce) por arriba"); 
+									    
+									    ladron =_.find(ficha2.seguidores,function(obj){return (obj.t=="Ladron", obj.n==4)});
+                       if (ladron){jugadores.push(ladron.j)}
 									    
                        _.each(jugadores, function(seg){
                          var jugador= _.find(Tablero.listaJugadores,function(obj){return (obj.numero==seg.j)});
@@ -532,14 +540,13 @@ var Tablero = new function(){
                          var pos = seg.f.seguidores.indexOf( seg );
                          pos > -1 && seg.f.seguidores.splice( pos, 1 );
                       });
-                      
-									    
+                      puntos=1;
+                      jugadores=[];									    
 									}
 
-									else if(ficha2.lleno && ficha2!=Cerrado){
-									    var commited = puntos;
+									else if(ficha2.lleno && ficha2!=Cerrado  && flag==1){
 									    Cerrado=recursiva(ficha2,"abajo");
-									    if ((Cerrado && flag==1) || flag==2){
+									    if (Cerrado){
 									      console.log("cierra camino (cruce) por arriba");
 									      _.each(jugadores, function(seg){
                            var jugador= _.find(Tablero.listaJugadores,function(obj){return (obj.numero==seg.j)});
@@ -548,14 +555,35 @@ var Tablero = new function(){
                            var pos = seg.f.seguidores.indexOf( seg );
                            pos > -1 && seg.f.seguidores.splice( pos, 1 );
                         });
-                      }else{puntos=commited}
+                      }
+                      puntos=1;
+                      jugadores=[];	
+
+									}
+									else if(ficha2.lleno && flag==2){ 
+									  recursiva(ficha2,"abajo");
+									  _.each(jugadores, function(seg){
+                           var jugador= _.find(Tablero.listaJugadores,function(obj){return (obj.numero==seg.j)});
+                           jugador.puntos+=puntos;
+                           jugador.n_seguidores++;
+                           var pos = seg.f.seguidores.indexOf( seg );
+                           pos > -1 && seg.f.seguidores.splice( pos, 1 );
+                        });	
+                    puntos=1;	
+                    jugadores=[];						  
 									} 	
 					  }
 					  if (ficha.abajo=="Rue"){
+					  
+					        ladron =_.find(ficha.seguidores,function(obj){return (obj.t=="Ladron", obj.n==4)});
+                  if (ladron){jugadores.push(ladron.j)}
+					  
 									ficha2=Tablero.buscarxcoor(ficha.x,ficha.y+1);
 									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1 && flag==1){
 									    puntos++;
 									    console.log("cierra camino (cruce) por abajo");
+									    ladron =_.find(ficha2.seguidores,function(obj){return (obj.t=="Ladron", obj.n==0)});
+                      if (ladron){jugadores.push(ladron.j)}
 									    _.each(jugadores, function(seg){
                          var jugador= _.find(Tablero.listaJugadores,function(obj){return (obj.numero==seg.j)});
                          jugador.puntos+=puntos;
@@ -563,11 +591,12 @@ var Tablero = new function(){
                          var pos = seg.f.seguidores.indexOf( seg );
                          pos > -1 && seg.f.seguidores.splice( pos, 1 );
                       });
+                      puntos=1;
+                      jugadores=[];
 									}
-									else if(ficha2.lleno && ficha2!=Cerrado){
-									    var commited = puntos;
+									else if(ficha2.lleno && ficha2!=Cerrado  && flag==1){
 									    Cerrado=recursiva(ficha2,"arriba");
-									    if ((Cerrado && flag==1) || flag==2){
+									    if (Cerrado){
 									      console.log("cierra camino (cruce) por abajo");
 									      _.each(jugadores, function(seg){
                            var jugador= _.find(Tablero.listaJugadores,function(obj){return (obj.numero==seg.j)});
@@ -576,15 +605,37 @@ var Tablero = new function(){
                            var pos = seg.f.seguidores.indexOf( seg );
                            pos > -1 && seg.f.seguidores.splice( pos, 1 );
                         });
-                      }else{puntos=commited};
+                      }
+                      puntos=1;
+                      jugadores=[];
 
+									}
+									else if(ficha2.lleno && flag==2){
+									  recursiva(ficha2,"arriba");
+									  _.each(jugadores, function(seg){
+                           var jugador= _.find(Tablero.listaJugadores,function(obj){return (obj.numero==seg.j)});
+                           jugador.puntos+=puntos;
+                           jugador.n_seguidores++;
+                           var pos = seg.f.seguidores.indexOf( seg );
+                           pos > -1 && seg.f.seguidores.splice( pos, 1 );
+                        });	
+                    puntos=1;	
+                    jugadores=[];						  
 									}
 					  }
 					  if (ficha.izda=="Rue"){
-      						        ficha2=Tablero.buscarxcoor(ficha.x-1,ficha.y);
+					    
+					        ladron =_.find(ficha.seguidores,function(obj){return (obj.t=="Ladron", obj.n==6)});
+                  if (ladron){jugadores.push(ladron.j)}    
+					      
+      						ficha2=Tablero.buscarxcoor(ficha.x-1,ficha.y);
 									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1 && flag==1){
 									    puntos++;
 									    console.log("cierra camino (cruce) por la izda");
+									    
+									    ladron =_.find(ficha2.seguidores,function(obj){return (obj.t=="Ladron", obj.n==2)});
+                      if (ladron){jugadores.push(ladron.j)}
+									    
 									    _.each(jugadores, function(seg){
                          var jugador= _.find(Tablero.listaJugadores,function(obj){return (obj.numero==seg.j)});
                          jugador.puntos+=puntos;
@@ -592,11 +643,12 @@ var Tablero = new function(){
                          var pos = seg.f.seguidores.indexOf( seg );
                          pos > -1 && seg.f.seguidores.splice( pos, 1 );
                       });
+                      puntos=1;
+                      jugadores=[];
 									}
-									else if(ficha2.lleno && ficha2!=Cerrado){
-									    var commited = puntos;
-									    Cerrado=recursiva(ficha2,"derecha") 
-									    if ((Cerrado && flag==1) || flag==2){
+									else if(ficha2.lleno && ficha2!=Cerrado  && flag==1){
+									    Cerrado=recursiva(ficha2,"derecha");
+									    if (Cerrado){
 									      console.log("cierra camino (cruce) por la izda");
 									      _.each(jugadores, function(seg){
                            var jugador= _.find(Tablero.listaJugadores,function(obj){return (obj.numero==seg.j)});
@@ -605,14 +657,36 @@ var Tablero = new function(){
                            var pos = seg.f.seguidores.indexOf( seg );
                            pos > -1 && seg.f.seguidores.splice( pos, 1 );
                         });
-                      }else{puntos=commited}
+                      }
+                      puntos=1;
+                      jugadores=[];
+									}
+									else if(ficha2.lleno && flag==2){
+									  recursiva(ficha2,"derecha");
+									  _.each(jugadores, function(seg){
+                           var jugador= _.find(Tablero.listaJugadores,function(obj){return (obj.numero==seg.j)});
+                           jugador.puntos+=puntos;
+                           jugador.n_seguidores++;
+                           var pos = seg.f.seguidores.indexOf( seg );
+                           pos > -1 && seg.f.seguidores.splice( pos, 1 );
+                        });	
+                    puntos=1;
+                    jugadores=[];							  
 									}
 					  }
 					  if (ficha.derecha=="Rue"){
+					  
+					        ladron =_.find(ficha.seguidores,function(obj){return (obj.t=="Ladron", obj.n==2)});
+                  if (ladron){jugadores.push(ladron.j)}
+					  
 									ficha2=Tablero.buscarxcoor(ficha.x+1,ficha.y);
 									if (ficha2.lleno && cierracamino.indexOf(ficha2.tipo)!=-1 && flag==1){
 									    puntos++;
 									    console.log("cierra camino (cruce) por la dcha");
+									    
+									    ladron =_.find(ficha2.seguidores,function(obj){return (obj.t=="Ladron", obj.n==6)});
+                       if (ladron){jugadores.push(ladron.j)}
+									    
 									    _.each(jugadores, function(seg){
                          var jugador= _.find(Tablero.listaJugadores,function(obj){return (obj.numero==seg.j)});
                          jugador.puntos+=puntos;
@@ -620,11 +694,12 @@ var Tablero = new function(){
                          var pos = seg.f.seguidores.indexOf( seg );
                          pos > -1 && seg.f.seguidores.splice( pos, 1 );
                       });
+                      puntos=1;
+                      jugadores=[];
 									}
-									else if(ficha2.lleno && ficha2!=Cerrado){
-									    var commited=puntos;
+									else if(ficha2.lleno && ficha2!=Cerrado  && flag==1){
 									    Cerrado=recursiva(ficha2,"izquierda");
-									    if((Cerrado && flag==1)||flag==2){
+									    if(Cerrado){
 									      console.log("cierra camino (cruce) por la dcha");
 									      _.each(jugadores, function(seg){
                            var jugador= _.find(Tablero.listaJugadores,function(obj){return (obj.numero==seg.j)});
@@ -633,7 +708,21 @@ var Tablero = new function(){
                            var pos = seg.f.seguidores.indexOf( seg );
                            pos > -1 && seg.f.seguidores.splice( pos, 1 );
                         });
-                      }else{puntos=commited}
+                      }
+                      puntos=1;
+                      jugadores=[];
+									}
+									else if(ficha2.lleno && flag==2){
+									  recursiva(ficha2,"izquierda");
+									  _.each(jugadores, function(seg){
+                           var jugador= _.find(Tablero.listaJugadores,function(obj){return (obj.numero==seg.j)});
+                           jugador.puntos+=puntos;
+                           jugador.n_seguidores++;
+                           var pos = seg.f.seguidores.indexOf( seg );
+                           pos > -1 && seg.f.seguidores.splice( pos, 1 );
+                        });	
+                    puntos=1;
+                    jugadores=[];						  
 									}
 					  }
 				  }

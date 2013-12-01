@@ -343,7 +343,7 @@ $(function() {
   Tablero.colocarficha(nuevaficha,4,5);
   var nuevaficha = new ObjetoFicha(0,0,0,"Rcurva");
   nuevaficha.girar();
-   // Tablero.colocarficha(nuevaficha,3,5);
+   Tablero.colocarficha(nuevaficha,3,5);
     var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
     var x = Tablero.colocarficha(nuevaficha,3,6);
     x.seguidores.push({t:"Ladron",n:0,j:2,f:x},{t:"Granja",n:3,j:2,f:x});  //le metemos ladron
@@ -354,7 +354,7 @@ $(function() {
     var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
   nuevaficha.girar();
   Tablero.colocarficha(nuevaficha,4,7);
-  var nuevaficha = new ObjetoFicha(0,0,0,"Rcurva");
+  var nuevaficha = new ObjetoFicha(0,0,0,"Ccruce");
   nuevaficha.girar();
   nuevaficha.girar();
   nuevaficha.girar();
