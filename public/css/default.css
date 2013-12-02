@@ -812,7 +812,11 @@ td, th {
 	text-align: center;
 }
 
-#container_part {
+.muestra_part {
 	margin: 1%;
 	border: 2px solid black;
+}
+
+.oculta_part {
+	visibility: hidden;
 }
