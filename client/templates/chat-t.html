@@ -1,7 +1,36 @@
 
-<template name="gchat">
+<template name="chat">
 
-    <div id="gblchat">
+	<input type="button" id="showchat" value="chat">
+
+    <div id="boxchat" style="display:none">
+    	<div id="headerchat">
+    		<h4> {{chatName}} </h4>
+    		<input type="button" id="hidechat" value="-">
+    	</div>
+    	<div id="contentchat">
+    		{{> messages}}
+    	</div>
+    	<div id="msgchat">
+    		{{> input}}
+    	</div>
 	</div>
 
+</template>
+
+<template name="messages">
+	{{#each messages}}
+	<p>
+	<strong>{{name}} : <strong>  
+	{{message}} <br>
+	</p>
+	{{/each}}
+</template>
+
+<template name="input">
+	<input type="text" id="message">
+	<div id="loginError" style="display:none">
+    	Debes registrarte.
+    	<input type="button" id="hidelogerror" value="-">
+  	</div>
 </template>
