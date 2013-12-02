@@ -3,9 +3,17 @@ Template.chat.chatName = function () {
 	return "General";
 }
 
-// Template.messages.messages = function () {
+Template.messages.messages = function () {
+	var messagesColl =  Global_msgs.find({}, { sort: { time: -1 }});
+    var messages = [];
 
-// }
+    messagesColl.forEach(function(m){
+	var userName = Meteor.users.findOne(m.user_id).username;
+	messages.push({name: userName , message: m.msg});
+    });
+
+    return messages;
+}
 
 Template.chat.events = {
 	'click input#hidechat': function () {
