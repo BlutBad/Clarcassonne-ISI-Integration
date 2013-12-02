@@ -36,7 +36,9 @@ dummyG1 = function(canvasElementId, sprite_data, callback, gameId) {
 		};
 
 		startGame(this.ctx)
-		Meteor.call('newScore', gameId, Math.floor(Random.fraction() * 10) * 5); 
+		
+		var Mpoints = Math.floor(Random.fraction() * 70);
+		Meteor.call("matchFinish", Session.get("current_game"), Mpoints);
 
 		function startGame(ctx) {
 			var canvas = document.getElementById('dummydiv');

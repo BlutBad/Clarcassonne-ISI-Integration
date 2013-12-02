@@ -32,6 +32,10 @@ dummyG3 = function(canvasElementId, sprite_data, callback, gameId) {
 
 		};
 
+		
+		var Mpoints = Math.floor(Random.fraction() * 70);
+		Meteor.call("matchFinish", Session.get("current_game"), Mpoints);
+		
 		startGame(this.ctx)
 
 		var result = Meteor.call('newScore', gameId, Math.floor(Random
