@@ -25,7 +25,7 @@
 								<p>{{description}}</p>
 								<input type="button" class="{{_id}}" id = "participantes" value="Participantes">
 								{{#if currentUser}}
-									<input type="button" id="{{_id}}" class = "apunto" value="Me apunto!">
+									<input type="button" id="{{_id}}" class = "{{clase_Apuntada _id getUserId}}" value="{{apunto _id getUserId}}">
 									<p>{{participantes}}</p> 
 								{{else}}
 									<i>Sign for add to this championship.</i>  
