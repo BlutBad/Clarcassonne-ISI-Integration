@@ -19,8 +19,8 @@
 <template name="messages">
 	{{#each messages}}
 	<p class="msg">
-	<strong>{{name}} : <strong>  
-	{{message}} <br>
+	<strong>{{getUsername user_id}} : <strong>  
+	{{msg}} <br>
 	</p>
 	{{/each}}
 </template>

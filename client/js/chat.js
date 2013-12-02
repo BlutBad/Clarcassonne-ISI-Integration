@@ -4,15 +4,7 @@ Template.chat.chatName = function () {
 }
 
 Template.messages.messages = function () {
-	var messagesColl =  Global_msgs.find({}, { sort: { time: -1 }});
-    var messages = [];
-
-    messagesColl.forEach(function(m){
-	var userName = Meteor.users.findOne(m.user_id).username;
-	messages.push({name: userName , message: m.msg});
-    });
-
-    return messages;
+    return Global_msgs.find({}, { sort: { time: -1 }});;
 }
 
 Template.chat.events = {
