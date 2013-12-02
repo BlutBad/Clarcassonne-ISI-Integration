@@ -804,3 +804,7 @@ td, th {
 .selected_apunto {
 	background-color: red;
 } 
+
+.form-control {
+ margin-bottom: 10px; 
+}

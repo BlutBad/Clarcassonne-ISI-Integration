@@ -1,13 +1,28 @@
-<template name="profile">
-{{#if showprofile}}
-{{>form}}
-{{/if}}
+<template name="profil">
+	{{#if showprofile}}
+		<div id="formu">
+			<h1>Perfil de Usuario</h1>
+			<div class="container">            
+				Nombre: <input class="form-control" name="firstname" value="{{getUsername getUserId}}" type="text"/>
+           		Email: <input class="form-control" name="youremail" value="{{getUserEmail getUserId}}" type="email" />
+            	<!--<input class="form-control" name="password" placeholder="New Password" type="password" />-->
+            	<!--Fecha de nacimiento: <input type="text" id="date_start" value="{{datebirthday}}">-->
+				<label class="radio-inline"> Género: 
+					<input type="radio" name="sex" id="inlineCheckbox1" value="male" /> Male
+					<input type="radio" name="sex" id="inlineCheckbox2" value="female" /> Female
+				</label>
+				<br/>
+				<br/>
+				<button class="btn btn-primary" type="submit"> Guardar los cambios</button>
+			</div>
+		</div>
+		insignias
+		rango
+		posicion en el ranking general
+		puntos conseguidos
+		partidas jugadas
+		partidas ganadas
+		(si se pudiese mejor con un gráfico)
+	{{/if}}
 </template>
 
-<template name="form">
-	<div id="form">
-			<h1>Perfil de Usuario</h1>
-		<p>Nombre: {{getUsername getUserId}}</p>
-	
-	</div>
-</template>
