@@ -1,0 +1,14 @@
+<template name="profile">
+{{#if showprofile}}
+{{>form}}
+{{/if}}
+</template>
+
+<template name="form">
+	<div id="form">
+		<p>Username:{{usuario.username}} </p>
+		<p>Nombre: {{usuario.nombre}}</p>
+	<!--<p>Partidas Jugadas: {{game_participant}} </p>
+	<p>Partidas ganadas: {{win}} </p>-->
+	</div>
+</template>
