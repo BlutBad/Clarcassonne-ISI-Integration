@@ -55,6 +55,9 @@ Meteor
 							description : 'Descripcion del juego!',
 							idn : 'alien',
 							rangos :[ {
+								rango : "Noob",
+								minPoints : 0,
+							},{
 								rango : "Capitan",
 								minPoints : 1000,
 							}, {
@@ -77,6 +80,9 @@ Meteor
 							description : 'Descripcion del juego!',
 							idn : '',
 							rangos : [ {
+								rango : "Noob",
+								minPoints : 0,
+							},{
 								rango : "Capitan",
 								minPoints : 1000,
 							}, {
@@ -100,6 +106,9 @@ Meteor
 							description : 'Descripcion del juego!',
 							idn : 'froot',
 							rangos : [ {
+								rango : "Noob",
+								minPoints : 0,
+							},{
 								rango : "Capitan",
 								minPoints : 1000,
 							}, {
