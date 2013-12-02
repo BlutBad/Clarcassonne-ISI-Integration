@@ -6,9 +6,8 @@
 
 <template name="form">
 	<div id="form">
-		<p>Username:{{usuario.username}} </p>
-		<p>Nombre: {{usuario.nombre}}</p>
-	<!--<p>Partidas Jugadas: {{game_participant}} </p>
-	<p>Partidas ganadas: {{win}} </p>-->
+			<h1>Perfil de Usuario</h1>
+		<p>Nombre: {{getUsername getUserId}}</p>
+	
 	</div>
 </template>

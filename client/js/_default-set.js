@@ -10,3 +10,23 @@ Meteor.startup(function() {
 	$('#gameFrootcontainer').hide();
 	$('#gamecanvasAlien').hide();
 });
+
+
+if (typeof Handlebars !== 'undefined') {
+	Handlebars.registerHelper('getUsername', function (userId) {
+		var user = _extractProfile(userId);
+		if (user) {
+			if (user.username)
+				return user.username;
+			if (user.twitterUsername)
+				return user.twitterUsername;
+			}
+			return '[ Server ]';
+	});
+
+	Handlebars.registerHelper('getUserId', function () {
+		if (Meteor.user()){
+			return Meteor.user()._id;
+		}
+	});
+}

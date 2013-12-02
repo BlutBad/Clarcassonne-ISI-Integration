@@ -47,6 +47,13 @@ Template.torneos.juegos=function(){
 	return Juegos.find({});
 };
 
+Template.torneos.clase_Apuntada = function(t_id, u_id){
+
+	
+
+}
+
+
 Template.createDialog.juegos = function(){
 	return Juegos.find({});	
 }
