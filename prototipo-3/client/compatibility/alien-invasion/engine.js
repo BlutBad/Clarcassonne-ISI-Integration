@@ -17,7 +17,7 @@ var Game = new function() {
   var boards = [];
 
     // Inicializa el juego
-  this.initialize = function(canvasElementId,sprite_data,callback) {
+  	this.initialize = function(canvasElementId,sprite_data,callback) {
     this.canvas = document.getElementById(canvasElementId);
 
 	// Propiedades para pantallas táctiles
@@ -46,21 +46,11 @@ var Game = new function() {
   
 
     // Gestión de la entrada (teclas para izda/derecha y disparo)
-    var KEY_CODES = { 37:'left', 39:'right', 32 :'fire' };
+    var KEY_CODES = { 37:'left', 39:'right', 32 :'fire', 66: 'fireleft', 78: 'fireright' };
     this.keys = {};
 
-    var focusCanvas = true;
-
     this.setupInput = function() {
-        $(window).click(function(event){
-          if (event.target.id == "game")
-            focusCanvas = true;
-          else 
-            focusCanvas = false;
-        });
-
 	$(window).keydown(function(event){
-          if (focusCanvas)
 	    if (KEY_CODES[event.which]) {
 		Game.keys[KEY_CODES[event.which]] = true;
 		return false;
@@ -68,7 +58,6 @@ var Game = new function() {
 	});
 	
 	$(window).keyup(function(event){
-          if (focusCanvas)
 	    if (KEY_CODES[event.which]) {
 		Game.keys[KEY_CODES[event.which]] = false;
 		return false;
@@ -178,12 +167,19 @@ var SpriteSheet = new function() {
     this.draw = function(ctx,sprite,x,y,frame) {
 	var s = this.map[sprite];
 	if(!frame) frame = 0;
+	if (sprite=="fireball"){
+		dw = s.w*0.5;
+		dh = s.h*0.5;
+	}else{
+		dw=s.w;
+		dh=s.h;
+	}
 	ctx.drawImage(this.image,
                       s.sx + frame * s.w, 
                       s.sy, 
                       s.w, s.h, 
                       Math.floor(x), Math.floor(y),
-                      s.w, s.h);
+                      dw, dh);
     };
 }
 
@@ -497,31 +493,40 @@ var TouchControls = function() {
     // Ancho de cada columna
     var blockWidth = unitWidth-gutterWidth;
 
-    // Dibuja un rectángulo con texto dentro. Usado para representar
+    // Dibuja un rectángulo con un carácter dentro. Usado para representar
     // los botones. 
     // Los botones de las flechas izquierda y derecha usan los
-    // caracteres Univode UTF-8 \u25C0 y \u25B6 respectivamente, que
+    // caracteres Unicode UTF-8 \u25C0 y \u25B6 respectivamente, que
     // corresponden a sendos triángulos
     this.drawSquare = function(ctx,x,y,txt,on) {
-	// Usamos un nivel de opacidad del fondo (globalAlpha)
-	// diferente para que cambie la apariencia del botón en
-	// función de si está presionado (opaco) o no (más
-	// transparente)
-	ctx.globalAlpha = on ? 0.9 : 0.6;
+		// Usamos un nivel de opacidad del fondo (globalAlpha)
+		// diferente para que cambie la apariencia del botón en
+		// función de si está presionado (opaco) o no (más
+		// transparente)
+		ctx.globalAlpha = on ? 0.9 : 0.6;
 
-	ctx.fillStyle =  "#CCC";
-	ctx.fillRect(x,y,blockWidth,blockWidth);
+		ctx.fillStyle =  "#CCC";
+		if (txt == "*"){
+			ctx.fillRect(x,y,2*blockWidth,blockWidth);
+		}else{
+			ctx.fillRect(x,y,blockWidth,blockWidth);
+		}
 
-	ctx.fillStyle = "#FFF";
-	ctx.textAlign = "center";
-	ctx.globalAlpha = 1.0;
-	ctx.font = "bold " + (3*unitWidth/4) + "px arial";
+		ctx.fillStyle = "#FFF";
+		ctx.textAlign = "center";
+		ctx.globalAlpha = 1.0;
+		ctx.font = "bold " + (3*unitWidth/4) + "px arial";
 
-
-	ctx.fillText(txt, 
-                     x+blockWidth/2,
-                     y+3*blockWidth/4+5);
-    };
+		if (txt == "*"){
+			ctx.fillText(txt, 
+				             x+blockWidth,
+				             y+3*blockWidth/4+5);
+		}else{
+			ctx.fillText(txt, 
+				             x+blockWidth/2,
+				             y+3*blockWidth/4+5);
+		}
+	};
 
 
 
@@ -535,7 +540,8 @@ var TouchControls = function() {
 	var yLoc = Game.height - unitWidth;
 	this.drawSquare(ctx,gutterWidth,yLoc,"\u25C0", Game.keys['left']);
 	this.drawSquare(ctx,unitWidth + gutterWidth,yLoc,"\u25B6", Game.keys['right']);
-	this.drawSquare(ctx,4*unitWidth,yLoc,"A",Game.keys['fire']);
+	this.drawSquare(ctx,2*unitWidth +gutterWidth,yLoc,"*",Game.keys['fireleft','fireright']);
+	this.drawSquare(ctx,4*unitWidth,yLoc,"''",Game.keys['fire']);
 
 	// Recupera el estado salvado al principio del método
 	ctx.restore();
@@ -543,53 +549,70 @@ var TouchControls = function() {
 
     this.step = function(dt) { };
 
+    // Manejador para eventos de la pantalla táctil
     this.trackTouch = function(e) {
-	var touch, x;
+		var touch, x;
 	
-	// Elimina comportamiento por defecto para este evento, como
-	// scrolling, clicking, zooming, etc.
-	e.preventDefault();
+		// Elimina comportamiento por defecto para este evento, como
+		// scrolling, clicking, zooming, etc.
+		e.preventDefault();
 
-	// Detección de eventos sobre las dos franjas de la izquierda
-	// correspondientes a flecha izquierda y flecha derecha
-	Game.keys['left'] = false;
-	Game.keys['right'] = false;
-	for(var i=0;i<e.targetTouches.length;i++) {
-	    // Independientemente de dónde se tocó originalmente, nos
-	    // fijamos en todos los dedos y si hay alguno sobre los
-	    // botones de dirección, lo consideramos activado. Esto
-	    // permite desplazar los dedos sin levantarlos, y que se
-	    // generen eventos cuando pasan por encima de los botones
-	    // de dirección
-	    touch = e.targetTouches[i];
+		// Detección de eventos sobre las dos franjas de la izquierda
+		// correspondientes a flecha izquierda y flecha derecha
+		Game.keys['left'] = false;
+		Game.keys['right'] = false;
+		Game.keys['fireleft'] = false;
+		Game.keys['fireright'] = false;
 
-	    // Al fijarnos sólo en las coordenadas X hacemos que toda
-	    // la franja vertical de cada botón sea activa.
-	    x = touch.pageX / Game.canvasMultiplier - Game.canvas.offsetLeft;
-	    if(x < unitWidth) {
-		Game.keys['left'] = true;
-	    } 
-	    if(x > unitWidth && x < 2*unitWidth) {
-		Game.keys['right'] = true;
-	    } 
-	}
+		for(var i=0;i<e.targetTouches.length;i++) {
+			// Independientemente de dónde se tocó originalmente, y
+			// del tipo de evento, nos fijamos en todos los dedos
+			// (targetTouches), y si hay alguno sobre los botones de
+			// dirección, lo consideramos activado. Esto permite
+			// desplazar los dedos sin levantarlos, y que se generen
+			// eventos cuando pasan por encima de los botones de
+			// dirección
+			touch = e.targetTouches[i];
+			
+			// Al fijarnos sólo en las coordenadas X hacemos que toda
+			// la franja vertical de cada botón sea activa.
+			x = touch.pageX / Game.canvasMultiplier - Game.canvas.offsetLeft;
+			if(x < unitWidth) {
+			Game.keys['left'] = true;
+			} 
+			if(x > unitWidth && x < 2*unitWidth) {
+			Game.keys['right'] = true;
+			} 
 
-	// Detección de eventos sobre franja de la derecha: disparo
-	if(e.type == 'touchstart' || e.type == 'touchend') {
-	    for(i=0;i<e.changedTouches.length;i++) {
-		// Sólo consideramos dedos que han intervenido en el
-		// evento actual (touchstart o touchend según
-		// comprobamos en el anterior if)
-		touch = e.changedTouches[i];
-
-		// Al fijarnos sólo en las coordenadas X hacemos que toda
-		// la franja vertical de cada botón sea activa.
-		x = touch.pageX / Game.canvasMultiplier - Game.canvas.offsetLeft;
-		if(x > 4 * unitWidth) {
-		    Game.keys['fire'] = (e.type == 'touchstart');
+			if(e.type == 'touchmove' ) {
+				if(x > 2*unitWidth && x < 4 * unitWidth) {					
+					if (x < 3*unitWidth && touch.pageY < Game.height-200){
+						Game.keys['fireleft'] = true;
+					}else if (x > 3*unitWidth && touch.pageY < Game.height-200){
+						Game.keys['fireright'] = true;
+					}
+				}
+			}
 		}
-	    }
-	}
+
+		// Detección de eventos sobre franja de la derecha: disparo
+		if(e.type == 'touchstart' || e.type == 'touchend') {
+			for(i=0;i<e.changedTouches.length;i++) {
+				// Sólo consideramos dedos que han intervenido en el
+				// evento actual (touchstart o touchend), por lo que 
+				        // miramos en changedTouches
+				touch = e.changedTouches[i];
+
+				// Al fijarnos sólo en las coordenadas X hacemos que toda
+				// la franja vertical de cada botón sea activa.
+				x = touch.pageX / Game.canvasMultiplier - Game.canvas.offsetLeft;
+				if(x > 4 * unitWidth) {
+					Game.keys['fire'] = (e.type == 'touchstart');
+				}
+			}
+		}
+		
+		
     };
 
     // Registra los manejadores para los eventos táctiles asociados al
@@ -605,7 +628,6 @@ var TouchControls = function() {
     // modificado PlayerShip para que tenga en cuenta este
     // offset.
     Game.playerOffset = unitWidth + 20;
-
 };
 
 

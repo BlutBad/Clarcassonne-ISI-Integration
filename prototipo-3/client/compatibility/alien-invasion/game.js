@@ -6,6 +6,7 @@ var sprites = {
     enemy_ship: { sx: 116, sy: 0, w: 42, h: 43, frames: 1 },
     enemy_circle: { sx: 158, sy: 0, w: 32, h: 33, frames: 1 },
     explosion: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 },
+	 fireball: { sx: 0, sy: 64, w: 64, h: 64, frames: 1 },
     enemy_missile: { sx: 9, sy: 42, w: 3, h: 20, frame: 1 }
 };
 
@@ -17,30 +18,27 @@ var enemies = {
     straight: { x: 0,   y: -50, sprite: 'enemy_ship', health: 10, 
 		E: 100 },
 
-
     //  ltr (left to right) tiene velocidad constante vertical pero
     //  tiene parámetros B y C que le dotan de una velocidad
     //  horizontal sinusoidal suave.
     ltr:      { x: 0,   y: -100, sprite: 'enemy_purple', health: 10, 
-		B: 75, C: 1, E: 100, missiles: 2  },
-
+		B: 75, C: 1, E: 100  },
 
     // circle tiene velocidad sinusoidal vx e vy, que junto al
     // parámetro H de desplazamiento en el tiempo le dotan de un
     // movimiento circular.
     circle:   { x: 250,   y: -50, sprite: 'enemy_circle', health: 10, 
 		A: 0,  B: -100, C: 1, E: 20, F: 100, G: 1, H: Math.PI/2 },
-
+    circle2:   { x: 250,   y: -50, sprite: 'enemy_circle', health: 10, 
+		A: 0,  B: -100, C: 1, E: 20, F: 100, G: 1, H: Math.PI/6 },
 
     //  wiggle y step tienen los mismos parámetros pero con diferentes
     //  magnitudes que les hacen serpentear de manera diferente según
     //  van bajando.
     wiggle:   { x: 100, y: -50, sprite: 'enemy_bee', health: 20, 
-		B: 50, C: 4, E: 100, firePercentage: 0.001, missiles: 2 },
-
+		B: 50, C: 4, E: 100 },
     step:     { x: 0,   y: -50, sprite: 'enemy_circle', health: 10,
 		B: 150, C: 1.2, E: 75 }
-
 };
 
 
@@ -56,8 +54,12 @@ var startGame = function() {
     Game.setBoard(2,new Starfield(100,1.0,50));
     Game.setBoard(3,new TitleScreen("Alien Invasion", 
                                     "Press fire to start playing",
-                                    playGame));
+                                    playGame1));
+	Game.setBoard(5,new GamePoints(0));
 };
+
+var collision1;
+var collision2;
 
 
 // Definición del nivel level1.  
@@ -73,48 +75,74 @@ var startGame = function() {
 // enemigo.
 
 var level1 = [
-    //  Comienzo, Fin,   Frecuencia,  Tipo,       Override
-    [ 0,      4000,  500, 'step' ],
-    [ 6000,   13000, 800, 'ltr' ],
-    [ 10000,  16000, 400, 'circle' ],
-    [ 17800,  20000, 500, 'straight', { x: 50 } ],
-    [ 18200,  20000, 500, 'straight', { x: 90 } ],
-    [ 18200,  20000, 500, 'straight', { x: 10 } ],
-    [ 22000,  25000, 400, 'wiggle', { x: 150 }],
-    [ 22000,  25000, 400, 'wiggle', { x: 100 }]
+  //  Comienzo, Fin,   Frecuencia,  Tipo,       Override
+    [ 0,        4000,  500,         'step'                 ],
+    [ 6000,     13000, 800,         'ltr'                  ],
+    [ 10000,    16000, 400,         'circle'               ],
+    [ 17800,    20000, 500,         'straight', { x: 50  } ],
+    [ 18200,    20000, 500,         'straight', { x: 90  } ],
+    [ 18200,    20000, 500,         'straight', { x: 10  } ],
+    [ 22000,    25000, 400,         'wiggle',   { x: 150 } ],
+    [ 22000,    25000, 400,         'wiggle',   { x: 100 } ]
+];
+
+var level2 = [
+  //  Comienzo, Fin,   Frecuencia,  Tipo,       Override
+	[ 0,         4000, 400,         'circle2'     ],	
+	[ 3000,      7000, 400,         'circle2'     ],
+	[ 6000,      10000, 400,        'circle2'     ],
+	[ 6000,     13000, 500,         'straight', { x: 230  } ],
+	[ 6000,     13000, 500,         'straight', { x: 50  } ],
+	[ 13000,    16000, 400,         'wiggle',   { x: 50 } ],
+   	[ 13000,    16000, 400,         'wiggle',   { x: 230 } ],
+	[ 13000,    16000, 400,         'wiggle',   { x: 80 } ],
+    	[ 13000,    16000, 400,         'wiggle',   { x: 200 } ],
+	[ 16000,    25000, 800,         'ltr'                  ],
+	[ 18000,    25000,  500,         'step'                 ]
 ];
 
 
-var playGame = function() {
+var playGame1 = function() {
     var board = new GameBoard();
     board.add(new PlayerShip());
 
-    // Se un nuevo nivel al tablero de juego, pasando la definición de
+    // Se añade un nuevo nivel al tablero de juego, pasando la definición de
     // nivel level1 y la función callback a la que llamar si se ha
     // ganado el juego
-    board.add(new Level(level1,winGame));
+    board.add(new Level(level1, nextLevel));
     Game.setBoard(3,board);
-    Game.setBoard(5,new GamePoints(0));
+	Game.points =0;
 };
 
+var playGame2 = function() {
+    var board = new GameBoard();
+    board.add(new PlayerShip());
+
+    board.add(new Level(level2, winGame));
+    Game.setBoard(3,board);
+};
 
 // Llamada cuando han desaparecido todos los enemigos del nivel sin
 // que alcancen a la nave del jugador
 var winGame = function() {
-    Meteor.call("matchFinish", Session.get("current_game"), Game.points);
     Game.setBoard(3,new TitleScreen("You win!", 
                                     "Press fire to play again",
-                                    playGame));
+                                    playGame1));
 };
 
 
 // Llamada cuando la nave del jugador ha sido alcanzada, para
 // finalizar el juego
 var loseGame = function() {
-    Meteor.call("matchFinish", Session.get("current_game"), Game.points);
     Game.setBoard(3,new TitleScreen("You lose!", 
                                     "Press fire to play again",
-                                    playGame));
+                                    playGame1));
+};
+
+var nextLevel = function() {
+    Game.setBoard(3,new TitleScreen("Level 1 Completed!",
+                                    "Press fire to play level 2",
+                                    playGame2));
 };
 
 
@@ -200,28 +228,41 @@ var PlayerShip = function() {
     this.x = Game.width/2 - this.w / 2;
     this.y = Game.height - Game.playerOffset - this.h;
 
+	this.pressed = true;
+
     this.step = function(dt) {
-	if(Game.keys['left']) { this.vx = -this.maxVel; }
-	else if(Game.keys['right']) { this.vx = this.maxVel; }
-	else { this.vx = 0; }
+		if(Game.keys['left']) { this.vx = -this.maxVel; }
+		else if(Game.keys['right']) { this.vx = this.maxVel; }
+		else { this.vx = 0; }
 
-	this.x += this.vx * dt;
+		this.x += this.vx * dt;
 
-	if(this.x < 0) { this.x = 0; }
-	else if(this.x > Game.width - this.w) { 
-	    this.x = Game.width - this.w;
-	}
+		if(this.x < 0) { this.x = 0; }
+		else if(this.x > Game.width - this.w) { 
+			this.x = Game.width - this.w;
+		}
 
-	this.reload-=dt;
-	if(Game.keys['fire'] && this.reload < 0) {
-	    // Esta pulsada la tecla de disparo y ya ha pasado el tiempo reload
-	    Game.keys['fire'] = false;
-	    this.reload = this.reloadTime;
+		this.reload-=dt;
+		if(!Game.keys['fire']) { this.pressed=true; }
 
-	    // Se añaden al gameboard 2 misiles 
-	    this.board.add(new PlayerMissile(this.x,this.y+this.h/2));
-	    this.board.add(new PlayerMissile(this.x+this.w,this.y+this.h/2));
-	}
+		if(Game.keys['fire'] && this.reload < 0 && this.pressed) {
+			// Esta pulsada la tecla de disparo y ya ha pasado el tiempo reload
+			//
+			this.pressed = false;
+			this.reload = this.reloadTime;
+
+			// Se añaden al gameboard 2 misiles 
+			this.board.add(new PlayerMissile(this.x,this.y+this.h/2));
+			this.board.add(new PlayerMissile(this.x+this.w,this.y+this.h/2));
+		}
+		if (Game.keys['fireleft'] && this.reload < 0) {
+			this.board.add(new FireBall(this.x,this.y+this.h/2,"left"));
+			this.reload = this.reloadTime;	
+		} 
+		if (Game.keys['fireright'] && this.reload < 0) {
+			this.board.add(new FireBall(this.x+this.w,this.y+this.h/2,"right"));
+			this.reload = this.reloadTime;
+		}
     };
 };
 
@@ -234,7 +275,8 @@ PlayerShip.prototype.type = OBJECT_PLAYER;
 // Llamada cuando una nave enemiga colisiona con la nave del usuario
 PlayerShip.prototype.hit = function(damage) {
     if(this.board.remove(this)) {
-	loseGame();
+        this.board.add(new Explosion(this.x + this.w/2, this.y + this.h/2));
+        setTimeout(loseGame,800);    
     }
 };
 
@@ -262,6 +304,39 @@ PlayerMissile.prototype.step = function(dt)  {
 	this.board.remove(this); 
     }
 };
+
+var FireBall = function(x,y,direction) {
+	this.setup('fireball',{vy: -1300,vx: -150,direction: direction, damage: 20});
+
+    this.x = x - this.w/4.5; 
+    this.y = y - this.h/2; 
+
+	if (direction == "right"){
+		this.vx = -this.vx;
+	}
+};
+
+FireBall.prototype = new Sprite();
+FireBall.prototype.type = OBJECT_POWERUP;
+
+FireBall.prototype.step = function(dt)  {
+    this.y += this.vy * dt;
+    this.x += this.vx * dt;
+    this.vy += 120; 
+
+	var collision = this.board.collide(this,OBJECT_ENEMY);
+    if(collision) {
+		collision.hit(this.damage);
+    }else if(this.y > 480){
+		 this.board.remove(this); 
+	}
+
+
+};
+
+FireBall.prototype.hit = function (){
+	this.board.remove(this);
+}
 
 
 
@@ -387,13 +462,18 @@ EnemyMissile.prototype.type = OBJECT_ENEMY_PROJECTILE;
 
 EnemyMissile.prototype.step = function(dt)  {
     this.y += this.vy * dt;
-    var collision = this.board.collide(this,OBJECT_PLAYER)
-    if(collision) {
-	collision.hit(this.damage);
-	this.board.remove(this);
-    } else if(this.y > Game.height) {
-	this.board.remove(this); 
+    collision1 = this.board.collide(this,OBJECT_PLAYER)
+    if(collision1) {
+		collision1.hit(this.damage);
+	 this.board.remove(this);
+    	} else if(this.y > Game.height) {
+		this.board.remove(this); 
     }
+	collision2 = this.board.collide(this,OBJECT_POWERUP)
+	if(collision2) {
+		collision2.hit();
+		this.board.remove(this);
+	}
 };
 
 

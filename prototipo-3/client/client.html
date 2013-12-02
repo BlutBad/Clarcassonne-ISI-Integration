@@ -92,6 +92,12 @@
 	</div>
 </template>
 
+<template name="roomchattemp">
+	<div id="roomchat">
+	{{> input}}{{> messagestemp}}
+	</div>
+</template>
+
 <template name="loguserstemp">
 	<div id="logusers">
 		{{# each logusers}}
@@ -134,7 +140,7 @@
 <template name="roomgametemp">
 	<div id="roomcontainer">
 		<a style ="cursor:pointer;text-decoration:underline;" id="exitgame"> Salir </a>
-		{{> input}} {{> messagestemp}} {{> alientemp}}
+		{{> roomchattemp}} {{> alientemp}}
 	</div>
 </template>
 

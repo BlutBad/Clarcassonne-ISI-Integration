@@ -15,7 +15,7 @@ html{
 #div-login-button{
     float: right;
     position: fixed;
-    right: 15%;
+    right: 10%;
     font-size:120%;
     color: white;
     transition: color 1s;

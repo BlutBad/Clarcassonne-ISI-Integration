@@ -19,9 +19,7 @@ table {
 	border-spacing: 0;
 }
 
-
-
 /* Give canvas a background */
 canvas {
-  background-color:black;
+  margin-left: 50%;
 }
