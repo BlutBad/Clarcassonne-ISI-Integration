@@ -2,17 +2,17 @@
 // Colección de la base de datos del chat global
 Global_msgs = new Meteor.Collection('global_msgs');
 /*
-	_id | id_user | msg
+	_id | user_id | msg
 */
 
 Private_msgs = new Meteor.Collection('private_msgs');
 /*
-	_id | id_user1 | id_user2 | msg
+	_id | user1_id | user2_id | msg
 */
 
 Game_msgs = new Meteor.Collection('game_msgs');
 /*
-	_id | id_user | id_game | msg
+	_id | user_id | game_id | msg
 */
 
 //Menu -- {name: String}
