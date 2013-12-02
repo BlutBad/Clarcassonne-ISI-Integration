@@ -15,6 +15,7 @@
 					{{#each torneo}}
 						<div class="post-summary">
 							<h3 class="post-title">{{title}}</h3>
+							<h5>Juego: {{game}}</h5>
 							<div class="post-details"> 
 								<span class="date">Disponible desde {{date_start}}</span>
 								<span class="date">hasta {{date_finish}}</span> 
@@ -23,10 +24,14 @@
 							<img src={{pic}} class="post-image" alt="sample image" width="606" height="115" />
 							<div class="post-description">
 								<p>{{description}}</p>
-								<input type="button" class="{{_id}}" id = "participantes" value="Participantes">
+								<input type="button" class="{{_id}}" id = "participantes" value="{{participantes _id}}">
 								{{#if currentUser}}
-									<input type="button" id="{{_id}}" class = "{{clase_Apuntada _id getUserId}}" value="Me apunto!">
-									<p>{{participantes}}</p> 
+									<input type="button" id="{{_id}}" class = "{{clase_Apuntada _id getUserId}}" value="{{apunto _id getUserId}}">
+									<div id = "container_part">
+										{{#each lista_participantes _id}}
+											<div id = "part_list">{{getUsername id_user}}</div>
+										{{/each}}
+									</div>
 								{{else}}
 									<i>Sign for add to this championship.</i>  
 								{{/if}} 

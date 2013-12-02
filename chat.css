@@ -1,0 +1,48 @@
+#page #page-content #boxchat {
+	width:20%;
+	height:350px;
+	right: 2%;
+	position:absolute;
+	bottom: 1%;
+}
+
+#nameChat {
+	float: left;
+	border-radius:3px;
+	background: #819FF7;
+	padding: 10px;
+	width: 75%;
+	margin-bottom: 2px;
+}
+
+#hidechat {
+	float: left;
+	margin: 2px;
+}
+
+#page #page-content #boxchat #contentchat {
+	background: white;
+	clear: both;
+	border-radius:3px;
+	padding: 10px;
+	border: #6E6E6E 1px solid;
+	overflow-y: scroll;
+	height: 100%;
+	margin-bottom: 5px;
+}
+
+#msgchat {
+	background: #BDBDBD;
+	border-radius:3px;
+}
+
+#message {
+	width: 80%;	
+	margin: 5px;
+}
+
+.msg {
+	border-bottom: solid 1px blue;
+}
+
+
