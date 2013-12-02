@@ -804,3 +804,15 @@ td, th {
 .selected_apunto {
 	background-color: red;
 } 
+
+#part_list {
+	margin: 1%;
+	color: red;
+	font-weight: bold;
+	text-align: center;
+}
+
+#container_part {
+	margin: 1%;
+	border: 2px solid black;
+}

@@ -24,8 +24,8 @@ Template.torneos.torneo=function(){
 		sortTorneos = Torneos.find({game: game_session});
 	}	
 
-	show_torneos = Session.get("showParticipantes");   
-	champ = ChampUser.find({id_torneo: show_torneos});  
+	//show_torneos = Session.get("showParticipantes");   
+	//champ = ChampUser.find({id_torneo: show_torneos});  
 	/*sortTorneos.forEach(function(each) {  
 		if (each._id == champ.id_torneo) {
 			each.participantes = Meteor.user(champ.id_user).username;  
@@ -55,6 +55,11 @@ Template.torneos.apunto = function(t_id, u_id){
 		return "Me apunto!";
 	}
 }
+
+Template.torneos.lista_participantes = function(t_id){
+	return ChampUser.find({id_torneo: t_id});
+}
+
 
 Template.torneos.participantes = function(t_id){ 
 	num_parts = (ChampUser.find({id_torneo: t_id})).count(); 
