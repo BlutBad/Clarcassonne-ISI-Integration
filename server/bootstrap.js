@@ -54,13 +54,13 @@ Meteor
 							title_desc : 'Titulo para la descripcion del juego',
 							description : 'Descripcion del juego!',
 							idn : 'alien',
-							rangos :[ {
+							rangos : [ {
 								rango : "Gusano",
 								minPoints : -1,
-							},{
+							}, {
 								rango : "Noob",
 								minPoints : -0.1,
-							},{
+							}, {
 								rango : "Capitan",
 								minPoints : 999,
 							}, {
@@ -72,7 +72,33 @@ Meteor
 							}, {
 								rango : "Heroe",
 								minPoints : 9000,
-							} ]
+							} ],
+							insignias : [
+									{
+										description : "Has jugado una vez a este juego",
+										timesPlayed : 1,
+										insig_image_src : '/insignias/1.jpg'
+									},
+									{
+										description : "Has jugado una vez a este juego",
+										timesPlayed : 2,
+										insig_image_src : '/insignias/2.jpg'
+									},
+									{
+										description : "Has jugado una vez a este juego",
+										timesPlayed : 3,
+										insig_image_src : '/insignias/3.jpg'
+									},
+									{
+										description : "Has jugado una vez a este juego",
+										timesPlayed : 4,
+										insig_image_src : '/insignias/4.jpg'
+									},
+									{
+										description : "Has jugado una vez a este juego",
+										timesPlayed : 5,
+										insig_image_src : '/insignias/5.jpg'
+									}, ]
 						},
 						{
 							name : 'Clarcassone',
@@ -82,14 +108,13 @@ Meteor
 							title_desc : 'Titulo para la descripcion del juego',
 							description : 'Descripcion del juego!',
 							idn : '',
-							rangos : [ 
-							           {
+							rangos : [ {
 								rango : "Gusano",
 								minPoints : -1,
-							},{
+							}, {
 								rango : "Noob",
 								minPoints : 0,
-							},{
+							}, {
 								rango : "Capitan",
 								minPoints : 1000,
 							}, {
@@ -101,7 +126,33 @@ Meteor
 							}, {
 								rango : "Heroe",
 								minPoints : 9000,
-							} ]
+							} ],
+							insignias : [
+									{
+										description : "Has jugado una vez a este juego",
+										timesPlayed : 1,
+										insig_image_src : '/insignias/1.jpg'
+									},
+									{
+										description : "Has jugado una vez a este juego",
+										timesPlayed : 2,
+										insig_image_src : '/insignias/2.jpg'
+									},
+									{
+										description : "Has jugado una vez a este juego",
+										timesPlayed : 3,
+										insig_image_src : '/insignias/3.jpg'
+									},
+									{
+										description : "Has jugado una vez a este juego",
+										timesPlayed : 4,
+										insig_image_src : '/insignias/4.jpg'
+									},
+									{
+										description : "Has jugado una vez a este juego",
+										timesPlayed : 5,
+										insig_image_src : '/insignias/5.jpg'
+									}, ]
 						},
 
 						{
@@ -112,13 +163,13 @@ Meteor
 							title_desc : 'Titulo para la descripcion del juego',
 							description : 'Descripcion del juego!',
 							idn : 'froot',
-							rangos : [{
+							rangos : [ {
 								rango : "Gusano",
 								minPoints : -1,
-							},{
+							}, {
 								rango : "Noob",
 								minPoints : 0,
-							},{
+							}, {
 								rango : "Capitan",
 								minPoints : 1000,
 							}, {
@@ -130,7 +181,33 @@ Meteor
 							}, {
 								rango : "Heroe",
 								minPoints : 9000,
-							} ]
+							} ],
+							insignias : [
+									{
+										description : "Has jugado una vez a este juego",
+										timesPlayed : 1,
+										insig_image_src : '/insignias/6.jpg'
+									},
+									{
+										description : "Has jugado una vez a este juego",
+										timesPlayed : 2,
+										insig_image_src : '/insignias/7.jpg'
+									},
+									{
+										description : "Has jugado una vez a este juego",
+										timesPlayed : 3,
+										insig_image_src : '/insignias/8.jpg'
+									},
+									{
+										description : "Has jugado una vez a este juego",
+										timesPlayed : 4,
+										insig_image_src : '/insignias/9.jpg'
+									},
+									{
+										description : "Has jugado una vez a este juego",
+										timesPlayed : 5,
+										insig_image_src : '/insignias/10.jpg'
+									}, ]
 						},
 				/*
 				 * { name : 'Dummy1', wrapf : 'dummyG1', logo_src :
@@ -148,30 +225,46 @@ Meteor
 				 * logo_alt : 'Juega es este juego', title_desc : 'Titulo para
 				 * la descripcion del juego', description : 'Descripcion del
 				 * juego!' }
-				 */];
-/*
+				 */
+				];
+				/*
+				 * for (var i = 0; i < data.length; i++) { var list_id =
+				 * Juegos.insert(data[i]); }
+				 */
+				var timestamp = (new Date()).getTime();
 				for (var i = 0; i < data.length; i++) {
-					var list_id = Juegos.insert(data[i]);
+					var juego_id = Juegos.insert({
+						name : data[i].name,
+						wrapf : data[i].wrapf,
+						logo_src : data[i].logo_src,
+						logo_alt : data[i].logo_alt,
+						title_desc : data[i].title_desc,
+						description : data[i].description,
+						idn : data[i].idn
+					});
+
+					for (var j = 0; j < data[i].rangos.length; j++) {
+						var info = data[i].rangos[j];
+						Rangos.insert({
+							game_id : juego_id,
+							rango : info.rango,
+							minPoints : info.minPoints
+						});
+						timestamp += 1; // ensure unique timestamp.
+					}
+
+					for (var j = 0; j < data[i].insignias.length; j++) {
+						var info = data[i].insignias[j];
+						Insignias.insert({
+							game_id : juego_id,
+							insig_image_src : info.insig_image_src,
+							description : info.description,
+							timesPlayed : info.timesPlayed,
+						});
+						timestamp += 1; // ensure unique timestamp.
+					}
+
 				}
-				*/
-				 var timestamp = (new Date()).getTime();
-				    for (var i = 0; i < data.length; i++) {
-				    	var juego_id = Juegos.insert({name:data[i].name,
-				    		wrapf:data[i].wrapf, 
-				    		logo_src:data[i].logo_src, 
-				    		logo_alt:data[i].logo_alt,
-				    		title_desc:data[i].title_desc, 
-				    		description:data[i].description, 
-				    		idn:data[i].idn});
-				    	
-				      for (var j = 0; j < data[i].rangos.length; j++) {
-				        var info = data[i].rangos[j];
-				        Rangos.insert({game_id: juego_id,
-				                      rango: info.rango,
-				                      minPoints: info.minPoints});
-				        timestamp += 1; // ensure unique timestamp.
-				      }
-				    }
 			}
 
 			if (Torneos.find().count() === 0) {
@@ -210,5 +303,3 @@ Meteor
 				}
 			}
 		});
-
-
