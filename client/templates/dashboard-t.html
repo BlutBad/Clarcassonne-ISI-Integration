@@ -1,5 +1,14 @@
 <template name="dashboard">
 	{{#if show}}
 		<h1>Dashboard</h1>
+		{{>rangos}}
 	{{/if}}
+</template> 
+
+<template name="rangos">
+<ul>
+{{#each ColRango}}
+<li>{{game_id}}|{{rango}} |  {{minPoints}}</li>
+</ul>
+{{/each}}
 </template> 
