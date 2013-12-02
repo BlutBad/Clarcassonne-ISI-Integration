@@ -55,14 +55,17 @@ Meteor
 							description : 'Descripcion del juego!',
 							idn : 'alien',
 							rangos :[ {
+								rango : "Gusano",
+								minPoints : -1,
+							},{
 								rango : "Noob",
-								minPoints : 0,
+								minPoints : -0.1,
 							},{
 								rango : "Capitan",
-								minPoints : 1000,
+								minPoints : 999,
 							}, {
 								rango : "Comandante",
-								minPoints : 4000,
+								minPoints : 3999,
 							}, {
 								rango : "General",
 								minPoints : 70000,
@@ -79,7 +82,11 @@ Meteor
 							title_desc : 'Titulo para la descripcion del juego',
 							description : 'Descripcion del juego!',
 							idn : '',
-							rangos : [ {
+							rangos : [ 
+							           {
+								rango : "Gusano",
+								minPoints : -1,
+							},{
 								rango : "Noob",
 								minPoints : 0,
 							},{
@@ -90,7 +97,7 @@ Meteor
 								minPoints : 4000,
 							}, {
 								rango : "General",
-								minPoints : 70000,
+								minPoints : 7000,
 							}, {
 								rango : "Heroe",
 								minPoints : 9000,
@@ -105,7 +112,10 @@ Meteor
 							title_desc : 'Titulo para la descripcion del juego',
 							description : 'Descripcion del juego!',
 							idn : 'froot',
-							rangos : [ {
+							rangos : [{
+								rango : "Gusano",
+								minPoints : -1,
+							},{
 								rango : "Noob",
 								minPoints : 0,
 							},{

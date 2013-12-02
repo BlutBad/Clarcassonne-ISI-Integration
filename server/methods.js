@@ -21,7 +21,7 @@ Meteor.methods({
 				}
 				curUser.totalScore +=score;
 				
-				rango = Rangos.findOne({game_id:gameId, minPoints:{$lt: curUser.totalScore}});
+				rango = Rangos.findOne({game_id:gameId, minPoints:{$gt: curUser.totalScore}});
 				//curUser.rango_id = rango._id;
 				
 				Ranking.update(curUser._id, {$set : {
@@ -33,7 +33,7 @@ Meteor.methods({
 				
 				
 			}else{
-				rango = Rangos.findOne({game_id:gameId, minPoints:{$lt: score}});
+				rango = Rangos.findOne({game_id:gameId, minPoints:{$gt: score}});
 				Ranking.insert({
 					gameId : gameId,
 					userId : this.userId,
