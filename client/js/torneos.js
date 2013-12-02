@@ -32,13 +32,7 @@ Template.torneos.torneo=function(){
 			each.participantes = Meteor.user(champ.id_user).username;  
 		} 
 		console.log(each);
-	}); */ 
-
-	sortTorneos.forEach(function(each3) {  
-		if (ChampUser.find({id_torneo: each3._id, id_user: Meteor.user()._id})) {   
-			$("#" + each3._id).addClass("selected_apunto");
-		}
-	});
+	}); */  
 
     return sortTorneos; 
 };  
@@ -47,12 +41,21 @@ Template.torneos.juegos=function(){
 	return Juegos.find({});
 };
 
-Template.torneos.clase_Apuntada = function(t_id, u_id){
-
-	
-
+Template.torneos.clase_Apuntada = function(t_id, u_id){ 
+	if (ChampUser.findOne({id_torneo: t_id, id_user: u_id})) { 
+		return "selected_apunto";
+	} else {
+		return "apunto";
+	}
 }
 
+Template.torneos.apunto = function(t_id, u_id){ 
+	if (ChampUser.findOne({id_torneo: t_id, id_user: u_id})) { 
+		return "Apuntado!";
+	} else {
+		return "Me apunto!";
+	}
+}
 
 Template.createDialog.juegos = function(){
 	return Juegos.find({});	
@@ -84,17 +87,16 @@ Template.torneos.events = {
 	'click .apunto': function (){       
 		if (!ChampUser.findOne({id_torneo: this._id, id_user: Meteor.user()._id})) {  
 			ChampUser.insert({id_torneo: this._id, id_user: Meteor.user()._id});  
+			$("#" + this._id).replaceWith("Apuntado!");
 			$("#" + this._id).switchClass("apunto", "selected_apunto");
-		} else {   
-			id_torneo_rm = ChampUser.findOne({id_torneo: this._id, id_user: Meteor.user()._id}); 
-			ChampUser.remove(id_torneo_rm._id); 
-		}
+		}  
 	},
 	'click .selected_apunto': function () { 
 		if (ChampUser.findOne({id_torneo: this._id, id_user: Meteor.user()._id})) {  
 			id_torneo_rm = ChampUser.findOne({id_torneo: this._id, id_user: Meteor.user()._id}); 
 			ChampUser.remove(id_torneo_rm._id);
 		}
+		$("#" + this._id).replaceWith("Me apunto!");
 		$("#" + this._id).switchClass("selected_apunto", "apunto");	
 	},
 	'click #participantes': function(){   
