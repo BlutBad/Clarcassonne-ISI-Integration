@@ -20,7 +20,7 @@ Template.chat.events = {
 		$("#boxchat").hide();
 	},
 	'click input#showchat': function () {
-		$("#boxchat").show();
+		$("#boxchat").show("clip", 2000);
 	}
 }
 
@@ -40,7 +40,7 @@ Template.input.events = {
 				}
  			} else {
  				$("#message").val('');
-				$("#loginError").show();
+				$("#loginError").show("clip", 1000);
 			}
 		}
 	},

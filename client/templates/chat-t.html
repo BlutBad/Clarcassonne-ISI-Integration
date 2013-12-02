@@ -1,12 +1,9 @@
 
 <template name="chat">
-
-	<input type="button" id="showchat" value="chat">
-
     <div id="boxchat" style="display:none">
     	<div id="headerchat">
-    		<h4> {{chatName}} </h4>
-    		<input type="button" id="hidechat" value="-">
+    		<h4 id="nameChat"> {{chatName}} </h4>
+    		<input type="button" id="hidechat" value="X">
     	</div>
     	<div id="contentchat">
     		{{> messages}}
@@ -16,11 +13,12 @@
     	</div>
 	</div>
 
+    <input type="button" id="showchat" value="chat">
 </template>
 
 <template name="messages">
 	{{#each messages}}
-	<p>
+	<p class="msg">
 	<strong>{{name}} : <strong>  
 	{{message}} <br>
 	</p>
@@ -31,6 +29,6 @@
 	<input type="text" id="message">
 	<div id="loginError" style="display:none">
     	Debes registrarte.
-    	<input type="button" id="hidelogerror" value="-">
+    	<input type="button" id="hidelogerror" value="X">
   	</div>
 </template>
