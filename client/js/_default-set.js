@@ -29,4 +29,14 @@ if (typeof Handlebars !== 'undefined') {
 			return Meteor.user()._id;
 		}
 	});
+
+	Handlebars.registerHelper('getUserEmail', function (userId) {
+		var user = _extractProfile(userId);
+		if (user) {
+			if (user.email)
+				return user.email;
+		}
+			return ' ';
+
+	});
 }
