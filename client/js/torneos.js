@@ -59,13 +59,11 @@ Template.torneos.lista_participantes = function(t_id){
 }
 
 Template.torneos.muestra_part = function(t_id){ 
-	show_torneos = Session.get("showParticipantes");   
-	if (show_torneos == undefined) {
+	show_torneos = Session.get("showParticipantes");    
+	if (show_torneos == undefined | !_.contains(show_torneos, t_id)) {
 		return "oculta_part";
-	} else {
-		if (_.contains(show_torneos, t_id)) {
-			return "muestra_part";
-		}
+	} else { 
+		return "muestra_part"; 
 	} 
 }
 
@@ -116,12 +114,15 @@ Template.torneos.events = {
 			$("#" + this._id).replaceWith("Me apunto!"); 
 		}
 	},
-	'click #participantes': function(){  
+	'click .participantes': function(){  
 		lista_show = Session.get("showParticipantes");
 		if (lista_show == undefined) {
 			lista_show = [];
+		} else if (!_.contains(show_torneos, this._id)) {
+			lista_show.push(this._id);
+		} else {
+			$("#" + this._id).switchClass("oculta_part");
 		}
-		lista_show.push(this._id);
 		Session.set("showParticipantes", lista_show);
 	}
 };

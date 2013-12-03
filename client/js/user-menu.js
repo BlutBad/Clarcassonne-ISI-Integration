@@ -15,7 +15,7 @@ Template.user_menu.events({
   // Si esta pulsado el boton del raton sobre alguno de los menus
   // Si estas pinchando sobre el mismo tag que ya esta seleccionado
   'mousedown li' : function() {
-    console.log(this.name);
+    //console.log(this.name);
     // Si estas pinchando sobre el mismo tag que ya esta seleccionado
     if (Session.equals('current_stage', this.name)){
     // Poner lo a null, es decir celeccionar por defecto
