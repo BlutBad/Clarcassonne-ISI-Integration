@@ -3,15 +3,14 @@ Meteor.startup(function () {
 	if(Meteor.userId()){
 			$('#container').children().hide();
 			$('#container #tabs').fadeIn();
-			$('#container #chatTabs').fadeIn();
 			$('#friends').fadeIn();
 	} else {
 			$('#container').children().hide();
 			$('#slider').fadeIn();
 	}
 	$('#matches').hide();
-	//$('#roomcontainer').hide();
-	//$('#aliencontainer').hide();
+	$('#roomcontainer').hide();
+	$('#aliencontainer').hide();
 });
 
 //Cargo el efecto slider y pestañas
@@ -26,12 +25,12 @@ $(document).ready(function() {
 		});
 		
 		$("#friends").css("top",$(window).height()-57);
-		$("#friends").css("left",$(window).width()-181);
+		$("#friends").css("left",$(window).width()-182);
 		$("#accordion").css("top",10);
 		$("#accordion").css("left",$(window).width()-183);
 		$("#tabs").css("width",$(window).width()-200);
 		$("#chatTabs").css("width",$(window).width()-200);
-		$("#chatTabs").css("top",$(window).height()-148);
+		$("#chatTabs").css("top",$(window).height()-58);
 
 
 		$("#friends").click(function() {
@@ -119,7 +118,6 @@ Deps.autorun(function () {
 	if(Meteor.userId()){
 		$('#container').children().hide();
 		$('#container #tabs').fadeIn();
-		$('#container #chatTabs').fadeIn();
 		$('#friends').fadeIn();
 	}else{
 		$('#container').children().hide();
@@ -165,6 +163,9 @@ Template.input.events = {
 
 
 
+
+
+
 //Pinta lista de amigos conectados, tiene que ser reactivo porque no esta disponible desde el comienzo
 Deps.autorun(function () {
 	Template.listaAmigosOnlineTemp.listaAmigosOnline = function(){
@@ -189,6 +190,55 @@ Deps.autorun(function () {
 		}	
 	}		
 });
+
+
+
+
+
+
+
+var mychats = new Array();
+//Cada vez que hago click en un amigo conectado se inserta una pestaña de chat
+//y se añade a un array el id del usuario clickeado para saber las conversaciones
+//activas y no abrirlas de nuevo si lo estan. Se muestra la plantilla.
+//En un futuro la llegada de un mensaje desde otro usuario habra que asociarla
+//al mismo evento de insertar ventana y modificar el array.
+Template.listaAmigosOnlineTemp.events = {
+	'click a.linkchat':function(event){
+		Session.set('userdest_id', $(this)[0]._id);
+		var indice=mychats.indexOf(Session.get('userdest_id'));
+		var userdest=Meteor.users.findOne({_id: Session.get('userdest_id')});
+		if (indice==-1){
+			mychats.push(Session.get('userdest_id'));
+			$("#chatTabs ul").append("<li id='"+Session.get('userdest_id')+"'> <a href='#"+userdest.username+"'>"+userdest.username+"</a><button type='button' class='closechattab'>x</button></li>");
+			$("#chatTabs").append("<div id='"+userdest.username+"'> mensajes con "+userdest.username+"</div>")
+			$("#chatTabs").tabs("refresh");
+		}else{
+			$("#"+Session.get('userdest_id')+" a").trigger('click');
+		}
+		if (mychats.length!=0)
+			$("#chatTabs").fadeIn();	
+	}
+}
+
+//Si hago click en la cruz de la pestaña se cierra ésta y se elimina del array
+//la conversacion. Si no quedan conversaciones se oculta la plantilla
+$(document).on("click", ".closechattab", function() {
+        var userdest_id=($(this).parent().attr("id"));
+        var indice=mychats.indexOf(userdest_id);
+        var userdest=Meteor.users.findOne({_id: userdest_id});
+        mychats.splice(indice,1);
+
+		$("#"+userdest_id).remove();
+		$("#"+userdest.username).remove();
+		$("#chatTabs").tabs("refresh");
+		if (mychats.length==0)
+			$("#chatTabs").hide();
+});
+
+
+
+
 
 
 
@@ -285,6 +335,18 @@ function deleteFriend(idUser,idAborrar) {
 	Meteor.users.update({_id: idUser}, {$set: {amigos: listAmigos}});
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
 // Abrimos sesión en uno de los juegos
 Template.gamestemp.events = {
 	'click a.linkgame':function(event){
@@ -293,16 +355,6 @@ Template.gamestemp.events = {
 		$('#matches').fadeIn();
 	}
 }
-
-
-
-
-
-
-
-
-
-
 
 Template.matchestemp.events = {
 	// Creamos una partida nueva en la base de datos
