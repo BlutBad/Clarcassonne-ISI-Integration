@@ -10,8 +10,9 @@ Template.ranking.scores = function() {
 		rankings = Ranking.find({gameId: idgame_session})
 	}
 	scores = [];
-	rankings.forEach(function(each) { 
+	rankings.forEach(function(each,index) { 
 		sco = {};   
+		sco.No = index+1;
 		sco.game = Juegos.findOne({_id: each.gameId}).name;
 		sco.user = Meteor.user(each.userId).username;
     	sco.maxScore = each.maxScore;
