@@ -129,7 +129,7 @@ Ficha_abajo = function(cx,cy) {
     	this.step = function(dt) {
     	       if(Game.keys['sacar_ficha']) {
                         dibujar = true;	
-                        Game.setBoard(7,new PiezaMapa(76,74, "Ciudad3lE",90));
+                        Game.setBoard(7,new PiezaMapa(CurrentScroll.x + 6,CurrentScroll.y + 5, "Ciudad3lE",90));
                } 	
     	}
 };
