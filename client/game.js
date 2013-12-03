@@ -73,6 +73,7 @@ Jugador4 = {nombre: "Ana"    , color: "ficha_verde", puntos:30, turno: 0};
 CurrentScroll = {x:70,y:70,active: true};
 
 CurrentMove = 0;
+CurrentTurn = 0;
 
 function getTurno () {
 	if (Jugador1.turno == 1) return Jugador1;
@@ -87,6 +88,7 @@ function pasarTurno () {
 	else if (Jugador3.turno == 1) { Jugador4.turno = 1; Jugador3.turno = 0;}
 	else if (Jugador4.turno == 1) { Jugador1.turno = 1; Jugador4.turno = 0;}
 	CurrentMove = 0;
+	CurrentTurn += 1;
 }
 
 
@@ -118,18 +120,22 @@ Time = function () {
 		ctx.restore();
 	}
 	
-	var pasado = false;
+	var turno = CurrentTurn;
 	this.step = function () {
-		if (CurrentMove == 2) {
-			pasado = true;
-		}
-		if (this.tiempo == 0 || (pasado && CurrentMove == 0)) {
+
+		if (this.tiempo == 0) {
 			this.tiempo = 60;
 			pasarTurno();
+			turno = CurrentTurn;
 			Game.setBoard(7, Blank);
 			Game.setBoard(8, Blank);
-			pasado = false;
 		}
+		
+		if (turno != CurrentTurn) {
+			this.tiempo = 60;
+			turno = CurrentTurn;
+		}
+		
 		if (this.init == false) {
 			var that = this;
 			setInterval(function () { that.tiempo -= 1}, 1000);
