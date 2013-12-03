@@ -205,10 +205,15 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 	this.y = 100*(cy - CurrentScroll.y); // cy + scrollY
 	this.rotation = rotate;
 	this.sprite = sprite;
+	this.colocada = false;
 	this.type = 'PiezaMapa';
 	
 	this.draw = function (ctx) {
-		if (this.y < 500 && this.y >= 0 && this.x >= 0 && this.x < 800) {
+		if (this.colocada == true) {
+			if (this.y < 500 && this.y >= 0 && this.x >= 0 && this.x < 800) {
+				SpriteSheet.draw(ctx,this.sprite,this.x,this.y,1,this.rotation,1);
+			}
+		} else {
 			SpriteSheet.draw(ctx,this.sprite,this.x,this.y,1,this.rotation,1);
 		}
 	}
