@@ -54,6 +54,7 @@ Meteor
 							title_desc : 'Titulo para la descripcion del juego',
 							description : 'Descripcion del juego!',
 							idn : 'alien',
+							mode: 'solo',
 							rangos : [ {
 								rango : "Gusano",
 								minPoints : -1,
@@ -107,7 +108,8 @@ Meteor
 							logo_alt : 'Juega es este juego',
 							title_desc : 'Titulo para la descripcion del juego',
 							description : 'Descripcion del juego!',
-							idn : '',
+    							idn : 'klarki',
+    							mode: 'multi',
 							rangos : [ {
 								rango : "Gusano",
 								minPoints : -1,
@@ -163,6 +165,7 @@ Meteor
 							title_desc : 'Titulo para la descripcion del juego',
 							description : 'Descripcion del juego!',
 							idn : 'froot',
+							mode: 'solo',
 							rangos : [ {
 								rango : "Gusano",
 								minPoints : -1,
