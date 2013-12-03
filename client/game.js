@@ -86,6 +86,7 @@ function pasarTurno () {
 	else if (Jugador2.turno == 1) { Jugador3.turno = 1; Jugador2.turno = 0;}
 	else if (Jugador3.turno == 1) { Jugador4.turno = 1; Jugador3.turno = 0;}
 	else if (Jugador4.turno == 1) { Jugador1.turno = 1; Jugador4.turno = 0;}
+	CurrentMove = 0;
 }
 
 
@@ -101,8 +102,44 @@ startGame = function() {
 	
 	Game.setBoard(5,new Ficha_abajo());
 	Game.setBoard(9,new Helptext()); 
+	Game.setBoard(10, new Time());
 	
 };
+
+Time = function () {
+	this.tiempo = 60;
+	this.init = false;
+	
+	this.draw = function (ctx) {
+		ctx.save();
+		ctx.fillStyle="rgb(255,255,255)";
+		ctx.font="bold 20px Arial";
+		ctx.fillText(this.tiempo,770,590);
+		ctx.restore();
+	}
+	
+	var pasado = false;
+	this.step = function () {
+		if (CurrentMove == 2) {
+			pasado = true;
+		}
+		if (this.tiempo == 0 || (pasado && CurrentMove == 0)) {
+			this.tiempo = 60;
+			pasarTurno();
+			Game.setBoard(7, Blank);
+			Game.setBoard(8, Blank);
+			pasado = false;
+		}
+		if (this.init == false) {
+			var that = this;
+			setInterval(function () { that.tiempo -= 1}, 1000);
+			this.init = true;
+		}
+	
+	}
+
+
+}
 
 
 
@@ -121,7 +158,7 @@ Helptext = function () {
 		}
 		
 		if (CurrentMove == 1) {
-			ctx.fillText("Arrastra la ficha con el raton y posicionala con espacio",210,485);
+			ctx.fillText("Arrastra la ficha con el raton y posicionala con espacio, rotala con 0",170,485);
 		}
 		
 		if (CurrentMove == 2) {
@@ -464,7 +501,6 @@ Set = function (PiezaMapa) {
 					Game.setBoard(7, Blank);
 					CurrentScroll.active = true;
 					pasarTurno();
-					CurrentMove = 0;
 
 				}
 			}
@@ -516,7 +552,6 @@ Set = function (PiezaMapa) {
 				Game.setBoard(7, Blank);
 				CurrentScroll.active = true;
 				pasarTurno();
-				CurrentMove = 0;
 				
 			}
 		}
