@@ -98,10 +98,11 @@ startGame = function() {
 	
 	Tablero = new GameBoard();
 	Game.setBoard(4,Tablero);
-	Game.setBoard(6,new Flecharotacion());
+	
 	Tablero.add(new PiezaMapa(75,73,'Rrecta',90));
+	
 	Game.setBoard(5,new Ficha_abajo());
-	//Game.setBoard(6,new Set(new PiezaMapa(72,72,'Rrecta',0)));
+	//Game.setBoard(9,new Set(new PiezaMapa(72,72,'Rrecta',0)));
 	
 };
 
@@ -114,33 +115,27 @@ Background = function() {
     this.step = function(dt) { }
 };
 
+
+
 // Se encarga de pintar la primera ficha boca abajo del juego
 Ficha_abajo = function(cx,cy) {
 	
 	var dibujar = false;
-    	this.draw = function(ctx) {
+	
+    this.draw = function(ctx) {
+    
 		ctx.drawImage(img2, 500, 500);
-		if (dibujar == true)
-		        //SpriteSheet.draw(ctx,"Ciudad3lE",600,500,1);
-		        dibujar = false
-			
-    	}
+	}
     	
-    	this.step = function(dt) {
-    	       if(Game.keys['sacar_ficha']) {
-                        dibujar = true;	
-                        Game.setBoard(7,new PiezaMapa(CurrentScroll.x + 6,CurrentScroll.y + 5, "Ciudad3lE",90));
-               } 	
-    	}
+    this.step = function(dt) {
+		 if(Game.keys['sacar_ficha'] && dibujar == false) {
+			 dibujar = true;	
+			 Game.setBoard(7,new PiezaMapa(CurrentScroll.x + 6,CurrentScroll.y + 5, "Ciudad3lE",90));
+		} 	
+	}
 };
 
-Flecharotacion = function(){
 
-	 this.draw = function(ctx){
-		ctx.drawImage(img3,720,560); 
-	}
-	this.step = function(dt) { }
-}
 
 Jugadores = function() {  
    this.draw = function(ctx){
@@ -239,7 +234,6 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 	         
 	              if (e.clientX > that.x && e.clientY > that.y && e.clientX < that.x + 100 && e.clientY < that.y + 100){
 	                  posicion_x = e.clientX - that.x;
-	                  
 	                  posicion_y = e.clientY - that.y;
 	                  
 
@@ -409,7 +403,7 @@ Set = function (PiezaMapa) {
 				} else {
 					// Coloco la ficha en el mapa
 					Tablero.add(this.pieza);
-					Game.setBoard(6,Blank);
+					Game.setBoard(9,Blank);
 					CurrentScroll.active = true;
 					pasarTurno();
 
@@ -458,7 +452,7 @@ Set = function (PiezaMapa) {
 				// Coloco la ficha en el mapa en la posicion optionx,optiony
 				Tablero.add(this.pieza);
 				Tablero.add(new Seguidor (this.pieza.x/100,this.pieza.y/100,this.setSeguidorType(),this.optionx,this.optiony));
-				Game.setBoard(6,Blank);
+				Game.setBoard(9,Blank);
 				CurrentScroll.active = true;
 				pasarTurno();
 				
