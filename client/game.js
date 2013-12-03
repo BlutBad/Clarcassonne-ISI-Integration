@@ -99,13 +99,52 @@ startGame = function() {
 	Tablero = new GameBoard();
 	Game.setBoard(4,Tablero);
 	
-	//Tablero.add(new PiezaMapa(75,73,'Rrecta',90));
-	
 	Game.setBoard(5,new Ficha_abajo());
-	//Game.setBoard(9,new Set(new PiezaMapa(72,72,'Rrecta',0)));
+	Game.setBoard(9,new Helptext()); 
 	
 };
 
+
+
+Helptext = function () {
+	this.enabled = true;
+	
+	this.draw = function (ctx) {
+		if (!this.enabled) return;
+		ctx.save();
+		ctx.fillStyle="rgb(255,255,255)";
+		ctx.font="bold 15px Arial";
+		
+		if (CurrentMove == 0) {
+			
+			ctx.fillText("Pulsa espacio para sacar ficha al azar",270,485);
+		}
+		
+		if (CurrentMove == 1) {
+			ctx.fillText("Arrastra la ficha con el raton y posicionala con espacio",210,485);
+		}
+		
+		if (CurrentMove == 2) {
+			ctx.fillText("Elige moviendote con las flechas y espacio",265,485);
+		
+		}
+		ctx.restore();
+		
+		
+	}
+	
+	var up = false;
+	this.step = function () {
+		if(!Game.keys['help']) up = true;
+    	if(up && Game.keys['help']) {
+    		up = false;
+    		this.enabled = !this.enabled;
+    	}
+    }
+
+
+
+}
 
 // Se encarga de pintar el fondo del juego
 Background = function() {
