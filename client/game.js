@@ -65,8 +65,8 @@ var img2 = new Image();
 img2.src = 'images/abajo.png';
 
 
-Jugador1 = {nombre: "Carlos" , color: "ficha_rojo", puntos:0, turno:0};
-Jugador2 = {nombre: "Mario"  , color: "ficha_azul", puntos:10, turno: 1};
+Jugador1 = {nombre: "Carlos" , color: "ficha_rojo", puntos:0, turno:1};
+Jugador2 = {nombre: "Mario"  , color: "ficha_azul", puntos:10, turno: 0};
 Jugador3 = {nombre: "Maria"  , color: "ficha_amarillo", puntos:20, turno: 0};
 Jugador4 = {nombre: "Ana"    , color: "ficha_verde", puntos:30, turno: 0};
 
@@ -123,7 +123,7 @@ Ficha_abajo = function(cx,cy) {
 	
     this.draw = function(ctx) {
     
-		ctx.drawImage(img2, 500, 500);
+		ctx.drawImage(img2, 700, 500);
 	}
     	
     var up = false;
