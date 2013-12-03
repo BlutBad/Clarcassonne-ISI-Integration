@@ -11,6 +11,7 @@ Meteor.startup(function () {
 	$('#matches').hide();
 	$('#roomcontainer').hide();
 	$('#aliencontainer').hide();
+	$('#frootwarscontainer').hide();
 });
 
 //Cargo el efecto slider y pestañas
@@ -380,7 +381,9 @@ Template.matchestemp.events = {
 			$('#matches').hide();
 			$('#roomcontainer').fadeIn();
 			if (Games.findOne({_id : $(this)[0].game_id}).name=="Alien_Invasion")
-				$('#aliencontainer').show()
+				$('#aliencontainer').show();
+			else if (Games.findOne({_id : $(this)[0].game_id}).name=="Froot_Wars")
+				$('#frootwarscontainer').show();
 			if(!Plays.findOne({match_id : $(this)[0]._id, user_id : Meteor.userId()}))
 				Plays.insert({match_id : Session.get('match_id'), user_id : Meteor.userId(), score : 0});
 		} else {
@@ -409,6 +412,7 @@ Template.roomgametemp.events = {
 		Session.set('match_id', undefined);
 		$('#roomcontainer').hide();
 		$('#aliencontainer').hide();
+		$('#frootwars').hide();
 		$('#matches').fadeIn();
 	}
 };
