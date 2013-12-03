@@ -213,20 +213,20 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 		}
 	}
 	
-
-	 var mouseIsDown = false;
+	var rotacion = false;
+	var mouseIsDown = false;
+	
 	this.step = function () { 
 
-	      var that = this;
+		var that = this;
 	   
 		if (this.colocada == false ) {
+		
+		
+		if(!Game.keys['rotar']) rotacion = true;
+		if(rotacion && Game.keys['rotar']) {
 			rotacion = false;
-			if(Game.keys['rotar']){
-				rotacion=true;
-				if(rotacion=true){
-					that.rotation = that.rotation -90;
-					rotacion=false;
-				}
+			this.rotation = this.rotation -90;
 		}
 	
 			$('#game').mousedown(function(e){
@@ -402,6 +402,7 @@ Set = function (PiezaMapa) {
 					this.menu += 1;
 				} else {
 					// Coloco la ficha en el mapa
+					this.pieza.colocada = true;
 					Tablero.add(this.pieza);
 					Game.setBoard(9,Blank);
 					CurrentScroll.active = true;
@@ -450,6 +451,7 @@ Set = function (PiezaMapa) {
 			if(up3 && Game.keys['sacar_ficha']) {
 				up3 = false;
 				// Coloco la ficha en el mapa en la posicion optionx,optiony
+				this.pieza.colocada = true;
 				Tablero.add(this.pieza);
 				Tablero.add(new Seguidor (this.pieza.x/100,this.pieza.y/100,this.setSeguidorType(),this.optionx,this.optiony));
 				Game.setBoard(9,Blank);
