@@ -1,6 +1,18 @@
-
 Template.hall_clarcassone.show = function() {
-	return Session.get('current_stage') == 'klarkiHall';
+    if (Session.get('current_stage') == 'klarkiHall') {
+	UsersInHall.insert({
+	    user_id : Meteor.userId()
+	});
+	return true;
+    } else {
+	userA = UsersInHall.findOne({
+	    user_id : Meteor.userId()
+	});
+	if (userA) {
+	    UsersInHall.remove(userA._id);
+	}
+	return false;
+    }
 };
 
 Template.hall_clarcassone.events({
@@ -17,4 +29,8 @@ Template.hall_clarcassone.events({
 
 Template.hall_clarcassone.partidasVolatiles = function() {
     return PartidasVolatiles.find({});
+}
+
+Template.hall_clarcassone.UsersInHall = function() {
+    return UsersInHall.find({});
 }

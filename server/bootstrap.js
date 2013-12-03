@@ -55,6 +55,7 @@ Meteor
 							description : 'Descripcion del juego!',
 							idn : 'alien',
 							mode: 'solo',
+							hall: '',
 							rangos : [ {
 								rango : "Gusano",
 								minPoints : -1,
@@ -110,6 +111,7 @@ Meteor
 							description : 'Descripcion del juego!',
     							idn : 'klarki',
     							mode: 'multi',
+    							hall: 'klarkiHall',
 							rangos : [ {
 								rango : "Gusano",
 								minPoints : -1,
@@ -166,6 +168,7 @@ Meteor
 							description : 'Descripcion del juego!',
 							idn : 'froot',
 							mode: 'solo',
+							hall: '',
 							rangos : [ {
 								rango : "Gusano",
 								minPoints : -1,
@@ -243,7 +246,9 @@ Meteor
 						logo_alt : data[i].logo_alt,
 						title_desc : data[i].title_desc,
 						description : data[i].description,
-						idn : data[i].idn
+						idn : data[i].idn,
+						mode: data[i].mode,
+    						hall: data[i].hall,
 					});
 
 					for (var j = 0; j < data[i].rangos.length; j++) {

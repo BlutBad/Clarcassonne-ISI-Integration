@@ -9,7 +9,9 @@ http://bootsnipp.com/snippets/featured/condensed-table-example -->
             <div class="well">
         		<h2 class="muted">Jugadores</h2>
         		<ul>
-        			<li><span class="label">Jugador 1</span></li>
+        			{{#each UsersInHall}}
+        				<li><span class="label">{{getUsername user_id}}</span></li>
+        			{{/each}}
         		</ul>          
         		<p>Descripcion de como se juega aqui.</p>
         		<hr>	
