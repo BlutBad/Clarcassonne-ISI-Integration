@@ -64,8 +64,6 @@ img.src = 'images/background.png';
 var img2 = new Image();
 img2.src = 'images/abajo.png';
 
-var img3 = new Image();
-img3.src = 'images/flecharotacion.png';
 
 Jugador1 = {nombre: "Carlos" , color: "ficha_rojo", puntos:0, turno:0};
 Jugador2 = {nombre: "Mario"  , color: "ficha_azul", puntos:10, turno: 1};
@@ -73,6 +71,8 @@ Jugador3 = {nombre: "Maria"  , color: "ficha_amarillo", puntos:20, turno: 0};
 Jugador4 = {nombre: "Ana"    , color: "ficha_verde", puntos:30, turno: 0};
 
 CurrentScroll = {x:70,y:70,active: true};
+
+CurrentMove = 0;
 
 function getTurno () {
 	if (Jugador1.turno == 1) return Jugador1;
@@ -99,7 +99,7 @@ startGame = function() {
 	Tablero = new GameBoard();
 	Game.setBoard(4,Tablero);
 	
-	Tablero.add(new PiezaMapa(75,73,'Rrecta',90));
+	//Tablero.add(new PiezaMapa(75,73,'Rrecta',90));
 	
 	Game.setBoard(5,new Ficha_abajo());
 	//Game.setBoard(9,new Set(new PiezaMapa(72,72,'Rrecta',0)));
@@ -120,18 +120,29 @@ Background = function() {
 // Se encarga de pintar la primera ficha boca abajo del juego
 Ficha_abajo = function(cx,cy) {
 	
-	var dibujar = false;
 	
     this.draw = function(ctx) {
     
 		ctx.drawImage(img2, 500, 500);
 	}
     	
+    var up = false;
+    var NuevaPieza;
     this.step = function(dt) {
-		 if(Game.keys['sacar_ficha'] && dibujar == false) {
-			 dibujar = true;	
-			 Game.setBoard(7,new PiezaMapa(CurrentScroll.x + 6,CurrentScroll.y + 5, "Ciudad3lE",90));
-		} 	
+    
+		if(!Game.keys['sacar_ficha']) up = true;
+    	if(up && Game.keys['sacar_ficha']) {
+    		up = false;
+    		if (CurrentMove == 0)  {
+				NuevaPieza = new PiezaMapa(CurrentScroll.x + 6,CurrentScroll.y + 5, "Ciudad3lE",90);
+				Game.setBoard(7, NuevaPieza);
+				CurrentMove = 1;
+			} else if (CurrentMove == 1) {
+				Game.setBoard(8,new Set(NuevaPieza));
+				CurrentMove = 2;
+			}
+		}
+		
 	}
 };
 
@@ -176,23 +187,24 @@ Jugadores = function() {
 
 Rejilla =  function(){	
 	this.draw = function(ctx){
-	ctx.save();
-	for(var x=0; x<=800; x=x+100){
-		ctx.moveTo(x,0);
-		ctx.lineTo(x,500);
-	};
+		ctx.save();
+		for(var x=0; x<=800; x=x+100){
+			ctx.moveTo(x,0);
+			ctx.lineTo(x,500);
+		};
 	
-	for(var y=0; y<=500; y=y+100){
-		ctx.moveTo(0,y);
-		ctx.lineTo(800,y);
-	};
+		for(var y=0; y<=500; y=y+100){
+			ctx.moveTo(0,y);
+			ctx.lineTo(800,y);
+		};
 
-	ctx.strokeStyle ="#190B07";
-	ctx.stroke();
-	ctx.restore();
+		ctx.strokeStyle ="#190B07";
+		ctx.stroke();
+		ctx.restore();
 	
 	}
-	this.step= function(dt){};
+	
+	this.step= function(dt){ };
 }; 
 
 PiezaMapa = function (cx,cy, sprite,rotate) {
@@ -213,6 +225,7 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 		}
 	}
 	
+	var init = false;
 	var rotacion = false;
 	var mouseIsDown = false;
 	
@@ -223,44 +236,48 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 		if (this.colocada == false ) {
 		
 		
-		if(!Game.keys['rotar']) rotacion = true;
-		if(rotacion && Game.keys['rotar']) {
-			rotacion = false;
-			this.rotation = this.rotation -90;
-		}
+			if(!Game.keys['rotar']) rotacion = true;
+			if(rotacion && Game.keys['rotar']) {
+				rotacion = false;
+				this.rotation = this.rotation -90;
+			}
 	
-			$('#game').mousedown(function(e){
-	            	
+			if (init == false) {
+				$('#game').mousedown(function(e){
+	          	  	if (that.colocada == false ) {
 	         
-	              if (e.clientX > that.x && e.clientY > that.y && e.clientX < that.x + 100 && e.clientY < that.y + 100){
-	                  posicion_x = e.clientX - that.x;
-	                  posicion_y = e.clientY - that.y;
+						if (e.clientX > that.x && e.clientY > that.y && e.clientX < that.x + 100 && e.clientY < that.y + 100){
+							posicion_x = e.clientX - that.x;
+							posicion_y = e.clientY - that.y;
 	                  
-
-                 mouseIsDown = true;
-                 }
-            })
-            $('#game').mouseup(function(e){
-         // cuando mueves. soltar ficha en una casilla
-                 
-						   that.x = Math.floor(e.clientX/100)* 100;
-						   that.y = Math.floor(e.clientY/100)* 100;
-						 mouseIsDown = false;
-            })
+							mouseIsDown = true;
+						}
+					}
+				})
+		
+				$('#game').mouseup(function(e){
+       		 	 // cuando mueves. soltar ficha en una casilla
+                	if (that.colocada == false ) {
+						that.x = Math.floor(e.clientX/100)* 100;
+						that.y = Math.floor(e.clientY/100)* 100;
+					}
+					mouseIsDown = false;
+				})
                
 
-            $('#game').mousemove(function(e){
+				$('#game').mousemove(function(e){
              
-               if(!mouseIsDown) return;
-    
-
-                   that.x = e.clientX - posicion_x;
-                   that.y = e.clientY - posicion_y;
-                   
-                  return false;
-               })
-            }
-	 }
+					if(!mouseIsDown) return;
+   					if (that.colocada == false ) {
+						that.x = e.clientX - posicion_x;
+						that.y = e.clientY - posicion_y;
+                	}
+					return false;
+				})
+				init = true;
+			}
+		}
+	}
 }  
 
 
@@ -337,7 +354,7 @@ Set = function (PiezaMapa) {
 			//ctx.fillRect(370+50*this.optionx,195+50*this.optiony,50,50);
 			
 			ctx.fillText("Colocar seguidor",350,160);
-			SpriteSheet.draw(ctx,this.pieza.sprite,370,195,1,this.pieza.rotation,1.5);
+			SpriteSheet.draw(ctx,this.pieza.sprite,420,195,1,this.pieza.rotation,1.5);
 			ctx.font="bold 20px Arial";
 			for(var y=0; y<3; y=y+1){
 				for(var x=0; x<3; x=x+1){
@@ -404,9 +421,11 @@ Set = function (PiezaMapa) {
 					// Coloco la ficha en el mapa
 					this.pieza.colocada = true;
 					Tablero.add(this.pieza);
-					Game.setBoard(9,Blank);
+					Game.setBoard(8,Blank);
+					Game.setBoard(7, Blank);
 					CurrentScroll.active = true;
 					pasarTurno();
+					CurrentMove = 0;
 
 				}
 			}
@@ -454,9 +473,11 @@ Set = function (PiezaMapa) {
 				this.pieza.colocada = true;
 				Tablero.add(this.pieza);
 				Tablero.add(new Seguidor (this.pieza.x/100,this.pieza.y/100,this.setSeguidorType(),this.optionx,this.optiony));
-				Game.setBoard(9,Blank);
+				Game.setBoard(8,Blank);
+				Game.setBoard(7, Blank);
 				CurrentScroll.active = true;
 				pasarTurno();
+				CurrentMove = 0;
 				
 			}
 		}
@@ -557,8 +578,8 @@ Scroll = function() {
 }
 
 Blank = new function () {
-this.draw = function() {};
-this.step = function() {};
+	this.draw = function() {};
+	this.step = function() {};
 }
 
 $(function() {
