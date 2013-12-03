@@ -414,8 +414,9 @@ Set = function (PiezaMapa) {
 
 		ctx.fillRect(350,170,190,2);
 		if (this.menu < 0) {
-			Game.setBoard(6,Blank);
+			Game.setBoard(8,Blank);
 			CurrentScroll.active = true;
+			CurrentMove = 1;
 		}
 		if (this.menu == 0) {
 			ctx.fillText("Colocar la pieza",350,160);
