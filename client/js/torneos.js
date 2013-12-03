@@ -7,7 +7,6 @@ var openCreateDialog = function () {
 	Session.set("showCreateDialog", true);
 }; 
 
-
 Template.torneos.showCreateDialog = function () {
 	return Session.get("showCreateDialog");
 }; 
@@ -24,7 +23,6 @@ Template.torneos.torneo=function(){
 		sortTorneos = Torneos.find({game: game_session});
 	}	
 
-	//show_torneos = Session.get("showParticipantes");   
 	//champ = ChampUser.find({id_torneo: show_torneos});  
 	/*sortTorneos.forEach(function(each) {  
 		if (each._id == champ.id_torneo) {
@@ -60,6 +58,16 @@ Template.torneos.lista_participantes = function(t_id){
 	return ChampUser.find({id_torneo: t_id});
 }
 
+Template.torneos.muestra_part = function(t_id){ 
+	show_torneos = Session.get("showParticipantes");   
+	if (show_torneos == undefined) {
+		return "oculta_part";
+	} else {
+		if (_.contains(show_torneos, t_id)) {
+			return "muestra_part";
+		}
+	} 
+}
 
 Template.torneos.participantes = function(t_id){ 
 	num_parts = (ChampUser.find({id_torneo: t_id})).count(); 
@@ -108,8 +116,13 @@ Template.torneos.events = {
 			$("#" + this._id).replaceWith("Me apunto!"); 
 		}
 	},
-	'click #participantes': function(){   
-		Session.set("showParticipantes", this._id);
+	'click #participantes': function(){  
+		lista_show = Session.get("showParticipantes");
+		if (lista_show == undefined) {
+			lista_show = [];
+		}
+		lista_show.push(this._id);
+		Session.set("showParticipantes", lista_show);
 	}
 };
 

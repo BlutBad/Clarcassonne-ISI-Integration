@@ -27,7 +27,7 @@
 								<input type="button" class="{{_id}}" id = "participantes" value="{{participantes _id}}">
 								{{#if currentUser}}
 									<input type="button" id="{{_id}}" class = "{{clase_Apuntada _id getUserId}}" value="{{apunto _id getUserId}}">
-									<div id = "container_part">
+									<div id = "{{_id}}" class = "{{muestra_part _id}}">
 										{{#each lista_participantes _id}}
 											<div id = "part_list">{{getUsername id_user}}</div>
 										{{/each}}

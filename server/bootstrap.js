@@ -32,7 +32,7 @@ Meteor
 					name : "Mi clan",
 					contents : []
 				}, {
-					name : "Configuración de mi cuenta",
+					name : "Amigos",
 					contents : []
 				}, ];
 
