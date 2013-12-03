@@ -218,9 +218,54 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 		}
 	}
 	
-	this.step = function () { }
+	 var mouseIsDown = false;
+	this.step = function () { 
 
-}
+	      var that = this;
+	   
+	      if (this.colocada == false ) {
+	      
+	        
+	      
+	         $('#game').mousedown(function(e){
+	            	
+	         
+	              if (e.clientX > that.x && e.clientY > that.y && e.clientX < that.x + 100 && e.clientY < that.y + 100){
+	                  posicion_x = e.clientX - that.x;
+	                  
+	                  posicion_y = e.clientY - that.y;
+	                  
+
+                 mouseIsDown = true;
+                 }
+            })
+            $('#game').mouseup(function(e){
+         // cuando mueves. soltar ficha en una casilla
+                 
+						   that.x = Math.floor(e.clientX/100)* 100;
+						   that.y = Math.floor(e.clientY/100)* 100;
+						 mouseIsDown = false;
+            })
+               
+
+            $('#game').mousemove(function(e){
+             
+               if(!mouseIsDown) return;
+    
+
+                   that.x = e.clientX - posicion_x;
+                   that.y = e.clientY - posicion_y;
+                   
+                  return false;
+               })
+            }
+	 }
+}  
+
+
+	
+
+
 
 
 
