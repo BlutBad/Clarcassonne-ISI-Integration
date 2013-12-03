@@ -77,27 +77,27 @@ Meteor
 									{
 										description : "Has jugado una vez a este juego",
 										timesPlayed : 1,
-										insig_image_src : '/insignias/1.jpg'
-									},
-									{
-										description : "Has jugado una vez a este juego",
-										timesPlayed : 2,
-										insig_image_src : '/insignias/2.jpg'
-									},
-									{
-										description : "Has jugado una vez a este juego",
-										timesPlayed : 3,
 										insig_image_src : '/insignias/3.jpg'
 									},
 									{
-										description : "Has jugado una vez a este juego",
-										timesPlayed : 4,
-										insig_image_src : '/insignias/4.jpg'
+										description : "Has jugado dos veces a este juego",
+										timesPlayed : 2,
+										insig_image_src : '/insignias/6.jpg'
 									},
 									{
-										description : "Has jugado una vez a este juego",
+										description : "Has jugado tres veces a este juego",
+										timesPlayed : 3,
+										insig_image_src : '/insignias/7.jpg'
+									},
+									{
+										description : "Has jugado 4 veces a este juego",
+										timesPlayed : 4,
+										insig_image_src : '/insignias/8.jpg'
+									},
+									{
+										description : "Has jugado 5 veces a este juego",
 										timesPlayed : 5,
-										insig_image_src : '/insignias/5.jpg'
+										insig_image_src : '/insignias/9.jpg'
 									}, ]
 						},
 						{
@@ -186,27 +186,27 @@ Meteor
 									{
 										description : "Has jugado una vez a este juego",
 										timesPlayed : 1,
-										insig_image_src : '/insignias/6.jpg'
+										insig_image_src : '/insignias/3.jpg'
 									},
 									{
 										description : "Has jugado una vez a este juego",
 										timesPlayed : 2,
-										insig_image_src : '/insignias/7.jpg'
+										insig_image_src : '/insignias/2.jpg'
 									},
 									{
 										description : "Has jugado una vez a este juego",
 										timesPlayed : 3,
-										insig_image_src : '/insignias/8.jpg'
+										insig_image_src : '/insignias/4.jpg'
 									},
 									{
 										description : "Has jugado una vez a este juego",
 										timesPlayed : 4,
-										insig_image_src : '/insignias/9.jpg'
+										insig_image_src : '/insignias/5.jpg'
 									},
 									{
 										description : "Has jugado una vez a este juego",
 										timesPlayed : 5,
-										insig_image_src : '/insignias/10.jpg'
+										insig_image_src : '/insignias/6.jpg'
 									}, ]
 						},
 				/*
