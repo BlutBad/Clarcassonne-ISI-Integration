@@ -1,9 +1,19 @@
-#page #page-content #boxchat {
-	width:20%;
-	height:350px;
-	right: 2%;
-	position:absolute;
-	bottom: 1%;
+#chat {
+	width: 20%;
+	position:fixed;
+	top:75%;
+	left:90%;
+	margin-left: -150px;
+	margin-top: -250px;
+}
+
+#showchat {
+	float: right;
+	margin: 5px;
+}
+
+#boxchat {
+	clear: both;
 }
 
 #nameChat {
@@ -20,14 +30,14 @@
 	margin: 2px;
 }
 
-#page #page-content #boxchat #contentchat {
+#contentchat {
 	background: white;
 	clear: both;
 	border-radius:3px;
 	padding: 10px;
 	border: #6E6E6E 1px solid;
 	overflow-y: scroll;
-	height: 100%;
+	height: 250px;
 	margin-bottom: 5px;
 }
 
@@ -55,4 +65,5 @@
     margin-top: 3px;
     margin-bottom: -3px;
 }
+
 

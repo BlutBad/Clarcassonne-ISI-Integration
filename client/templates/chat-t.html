@@ -1,19 +1,20 @@
 
 <template name="chat">
-    <div id="boxchat" style="display:none">
-    	<div id="headerchat">
-    		<h4 id="nameChat"> {{chatName}} </h4>
-    		<input type="button" id="hidechat" value="X">
+    <div id="chat">
+        <input type="button" id="showchat" class="btn btn-primary" value="Chat"></input>
+        <div id="boxchat" style="display:none">
+        	<div id="headerchat">
+        		<h4 id="nameChat"> {{chatName}} </h4>
+        		<input type="button" id="hidechat" value="X">
+        	</div>
+        	<div id="contentchat">
+        		{{> messages}}
+        	</div>
+        	<div id="msgchat">
+        		{{> input}}
+        	</div>
     	</div>
-    	<div id="contentchat">
-    		{{> messages}}
-    	</div>
-    	<div id="msgchat">
-    		{{> input}}
-    	</div>
-	</div>
-
-    <input type="button" id="showchat" class="btn btn-primary" value="Chat"></input>
+    </div>
 </template>
 
 <template name="messages">
