@@ -129,7 +129,7 @@ Ficha_abajo = function(cx,cy) {
     	this.step = function(dt) {
     	       if(Game.keys['sacar_ficha']) {
                         dibujar = true;	
-                        Game.setBoard(7,new PiezaMapa(76,74, "Ciudad3lE",90));
+                        Game.setBoard(7,new PiezaMapa(CurrentScroll.x + 6,CurrentScroll.y + 5, "Ciudad3lE",90));
                } 	
     	}
 };
@@ -218,12 +218,26 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 		}
 	}
 	
+
 	 var mouseIsDown = false;
 	this.step = function () { 
 
 	      var that = this;
 	   
 	      if (this.colocada == false ) {
+	         
+	            rotacion = false;
+		   
+		
+		   if(Game.keys['rotar']){
+				rotacion=true;
+		
+			if(rotacion=true){
+				this.rotation = this.rotation - (90);
+				rotacion=false;
+			}
+		}
+	
 	      
 	        
 	      
@@ -264,8 +278,6 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 
 
 	
-
-
 
 
 
