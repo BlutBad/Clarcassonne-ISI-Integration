@@ -352,7 +352,7 @@ function deleteFriend(idUser,idAborrar) {
 
 // Abrimos sesión en uno de los juegos
 Template.gamestemp.events = {
-	'click a.linkgame':function(event){
+	'click .linkgame':function(event){
 		Session.set('game_id', $(this)[0]._id);
 		$('#games').hide();
 		$('#matches').fadeIn();

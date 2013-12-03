@@ -4,15 +4,14 @@
 
 <body>
 	<div id="div-login-button">{{loginButtons}}</div>
-	<h1><FONT  id="titulo" Size="6">X-ADrian</FONT>
-		<FONT Size="2">&nbsp&nbsp&nbsp Welcome to X-ADrian platform</FONT>
-	</h1>
+	<div id="titulo" Size="6">X-ADrian</div>
+	<div id="subtitulo">&nbsp&nbsp&nbsp Welcome to X-ADrian platform</div><br>
 	<div id="container">
    		{{> cointemp}}
 		{{> tabstemp}}
 		{{> friendsTemp}}
 		{{> chatsTabsTemp}}
-   </div>	
+   	</div>	
 
 </body>
 
@@ -108,7 +107,7 @@
 	<div id="games">
 		{{# each games}}
 			<a style ="cursor:pointer;text-decoration:underline;" class="linkgame">{{name}}</a><br>
-			<IMG  SRC={{name}}><br>
+			<IMG  SRC ={{name}} class="linkgame"><br>
 		{{/ each}}
 	</div>
 

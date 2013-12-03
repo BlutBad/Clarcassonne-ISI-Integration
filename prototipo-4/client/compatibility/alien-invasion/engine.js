@@ -51,10 +51,13 @@ var Game = new function() {
 
 	this.setupInput = function() {
 		$(window).click(function(event){
-			if (event.target.id == "aliencanvas")
+			if (event.target.id == "aliencanvas"){
+				$("#aliencanvas").css("border-color","#FF4000");
 				focusCanvas = true;
-			else 
+			}else{
+				$("#aliencanvas").css("border-color","#848484");
 				focusCanvas = false;
+			}
 		});
 
 	$(window).keydown(function(event){

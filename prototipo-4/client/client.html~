@@ -4,17 +4,14 @@
 
 <body>
 	<div id="div-login-button">{{loginButtons}}</div>
-	<h1><FONT  id="titulo" Size="6">X-ADrian</FONT>
-		<FONT Size="2">&nbsp&nbsp&nbsp Welcome to X-ADrian platform</FONT>
-	</h1>
+	<div id="titulo" Size="6">X-ADrian</div>
+	<div id="subtitulo">&nbsp&nbsp&nbsp Welcome to X-ADrian platform</div><br>
 	<div id="container">
    		{{> cointemp}}
 		{{> tabstemp}}
 		{{> friendsTemp}}
 		{{> chatsTabsTemp}}
-   </div>
-
-   <div id="gamecontainer" class="span7">{{> frootwarstemp}}</div>	
+   	</div>	
 
 </body>
 
@@ -138,7 +135,7 @@
 </template>
 
 <template name="frootwarstemp">
-	<!-<div id="frootwarscontainer">
+	<div id="frootwarscontainer">
 		<canvas id="gamecanvas" width="640" height="480" class="gamelayer"></canvas>
   		<div id="scorescreen" class="gamelayer">
     		<img id="togglemusic" src="images/icons/sound.png" onclick="game.toggleBackgroundMusic();">
@@ -161,13 +158,13 @@
       		<p id="returntolevelscreen"onclick="game.showLevelScreen();"><img src="images/icons/return.png"> Return to Level Screen</p>
     		</div>
   		</div>
-	<!-</div>
+	</div>
 </template>
 
 <template name="roomgametemp">
 	<div id="roomcontainer">
 		<a style ="cursor:pointer;text-decoration:underline;" id="exitgame"> Salir </a>
-		{{> roomchattemp}} {{> alientemp}} <!--<div id="gamecontainer" class="span7">{{> frootwarstemp}}</div>-->
+		{{> roomchattemp}} {{> alientemp}} {{> frootwarstemp}}
 	</div>
 </template>
 

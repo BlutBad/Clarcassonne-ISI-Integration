@@ -3,10 +3,22 @@ html{
     font-family: verdana, sans-serif;
     background-color: #2E2E2E;
     color: white;
+	
 }
 
-#titulo{
+#titulo{	
+	text-align:center;
+	font-weight:bold;
+	font-size:170%;
 	text-shadow: 0.1em 0.1em 0.1em #2E9AFE, 0.3em 0.2em 0.5em black;
+}
+#subtitulo{	
+	text-align:center;
+	font-size:100%;
+}
+
+#aliencanvas{	
+	border: 2px solid #848484;
 }
 
 
@@ -15,7 +27,7 @@ html{
 #div-login-button{
     float: right;
     position: fixed;
-    right: 10%;
+    right: 15%;
     font-size:120%;
     color: white;
     transition: color 1s;
@@ -67,16 +79,15 @@ html{
 
 #accordion{	
 	position: absolute;
+	text-align:left;
 }
 
 #accordion #formSearch{	
-	float:right;
+	display: block;
 	width: 130px;
-	
 }
 
 #accordion #buttonSearch{	
-	float:left;
 	display: block;
 }
 
