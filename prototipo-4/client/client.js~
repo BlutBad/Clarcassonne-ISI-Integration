@@ -247,7 +247,7 @@ $(document).on("click", ".closechattab", function() {
 
 
 
-//Para buscar y añadir usuarios
+//Para buscar y añadir usuarios, esta detecta cuando se escribe en el formulario
 Template.friendsTemp.events = {
 	'keydown input#formSearch':function(event){
 		if(event.which==13){
@@ -261,7 +261,8 @@ Template.friendsTemp.events = {
 			}
 		}
 }
-
+//busca y te da opcion a agregar si no es tu amigo. si ya es amigo o ya existe o eres tu no te deja o te deja borrar
+//en caso de que sea ya amigo
 function searchUsers(user) {
 
 	$("#formSearch").prop('value', '');
@@ -288,7 +289,7 @@ function searchUsers(user) {
 		$.ambiance({message: "User: " +user+ " not found!", type: "error", fade: false});
 	}
 }
-
+//comprueba si la persona que te quiere agregar es amigo
 function isAmigo (id) {
 	amigos = Meteor.user().amigos;		
 	if (amigos == undefined){
@@ -306,6 +307,7 @@ function isAmigo (id) {
 	return false;
 }
 
+//agrega a los dos usuarios a amigos respectivamente
 function addingFriend(user,id) {
 	var button = $(window.document.createElement('button'))
 		.attr('id', 'AddButtFriend').addClass("btn btn-primary").html("Agregar");
@@ -316,7 +318,7 @@ function addingFriend(user,id) {
 		$.ambiance({message: "You and "+user+" are now friends!", title: "Success!",type: "success"});
 	});
 }
-
+//borra a los dos usuarios a amigos respectivamente
 function rmingFriend(user,id) {
 	var button = $(window.document.createElement('button'))
 		.attr('id', 'RmButtFriend').addClass("btn btn-primary").html("Borrar");
@@ -327,7 +329,7 @@ function rmingFriend(user,id) {
 		$.ambiance({message: "You and "+user+" are not friends!", title: "Success!",type: "success"});
 	});	
 }
-
+//si borra actualiza sus bases de datos
 function deleteFriend(idUser,idAborrar) {
 	var listAmigos = Meteor.users.findOne({_id: idUser});
 	listAmigos = listAmigos.amigos;

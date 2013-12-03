@@ -381,11 +381,13 @@ Template.matchestemp.events = {
 			$('#roomcontainer').fadeIn();
 			if (Games.findOne({_id : $(this)[0].game_id}).name=="Alien_Invasion")
 				$('#aliencontainer').show()
-			Plays.insert({match_id : Session.get('match_id'), user_id : Meteor.userId(), score : 0});
+			if(!Plays.findOne({match_id : $(this)[0]._id, user_id : Meteor.userId()}))
+				Plays.insert({match_id : Session.get('match_id'), user_id : Meteor.userId(), score : 0});
 		} else {
 			Session.set('match_id', undefined);
 			alert("Partida llena. Pruebe en otra partida.");
 		};
+
 	},
 	// Volvemos atrás para elegir otro juego
 	'click a#match_back':function(event){
@@ -398,13 +400,19 @@ Template.matchestemp.events = {
 Template.roomgametemp.events = {
 	// Salimos de una partida
 	'click a#exitgame':function(event){
+		quiter_key = Plays.findOne({match_id : Session.get('match_id'), user_id : Meteor.userId()})._id;
+		Plays.remove({_id:quiter_key});
+
+		if(!Plays.findOne({match_id : Session.get('match_id')})){
+			Matches.remove({_id : Session.get('match_id')});
+		}
 		Session.set('match_id', undefined);
 		$('#roomcontainer').hide();
 		$('#aliencontainer').hide();
 		$('#matches').fadeIn();
-		console.log(Session.get('match_id'));
 	}
 };
+
 
 
 
