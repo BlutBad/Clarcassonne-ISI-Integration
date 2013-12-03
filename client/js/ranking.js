@@ -14,8 +14,13 @@ Template.ranking.scores = function() {
 		sco = {};   
 		sco.No = index+1;
 		sco.game = Juegos.findOne({_id: each.gameId}).name;
-		sco.user = Meteor.user(each.userId).username;
-    	sco.maxScore = each.maxScore;
+		
+		sco.user = Meteor.users.findOne({_id: each.userId}).username;
+		
+
+    	
+		
+		sco.maxScore = each.maxScore;
     	sco.totalScore = each.totalScore;
     	sco.rango = Rangos.findOne({_id: each.rango_id}).rango;
     	scores.push(sco);
