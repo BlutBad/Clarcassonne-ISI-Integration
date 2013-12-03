@@ -46,7 +46,7 @@
   
 
     // Gestión de la entrada (teclas para izda/derecha y disparo)
-    var KEY_CODES = { 37:'left', 39:'right', 38 :'up', 40:'down', 32:'sacar_ficha', 27: 'back'};
+    var KEY_CODES = { 37:'left', 39:'right', 38 :'up', 40:'down', 32:'sacar_ficha', 27: 'back', 48:'rotar'};
     this.keys = {};
 
     this.setupInput = function() {

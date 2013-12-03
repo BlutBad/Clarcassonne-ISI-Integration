@@ -218,7 +218,19 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 		}
 	}
 	
-	this.step = function () { }
+	this.step = function () { 
+		rotacion = false;
+		console.log(rotacion);
+		if(Game.keys['rotar']){
+				rotacion=true;
+				console.log(rotacion);
+			if(rotacion=true){
+				this.rotation = this.rotation - (90);
+				rotacion=false;
+			}
+		}
+	
+	}
 
 }
 
