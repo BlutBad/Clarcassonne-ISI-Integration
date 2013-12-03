@@ -224,24 +224,17 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 
 	      var that = this;
 	   
-	      if (this.colocada == false ) {
-	         
-	            rotacion = false;
-		   
-		
-		   if(Game.keys['rotar']){
+		if (this.colocada == false ) {
+			rotacion = false;
+			if(Game.keys['rotar']){
 				rotacion=true;
-		
-			if(rotacion=true){
-				this.rotation = this.rotation - (90);
-				rotacion=false;
-			}
+				if(rotacion=true){
+					that.rotation = that.rotation -90;
+					rotacion=false;
+				}
 		}
 	
-	      
-	        
-	      
-	         $('#game').mousedown(function(e){
+			$('#game').mousedown(function(e){
 	            	
 	         
 	              if (e.clientX > that.x && e.clientY > that.y && e.clientX < that.x + 100 && e.clientY < that.y + 100){
