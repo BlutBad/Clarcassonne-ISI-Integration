@@ -1,5 +1,40 @@
 <template name="dashboard">
 	{{#if show}}
 		<h1>Dashboard</h1>
+		{{>misInsignias}}
 	{{/if}}
+	
 </template> 
+
+
+<template name="misInsignias">
+<div class="well">
+<h2>Insignias conseguidas en los juegos:</h2>
+    <table class="table">
+      <thead>
+        <tr>
+      		<th>#</th>
+			<th>GAME</th>
+			<th>Insignias</th>
+        </tr>
+      </thead>
+      <tbody>
+      	{{#each juegos getUserId}}
+      		<tr>
+      		<td></td>
+			<td><h4>{{gameName _id}}</h4></td>
+			<td>
+    		{{#each insignias _id getUserId}}
+    			{{#with infoInsignia insignia_id}}
+			        <div>{{description}}<img src="{{insig_image_src}}" alt="{{description}}"></div>
+				{{/with}}
+			{{/each}}
+			</td>
+			</tr>		
+		{{/each}}
+      </tbody>
+    </table>
+</div>
+
+</template> 
+
