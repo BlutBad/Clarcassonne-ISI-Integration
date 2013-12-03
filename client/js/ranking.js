@@ -5,9 +5,9 @@ Template.ranking.show = function() {
 Template.ranking.scores = function() { 
 	idgame_session = Session.get("gamerank");
 	if (idgame_session == null) {
-		rankings = Ranking.find({});
+		rankings = Ranking.find({},{sort:{maxScore: -1}});
 	} else {
-		rankings = Ranking.find({gameId: idgame_session})
+		rankings = Ranking.find({gameId: idgame_session}, {sort:{maxScore: -1}})
 	}
 	scores = [];
 	rankings.forEach(function(each,index) { 
