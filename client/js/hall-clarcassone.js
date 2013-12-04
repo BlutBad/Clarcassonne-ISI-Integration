@@ -1,5 +1,7 @@
 Template.hall_clarcassone.show = function() {
+   //Mostrar el hall de clarcassone si ...
     if (Session.get('current_stage') == 'klarkiHall') {
+	//Dejar al user estar en lista de jugadores solo si esta auntenticado
 	if (Meteor.userId()) {
 	    UsersInHall.insert({
 		user_id : Meteor.userId()
@@ -7,6 +9,8 @@ Template.hall_clarcassone.show = function() {
 	}
 	return true;
     } else {
+	//Si el estado cambia, ya no estamos en el hall de clarkasonne
+	//borrar al user de los juadores online
 	userA = UsersInHall.findOne({
 	    user_id : Meteor.userId()
 	});
@@ -19,7 +23,7 @@ Template.hall_clarcassone.show = function() {
 
 Template.hall_clarcassone.events({
     'click #nuevaPartida' : function() {
-	console.log("Nueva partida");
+	console.log("Nueva partida")
 	if (Meteor.userId()) {
 	    // ^.^ edad = Math.floor(Random.fraction() * 70);
 	    PartidasVolatiles.insert({
@@ -32,6 +36,8 @@ Template.hall_clarcassone.events({
 	PartidasVolatiles.remove(this._id);
     },
     'click .startparty' : function() {
+	//Hacer una entrada a la coleccion de Partidas, 
+	//y llamar a ui y ai con ese _id de la partida.
 	console.log('Crear una partida de verdad');
     },
 
@@ -54,8 +60,9 @@ Template.hall_clarcassone.UsersInHall = function() {
     return UsersInHall.find({});
 }
 
-Template.hall_clarcassone.userRango = function(user_id) {
 
+//El rango del usuario en la tabla de miembros de la partida
+Template.hall_clarcassone.userRango = function(user_id) {
     gid = Session.get("current_game");
     if (gid) {
 	rankingU = Ranking.findOne({
