@@ -1,25 +1,28 @@
 sprites = {
         Rrecta: { sx: 0, sy: 0, w:100, h: 100, frames: 1 },
-        Rcurva: { sx: -200, sy: 400, w: 100, h: 100, frames: 1 },
-        Catedral: { sx: -200, sy: 500, w: 100, h: 100, frames: 1 },
-        Posada: { sx: 0, sy: 400, w: 100, h: 100, frames: 1 },
-        Ccruze: { sx: 0, sy: 200, w: 100, h: 100, frames: 1 },
-        CiudadE: { sx: 100, sy: 0, w: 100, h: 100, frames: 1 },
-        Ciudad3lc: { sx: 400, sy: 0, w: 100, h: 100, frames: 1 },
-        Ciudad3lcE: { sx: 300, sy: 0, w: 100, h: 100, frames: 1 },
-        Ciudad3l: { sx: 300, sy: 100, w: 100, h: 100, frames: 1 },
-        Ciudad3lE: { sx: 100, sy: 100, w: 100, h: 100, frames: 1 },
-        Ciudad2lc: { sx: 200, sy: 200, w: 100, h: 100, frames: 1 },
-        Ciudad2lcE: { sx: 100, sy: 200, w: 100, h: 100, frames: 1 },
-        Ciudad2l: { sx: 300, sy: 300, w: 100, h: 100, frames: 1 },
-        Ciudad2lE: { sx: 100, sy: 400, w: 100, h: 100, frames: 1 },
-        CiudadPuerta: { sx: 400, sy: 400, w: 100, h: 100, frames: 1 },
-        CiudadPuertaE: { sx: 300, sy: 400, w: 100, h: 100, frames: 1 },
-        Ciudadext: { sx: 300, sy: 500, w: 100, h: 100, frames: 1 },
-        Ciudad1l2crect: { sx: 500, sy: 0, w: 100, h: 100, frames: 1 },
-        Ciudadcurvder: { sx: 500, sy: 100, w: 100, h: 100, frames: 1 },
-        Ciudadcurvizq: { sx: 500, sy: 200, w: 100, h: 100, frames: 1 },
-        Ciudad1lcruze: { sx: 500, sy: 300, w: 100, h: 100, frames: 1 },
+        Rcurva: { sx: 0, sy: 400, w: 100, h: 100, frames: 1 },
+        Catedral: { sx: 0, sy: 500, w: 100, h: 100, frames: 1 },
+        Posada: { sx: 200, sy: 400, w: 100, h: 100, frames: 1 },  
+        Ccruze: { sx: 200, sy: 200, w: 100, h: 100, frames: 1 },   
+        CiudadE: { sx: 300, sy: 0, w: 100, h: 100, frames: 1 },    
+        Ciudad3lc: { sx: 600, sy: 0, w: 100, h: 100, frames: 1 },  
+        Ciudad3lcE: { sx: 500, sy: 0, w: 100, h: 100, frames: 1 },     
+        Ciudad3l: { sx: 500, sy: 100, w: 100, h: 100, frames: 1 },    
+        Ciudad3lE: { sx: 300, sy: 100, w: 100, h: 100, frames: 1 },
+        Ciudad2lc: { sx: 400, sy: 200, w: 100, h: 100, frames: 1 },   
+        Ciudad2lcE: { sx: 300, sy: 200, w: 100, h: 100, frames: 1 },
+        Ciudad2l: { sx: 400, sy: 300, w: 100, h: 100, frames: 1 },  
+        Ciudad2lE: { sx: 300, sy: 400, w: 100, h: 100, frames: 1 },  
+        CiudadPuerta: { sx: 600, sy: 400, w: 100, h: 100, frames: 1 },
+        CiudadPuertaE: { sx: 500, sy: 400, w: 100, h: 100, frames: 1 },  
+        Ciudadext: { sx: 500, sy: 500, w: 100, h: 100, frames: 1 },  
+        Ciudad1l2crect: { sx: 700, sy: 0, w: 100, h: 100, frames: 1 },  
+        Ciudadcurvder: { sx: 700, sy: 100, w: 100, h: 100, frames: 1 },  
+        Ciudadcurvizq: { sx: 700, sy: 200, w: 100, h: 100, frames: 1 },
+        Ciudad1lcruze: { sx: 700, sy: 300, w: 100, h: 100, frames: 1 },
+        Ciudad1ll: { sx: 1000, sy: 100, w: 100, h:100, frames:1},
+        Ciudad1l: { sx: 1000, sy: 300, w: 100, h: 100, frames:1},
+        Tcruze: {sx: 1000, sy: 500, w: 100, h: 100, frames:1},
         
         ficha_rojo: { sx: 1152, sy: 0, w: 48, h: 48, frames: 1 },
         cura_rojo: { sx: 1200, sy: 0, w: 48, h: 48, frames: 1 },
@@ -226,7 +229,7 @@ Ficha_abajo = function(cx,cy) {
     	if(up && Game.keys['sacar_ficha']) {
     		up = false;
     		if (CurrentMove == 0)  {
-				NuevaPieza = new PiezaMapa(CurrentScroll.x + 6,CurrentScroll.y + 5, "Ciudad3lE",90);
+				NuevaPieza = new PiezaMapa(CurrentScroll.x + 6,CurrentScroll.y + 5, "Tcruze",90);
 				sonido_ladron.play();
 				Game.setBoard(7, NuevaPieza);
 				CurrentMove = 1;
