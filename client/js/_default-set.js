@@ -23,6 +23,7 @@ if (typeof Handlebars !== 'undefined') {
 			}
 			return '[ Server ]';
 	});
+	
 
 	Handlebars.registerHelper('getUserId', function () {
 		if (Meteor.user()){

@@ -41,7 +41,7 @@ Deps.autorun(function(c) {
 	$('#gamecontainer').show();
 
 	Session.set("current_game", lg._id);
-	eval(lg.wrapf);
+
 	
 	if (lg.mode === "solo") {
 	    eval(lg.wrapf);

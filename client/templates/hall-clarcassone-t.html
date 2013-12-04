@@ -4,6 +4,12 @@ http://bootsnipp.com/snippets/featured/condensed-table-example -->
 
 <template name="hall_clarcassone">
 {{#if show}}
+		<div class="full-page">
+		
+			<h5 id = "hidden">Juegos disponibles en la plataforma</h5>
+					
+			<h2>¡Creacion de partidas para el juego Clarcassone!</h2>
+			<div class="gallery">
 <div class="container">
 	<div class="span3">
             <div class="well">
@@ -29,19 +35,21 @@ http://bootsnipp.com/snippets/featured/condensed-table-example -->
                   <thead>
                   <tr>
                       <th>Username</th>
-                      <th>Date registered</th>
+                      <th>Rango</th>
                       <th>Role</th>
                       <th>Status</th>                                          
                   </tr>
               </thead>   
               <tbody>
+              {{#each jugadores}}
                 <tr>
-                    <td>Donna R. Folse</td>
-                    <td>2012/05/06</td>
+                    <td>{{getUsername this}}</td>
+                    <td>{{getUserRango this}}</td>
                     <td>Editor</td>
                     <td><span class="label label-success">Active</span>
                     </td>                                       
                 </tr>
+                {{/each}}
                 <tr>
                     <td>Emily F. Burns</td>
                     <td>2011/12/01</td>
@@ -68,9 +76,18 @@ http://bootsnipp.com/snippets/featured/condensed-table-example -->
                 </tr>                                   
               </tbody>
             </table>
+            	<div class="btn-toolbar">
+
+		    <button class="btn startparty">Empezar</button>
+		    <button class="btn removeparty">Descartar</button>
+		    <button class="btn unirme">Unirme</button>
+		    <button class="btn ready">Listo!</button>
+	</div>
             {{/each}}
             </div>
             
+</div>
+</div>
 </div>
 {{/if}}
 </template>

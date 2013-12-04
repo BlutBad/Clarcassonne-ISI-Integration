@@ -55,9 +55,9 @@ Meteor
 							description : 'Descripcion del juego!',
 							idn : 'alien',
 							mode: 'solo',
-							hall: '',
+							hall: 'alienHall',
 							rangos : [ {
-								rango : "Gusano",
+								rango : "Fantasma",
 								minPoints : -1,
 							}, {
 								rango : "Noob",
@@ -113,7 +113,7 @@ Meteor
     							mode: 'multi',
     							hall: 'klarkiHall',
 							rangos : [ {
-								rango : "Gusano",
+								rango : "Fantasma",
 								minPoints : -1,
 							}, {
 								rango : "Noob",
@@ -168,9 +168,9 @@ Meteor
 							description : 'Descripcion del juego!',
 							idn : 'froot',
 							mode: 'solo',
-							hall: '',
+							hall: 'frootHall',
 							rangos : [ {
-								rango : "Gusano",
+								rango : "Fantasma",
 								minPoints : -1,
 							}, {
 								rango : "Noob",
