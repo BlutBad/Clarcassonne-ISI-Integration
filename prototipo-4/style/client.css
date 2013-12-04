@@ -73,9 +73,15 @@ html{
 }
 
 
+.linkmatch{
+	cursor:pointer;
+	text-decoration:underline;"
+}
 
-
-
+#matches table tr td{
+	text-align: center;
+	width: 250px;
+}
 
 #accordion{	
 	position: absolute;

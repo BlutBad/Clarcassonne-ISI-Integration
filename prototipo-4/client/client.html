@@ -127,11 +127,11 @@
 
 <template name="matchestemp">
 	<div id="matches">
-		{{> gamenametemp}}
+		<h1> {{> gamenametemp}} </h1>
 		<table>
 			{{# each matches}}
 				<tr>
-					<td><a style ="cursor:pointer;text-decoration:underline;" class="linkmatch">{{name}}</a></td><td> - {{created}}</td>
+					-<td><a class="linkmatch">{{name}}</a></td><td> {{created}}</td><td> {{num_players}} Jugadores</td>
 				</tr>
 			{{/ each}}
 		</table>
@@ -176,13 +176,24 @@
 <template name="roomgametemp">
 	<div id="roomcontainer">
 		<a style ="cursor:pointer;text-decoration:underline;" id="exitgame"> Salir </a>
-		{{> roomchattemp}} {{> alientemp}} {{> frootwarstemp}}
+		<h1>{{> gamenametemp}} - {{> matchnametemp}}</h1> {{> roomplayerstemp}} {{> roomchattemp}} {{> alientemp}} {{> frootwarstemp}}
 	</div>
 </template>
 
 <template name="gamenametemp">
-	<h1>{{gamename}}</h1>
+	{{gamename}}
 </template>
+
+<template name="matchnametemp">
+	{{matchname}}
+</template>
+
+
+<template name="roomplayerstemp">
+	<b>Jugadores:</b><br></br>
+		<!-- VACÍO -->
+</template>
+
 
 <template name="listaAmigosOnlineTemp">
 	<div id="listaAmigosOnline">
