@@ -69,6 +69,9 @@ img.src = 'images/background.png';
 var img2 = new Image();
 img2.src = 'images/abajo.png';
 
+var img3 = new Image();
+img3.src = 'images/musica.png';
+
 var sonido_ladron=new Audio();
 sonido_ladron.src='audio/ladron.ogg';
 
@@ -83,6 +86,7 @@ CurrentScroll = {x:70,y:70,active: true};
 
 CurrentMove = 0;
 CurrentTurn = 0;
+sonar = 1;
 
 function getTurno () {
 	if (Jugador1.turno == 1) return Jugador1;
@@ -107,6 +111,8 @@ function pasarTurno () {
 //loader.init(); 
 startGame = function() {   
 	
+	
+	        
 	Game.setBoard(0,new Background());
 	Game.setBoard(1,new Jugadores());
 	Game.setBoard(2,new Rejilla()); 
@@ -134,6 +140,7 @@ Time = function () {
 		ctx.fillStyle="rgb(255,255,255)";
 		ctx.font="bold 20px Arial";
 		ctx.fillText(this.tiempo,670,590);
+		//ctx.fillText2(this.tiempo,670,580);
 		ctx.restore();
 	}
 	
@@ -174,6 +181,10 @@ Helptext = function () {
 		ctx.save();
 		ctx.fillStyle="rgb(255,255,255)";
 		ctx.font="bold 15px Arial";
+		
+		if(sonar == 1){
+		      ctx.fillText("pulsa 'm' para silenciar", 330,465);  
+		}
 		
 		if (CurrentMove == 0) {
 			
@@ -223,27 +234,47 @@ Ficha_abajo = function(cx,cy) {
     this.draw = function(ctx) {
     
 		ctx.drawImage(img2, 700, 500);
+		
 	}
     	
-    var up = false;
-    var NuevaPieza;
-    this.step = function(dt) {
-    
-		if(!Game.keys['sacar_ficha']) up = true;
+        var up = false;
+        var NuevaPieza;
+        this.step = function(dt) {
+        
+        /*if(!Game.keys['sonar']) sonar = true;
+	
+    	if(sonar && Game.keys['sonar']) {
+    		sonar = false;
+    	}*/
+    		
+        
+        if(Game.keys['sonar']&&sonar == 0){ 
+                console.log("doy a sonar");
+                console.log(sonar);
+                sonar = 1;
+        }
+        if(Game.keys['sonar']&&sonar == 1){ 
+                console.log("doy a mutar");
+                console.log(sonar);
+                sonar = 0;
+        }
+        
+	if(!Game.keys['sacar_ficha']) up = true;
+	
     	if(up && Game.keys['sacar_ficha']) {
     		up = false;
     		if (CurrentMove == 0)  {
-				NuevaPieza = new PiezaMapa(CurrentScroll.x + 7,CurrentScroll.y + 5, "Tcruze",90);
-				sonido_ladron.play();
-				Game.setBoard(7, NuevaPieza);
-				CurrentMove = 1;
-			} else if (CurrentMove == 1) {
-				Game.setBoard(8,new Set(NuevaPieza));
-				CurrentMove = 2;
-			}
+			NuevaPieza = new PiezaMapa(CurrentScroll.x + 7,CurrentScroll.y + 5, "Tcruze",90);
+			sonido_ladron.play();
+			Game.setBoard(7, NuevaPieza);
+			CurrentMove = 1;
+		} else if (CurrentMove == 1) {
+			Game.setBoard(8,new Set(NuevaPieza));
+			CurrentMove = 2;
 		}
-		
 	}
+		
+}
 };
 
 
