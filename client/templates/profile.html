@@ -1,28 +1,52 @@
 <template name="profil">
 	{{#if showprofile}}
-		<div id="formu">
-			<h1>Perfil de Usuario</h1>
-			<div class="container">            
-				Nombre: <input class="form-control" name="firstname" value="{{getUsername getUserId}}" type="text"/>
-           		Email: <input class="form-control" name="youremail" value="{{getUserEmail getUserId}}" type="email" />
-            	<!--<input class="form-control" name="password" placeholder="New Password" type="password" />-->
-            	<!--Fecha de nacimiento: <input type="text" id="date_start" value="{{datebirthday}}">-->
-				<label class="radio-inline"> Género: 
-					<input type="radio" name="sex" id="inlineCheckbox1" value="male" /> Male
-					<input type="radio" name="sex" id="inlineCheckbox2" value="female" /> Female
-				</label>
-				<br/>
-				<br/>
-				<button class="btn btn-primary" type="submit"> Guardar los cambios</button>
+		{{#if registrado}}
+			<div id="formu">
+				<h1>Perfil de Usuario</h1>
+				<div class="container">   
+					<label>
+					Nombre: <input class="form-control" id="nombre" value="{{getUsername getUserId}}" type="text" required/>
+					 </label>
+					 <label>
+           			Email: <input class="form-control" name="youremail" value="{{getUserEmail getUserId}}" type="email" required/>
+           			</label>
+            		<!--<input class="form-control" name="password" placeholder="New Password" type="password" />-->
+            		Fecha de nacimiento: <input type="text" id="datebirthday" value="{{datebirthday}}">
+            		<label>
+            		Género:
+					<select id="genero" name="list"> 
+						<option value="Male"> Male 
+						<option value="Female"> Female 
+					</select> 
+					</label>
+					<br/>
+					<br/>
+					<button class="btn btn-primary" id="save" type="submit"> Guardar los cambios</button>
+				</div>
 			</div>
+			<h1>Premios</h1>
+
+			puntos conseguidos: 
+			{{#each scores}} 
+			<table>
+				<tbody>
+					<tr>
+						<td>{{game}}</td>
+						<td>{{user}}</td>
+						<td>{{maxScore}}</td> 
+						<td>{{totalScore}}</td> 
+						<td>{{rango}}</td> 
+					</tr>
+				</tbody>
+			</table>  
 		</div>
-		insignias
-		rango
-		posicion en el ranking general
-		puntos conseguidos
-		partidas jugadas
-		partidas ganadas
-		(si se pudiese mejor con un gráfico)
+		{{/each}}
+			partidas jugadas
+			partidas ganadas
+			(si se pudiese mejor con un gráfico)
+		{{else}}
+			<p>Debes estar registrado para ver tu perfil</p>
+		{{/if}}
 	{{/if}}
 </template>
 

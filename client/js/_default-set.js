@@ -21,7 +21,7 @@ if (typeof Handlebars !== 'undefined') {
 			if (user.twitterUsername)
 				return user.twitterUsername;
 			}
-			return '[ Server ]';
+			return ' ';
 	});
 	
 
@@ -34,9 +34,15 @@ if (typeof Handlebars !== 'undefined') {
 	Handlebars.registerHelper('getUserEmail', function (userId) {
 		var user = _extractProfile(userId);
 		if (user) {
-			if (user.email)
+			if (user.email){
 				return user.email;
-		}
+			}else if (user.services.google.email){
+				return user.services.google.email;
+			}else if (user.services.facebook.email){
+				return user.services.facebook.email;
+			};
+
+		};
 			return ' ';
 
 	});

@@ -28,11 +28,12 @@ Accounts.loginServiceConfiguration.insert({
 	secret:"fbe35d056f81c98144201599d2e0c67fed5efab8"
 });
 
+/*no funcionaba bien asique se queda borrado hasta que haga un nuevo deploy y pueda ver donde se ponia
 Accounts.loginServiceConfiguration.insert({ 
   service: "google", 
   clientId: "1031671342321-cj8qu0c20677v926acpk1k5ql0uvbdmc.apps.googleusercontent.com",   
   secret: "KVo1OKJCQ_-ApyqR9im4RYx7" 
-});
+});*/
 
 Accounts.loginServiceConfiguration.insert({
 		service: "twitter",
