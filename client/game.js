@@ -58,11 +58,16 @@ sprites = {
         ladron_rosa: { sx: 1344, sy: 240, w: 48, h: 48, frames: 1 },
 }
 
+
+
 var img = new Image();
 img.src = 'images/background.png';
 
 var img2 = new Image();
 img2.src = 'images/abajo.png';
+
+var sonido_ladron=new Audio();
+sonido_ladron.src='audio/ladron.ogg';
 
 
 Jugador1 = {nombre: "Carlos" , color: "ficha_rojo", puntos:0, turno:1};
@@ -92,8 +97,9 @@ function pasarTurno () {
 }
 
 
-
-startGame = function() {    
+//loader.init(); 
+startGame = function() {   
+	
 	Game.setBoard(0,new Background());
 	Game.setBoard(1,new Jugadores());
 	Game.setBoard(2,new Rejilla()); 
@@ -105,6 +111,10 @@ startGame = function() {
 	Game.setBoard(5,new Ficha_abajo());
 	Game.setBoard(9,new Helptext()); 
 	Game.setBoard(10, new Time());
+	
+	
+	
+	
 	
 };
 
@@ -217,6 +227,7 @@ Ficha_abajo = function(cx,cy) {
     		up = false;
     		if (CurrentMove == 0)  {
 				NuevaPieza = new PiezaMapa(CurrentScroll.x + 6,CurrentScroll.y + 5, "Ciudad3lE",90);
+				sonido_ladron.play();
 				Game.setBoard(7, NuevaPieza);
 				CurrentMove = 1;
 			} else if (CurrentMove == 1) {
