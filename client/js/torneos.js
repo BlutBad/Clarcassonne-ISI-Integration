@@ -103,7 +103,7 @@ Template.torneos.events = {
 	'click .apunto': function (){       
 		if (!ChampUser.findOne({id_torneo: this._id, id_user: Meteor.user()._id})) {  
 			ChampUser.insert({id_torneo: this._id, id_user: Meteor.user()._id});  
-			$("#" + this._id).replaceWith("Apuntado!"); 
+			$("#" + this._id + ".apunto").replaceWith("Apuntado!"); 
 
 		}  
 	},
@@ -111,7 +111,7 @@ Template.torneos.events = {
 		if (ChampUser.findOne({id_torneo: this._id, id_user: Meteor.user()._id})) {  
 			id_torneo_rm = ChampUser.findOne({id_torneo: this._id, id_user: Meteor.user()._id}); 
 			ChampUser.remove(id_torneo_rm._id);
-			$("#" + this._id).replaceWith("Me apunto!"); 
+			$("#" + this._id + ".selected_apunto").replaceWith("Me apunto!"); 
 		}
 	},
 	'click .participantes': function(){  
@@ -119,9 +119,11 @@ Template.torneos.events = {
 		if (lista_show == undefined) {
 			lista_show = [];
 		} else if (!_.contains(show_torneos, this._id)) {
+			$("#" + this._id + ".ocutl	").switchClass("oculta_part", "muestra_part");
 			lista_show.push(this._id);
-		} else {
-			$("#" + this._id).switchClass("oculta_part");
+		} else { 
+			lista_show = _.without(lista_show, _.findWhere(lista_show, this._id));
+			$("#" + this._id + ".muestra_part").switchClass("muestra_part", "oculta_part");
 		}
 		Session.set("showParticipantes", lista_show);
 	}
