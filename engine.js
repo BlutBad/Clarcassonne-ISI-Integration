@@ -878,14 +878,24 @@ var Tablero = new function(){
     }
 
 // Comprueba si tenemos un monje y si esta rodeado un claustro.
-  this.cierraClaustro = function(ficha){
+  this.cierraClaustro = function(ficha,flag){
 		var puntos = 0;
-                         
+		var monje;
+
+		var sumarpuntos = function(){
+	           	var jugador= _.find(Tablero.listaJugadores,function(obj){return (obj.numero==monje.j)});				
+							jugador.puntos+=puntos;    
+              jugador.n_seguidores++;
+              var pos = monje.f.seguidores.indexOf( monje );
+              pos > -1 && monje.f.seguidores.splice( pos, 1 );              
+		}
+                        
 			var closeClaustro = function(ficha){
 		  	var haymonje = false;
 				puntos++;
 			  if (_.find(ficha.seguidores,function(obj){return (obj.t=="Monje")})){
 	 		   	haymonje=true;
+					monje = _.find(ficha.seguidores,function(obj){return (obj.t=="Monje", obj.n==8)});
 	 		   }
 				var rodeado=0;
 					ficha2 = Tablero.buscarxcoor(ficha.x+1, ficha.y);
@@ -905,8 +915,14 @@ var Tablero = new function(){
 					ficha2 = Tablero.buscarxcoor(ficha.x-1, ficha.y-1);
 				if (ficha2.lleno){puntos++;rodeado++}
 
-			if(rodeado==8 && haymonje == true){return [true,haymonje,puntos]}
-			else{return [false,haymonje,puntos]}
+			if (flag == 1 || flag == 2){			
+				if(rodeado==8 && haymonje == true){             
+						sumarpuntos();
+						return [true,haymonje];}
+				else{
+					sumarpuntos();
+					return [false,haymonje];}
+			}else{return [false,haymonje];}
 		}
 	
 		if ((ficha.tipo == "Catedral") || (ficha.tipo == "Posada")){return closeClaustro(ficha)}

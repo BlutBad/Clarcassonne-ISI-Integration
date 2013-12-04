@@ -230,7 +230,15 @@ $(function() {
     console.log("cierra castillo3: ",Tablero.cierraCastillo(nuevaficha));
 
     //Cierra Claustro con Catedral
+  Tablero.listaJugadores.push(new ObjetoJugador("Paco",23,1));
+  Tablero.listaJugadores.push(new ObjetoJugador("Pepe",88,2));
+  Tablero.listaJugadores.push(new ObjetoJugador("Menganito",34,3));
+  Tablero.listaJugadores.push(new ObjetoJugador("Fulanito",12,4));
+
+  Obj=Tablero.listaJugadores;
+  console.log("PTS-  j1:",Obj[0].puntos," j2:",Obj[1].puntos," j3:",Obj[2].puntos," j4:",Obj[3].puntos);
     Tablero.iniciar();
+
     var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
     Tablero.colocarficha(nuevaficha,7,5);
     var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
@@ -260,14 +268,15 @@ $(function() {
     nuevaficha.girar(); 
     Tablero.colocarficha(nuevaficha,7,6);
     var nuevaficha = new ObjetoFicha(0,0,0,"Catedral");
-    nuevaficha.seguidores.push({t:"Monje",n:8});
-    Tablero.colocarficha(nuevaficha,5,5); 
-//    var nuevaficha = new ObjetoFicha(0,0,0,"Catedral");
-//    Tablero.colocarficha(nuevaficha,6,5); 
-//    var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
-//    Tablero.colocarficha(nuevaficha,4,5);
-    console.log("cierra claustro: ",Tablero.cierraClaustro(nuevaficha));
-    
+    var x = Tablero.colocarficha(nuevaficha,5,5); 
+    nuevaficha.seguidores.push({t:"Monje",n:8,j:1,f:x});
+
+    var nuevaficha = new ObjetoFicha(0,0,0,"Catedral");
+    Tablero.colocarficha(nuevaficha,6,5); 
+    var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
+    Tablero.colocarficha(nuevaficha,4,5);
+    console.log("cierra claustro: ",Tablero.cierraClaustro(nuevaficha,1));
+    console.log("PTS-  j1:",Obj[0].puntos," j2:",Obj[1].puntos," j3:",Obj[2].puntos," j4:",Obj[3].puntos); 
 
 /*
   // Prueba la lista de seguidores.
