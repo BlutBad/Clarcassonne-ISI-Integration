@@ -77,6 +77,7 @@ Jugador1 = {nombre: "Carlos" , color: "ficha_rojo", puntos:0, turno:1};
 Jugador2 = {nombre: "Mario"  , color: "ficha_azul", puntos:10, turno: 0};
 Jugador3 = {nombre: "Maria"  , color: "ficha_amarillo", puntos:20, turno: 0};
 Jugador4 = {nombre: "Ana"    , color: "ficha_verde", puntos:30, turno: 0};
+Jugador5 = {nombre: "Niam"   , color: "ficha_gris", puntos:100, turno: 0};
 
 CurrentScroll = {x:70,y:70,active: true};
 
@@ -88,13 +89,16 @@ function getTurno () {
 	if (Jugador2.turno == 1) return Jugador2;
 	if (Jugador3.turno == 1) return Jugador3;
 	if (Jugador4.turno == 1) return Jugador4;
+	if (Jugador5.turno == 1) return Jugador5;
+	
 }
 
 function pasarTurno () {
 	if (Jugador1.turno == 1) { Jugador2.turno = 1; Jugador1.turno = 0;}
 	else if (Jugador2.turno == 1) { Jugador3.turno = 1; Jugador2.turno = 0;}
 	else if (Jugador3.turno == 1) { Jugador4.turno = 1; Jugador3.turno = 0;}
-	else if (Jugador4.turno == 1) { Jugador1.turno = 1; Jugador4.turno = 0;}
+	else if (Jugador4.turno == 1) { Jugador5.turno = 1; Jugador4.turno = 0;}
+	else if (Jugador5.turno == 1) { Jugador1.turno = 1; Jugador5.turno = 0;}
 	CurrentMove = 0;
 	CurrentTurn += 1;
 }
@@ -129,7 +133,7 @@ Time = function () {
 		ctx.save();
 		ctx.fillStyle="rgb(255,255,255)";
 		ctx.font="bold 20px Arial";
-		ctx.fillText(this.tiempo,770,590);
+		ctx.fillText(this.tiempo,670,590);
 		ctx.restore();
 	}
 	
@@ -229,7 +233,7 @@ Ficha_abajo = function(cx,cy) {
     	if(up && Game.keys['sacar_ficha']) {
     		up = false;
     		if (CurrentMove == 0)  {
-				NuevaPieza = new PiezaMapa(CurrentScroll.x + 6,CurrentScroll.y + 5, "Tcruze",90);
+				NuevaPieza = new PiezaMapa(CurrentScroll.x + 7,CurrentScroll.y + 5, "Tcruze",90);
 				sonido_ladron.play();
 				Game.setBoard(7, NuevaPieza);
 				CurrentMove = 1;
@@ -269,6 +273,11 @@ Jugadores = function() {
       ctx.fillText(Jugador4.nombre,435,540);
       SpriteSheet.draw(ctx,Jugador4.color,410,520,1,0,0.5);
       ctx.fillText(Jugador4.puntos,440,570);
+      
+      ctx.fillStyle="rgb(255,255," + Jugador5.turno * 255 +")";
+      ctx.fillText(Jugador5.nombre,565,540);
+      SpriteSheet.draw(ctx,Jugador5.color,540,520,1,0,0.5);
+      ctx.fillText(Jugador5.puntos,570,570);
 
       ctx.restore();
    
