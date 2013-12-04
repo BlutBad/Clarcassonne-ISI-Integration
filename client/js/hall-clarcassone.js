@@ -1,9 +1,9 @@
 Template.hall_clarcassone.show = function() {
     if (Session.get('current_stage') == 'klarkiHall') {
 	if (Meteor.userId()) {
-	UsersInHall.insert({
-	    user_id : Meteor.userId()
-	});
+	    UsersInHall.insert({
+		user_id : Meteor.userId()
+	    });
 	}
 	return true;
     } else {
@@ -24,33 +24,27 @@ Template.hall_clarcassone.events({
 	    // ^.^ edad = Math.floor(Random.fraction() * 70);
 	    PartidasVolatiles.insert({
 		creator_id : Meteor.userId(),
-		jugadores: [Meteor.userId()]
+		jugadores : [ Meteor.userId() ]
 	    });
 	}
     },
-    'click .removeparty': function() {
+    'click .removeparty' : function() {
 	PartidasVolatiles.remove(this._id);
     },
-    'click .startparty': function() {
+    'click .startparty' : function() {
 	console.log('Crear una partida de verdad');
     },
-    
-    'click .unirme': function() {
+
+    'click .unirme' : function() {
 	console.log('Unirme a una partida');
-	PartidasVolatiles.update(this._id, {$push: {jugadores: Meteor.userId()}});
+	PartidasVolatiles.update(this._id, {
+	    $push : {
+		jugadores : Meteor.userId()
+	    }
+	});
     },
 
 });
-/*
-Ranking.update(curUser._id, {$set : {
-	rango_id:rango._id,
-	totalScore:curUser.totalScore,
-	maxScore:curUser.maxScore,
-	timesPlayed: curUser.timesPlayed
-}});
-
-Meteor.users.update({username: "Codd"}, {$push: {amigos: "pheras"}});
-*/
 
 Template.hall_clarcassone.partidasVolatiles = function() {
     return PartidasVolatiles.find({});
@@ -60,14 +54,24 @@ Template.hall_clarcassone.UsersInHall = function() {
     return UsersInHall.find({});
 }
 
+Template.hall_clarcassone.userRango = function(user_id) {
 
-Template.hall_clarcassone.getUserRango = function(user_id) {
-    /*
     gid = Session.get("current_game");
-    console.log("gid " + gid);
-    rankingU = Ranking.findOne({gameId: gid, userId : user_id})
-*/
-    return Rangos.findOne({}).rango;
+    if (gid) {
+	rankingU = Ranking.findOne({
+	    gameId : gid,
+	    userId : user_id
+	})
+	if (rankingU) {
+	    return Rangos.findOne({
+		_id : rankingU.rango_id
+	    }).rango;
+	} else {
+	    return Rangos.findOne({
+		game_id : gid
+	    }).rango;
+	}
+    } else {
+	return "--"
+    }
 }
-
-
