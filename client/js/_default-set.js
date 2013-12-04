@@ -4,7 +4,7 @@ Session.setDefault('current_stage', 'Dashboard');
 Session.setDefault('load_game', null);
 
 Session.setDefault('showGameIdn',null);
-
+Session.setDefault("current_game",null);
 
 Meteor.startup(function() {
 	$('#gameFrootcontainer').hide();
@@ -23,6 +23,7 @@ if (typeof Handlebars !== 'undefined') {
 			}
 			return '[ Server ]';
 	});
+	
 
 	Handlebars.registerHelper('getUserId', function () {
 		if (Meteor.user()){

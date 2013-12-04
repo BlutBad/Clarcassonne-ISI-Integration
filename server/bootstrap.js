@@ -54,8 +54,10 @@ Meteor
 							title_desc : 'Titulo para la descripcion del juego',
 							description : 'Descripcion del juego!',
 							idn : 'alien',
+							mode: 'solo',
+							hall: 'alienHall',
 							rangos : [ {
-								rango : "Gusano",
+								rango : "Fantasma",
 								minPoints : -1,
 							}, {
 								rango : "Noob",
@@ -107,9 +109,11 @@ Meteor
 							logo_alt : 'Juega es este juego',
 							title_desc : 'Titulo para la descripcion del juego',
 							description : 'Descripcion del juego!',
-							idn : '',
+    							idn : 'klarki',
+    							mode: 'multi',
+    							hall: 'klarkiHall',
 							rangos : [ {
-								rango : "Gusano",
+								rango : "Fantasma",
 								minPoints : -1,
 							}, {
 								rango : "Noob",
@@ -163,8 +167,10 @@ Meteor
 							title_desc : 'Titulo para la descripcion del juego',
 							description : 'Descripcion del juego!',
 							idn : 'froot',
+							mode: 'solo',
+							hall: 'frootHall',
 							rangos : [ {
-								rango : "Gusano",
+								rango : "Fantasma",
 								minPoints : -1,
 							}, {
 								rango : "Noob",
@@ -240,7 +246,9 @@ Meteor
 						logo_alt : data[i].logo_alt,
 						title_desc : data[i].title_desc,
 						description : data[i].description,
-						idn : data[i].idn
+						idn : data[i].idn,
+						mode: data[i].mode,
+    						hall: data[i].hall,
 					});
 
 					for (var j = 0; j < data[i].rangos.length; j++) {
