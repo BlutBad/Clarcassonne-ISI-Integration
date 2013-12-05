@@ -55,8 +55,10 @@ Template.hall_clarcassone.events({
 						jugadores : [ Meteor.userId() ]
 				    }); 
 					UsersInHall.remove(userA._id); 
-				} 
-				Session.set("createError", undefined);
+					Session.set("createError", undefined);
+				} else {
+					Session.set("createError", "Ya estás en una partida.... no crees otra! :D");
+				}
 			}
 		} else {	 
 			Session.set("createError", "Regístrate para crear partidas!");
