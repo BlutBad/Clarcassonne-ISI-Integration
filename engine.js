@@ -956,10 +956,11 @@ var Tablero = new function(){
 
 
 
-var ObjetoJugador = function(nombre,edad,n_jugador){
+var ObjetoJugador = function(user_id,nombre,edad){
   this.numero=n_jugador;
   this.n_seguidores = 7;
 	this.nombre = nombre;
+	this.id=user_id;
 	this.edad = edad;
 	this.puntos = 0;
 	
