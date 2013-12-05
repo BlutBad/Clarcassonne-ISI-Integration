@@ -4,8 +4,17 @@ Template.hall_clarcassone.show = function() {
 	    user_id : Meteor.userId()
 	});
     if (Session.get('current_stage') == 'klarkiHall') {
+    	userCreator = PartidasVolatiles.findOne({
+			creator_id: Meteor.userId()
+		});
+		usersJoined = PartidasVolatiles.find({});
+		usersJoined.forEach(function(each) {  
+			if (_.contains(each.jugadores, Meteor.userId())) {
+				usersinParty = true;
+			}
+		}); 
 		//Dejar al user estar en lista de jugadores solo si esta auntenticado
-		if (Meteor.userId() && !userA) {
+		if (Meteor.userId() && !userA && !usersinParty) {
 		    UsersInHall.insert({
 				user_id : Meteor.userId()
 		    });
@@ -54,6 +63,7 @@ Template.hall_clarcassone.events({
     },
     'click .removeparty' : function() {
 		PartidasVolatiles.remove(this._id);
+		Session.set("createError", undefined);
     },
     'click .startparty' : function() {
 		//Hacer una entrada a la coleccion de Partidas, 
