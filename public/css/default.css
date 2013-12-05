@@ -820,7 +820,13 @@ td, th {
 
 .oculta_part {
 	visibility: hidden;
+}
 
 .form-control {
  margin-bottom: 10px; 
+}
 
+.btn_edit, .edit_game {
+	margin-left: 2%; 
+	margin-bottom: 5%;
+}

@@ -90,8 +90,20 @@ function date_compare (init, fin) {
 	}
 }
 
+Template.editTor.torneo = function() {
+    var id = Session.get('tornToEdit');
+    console.log(id)
+    return Torneos.findOne({
+		_id : id
+    });
+};
+
+Template.torneos.showEditTorn = function() {
+    return Session.get('tornToEdit'); 
+}
+
 Template.torneos.events = {
-	'click input#crear_torneo': function() {
+	'click input#crear_torneo': function() {n
 		openCreateDialog();
 	},
 	'click .sortBy': function () {
@@ -118,15 +130,19 @@ Template.torneos.events = {
 		lista_show = Session.get("showParticipantes");
 		if (lista_show == undefined) {
 			lista_show = [];
-		} else if (!_.contains(show_torneos, this._id)) {
-			$("#" + this._id + ".ocutl	").switchClass("oculta_part", "muestra_part");
+		} 
+		if (!_.contains(show_torneos, this._id)) {
+			$("#" + this._id + ".oculta_part").switchClass("oculta_part", "muestra_part");
 			lista_show.push(this._id);
 		} else { 
 			lista_show = _.without(lista_show, _.findWhere(lista_show, this._id));
 			$("#" + this._id + ".muestra_part").switchClass("muestra_part", "oculta_part");
 		}
 		Session.set("showParticipantes", lista_show);
-	}
+	},	
+    'click .btn_edit' : function() {
+		Session.set('tornToEdit', this._id);  
+    }
 };
 
 Template.createDialog.events({
@@ -181,4 +197,35 @@ Template.createDialog.events({
 			});
 		});
 	}
+});
+
+Template.editTor.events({
+
+    'click .save' : function(event, template) {
+		var gid = Session.get('tornToEdit');
+
+		var title = template.find("#title").value;
+		var date_start = template.find("#date_start").value;
+		var date_finish = template.find("#date_finish").value;
+		var description = template.find("#description").value; 
+		var logo_src = template.find("#pic").value; 
+
+		Torneos.update(gid, {
+		    $set : {
+				title : title,
+				logo_src : logo_src,
+				date_start : date_start,
+				date_finish: date_finish,
+				pic: logo_src,
+				description : description
+		    }
+		});
+
+		Session.set('tornToEdit', null);
+    },
+
+    'click .cancel' : function() {
+		Session.set('tornToEdit', null); 
+    }
+
 });

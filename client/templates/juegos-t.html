@@ -1,48 +1,41 @@
 <template name="juegos">
 
  {{#if show}}
-		<div class="full-page">
-		
-			<h5 id = "hidden">Juegos disponibles en la plataforma</h5>
-			<h2>¡Nuestros juegos!</h2>
-			<div class="gallery">
-			
-			
-				{{#each juegos}}
+    <div class="full-page">
+    
+      <h5 id = "hidden">Juegos disponibles en la plataforma</h5>
+      <h2>¡Nuestros juegos!</h2>
+      <div class="gallery">     
+        {{#each juegos}}
+          <div class="gallery-item">
+            <h3>{{name}}</h3>
+            <img src="{{logo_src}}" class="gallery-image" alt="{{logo_alt}}" />            
+            <div class="gallery-description">
+              <h5>{{title_desc}}</h5>
+              <p>{{description}}</p>
+              <input type="button" class="edit_game" value="Editar juego">
+            </div>          
+            
+            {{#if showEditGame}}
+              {{> editGame}}
+            {{/if}}
 
-				<div class="gallery-item">
-					<h3>{{name}}</h3>
-					<img src="{{logo_src}}" class="gallery-image" alt="{{logo_alt}}" />
-					<input type="button" class="btn cancel" value="Editar el info del juego">
-					
-					<div class="gallery-description">
-						<h5>{{title_desc}}</h5>
-						<p>{{description}}</p>
-					</div>
-					
-					
-					{{#if showEditGame}}
-						{{> editGame}}
-					{{/if}}
-				</div>
-				{{/each}}
-			</div>
-		</div>
-
-
-{{/if}} </template>
-
-
+          </div>
+        {{/each}}
+      </div>
+    </div>
+{{/if}} 
+</template>
 
 <template name="gamecontainer"> 
-	<div id="gamecontainer"> 
-			{{>idnAlien}}
-			{{>idnFroot}}
-	</div>
+  <div id="gamecontainer"> 
+      {{>idnAlien}}
+      {{>idnFroot}}
+  </div>
 </template>
 
 <template name="idnAlien"> 
-	<canvas id='gamecanvasAlien' width='320' height='480'></canvas>
+  <canvas id='gamecanvasAlien' width='320' height='480'></canvas>
 </template>
 
 <template name="idnFroot"> 
@@ -81,28 +74,28 @@
 
 
 <template name="editGame">
-{{#with game}}
-        <div class="mask"> </div>
-                <div class="modal">
-                
-                        <div class="modal-header">
-                                <button type="button" class="close cancel">&times;</button>
-                                <h3>Editar el juego</h3>
-                        </div>   
-                             
-                        <div class="modal-body">
-                        		<label>Nombre <input type="text" id="name" class="title span5" value={{name}}></label>
-                                <label>Titulo de descripcion <input type="text" id="title_desc"  value={{title_desc}}></label>
-                                <label>Descripcion </label> <textarea id="description" class="description span5">{{description}}</textarea> 
-                                <label>Imagen url: <input type="text" id="logo_src" class="title span5" value="{{logo_src}}"><br></label>
-                                <label>Init Function <input type="text" id="wrapf" class="title span5" value="{{wrapf}}"><br></label>
-                        </div>
-                        
-                        <div class="modal-footer">
-                                <a href="#" class="btn cancel">Cancelar</a>
-                                <a href="#" class="btn btn-primary save">Salvar</a>
-                        </div>
-                </div>
+  {{#with game}}
+    <div class="mask"> </div>
+        <div class="modal">
+        
+          <div class="modal-header">
+            <button type="button" class="close cancel">&times;</button>
+            <h3>Editar el juego</h3>
+          </div>   
+               
+          <div class="modal-body">
+            <label>Nombre: <br><input type="text" id="name" class="title span5" value={{name}}></label>
+            <label>Título de la descripción: <br><input type="text" id="title_desc"  value={{title_desc}}></label>
+            <label>Descripción: </label> <textarea id="description" class="description span5">{{description}}</textarea> 
+            <label>URL de la imagen: <input type="text" id="logo_src" class="title span5" value="{{logo_src}}"><br></label>
+            <label>Init Function: <input type="text" id="wrapf" class="title span5" value="{{wrapf}}"><br></label>
+          </div>
+          
+          <div class="modal-footer">
+            <a href="#" class="btn cancel">Cancelar</a>
+            <a href="#" class="btn btn-primary save">Salvar</a>
+          </div>
         </div>
-          {{/with}}
+    </div>
+  {{/with}}
 </template>
