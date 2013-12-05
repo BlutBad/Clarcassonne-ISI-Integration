@@ -3,16 +3,15 @@ Template.hall_clarcassone.show = function() {
 	userA = UsersInHall.findOne({
 	    user_id : Meteor.userId()
 	});
-    if (Session.get('current_stage') == 'klarkiHall') {
-    	userCreator = PartidasVolatiles.findOne({
-			creator_id: Meteor.userId()
-		});
+    if (Session.get('current_stage') == 'klarkiHall') { 
 		usersJoined = PartidasVolatiles.find({});
 		usersinParty = false;
 		usersJoined.forEach(function(each) {  
-			if (_.contains(each.jugadores, Meteor.userId())) {
-				usersinParty = true;
-			}
+			each.jugadores.forEach(function(each2){
+				if (each2.user_id == Meteor.userId()) {
+					usersinParty = true;
+				}
+			});
 		}); 
 		//Dejar al user estar en lista de jugadores solo si esta auntenticado
 		if (Meteor.userId() && !userA && !usersinParty) {
@@ -52,7 +51,10 @@ Template.hall_clarcassone.events({
 				    // ^.^ edad = Math.floor(Random.fraction() * 70);
 				    PartidasVolatiles.insert({
 						creator_id : Meteor.userId(),
-						jugadores : [ Meteor.userId() ]
+						jugadores : [{
+							user_id: Meteor.userId(),
+							estado: "pendiente"
+						}]
 				    }); 
 					UsersInHall.remove(userA._id); 
 					Session.set("createError", undefined);
@@ -82,21 +84,27 @@ Template.hall_clarcassone.events({
     },
 
     'click .unirme' : function() {
-		//console.log('Unirme a una partida');
-		userCreator = PartidasVolatiles.findOne({
-			creator_id: Meteor.userId()
-		});
+		//console.log('Unirme a una partida'); 
 		usersJoined = PartidasVolatiles.findOne({
 			_id: this._id
 		}).jugadores;
-		usersinParty = _.contains(usersJoined, Meteor.userId());
+		usersinParty = false;
+		usersJoined.forEach(function(each){
+			if (each.user_id == Meteor.userId()) {
+				usersinParty = true;
+			}
+		});
+		console.log(usersinParty)
 		userA = UsersInHall.findOne({
 		    user_id : Meteor.userId()
 		});
-		if (!userCreator && !usersinParty) {
+		if (!usersinParty) {
 			PartidasVolatiles.update(this._id, {
 			    $push : {
-					jugadores : Meteor.userId()
+					jugadores : {
+						user_id: Meteor.userId(),
+						estado: "pendiente"
+					}
 			    }
 			});
 			if (userA) {
@@ -117,7 +125,6 @@ Template.hall_clarcassone.partidasVolatiles = function() {
 Template.hall_clarcassone.UsersInHall = function() {
     return UsersInHall.find({});
 }
-
 
 //El rango del usuario en la tabla de miembros de la partida
 Template.hall_clarcassone.userRango = function(user_id) {

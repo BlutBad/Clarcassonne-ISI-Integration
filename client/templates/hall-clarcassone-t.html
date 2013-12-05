@@ -42,10 +42,10 @@ http://bootsnipp.com/snippets/featured/condensed-table-example -->
             <tbody>
               {{#each jugadores}}
                 <tr>
-                  <td>{{getUsername this}}</td>
-                  <td>{{userRango this}}</td>
+                  <td>{{getUsername this.user_id}}</td>
+                  <td>{{userRango this.user_id}}</td>
                   <td>Editor</td>
-                  <td><span class="label label-warning">Pendiente</span>
+                  <td><span class="label label-warning">{{this.estado}}</span>
                   </td>                                       
                 </tr>
               {{/each}}           
