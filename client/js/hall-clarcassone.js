@@ -21,6 +21,10 @@ Template.hall_clarcassone.show = function() {
     }
 };
 
+Template.hall_clarcassone.error = function () {
+	return Session.get("createError");
+};
+
 Template.hall_clarcassone.events({
     'click #nuevaPartida' : function() { 
 		if (Meteor.userId()) {
@@ -34,8 +38,12 @@ Template.hall_clarcassone.events({
 					jugadores : [ Meteor.userId() ]
 			    }); 
 				UsersInHall.remove(userA._id); 
+			} else {
+				Session.set("createError", "Ya creaste una partida!");
 			}
-		} 
+		} else {	 
+			Session.set("createError", "Regístrate para crear partidas!");
+		}
     },
     'click .removeparty' : function() {
 		PartidasVolatiles.remove(this._id);
