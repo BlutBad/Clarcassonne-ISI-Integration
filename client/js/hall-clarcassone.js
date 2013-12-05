@@ -8,6 +8,7 @@ Template.hall_clarcassone.show = function() {
 			creator_id: Meteor.userId()
 		});
 		usersJoined = PartidasVolatiles.find({});
+		usersinParty = false;
 		usersJoined.forEach(function(each) {  
 			if (_.contains(each.jugadores, Meteor.userId())) {
 				usersinParty = true;
@@ -80,12 +81,18 @@ Template.hall_clarcassone.events({
 			_id: this._id
 		}).jugadores;
 		usersinParty = _.contains(usersJoined, Meteor.userId());
+		userA = UsersInHall.findOne({
+		    user_id : Meteor.userId()
+		});
 		if (!userCreator && !usersinParty) {
 			PartidasVolatiles.update(this._id, {
 			    $push : {
 					jugadores : Meteor.userId()
 			    }
 			});
+			if (userA) {
+			    UsersInHall.remove(userA._id);
+			}
 			Session.set("createError", undefined);
 		} else {
 			Session.set("createError", "Ya estás en esta partida!");

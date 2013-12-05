@@ -30,7 +30,7 @@ var canvas;
 Deps.autorun(function(c) {
     lg = Session.get('load_game');
     if (lg) { 
-		console.log(lg);
+		//console.log(lg);
 		/*x = Session.get('load_game');
 		gw = Juegos.findOne({
 		    wrapf : x
