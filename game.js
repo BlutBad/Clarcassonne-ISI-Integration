@@ -45,16 +45,20 @@ $(function() {
   
  Meteor.methods({
 
-    InicioJuego:function(){
-        return [Tablero.listaJugadores];
+    InicioJuego:function(){              
+        return Tablero.listaJugadores;
     },
     
-    Robar:function(){
-        var robar=Tablero.robarFicha();
+    //Devuelve una lista de objetos jugador con todos los parametros
+    
+    
+    Robar:function(){                    
+        var robar=Tablero.robarFicha(); 
         var nuevaficha = new ObjetoFicha(0,0,0,robar);
         Tablero.buscarCandidatos(nuevaficha);
         return [nuevaficha.tipo,nuevaficha.encajaCon];
     }
+    //Devuelve una lista del tipo [string,lista[]] string= tipo ficha, lista= coordenadas donde encaja
 
   });
   
