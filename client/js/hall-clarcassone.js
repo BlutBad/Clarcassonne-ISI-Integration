@@ -46,6 +46,7 @@ Template.hall_clarcassone.events({
 				    }); 
 					UsersInHall.remove(userA._id); 
 				} 
+				Session.set("createError", undefined);
 			}
 		} else {	 
 			Session.set("createError", "Regístrate para crear partidas!");
@@ -61,12 +62,24 @@ Template.hall_clarcassone.events({
     },
 
     'click .unirme' : function() {
-		console.log('Unirme a una partida');
-		PartidasVolatiles.update(this._id, {
-		    $push : {
-				jugadores : Meteor.userId()
-		    }
+		//console.log('Unirme a una partida');
+		userCreator = PartidasVolatiles.findOne({
+			creator_id: Meteor.userId()
 		});
+		usersJoined = PartidasVolatiles.findOne({
+			_id: this._id
+		}).jugadores;
+		usersinParty = _.contains(usersJoined, Meteor.userId());
+		if (!userCreator && !usersinParty) {
+			PartidasVolatiles.update(this._id, {
+			    $push : {
+					jugadores : Meteor.userId()
+			    }
+			});
+			Session.set("createError", undefined);
+		} else {
+			Session.set("createError", "Ya estás en esta partida!");
+		}
     },
 
 });
