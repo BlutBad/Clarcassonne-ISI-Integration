@@ -1,8 +1,11 @@
 Template.hall_clarcassone.show = function() {
    //Mostrar el hall de clarcassone si ...
+	userA = UsersInHall.findOne({
+	    user_id : Meteor.userId()
+	});
     if (Session.get('current_stage') == 'klarkiHall') {
 		//Dejar al user estar en lista de jugadores solo si esta auntenticado
-		if (Meteor.userId()) {
+		if (Meteor.userId() && !userA) {
 		    UsersInHall.insert({
 				user_id : Meteor.userId()
 		    });
@@ -11,9 +14,7 @@ Template.hall_clarcassone.show = function() {
     } else {
 		//Si el estado cambia, ya no estamos en el hall de clarkasonne
 		//borrar al user de los juadores online
-		userA = UsersInHall.findOne({
-		    user_id : Meteor.userId()
-		});
+		
 		if (userA) {
 		    UsersInHall.remove(userA._id);
 		}
@@ -31,15 +32,20 @@ Template.hall_clarcassone.events({
 		    userA = UsersInHall.findOne({
 		    	user_id : Meteor.userId()
 			}); 
-			if (userA) {
-			    // ^.^ edad = Math.floor(Random.fraction() * 70);
-			    PartidasVolatiles.insert({
-					creator_id : Meteor.userId(),
-					jugadores : [ Meteor.userId() ]
-			    }); 
-				UsersInHall.remove(userA._id); 
-			} else {
+			userCreator = PartidasVolatiles.findOne({
+				creator_id: Meteor.userId()
+			})
+			if (userCreator) {
 				Session.set("createError", "Ya creaste una partida!");
+			} else {
+				if (userA) {
+				    // ^.^ edad = Math.floor(Random.fraction() * 70);
+				    PartidasVolatiles.insert({
+						creator_id : Meteor.userId(),
+						jugadores : [ Meteor.userId() ]
+				    }); 
+					UsersInHall.remove(userA._id); 
+				} 
 			}
 		} else {	 
 			Session.set("createError", "Regístrate para crear partidas!");
