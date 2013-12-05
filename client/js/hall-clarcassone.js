@@ -24,17 +24,17 @@ Template.hall_clarcassone.show = function() {
 Template.hall_clarcassone.events({
     'click #nuevaPartida' : function() { 
 		if (Meteor.userId()) {
-		    // ^.^ edad = Math.floor(Random.fraction() * 70);
-		    PartidasVolatiles.insert({
-				creator_id : Meteor.userId(),
-				jugadores : [ Meteor.userId() ]
-		    });
 		    userA = UsersInHall.findOne({
 		    	user_id : Meteor.userId()
-			});
+			}); 
 			if (userA) {
-			    UsersInHall.remove(userA._id);
-			} 
+			    // ^.^ edad = Math.floor(Random.fraction() * 70);
+			    PartidasVolatiles.insert({
+					creator_id : Meteor.userId(),
+					jugadores : [ Meteor.userId() ]
+			    }); 
+				UsersInHall.remove(userA._id); 
+			}
 		} 
     },
     'click .removeparty' : function() {
