@@ -1,3 +1,9 @@
+PÁGINA MÁS ACTUAL: 
+http://blutbad.meteor.com/
 
+Actualizar página:
 
-Deploy:  http://blutbad.meteor.com/
+Primero borrar:
+meteor deploy --delete http://blutbad.meteor.com/
+Volver a subir:
+meteor deploy http://blutbad.meteor.com
