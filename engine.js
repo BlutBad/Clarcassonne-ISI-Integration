@@ -89,16 +89,18 @@ var fichas = [ //72
 
 var Tablero = new function(){
 
-	this.huecos=[];
-	this.candidatos=[];
-  this.listaJugadores=[];
-  
 	this.iniciar = function(){
+
+	  this.huecos=[];
+    this.candidatos=[];
+    this.listaJugadores=[];
+    
+    
 	  var i=0;
 	  this.huecos=[];
 	  this.candidatos=[];
-	  for(var x=0;x<10;x++){        //de 10 a 10 para probar (144)
-		  for(var y=0;y<10;y++){
+	  for(var x=0;x<140;x++){        //de 10 a 10 para probar (144)
+		  for(var y=0;y<140;y++){
 			  this.huecos.push( new ObjetoFicha(x,y,i));
 			  i++;
 		  }	
@@ -956,7 +958,7 @@ var Tablero = new function(){
 
 
 
-var ObjetoJugador = function(user_id,nombre,edad){
+var ObjetoJugador = function(user_id,nombre,edad,n_jugador){
   this.numero=n_jugador;
   this.n_seguidores = 7;
 	this.nombre = nombre;
@@ -998,6 +1000,7 @@ var ObjetoFicha= function(x,y,i,tipoficha){
         this.abajo=this.izda;
         this.izda=aux;
     }
+    this.n_giros;
     this.seguidores=[];
 } 
 

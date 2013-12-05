@@ -7,7 +7,7 @@ $(function() {
 
 	//iniciamos el tablero
 	Tablero.iniciar();
-/*
+
 	//comprobamos que efectivamente la coordenada (5,5) es un hueco de ficha vacio. 
 	var centro = Tablero.buscarxcoor(5,5);
 	console.log("Tablero se inicia como lleno:",centro.lleno);
@@ -169,7 +169,7 @@ $(function() {
 	var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
 	console.log("si encaja objeto ficha:",Tablero.colocarficha(nuevaficha,8,2)); //Deberia encajar ----> devuelve la ficha colocada
 
-*/
+
     //Prueba de cierra Castillo 1
     Tablero.iniciar();
     var nuevaficha = new ObjetoFicha(0,0,0,'Ciudad1l');
@@ -230,14 +230,20 @@ $(function() {
     console.log("cierra castillo3: ",Tablero.cierraCastillo(nuevaficha));
 
     //Cierra Claustro con Catedral
-  Tablero.listaJugadores.push(new ObjetoJugador("Paco",23,1));
-  Tablero.listaJugadores.push(new ObjetoJugador("Pepe",88,2));
-  Tablero.listaJugadores.push(new ObjetoJugador("Menganito",34,3));
-  Tablero.listaJugadores.push(new ObjetoJugador("Fulanito",12,4));
+  //creamos la lista de jugadores
+  
+  Tablero.iniciar();
+  
+  
+  Tablero.listaJugadores.push(new ObjetoJugador(123,"Paco",23,1));
+  Tablero.listaJugadores.push(new ObjetoJugador(12,"Pepe",88,2));
+  Tablero.listaJugadores.push(new ObjetoJugador(45,"Mengano",34,3));
+  Tablero.listaJugadores.push(new ObjetoJugador(88,"Fulano",17,4));
+  Tablero.listaJugadores.push(new ObjetoJugador(128,"Zutano",12,5));
 
   Obj=Tablero.listaJugadores;
   console.log("PTS-  j1:",Obj[0].puntos," j2:",Obj[1].puntos," j3:",Obj[2].puntos," j4:",Obj[3].puntos);
-    Tablero.iniciar();
+
 
     var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
     Tablero.colocarficha(nuevaficha,7,5);
@@ -278,7 +284,7 @@ $(function() {
     console.log("cierra claustro: ",Tablero.cierraClaustro(nuevaficha,1));
     console.log("PTS-  j1:",Obj[0].puntos," j2:",Obj[1].puntos," j3:",Obj[2].puntos," j4:",Obj[3].puntos); 
 
-/*
+
   // Prueba la lista de seguidores.
   Tablero.iniciar();
 	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
@@ -301,19 +307,24 @@ $(function() {
 
 
 
-*/
+
 /////////////////////////// SIMULACRO PUNTUACIONES CAMINO
+  
+  Tablero.iniciar();
 
-
-  Tablero.listaJugadores.push(new ObjetoJugador("Paco",23,1));
-  Tablero.listaJugadores.push(new ObjetoJugador("Pepe",88,2));
-  Tablero.listaJugadores.push(new ObjetoJugador("Menganito",34,3));
-  Tablero.listaJugadores.push(new ObjetoJugador("Fulanito",12,4));
+  //creamos la lista de jugadores
+  Tablero.listaJugadores.push(new ObjetoJugador(123,"Paco",23,1));
+  Tablero.listaJugadores.push(new ObjetoJugador(12,"Pepe",88,2));
+  Tablero.listaJugadores.push(new ObjetoJugador(45,"Mengano",34,3));
+  Tablero.listaJugadores.push(new ObjetoJugador(88,"Fulano",17,4));
+  Tablero.listaJugadores.push(new ObjetoJugador(128,"Zutano",12,5));
+  
+  
 
   Obj=Tablero.listaJugadores;
   console.log("PTS-  j1:",Obj[0].puntos," j2:",Obj[1].puntos," j3:",Obj[2].puntos," j4:",Obj[3].puntos);
   
-  Tablero.iniciar();
+
 	var nuevaficha = new ObjetoFicha(0,0,0,"Posada");
 	var x=Tablero.colocarficha(nuevaficha,3,1);	
 	x.seguidores.push({t:"Ladron",n:4,j:1,f:x});  //le metemos ladron
@@ -332,16 +343,17 @@ $(function() {
 	
 	console.log("PTS-  j1:",Obj[0].puntos," j2:",Obj[1].puntos," j3:",Obj[2].puntos," j4:",Obj[3].puntos);
 
-  Tablero.listaJugadores=[];
+  Tablero.iniciar();
 
-  Tablero.listaJugadores.push(new ObjetoJugador("Paco",23,1));
-  Tablero.listaJugadores.push(new ObjetoJugador("Pepe",88,2));
-  Tablero.listaJugadores.push(new ObjetoJugador("Menganito",34,3));
-  Tablero.listaJugadores.push(new ObjetoJugador("Fulanito",12,4));
+  //creamos la lista de jugadores
+  Tablero.listaJugadores.push(new ObjetoJugador(123,"Paco",23,1));
+  Tablero.listaJugadores.push(new ObjetoJugador(12,"Pepe",88,2));
+  Tablero.listaJugadores.push(new ObjetoJugador(45,"Mengano",34,3));
+  Tablero.listaJugadores.push(new ObjetoJugador(88,"Fulano",17,4));
+  Tablero.listaJugadores.push(new ObjetoJugador(128,"Zutano",12,5));
 
   Obj=Tablero.listaJugadores;
-  console.log("PTS-  j1:",Obj[0].puntos,"-",Obj[0].n_seguidores," j2:",Obj[1].puntos," j3:",Obj[2].puntos," j4:",Obj[3].puntos);
-    Tablero.iniciar();   
+  console.log("PTS-  j1:",Obj[0].puntos,"-",Obj[0].n_seguidores," j2:",Obj[1].puntos," j3:",Obj[2].puntos," j4:",Obj[3].puntos);  
     var nuevaficha = new ObjetoFicha(0,0,0,"Rcurva");
     Tablero.colocarficha(nuevaficha,5,5);
     var nuevaficha = new ObjetoFicha(0,0,0,"Rrecta");
