@@ -109,9 +109,9 @@ Meteor
 							logo_alt : 'Juega es este juego',
 							title_desc : 'Titulo para la descripcion del juego',
 							description : 'Descripcion del juego!',
-    							idn : 'klarki',
-    							mode: 'multi',
-    							hall: 'klarkiHall',
+							idn : 'klarki',
+							mode: 'multi',
+							hall: 'klarkiHall',
 							rangos : [ {
 								rango : "Fantasma",
 								minPoints : -1,

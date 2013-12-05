@@ -36,20 +36,18 @@ Deps.autorun(function(c) {
 		    wrapf : x
 		});*/
 
-	Session.set('showGameIdn', lg.idn);
+		Session.set('showGameIdn', lg.idn);
 
-	$('#gamecontainer').show();
+		$('#gamecontainer').show();
 
-	Session.set("current_game", lg._id);
+		Session.set("current_game", lg._id);
 
-	
-	if (lg.mode === "solo") {
-	    eval(lg.wrapf);
-	} else if (lg.mode === "multi") {
-	    Session.set('current_stage','klarkiHall');
-	}
-	
-
+		
+		if (lg.mode === "solo") {
+		    eval(lg.wrapf);
+		} else if (lg.mode === "multi") {
+		    Session.set('current_stage','klarkiHall');
+		}
     } else {
 		Session.set('showGameIdn', null);
 		canvas = null;
