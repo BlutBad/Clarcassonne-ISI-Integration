@@ -72,8 +72,7 @@ img2.src = 'images/abajo.png';
 var img3 = new Image();
 img3.src = 'images/musica.png';
 
-var sonido_ladron=new Audio();
-sonido_ladron.src='audio/ladron.ogg';
+
 
 
 Jugador1 = {nombre: "Carlos" , color: "ficha_rojo", puntos:0, turno:1};
@@ -112,7 +111,6 @@ function pasarTurno () {
 startGame = function() {   
 	
 	
-	        
 	Game.setBoard(0,new Background());
 	Game.setBoard(1,new Jugadores());
 	Game.setBoard(2,new Rejilla()); 
@@ -123,10 +121,7 @@ startGame = function() {
 	
 	Game.setBoard(5,new Ficha_abajo());
 	Game.setBoard(9,new Helptext()); 
-	Game.setBoard(10, new Time());
-	
-	
-	
+	Game.setBoard(10, new Time());	
 	
 	
 };
@@ -183,7 +178,7 @@ Helptext = function () {
 		ctx.font="bold 15px Arial";
 		
 		if(sonar == 1){
-		      ctx.fillText("pulsa 'm' para silenciar", 330,465);  
+		      ctx.fillText("pulsa 'm' para silenciar y 'n' para volver a sonar", 250,465);  
 		}
 		
 		if (CurrentMove == 0) {
@@ -232,32 +227,29 @@ Ficha_abajo = function(cx,cy) {
 	
 	
     this.draw = function(ctx) {
-    
 		ctx.drawImage(img2, 700, 500);
-		
 	}
     	
-        var up = false;
-        var NuevaPieza;
-        this.step = function(dt) {
+	var up = false;
+	var NuevaPieza;
+	this.step = function(dt) {
+         /*if(!Game.keys['sonar']) sonar = true;
         
-        /*if(!Game.keys['sonar']) sonar = true;
-	
-    	if(sonar && Game.keys['sonar']) {
-    		sonar = false;
-    	}*/
-    		
-        
-        if(Game.keys['sonar']&&sonar == 0){ 
-                console.log("doy a sonar");
-                console.log(sonar);
-                sonar = 1;
-        }
-        if(Game.keys['sonar']&&sonar == 1){ 
-                console.log("doy a mutar");
-                console.log(sonar);
-                sonar = 0;
-        }
+        if(sonar && Game.keys['sonar']) {
+                sonar = false;
+        }*/
+ 
+		 if(Game.keys['sonar']&&sonar == 0){
+		            console.log("doy a sonar");
+		            console.log(sonar);
+		            sonar = 1;
+		 }
+		 if(Game.keys['sonar']&&sonar == 1){
+		            console.log("doy a mutar");
+		            console.log(sonar);
+		            sonar = 0;
+		}
+		    
         
 	if(!Game.keys['sacar_ficha']) up = true;
 	
@@ -265,7 +257,9 @@ Ficha_abajo = function(cx,cy) {
     		up = false;
     		if (CurrentMove == 0)  {
 			NuevaPieza = new PiezaMapa(CurrentScroll.x + 7,CurrentScroll.y + 5, "Tcruze",90);
+			
 			sonido_ladron.play();
+			
 			Game.setBoard(7, NuevaPieza);
 			CurrentMove = 1;
 		} else if (CurrentMove == 1) {
@@ -416,12 +410,6 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 	}
 }  
 
-
-	
-
-
-
-
 Seguidor = function (cx,cy, sprite, posx, posy) {
 	this.x = 100*cx;
 	this.y = 100*cy;
@@ -434,7 +422,9 @@ Seguidor = function (cx,cy, sprite, posx, posy) {
 		SpriteSheet.draw(ctx,this.sprite,this.x + this.posx,this.y + this.posy,1,0,0.5);
 	}
 	
-	this.step = function () { }
+	this.step = function () {
+	
+	}
 }
 
 
@@ -624,16 +614,28 @@ Set = function (PiezaMapa) {
 							var color = ficha_color.indexOf("_") + 1; 
 							return ficha_color.slice(color);
 						})(); 
-		if (this.option == 1){
-			return 'granjero_' + color;
-		} else if (this.option == 2){
-			return 'ladron_' + color;
-		} else if (this.option == 3){
-			return 'caballero_' + color;
-		} else if (this.option == 4){
-			return 'cura_' + color;
+		var sonar = 1;
+		if(Game.keys['silenciar'] && sonar == 1){ 
+                sonar = 0;
+        }
+        if(Game.keys['sonar'] && sonar == 0){
+        	sonar = 1;
+        }
+        if (sonar == 1){
+			if (this.option == 1){
+				sonido_ladron.play();
+				return 'granjero_' + color;
+			} else if (this.option == 2){
+				sonido_ladron.play();
+				return 'ladron_' + color;
+			} else if (this.option == 3){
+				sonido_ladron.play();
+				return 'caballero_' + color;
+			} else if (this.option == 4){
+				sonido_ladron.play();
+				return 'cura_' + color;
+			}
 		}
-		
 	
 	}
 

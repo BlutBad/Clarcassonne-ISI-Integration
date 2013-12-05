@@ -19,6 +19,8 @@
     // Inicializa el juego
   this.initialize = function(canvasElementId,sprite_data,callback) {
     this.canvas = document.getElementById(canvasElementId);
+    sonidojuego = document.getElementById("sonidojuego");
+    
 
 	// Propiedades para pantallas táctiles
     this.playerOffset = 10;
@@ -46,7 +48,8 @@
   
 
     // Gestión de la entrada (teclas para izda/derecha y disparo)
-    var KEY_CODES = { 37:'left', 39:'right', 38 :'up', 40:'down', 32:'sacar_ficha', 27: 'back', 48:'rotar', 72: 'help'};
+    var KEY_CODES = { 37:'left', 39:'right', 38 :'up', 40:'down', 32:'sacar_ficha', 
+    					27: 'back', 48:'rotar', 72: 'help', 77:'silenciar', 78:'sonar'};
     this.keys = {};
 
     this.setupInput = function() {
@@ -69,11 +72,26 @@
 
     // Bucle del juego
     var boards = [];
-
+	var sonar = 1;
     this.loop = function() { 
 	// segundos transcurridos
+	
 	var dt = 30 / 1000;
-
+	
+    if(Game.keys['silenciar'] && sonar == 1){ 
+		sonar = 0;
+    }
+    console.log(sonar);
+    if(Game.keys['sonar'] && sonar == 0){
+     	sonar = 1;
+    }
+    
+    if (sonar == 1){
+		sonidojuego.play();
+	}
+	if (sonar == 0){
+		sonidojuego.pause();
+	}	
 	// Para cada board, de 0 en adelante, se 
 	// llama a su método step() y luego a draw()
 	for(var i=0,len = boards.length;i<len;i++) {
