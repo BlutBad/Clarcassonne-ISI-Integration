@@ -92,7 +92,7 @@ function date_compare (init, fin) {
 
 Template.editTor.torneo = function() {
     var id = Session.get('tornToEdit');
-    console.log(id)
+    //console.log(id)
     return Torneos.findOne({
 		_id : id
     });
@@ -103,7 +103,7 @@ Template.torneos.showEditTorn = function() {
 }
 
 Template.torneos.events = {
-	'click input#crear_torneo': function() {n
+	'click input#crear_torneo': function() {
 		openCreateDialog();
 	},
 	'click .sortBy': function () {
@@ -201,7 +201,7 @@ Template.createDialog.events({
 
 Template.editTor.events({
 
-    'click .save' : function(event, template) {
+    'click .save_edit' : function(event, template) {
 		var gid = Session.get('tornToEdit');
 
 		var title = template.find("#title").value;
@@ -209,7 +209,7 @@ Template.editTor.events({
 		var date_finish = template.find("#date_finish").value;
 		var description = template.find("#description").value; 
 		var logo_src = template.find("#pic").value; 
-
+ 
 		Torneos.update(gid, {
 		    $set : {
 				title : title,
