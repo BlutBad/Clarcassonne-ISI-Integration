@@ -53,7 +53,7 @@ Template.hall_clarcassone.events({
 						creator_id : Meteor.userId(),
 						jugadores : [{
 							user_id: Meteor.userId(),
-							estado: "pendiente"
+							estado: "Pendiente"
 						}]
 				    }); 
 					UsersInHall.remove(userA._id); 
@@ -94,7 +94,7 @@ Template.hall_clarcassone.events({
 				usersinParty = true;
 			}
 		});
-		console.log(usersinParty)
+		//console.log(usersinParty)
 		userA = UsersInHall.findOne({
 		    user_id : Meteor.userId()
 		});
@@ -103,7 +103,7 @@ Template.hall_clarcassone.events({
 			    $push : {
 					jugadores : {
 						user_id: Meteor.userId(),
-						estado: "pendiente"
+						estado: "Pendiente"
 					}
 			    }
 			});
@@ -115,7 +115,18 @@ Template.hall_clarcassone.events({
 			Session.set("createError", "Ya estás en esta partida!");
 		}
     },
-
+    'click .ready' : function() {
+    	usersJoined = PartidasVolatiles.findOne({
+			_id: this._id
+		}).jugadores;
+		usersJoined.forEach(function(each){
+			if (each.user_id == Meteor.userId()) {
+				each.estado = "Listo!";
+			}
+		});
+		console.log(usersJoined)
+    	PartidasVolatiles.update(this._id, {jugadores: usersJoined});
+    }
 });
 
 Template.hall_clarcassone.partidasVolatiles = function() {
