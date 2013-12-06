@@ -4,21 +4,18 @@ Plataphorma BlutBad
 
 ## Información General
 ###Deploys
-[Deploy de la Plataforma BlutBad](http://blutbad.meteor.com/ "Deploy de la Plataforma BlutBad")
-
-[Deploy de la Plataforma Lowerlayers](http://lowerlayers.meteor.com/ "Plataforma de Juegos LowerLayers")
+* [Deploy de la Plataforma BlutBad](http://blutbad.meteor.com/ "Deploy de la Plataforma BlutBad")
+* [Deploy de la Plataforma Lowerlayers](http://lowerlayers.meteor.com/ "Plataforma de Juegos LowerLayers")
 
 ###Repositorios
-[Clarcassonne Interfaz de Usuario](https://github.com/locobiedma/iu_carcassone "Clarcassonne UI")
+* [Clarcassonne Interfaz de Usuario](https://github.com/locobiedma/iu_carcassone "Clarcassonne UI")
+* [Clarcassonne Inteligencia Artificial](https://github.com/ciglesiasgo/IA-Carcassonne "Clarcassonne IA")
 
-[Clarcassonne Inteligencia Artificial](https://github.com/ciglesiasgo/IA-Carcassonne "Clarcassonne IA")
-
----
-###[Dudas, preguntas y sugerencias sobre la API y Plataforma](https://github.com/BlutBad/ISI-Clarcassonne-PL/issues "Dudas, preguntas y sugerencias")
 
 
 
 ## API entre IA, IU y PL
+###[Dudas, preguntas y sugerencias sobre la API y Plataforma](https://github.com/BlutBad/ISI-Clarcassonne-PL/issues "Dudas, preguntas y sugerencias")
 
 ### El protocolo de partidas
 1.
@@ -28,7 +25,7 @@ En la plataforma:
 
 * Se crea una partida con la siguiente estructuda de datos:
 
-```
+```javascript
 Partidas.insert({
                 jugadores : [ {user_id: 11111, etc: etc},
                               {user_id: 22222, etc: etc}, ... ],
@@ -41,7 +38,7 @@ Se llama a las funciones de inicializacion de IA e IU.
 
 * Inicializacion de IA
 
-``` 
+```javascript 
 ClarcassonneGameIA.iniciar(party_id);
     party_id - _id de la partida que va a jugar el usuario en cuestion,
                 el que esta ejecutando ese codigo en su browser.
@@ -49,19 +46,19 @@ ClarcassonneGameIA.iniciar(party_id);
     
 * Inicializacion de IU
 
-```
+```javascript
 ClarcassonneGameIU.initialize(idCanvasElement, sprite_url, callback, party_id);
-idCanvasElement  - El #id del canvas donde se va iniciar el juego
-sprite_url       - Url del spritesheet del juego(ej: '/images/ClarcassonneSpriteSheet.png').
-callback         - Función de inicio del juego despues de que se ha finalizado 'initialize'.
-party_id         - _id de la partida que va a jugar el usuario en cuestion,
-                     el que esta ejecutando ese codigo en su browser.
+    idCanvasElement  - El #id del canvas donde se va iniciar el juego
+    sprite_url       - Url del spritesheet del juego(ej: '/images/ClarcassonneSpriteSheet.png').
+    callback         - Función de inicio del juego despues de que se ha finalizado 'initialize'.
+    party_id         - _id de la partida que va a jugar el usuario en cuestion,
+                         el que esta ejecutando ese codigo en su browser.
 ```
 
 3.
 'ClarcassonneGameIA' decide quien empieza la partida y escribe esa información en 'turnos':
 
-```
+```javascript
 Partidas.update(party_id, {
                             $push : {turnos : [11111, 22222,...]}
                           });
@@ -70,7 +67,7 @@ Partidas.update(party_id, {
 4.
  'ClarcassonneGameIU' lee el moviento del usuario y lo apunta el la collection:
 
-```             
+```javascript
 Partidas.update(party_id, {
                             $push : {movimientos : [{user_id: 11111, action:{}},
                                                     {user_id: 22222, action:{}},...]}
@@ -84,13 +81,15 @@ IA e IU hacen polling sobre la collection para ver si hay nuevas entras que les 
 
 6. 
 Partida ha terminado
-```             
+
+```javascript
 Partidas.update(party_id, {
                             $push : {puntuacion : [ {user_id: 11111, puntos : over9000},
                                                     {user_id: 22222, puntos : over9900},...]},
                             $set  : {terminada: true}
                 });
 ```
+
 6.
 LLama a `partyFinish` con el `party_id`, y la plataforma se ocupa de meter
  a cada usuario con su puntuacion corespondiente a la collection del Ranking. 
@@ -108,7 +107,7 @@ Partidas = new Meteor.Collection('partidas');
 
 * Estructura de una partida:
 
-```
+```javascript
 {   "_id"       : ObjectId("..."),
     turnos      : [ 11111, 22222,...],
     movimientos : [ {user_id: 11111, action:{}},

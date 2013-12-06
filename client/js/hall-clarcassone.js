@@ -67,15 +67,17 @@ Template.hall_clarcassone.events({
 		}
     },
     'click .removeparty' : function() {
-    	userCreator = PartidasVolatiles.findOne({
-			creator_id: Meteor.userId()
-		});
-		if (userCreator) {
-			PartidasVolatiles.remove(this._id);
-			Session.set("createError", undefined);
-		} else {
-			Session.set("createError", "No borres partidas que no has creado tú.... o.o");			
-		}
+	if (Meteor.userId()) {
+            	userCreator = PartidasVolatiles.findOne({
+        			creator_id: Meteor.userId()
+        		});
+        		if (userCreator) {
+        			PartidasVolatiles.remove(this._id);
+        			Session.set("createError", undefined);
+        		} else {
+        			Session.set("createError", "No borres partidas que no has creado tú.... o.o");			
+        		}
+	}
     },
     'click .startparty' : function() {
 		//Hacer una entrada a la coleccion de Partidas, 
