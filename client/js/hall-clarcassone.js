@@ -1,133 +1,149 @@
+var estadosU = {
+    listo : 'Listo!',
+    pendiente : 'Pendiente',
+    inactivo : 'Inactivo'
+};
+
 Template.hall_clarcassone.show = function() {
-   //Mostrar el hall de clarcassone si ...
-	userA = UsersInHall.findOne({
-	    user_id : Meteor.userId()
+    // Mostrar el hall de clarcassone si ...
+    userA = UsersInHall.findOne({
+	user_id : Meteor.userId()
+    });
+    if (Session.get('current_stage') == 'klarkiHall') {
+	usersJoined = PartidasVolatiles.find({});
+	usersinParty = false;
+	usersJoined.forEach(function(each) {
+	    each.jugadores.forEach(function(each2) {
+		if (each2.user_id == Meteor.userId()) {
+		    usersinParty = true;
+		}
+	    });
 	});
-    if (Session.get('current_stage') == 'klarkiHall') { 
-		usersJoined = PartidasVolatiles.find({});
-		usersinParty = false;
-		usersJoined.forEach(function(each) {  
-			each.jugadores.forEach(function(each2){
-				if (each2.user_id == Meteor.userId()) {
-					usersinParty = true;
-				}
-			});
-		}); 
-		//Dejar al user estar en lista de jugadores solo si esta auntenticado
-		if (Meteor.userId() && !userA && !usersinParty) {
-		    UsersInHall.insert({
-				user_id : Meteor.userId()
-		    });
-		}
-		return true;
+	// Dejar al user estar en lista de jugadores solo si esta auntenticado
+	if (Meteor.userId() && !userA && !usersinParty) {
+	    UsersInHall.insert({
+		user_id : Meteor.userId()
+	    });
+	}
+	return true;
     } else {
-		//Si el estado cambia, ya no estamos en el hall de clarkasonne
-		//borrar al user de los juadores online
-		
-		if (userA) {
-		    UsersInHall.remove(userA._id);
-		}
-		return false;
+	// Si el estado cambia, ya no estamos en el hall de clarkasonne
+	// borrar al user de los juadores online
+
+	if (userA) {
+	    UsersInHall.remove(userA._id);
+	}
+	return false;
     }
 };
 
-Template.hall_clarcassone.error = function () {
-	return Session.get("createError");
+Template.hall_clarcassone.error = function() {
+    return Session.get("createError");
 };
 
 Template.hall_clarcassone.events({
-    'click #nuevaPartida' : function() { 
-		if (Meteor.userId()) {
-		    userA = UsersInHall.findOne({
-		    	user_id : Meteor.userId()
-			}); 
-			userCreator = PartidasVolatiles.findOne({
-				creator_id: Meteor.userId()
-			})
-			if (userCreator) {
-				Session.set("createError", "Ya creaste una partida!");
-			} else {
-				if (userA) {
-				    // ^.^ edad = Math.floor(Random.fraction() * 70);
-				    PartidasVolatiles.insert({
-						creator_id : Meteor.userId(),
-						jugadores : [{
-							user_id: Meteor.userId(),
-							estado: "Pendiente"
-						}]
-				    }); 
-					UsersInHall.remove(userA._id); 
-					Session.set("createError", undefined);
-				} else {
-					Session.set("createError", "Ya estás en una partida.... no crees otra! :D");
-				}
-			}
-		} else {	 
-			Session.set("createError", "Regístrate para crear partidas!");
+    'click #nuevaPartida' : function() {
+	if (Meteor.userId()) {
+	    userA = UsersInHall.findOne({
+		user_id : Meteor.userId()
+	    });
+	    userCreator = PartidasVolatiles.findOne({
+		creator_id : Meteor.userId()
+	    })
+	    if (userCreator) {
+		Session.set("createError", "Ya creaste una partida!");
+	    } else {
+		if (userA) {
+		    // ^.^ edad = Math.floor(Random.fraction() * 70);
+		    PartidasVolatiles.insert({
+			creator_id : Meteor.userId(),
+			jugadores : [ {
+			    user_id : Meteor.userId(),
+			    estado : estadosU.pendiente,
+			} ]
+		    });
+		    UsersInHall.remove(userA._id);
+		    Session.set("createError", undefined);
+		} else {
+		    Session.set("createError",
+			    "Ya estás en una partida.... no crees otra! :D");
 		}
+	    }
+	} else {
+	    Session.set("createError", "Regístrate para crear partidas!");
+	}
     },
     'click .removeparty' : function() {
 	if (Meteor.userId()) {
-            	userCreator = PartidasVolatiles.findOne({
-        			creator_id: Meteor.userId()
-        		});
-        		if (userCreator) {
-        			PartidasVolatiles.remove(this._id);
-        			Session.set("createError", undefined);
-        		} else {
-        			Session.set("createError", "No borres partidas que no has creado tú.... o.o");			
-        		}
+	    userCreator = PartidasVolatiles.findOne({
+		creator_id : Meteor.userId()
+	    });
+	    if (userCreator) {
+		PartidasVolatiles.remove(this._id);
+		Session.set("createError", undefined);
+	    } else {
+		Session.set("createError",
+			"No borres partidas que no has creado tú.... o.o");
+	    }
 	}
     },
     'click .startparty' : function() {
-		//Hacer una entrada a la coleccion de Partidas, 
-		//y llamar a ui y ai con ese _id de la partida.
-		console.log('Crear una partida de verdad');
+	// Hacer una entrada a la coleccion de Partidas,
+	// y llamar a ui y ai con ese _id de la partida.
+	console.log('Crear una partida de verdad');
     },
 
     'click .unirme' : function() {
-		//console.log('Unirme a una partida'); 
-		usersJoined = PartidasVolatiles.findOne({
-			_id: this._id
-		}).jugadores;
-		usersinParty = false;
-		usersJoined.forEach(function(each){
-			if (each.user_id == Meteor.userId()) {
-				usersinParty = true;
-			}
-		});
-		//console.log(usersinParty)
-		userA = UsersInHall.findOne({
-		    user_id : Meteor.userId()
-		});
-		if (!usersinParty) {
-			PartidasVolatiles.update(this._id, {
-			    $push : {
-					jugadores : {
-						user_id: Meteor.userId(),
-						estado: "Pendiente"
-					}
-			    }
-			});
-			if (userA) {
-			    UsersInHall.remove(userA._id);
-			}
-			Session.set("createError", undefined);
-		} else {
-			Session.set("createError", "Ya estás en esta partida!");
+	// console.log('Unirme a una partida');
+	usersJoined = PartidasVolatiles.findOne({
+	    _id : this._id
+	}).jugadores;
+	usersinParty = false;
+	usersJoined.forEach(function(each) {
+	    if (each.user_id == Meteor.userId()) {
+		usersinParty = true;
+	    }
+	});
+	// console.log(usersinParty)
+	userA = UsersInHall.findOne({
+	    user_id : Meteor.userId()
+	});
+	if (!usersinParty) {
+	    PartidasVolatiles.update(this._id, {
+		$push : {
+		    jugadores : {
+			user_id : Meteor.userId(),
+			estado : estadosU.pendiente,
+		    }
 		}
+	    });
+	    if (userA) {
+		UsersInHall.remove(userA._id);
+	    }
+	    Session.set("createError", false);
+	} else {
+	    Session.set("createError", "Ya estás en esta partida!");
+	}
     },
     'click .ready' : function() {
-    	usersJoined = PartidasVolatiles.findOne({
-			_id: this._id
-		}).jugadores;
-		usersJoined.forEach(function(each){
-			if (each.user_id == Meteor.userId()) {
-				each.estado = "Listo!";
-			}
-		});
-		console.log(usersJoined)
-    	PartidasVolatiles.update(this._id, {jugadores: usersJoined});
+	usersJoined = PartidasVolatiles.findOne({
+	    _id : this._id
+	}).jugadores;
+	usersJoined.forEach(function(each) {
+	    if (each.user_id == Meteor.userId()) {
+		if(each.estado == estadosU.listo){
+		    each.estado = estadosU.pendiente;
+		}else if(each.estado == estadosU.pendiente){
+		    each.estado = estadosU.listo;
+		}else{
+		    each.estado = estadosU.inactivo;
+		}
+	    }
+	});
+	console.log(usersJoined)
+	PartidasVolatiles.update(this._id, {
+	    jugadores : usersJoined
+	});
     }
 });
 
@@ -139,40 +155,33 @@ Template.hall_clarcassone.UsersInHall = function() {
     return UsersInHall.find({});
 }
 
-//El rango del usuario en la tabla de miembros de la partida
+// El rango del usuario en la tabla de miembros de la partida
 Template.hall_clarcassone.userRango = function(user_id) {
     gid = Session.get("current_game");
     if (gid) {
-		rankingU = Ranking.findOne({
-		    gameId : gid,
-		    userId : user_id
-		})
+	rankingU = Ranking.findOne({
+	    gameId : gid,
+	    userId : user_id
+	})
 	if (rankingU) {
 	    return Rangos.findOne({
-			id : rankingU.rango_id
+		id : rankingU.rango_id
 	    }).rango;
 	} else {
 	    return Rangos.findOne({
-			game_id : gid
+		game_id : gid
 	    }).rango;
 	}
     } else {
-		return "--"
+	return "--"
     }
 }
 
-
 Template.hall_clarcassone.estadoUser = function(estado) {
-    if (estado == 'Pendiente') {
+    if (estado == estadosU.pendiente ) {
 	clas = 'label label-warning'
-    }else if (estado == 'Listo!') {
+    } else if (estado == estadosU.listo) {
 	clas = 'label label-success'
     }
     return clas;
-}
-if (condition) {
-    
-} else {
-
-}
-
+};
