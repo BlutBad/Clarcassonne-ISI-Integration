@@ -8,6 +8,7 @@ Plataphorma BlutBad
 * [Deploy de la Plataforma Lowerlayers](http://lowerlayers.meteor.com/ "Plataforma de Juegos LowerLayers")
 
 ###Repositorios
+* [Plataphorma BlutBad](https://github.com/BlutBad/ISI-Clarcassonne-PL "Plataphorma BlutBad")
 * [Clarcassonne Interfaz de Usuario](https://github.com/locobiedma/iu_carcassone "Clarcassonne UI")
 * [Clarcassonne Inteligencia Artificial](https://github.com/ciglesiasgo/IA-Carcassonne "Clarcassonne IA")
 
@@ -79,7 +80,7 @@ Se repiten puntos 3-4 hasta que la partida termine.
 IA e IU hacen polling sobre la collection para ver si hay nuevas entras que les corresponden, filtrando por `party_id` y comparando ultima entrada.
 
 
-6. 
+6.
 Partida ha terminado
 
 ```javascript
@@ -90,10 +91,10 @@ Partidas.update(party_id, {
                 });
 ```
 
-6.
+7.
 LLama a `partyFinish` con el `party_id`, y la plataforma se ocupa de meter
  a cada usuario con su puntuacion corespondiente a la collection del Ranking. 
----
+
 
 
 ### Coleciones en disponibles para la IU y IA:
@@ -134,13 +135,12 @@ Partidas = new Meteor.Collection('partidas');
 Como hacer Deploy:
 
 * `meteor deploy --delete http://blutbad.meteor.com/`
-
 * `meteor deploy http://blutbad.meteor.com`
+
 
 2.
 Editar ReadMe:
 
 * [Como editar rearme(Markdown Cheatsheet)](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#wiki-lists "Markdown Cheatsheet")
-
 * [Como editar rearme(Markdown Github Preview Online)](http://github-preview.herokuapp.com/ "Markdown GitHub Online")
 

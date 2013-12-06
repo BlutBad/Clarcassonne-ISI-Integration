@@ -160,3 +160,19 @@ Template.hall_clarcassone.userRango = function(user_id) {
 		return "--"
     }
 }
+
+
+Template.hall_clarcassone.estadoUser = function(estado) {
+    if (estado == 'Pendiente') {
+	clas = 'label label-warning'
+    }else if (estado == 'Listo!') {
+	clas = 'label label-success'
+    }
+    return clas;
+}
+if (condition) {
+    
+} else {
+
+}
+
