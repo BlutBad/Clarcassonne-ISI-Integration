@@ -143,7 +143,14 @@ Template.hall_clarcassone.events({
 				}
 			}
 		} else {
-			$(".not-register").show();
+			$(".not-register").dialog({
+      			modal: true,
+      			buttons: {
+        			Ok: function() {
+          			$( this ).dialog( "close" );
+        			}
+      			}
+    		});
 		}
     },
     'click .ready' : function() { 

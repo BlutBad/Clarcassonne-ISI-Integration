@@ -24,8 +24,11 @@ http://bootsnipp.com/snippets/featured/condensed-table-example -->
           {{#if error}}
             <div class="alert alert-error">{{error}}</div>
           {{/if}}
-          <div class="alert alert-error not-register" style="display:none">
-            <p>Para jugar debes registrate en la plataforma</p>
+          <div class="not-register" title="Clarcassonne" style="display:none">
+            <p class="alert alert-error">
+              <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
+              Para jugar debes estar registrado en la plataforma.
+            </p>
           </div>
         </div>
       </div>
