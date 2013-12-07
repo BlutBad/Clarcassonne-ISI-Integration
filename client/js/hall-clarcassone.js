@@ -97,47 +97,53 @@ Template.hall_clarcassone.events({
 
     'click .unirme' : function() {
 		// console.log('Unirme a una partida');
-		usersJoined = PartidasVolatiles.findOne({
-		    _id : this._id
-		}).jugadores;
-		usersinParty = false;
-		usersJoined.forEach(function(each) {
-		    if (each.user_id == Meteor.userId()) {
-				usersinParty = true;
-		    }
-		});
-		// console.log(usersinParty)
-		userA = UsersInHall.findOne({
-		    user_id : Meteor.userId()
-		});
-		if (!usersinParty) {
-		    PartidasVolatiles.update(this._id, {
-				$push : {
-				    jugadores : {
-						user_id : Meteor.userId(),
-						estado : estadosU.pendiente,
-				    }
-				}
-		    });
-		    if (userA) {
-				UsersInHall.remove(userA._id);
-		    } 
-			Session.set("createError", undefined);
-		} else {
-			userCreator = PartidasVolatiles.findOne({
+
+		if (Meteor.userId()) {
+
+			usersJoined = PartidasVolatiles.findOne({
 			    _id : this._id
-			}).creator_id; 
-			if (userCreator == Meteor.userId()) {
-				Session.set("createError",
-					"Si quieres abandonar debes descartar la partida! Eres el creador...");				
-			} else { 
-				usersJoined = _.without(usersJoined, _.findWhere(usersJoined, {user_id: Meteor.userId()})); 
-				PartidasVolatiles.update(this._id, {
-					creator_id: userCreator,
-				    jugadores : usersJoined
-				});				
+			}).jugadores;
+			usersinParty = false;
+			usersJoined.forEach(function(each) {
+			    if (each.user_id == Meteor.userId()) {
+					usersinParty = true;
+			    }
+			});
+			// console.log(usersinParty)
+			userA = UsersInHall.findOne({
+			    user_id : Meteor.userId()
+			});
+			if (!usersinParty) {
+			    PartidasVolatiles.update(this._id, {
+					$push : {
+					    jugadores : {
+							user_id : Meteor.userId(),
+							estado : estadosU.pendiente,
+					    }
+					}
+			    });
+			    if (userA) {
+					UsersInHall.remove(userA._id);
+			    } 
 				Session.set("createError", undefined);
+			} else {
+				userCreator = PartidasVolatiles.findOne({
+				    _id : this._id
+				}).creator_id; 
+				if (userCreator == Meteor.userId()) {
+					Session.set("createError",
+						"Si quieres abandonar debes descartar la partida! Eres el creador...");				
+				} else { 
+					usersJoined = _.without(usersJoined, _.findWhere(usersJoined, {user_id: Meteor.userId()})); 
+					PartidasVolatiles.update(this._id, {
+						creator_id: userCreator,
+					    jugadores : usersJoined
+					});				
+					Session.set("createError", undefined);
+				}
 			}
+		} else {
+			$(".not-register").show();
 		}
     },
     'click .ready' : function() { 
