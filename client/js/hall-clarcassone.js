@@ -130,7 +130,9 @@ Template.hall_clarcassone.events({
     'click .ready' : function() { 
 		usersJoined = PartidasVolatiles.findOne({
 		    _id : this._id
-		}).jugadores;
+		});
+		userCreator = usersJoined.creator_id;
+		usersJoined = usersJoined.jugadores;
 		usersJoined.forEach(function(each) {
 		    if (each.user_id == Meteor.userId()) {
 				if(each.estado == estadosU.listo){
@@ -143,6 +145,7 @@ Template.hall_clarcassone.events({
 		    }
 		}); 
 		PartidasVolatiles.update(this._id, {
+			creator_id: userCreator,
 		    jugadores : usersJoined
 		});
     }
