@@ -121,10 +121,23 @@ Template.hall_clarcassone.events({
 		    });
 		    if (userA) {
 				UsersInHall.remove(userA._id);
-		    }
-		    Session.set("createError", false);
+		    } 
+			Session.set("createError", undefined);
 		} else {
-		    Session.set("createError", "Ya estás en esta partida!");
+			userCreator = PartidasVolatiles.findOne({
+			    _id : this._id
+			}).creator_id; 
+			if (userCreator == Meteor.userId()) {
+				Session.set("createError",
+					"Si quieres abandonar debes descartar la partida! Eres el creador...");				
+			} else { 
+				usersJoined = _.without(usersJoined, _.findWhere(usersJoined, {user_id: Meteor.userId()})); 
+				PartidasVolatiles.update(this._id, {
+					creator_id: userCreator,
+				    jugadores : usersJoined
+				});				
+				Session.set("createError", undefined);
+			}
 		}
     },
     'click .ready' : function() { 
@@ -194,15 +207,32 @@ Template.hall_clarcassone.estadoUserAct = function(id_partida) {
 	usersJoined = PartidasVolatiles.findOne({
 	    _id : id_partida
 	}).jugadores;
+	content = 'Listo';
 	usersJoined.forEach(function(each) {
 	    if (each.user_id == Meteor.userId()) {
-			estado = each.estado;
+			if (each.estado == estadosU.pendiente ) {
+				content = 'Listo';
+		    } else if (each.estado == estadosU.listo) {
+				content  = 'Pendiente';
+		    }
 	    }
-	});
-    if (estado == estadosU.pendiente ) {
-		content = 'Listo';
-    } else if (estado == estadosU.listo) {
-		content  = 'Pendiente';
-    }
+	});    
     return content;
 };
+
+Template.hall_clarcassone.unir_aband = function(id_partida) { 
+	usersJoined = PartidasVolatiles.findOne({
+	    _id : id_partida
+	}).jugadores;
+	usersinParty = false;
+	usersJoined.forEach(function(each) {
+	    if (each.user_id == Meteor.userId()) {
+	    	usersinParty = true;
+			conten = "Abandonar";
+	    }
+	});
+	if (!usersinParty) {
+		conten = "Unirse";
+	}
+	return conten;
+}
