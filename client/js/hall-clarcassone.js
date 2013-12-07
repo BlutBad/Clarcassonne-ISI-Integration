@@ -236,3 +236,15 @@ Template.hall_clarcassone.unir_aband = function(id_partida) {
 	}
 	return conten;
 }
+
+Template.hall_clarcassone.rol = function(id_user) { 
+	usersJoined = PartidasVolatiles.find({}); 
+	usersJoined.forEach(function(each){
+		if (each.creator_id == id_user) {  
+			conte = "Creador";
+		} else {
+			conte = "Participante";
+		}
+	}); 
+	return conte;
+} 
