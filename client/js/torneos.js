@@ -76,6 +76,9 @@ Template.torneos.participantes = function(t_id){
 Template.createDialog.juegos = function(){
 	return Juegos.find({});	
 }
+Template.editChamp.juegos = function(){
+	return Juegos.find({});	
+}
 
 function date_compare (init, fin) { 
 	var inicio = Date.parse(init);  
@@ -103,9 +106,11 @@ Template.torneos.showEditTorn = function() {
 }
 
 Template.torneos.events = {
+
 	'click input#crear_torneo': function() {
 		openCreateDialog();
 	},
+	
 	'click .sortBy': function () {
 		Session.set("gametor", this.name);
 	},
@@ -139,10 +144,19 @@ Template.torneos.events = {
 			$("#" + this._id + ".muestra_part").switchClass("muestra_part", "oculta_part");
 		}
 		Session.set("showParticipantes", lista_show);
+<<<<<<< HEAD
 	},	
     'click .btn_edit' : function() {
 		Session.set('tornToEdit', this._id);  
     }
+=======
+	},
+	'click .editar' : function() {
+	 	Session.set('champToEdit', this._id);
+		console.log(this._id);
+    },
+	 
+>>>>>>> game
 };
 
 Template.createDialog.events({
@@ -199,6 +213,7 @@ Template.createDialog.events({
 	}
 });
 
+<<<<<<< HEAD
 Template.editTor.events({
 
     'click .save_edit' : function(event, template) {
@@ -229,3 +244,81 @@ Template.editTor.events({
     }
 
 });
+
+//EDIT CHAMPIONSHIP
+
+Template.torneos.showEditChamp = function() {
+    return !Session.equals('champToEdit', null);
+}
+
+
+Template.editChamp.champ = function() {
+    var id = Session.get('champToEdit');
+    return Torneos.findOne({
+	_id : id
+    });
+};
+Template.editChamp.events({
+    'click .save' : function(event, template) {
+    	var tid = Session.get('champToEdit');
+		var title = $('input#title').val();
+		var description = $('#description').val();
+		var date_start = $('input#date_start').val();
+		var date_finish = $('input#date_finish').val();
+		var game = $('#game').val();
+		var pic = $('input#pic').val();
+	Torneos.update(tid, {
+	    $set : {
+		title : title,
+		game : game,
+		date_start : date_start,
+		date_finish : date_finish,
+		description : description,
+		pic : pic,
+	    }
+	});
+	Session.set('champToEdit', null);
+    },
+    'click .cancel' : function() {
+	Session.set('champToEdit', null);
+	console.log(Session.get('curObj'));
+    },
+    
+	'click #date_start': function(){
+		$(function() {
+			$( "#date_start").datepicker({
+				showOn: "button",
+				buttonImage: "images/calendar.gif",
+				buttonImageOnly: true,
+				dateFormat: "yy-mm-dd"
+			});
+		});
+	},
+    'click #date_finish': function(){
+		$(function() {
+			$( "#date_finish").datepicker({
+				showOn: "button",
+				buttonImage: "images/calendar.gif",
+				buttonImageOnly: true,
+				dateFormat: "yy-mm-dd"
+			});
+		});
+	}
+});
+
+Template.torneos.editar=function(){
+	if (Meteor.user()){
+		usuarios=Torneos.findOne({_id : this._id});
+		console.log(this._id);
+		console.log(usuarios.user_create);
+		if (Meteor.user().username==usuarios.user_create) {
+    		return true;
+    	}else if(Meteor.user().profile.name==usuarios.user_create){ 
+    		return true;
+ 		}else{
+ 			return false;
+ 		};
+ 	};
+};
+
+

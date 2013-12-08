@@ -6,6 +6,16 @@ Template.juegos.juegos = function() {
     return Juegos.find({});
 };
 
+Template.juegos.editar=function(){
+	if (Meteor.user()){
+		if (Meteor.user().username=="admin") {
+    		return true;
+ 		}else{
+ 			return false;
+ 		};
+ 	};
+};
+
 Template.juegos.events({
     'click img' : function() {
 		// Si estas pinchando sobre el mismo tag que ya esta seleccionado
@@ -92,7 +102,11 @@ Deps.autorun(function(c) {
 
 
 Template.juegos.showEditGame = function() {
-    return !Session.equals('gameToEdit', null);
+	if (Meteor.user()){
+		if (Meteor.user().username=="admin") {
+    		return !Session.equals('gameToEdit', null);
+ 		};
+ 	};
 }
 
 

@@ -22,6 +22,7 @@
 								(creado por {{user_create}})
 							</div>
 							<img src={{pic}} class="post-image" alt="sample image" width="606" height="115" />
+
 							<div class="post-description">
 								<p>{{description}}</p>
             					<input type="button" class="btn_edit" value="Editar torneo"><br>
@@ -31,6 +32,11 @@
 					            {{/if}}
 
 								<input type="button" id="{{_id}}" class = "participantes" value="{{participantes _id}}">
+								
+
+								{{#if editar}}
+								<input type="button" id="{{_id}}" class="editar" value="Editar el info del torneo">
+					{{/if}}
 								{{#if currentUser}}
 									<input type="button" id="{{_id}}" class = "{{clase_Apuntada _id getUserId}}" value="{{apunto _id getUserId}}">
 									<div id = "{{_id}}" class = "{{muestra_part _id}}">
@@ -55,8 +61,11 @@
 					{{/each}}
 				</ul>         
 				<input type="button" id="mostrar_torneos" value="Mostrar todos"> 
-			</div>                     
-			
+			</div>    
+
+			{{#if showEditChamp}}
+              {{> editChamp}}
+                {{/if}}
 	{{/if}}
 </template> 
 
@@ -118,6 +127,44 @@
         </div>
     </div>
   {{/with}}
+</template>
+
+
+
+
+<template name="editChamp">
+{{#with champ}}
+<div class="mask"> </div>
+		<div class="modal">
+			<div class="modal-header">
+				<button type="button" class="close cancel">&times;</button>
+				<h3>Add Championship</h3>
+			</div>        
+			<div class="modal-body">
+				{{#if error}}
+					<div class="alert alert-error">{{error}}</div>
+				{{/if}}
+				<p>Title <input type="text" id="title" class="title span5" value="{{title}}"></p>
+				<p>Juego: 
+					<select id="game" name="Juego">
+						<option selected value="elige">{{game}}</option>
+						{{#each juegos}}
+							<option value="{{name}}">{{name}}</option>  
+						{{/each}}
+					</select>
+				</p>
+				<p>Date Start: <input type="text" id="date_start" value="{{date_start}}"></p>
+				<p>Date Finish: <input type="text" id="date_finish" value="{{date_finish}}"></p>
+				<p>Description: <textarea id="description" class="description span5">{{description}}</textarea> </p>
+				<p>URL Imagen: <input type="text" id="pic" value="{{pic}}"></p>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn cancel">Cancel</a>
+				<a href="#" class="btn btn-primary save">Save</a>
+			</div>
+		</div>
+	</div>
+          {{/with}}
 </template>
 
 
