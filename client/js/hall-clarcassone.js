@@ -42,6 +42,17 @@ Template.hall_clarcassone.error = function() {
     return Session.get("createError");
 };
 
+notRegister = function () {
+	$(".not-register").dialog({
+      		modal: true,
+      		buttons: {
+        		Ok: function() {
+          		$( this ).dialog( "close" );
+        	}
+      	}
+    });
+}
+
 Template.hall_clarcassone.events({
     'click #nuevaPartida' : function() {
 		if (Meteor.userId()) {
@@ -90,20 +101,20 @@ Template.hall_clarcassone.events({
 			    }
 			}
 		} else {
-			$(".not-register").dialog({
-      			modal: true,
-      			buttons: {
-        			Ok: function() {
-          			$( this ).dialog( "close" );
-        			}
-      			}
-    		});
+			notRegister();
 		}
     },
     'click .startparty' : function() {
-		// Hacer una entrada a la coleccion de Partidas,
-		// y llamar a ui y ai con ese _id de la partida.
-		console.log('Crear una partida de verdad');
+
+    	if (Meteor.userId()) {
+
+			// Hacer una entrada a la coleccion de Partidas,
+			// y llamar a ui y ai con ese _id de la partida.
+			console.log('Crear una partida de verdad');
+
+		} else {
+			notRegister();
+		}
     },
 
     'click .unirme' : function() {
@@ -154,14 +165,7 @@ Template.hall_clarcassone.events({
 				}
 			}
 		} else {
-			$(".not-register").dialog({
-      			modal: true,
-      			buttons: {
-        			Ok: function() {
-          			$( this ).dialog( "close" );
-        			}
-      			}
-    		});
+			notRegister();
 		}
     },
     'click .ready' : function() { 
@@ -188,14 +192,7 @@ Template.hall_clarcassone.events({
 			    jugadores : usersJoined
 			});
 		} else {
-			$(".not-register").dialog({
-      			modal: true,
-      			buttons: {
-        			Ok: function() {
-          			$( this ).dialog( "close" );
-        			}
-      			}
-    		});
+			notRegister();
 		}
     }
 });
