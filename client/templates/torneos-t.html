@@ -8,98 +8,87 @@
 			{{else}} <!--para que salga debajo sino sale a un lado el boton crear_torneo-->
 				<p></p>
 			{{/if}} 
-			
 		</div>
-			<div class="two-thirds"> 
-				<div class="blog">
-					{{#each torneo}}
-						<div class="post-summary">
-							<h3 class="post-title">{{title}}</h3>
-							<h5>Juego: {{game}}</h5>
-							<div class="post-details"> 
-								<span class="date">Disponible desde {{date_start}}</span>
-								<span class="date">hasta {{date_finish}}</span> 
-								(creado por {{user_create}})
-							</div>
-							<img src={{pic}} class="post-image" alt="sample image" width="606" height="115" />
-
-							<div class="post-description">
-								<p>{{description}}</p>
-            					<input type="button" class="btn_edit" value="Editar torneo"><br>
-
-								{{#if showEditTorn}}
-					              {{> editTor}}
-					            {{/if}}
-
-								<input type="button" id="{{_id}}" class = "participantes" value="{{participantes _id}}">
-								
-
-								{{#if editar}}
-								<input type="button" id="{{_id}}" class="editar" value="Editar el info del torneo">
-					{{/if}}
-								{{#if currentUser}}
-									<input type="button" id="{{_id}}" class = "{{clase_Apuntada _id getUserId}}" value="{{apunto _id getUserId}}">
-									<div id = "{{_id}}" class = "{{muestra_part _id}}">
-										{{#each lista_participantes _id}}
-											<div id = "part_list">{{getUsername id_user}}</div>
-										{{/each}}
-									</div>
-								{{else}}
-									<i>Sign for add to this championship.</i>  
-								{{/if}} 
-								<p></p> 
-							</div>
+		<div class="two-thirds"> 
+			<div class="blog">
+				{{#each torneo}}
+					<div class="post-summary">
+						<h3 class="post-title">{{title}}</h3>
+						<h5>Juego: {{game}}</h5>
+						<div class="post-details"> 
+							<span class="date">Disponible desde {{date_start}}</span>
+							<span class="date">hasta {{date_finish}}</span> 
+							(creado por {{user_create}})
 						</div>
-					{{/each}}
-				</div>
-			</div>   
-			<div class="one-third">
-				<h3>Juegos</h3> 
-				<ul class="sub-navigation">
-					{{#each juegos}}
-						<li class = "sortBy"><a href="#" class="{{name}}">{{name}}</a></li>
-					{{/each}}
-				</ul>         
+						<img src={{pic}} class="post-image" alt="sample image" width="606" height="115" />
+						<div class="post-description">
+							<p>{{description}}</p>
+							<input type="button" id="{{_id}}" class = "participantes" value="{{participantes _id}}">
+							{{#if editar}}
+								<input type="button" id="{{_id}}" class="editar" value="Editar el info del torneo">
+							{{/if}}
+							{{#if currentUser}}
+								<input type="button" id="{{_id}}" class = "{{clase_Apuntada _id getUserId}}" value="{{apunto _id getUserId}}">
+								<div id = "{{_id}}" class = "{{muestra_part _id}}">
+									{{#each lista_participantes _id}}
+										<div id = "part_list">{{getUsername id_user}}</div>
+									{{/each}}
+								</div>
+							{{else}}
+								<i>Sign for add to this championship.</i>  
+							{{/if}} 
+							<p></p> 
+						</div>
+					</div>
+				{{/each}}
+			</div>
+		</div>   
+		<div class="one-third">
+			<h3>Juegos</h3> 
+			<ul class="sub-navigation">
+			{{#each juegos}}
+				<li class = "sortBy"><a href="#" class="{{name}}">{{name}}</a></li>
+			{{/each}}
+			</ul>         
 				<input type="button" id="mostrar_torneos" value="Mostrar todos"> 
-			</div>    
-
-			{{#if showEditChamp}}
-              {{> editChamp}}
-                {{/if}}
+		</div>    
+		{{#if showEditChamp}}
+			{{> editChamp}}
+		{{/if}}
 	{{/if}}
 </template> 
 
 <template name="createDialog">
-	<div class="mask"> </div>
-		<div class="modal">
-			<div class="modal-header">
-				<button type="button" class="close cancel">&times;</button>
-				<h3>Añadir torneo</h3>
-			</div>        
-			<div class="modal-body">
-				{{#if error}}
-					<div class="alert alert-error">{{error}}</div>
-				{{/if}}
-				<p>Título: <input type="text" id="title" class="title span5"></p>
-				<p>Juego: 
-					<select id="game" name="Juego">
-						<option selected value="elige"> Elige una opción: </option>
-						{{#each juegos}}
-							<option value="{{name}}">{{name}}</option>  
-						{{/each}}
-					</select>
-				</p>
-				<p>Fecha comienzo: <input type="text" id="date_start"></p>
-				<p>Fecha fin: <input type="text" id="date_finish"></p>
-				<p>Descripción: <textarea id="description" class="description span5"></textarea></p>
-				<p>URL de la imagen: <input type="text" id="pic"></p>
-			</div>
-			<div class="modal-footer">
-				<a href="#" class="btn cancel">Cancelar</a>
-				<a href="#" class="btn btn-primary save">Añadir torneo</a>
-			</div>
-		</div>
-	</div>
+        <div class="mask"> </div>
+                <div class="modal">
+                        <div class="modal-header">
+                                <button type="button" class="close cancel">&times;</button>
+                                <h3>Añadir torneo</h3>
+                        </div>        
+                        <div class="modal-body">
+                                {{#if error}}
+                                        <div class="alert alert-error">{{error}}</div>
+                                {{/if}}
+                                <p>Título: <input type="text" id="title" class="title span5"></p>
+                                <p>Juego: 
+                                        <select id="game" name="Juego">
+                                                <option selected value="elige"> Elige una opción: </option>
+                                                {{#each juegos}}
+                                                        <option value="{{name}}">{{name}}</option>  
+                                                {{/each}}
+                                        </select>
+                                </p>
+                                <p>Fecha comienzo: <input type="text" id="date_start"></p>
+                                <p>Fecha fin: <input type="text" id="date_finish"></p>
+                                <p>Descripción: <textarea id="description" class="description span5"></textarea></p>
+                                <p>URL de la imagen: <input type="text" id="pic"></p>
+                        </div>
+                        <div class="modal-footer">
+                                <a href="#" class="btn cancel">Cancelar</a>
+                                <a href="#" class="btn btn-primary save">Añadir torneo</a>
+                        </div>
+                </div>
+        </div>
 </template>
 
 <template name="editTor">
@@ -113,11 +102,11 @@
           </div>   
                
           <div class="modal-body">
-			<p>Título: <input type="text" id="title" class="title span5" value = {{title}}></p>
-			<p>Fecha comienzo: <input type="text" id="date_start" value = {{date_start}}></p>
-			<p>Fecha fin: <input type="text" id="date_finish" value = {{date_finish}}></p>
-			<p>Descripción: <textarea id="description" class="description span5">{{description}}</textarea></p>
-			<p>URL de la imagen: <input type="text" id="pic" value = {{pic}}></p>
+                        <p>Título: <input type="text" id="title" class="title span5" value = {{title}}></p>
+                        <p>Fecha comienzo: <input type="text" id="date_start" value = {{date_start}}></p>
+                        <p>Fecha fin: <input type="text" id="date_finish" value = {{date_finish}}></p>
+                        <p>Descripción: <textarea id="description" class="description span5">{{description}}</textarea></p>
+                        <p>URL de la imagen: <input type="text" id="pic" value = {{pic}}></p>
           </div>
           
           <div class="modal-footer">
@@ -135,36 +124,34 @@
 <template name="editChamp">
 {{#with champ}}
 <div class="mask"> </div>
-		<div class="modal">
-			<div class="modal-header">
-				<button type="button" class="close cancel">&times;</button>
-				<h3>Add Championship</h3>
-			</div>        
-			<div class="modal-body">
-				{{#if error}}
-					<div class="alert alert-error">{{error}}</div>
-				{{/if}}
-				<p>Title <input type="text" id="title" class="title span5" value="{{title}}"></p>
-				<p>Juego: 
-					<select id="game" name="Juego">
-						<option selected value="elige">{{game}}</option>
-						{{#each juegos}}
-							<option value="{{name}}">{{name}}</option>  
-						{{/each}}
-					</select>
-				</p>
-				<p>Date Start: <input type="text" id="date_start" value="{{date_start}}"></p>
-				<p>Date Finish: <input type="text" id="date_finish" value="{{date_finish}}"></p>
-				<p>Description: <textarea id="description" class="description span5">{{description}}</textarea> </p>
-				<p>URL Imagen: <input type="text" id="pic" value="{{pic}}"></p>
-			</div>
-			<div class="modal-footer">
-				<a href="#" class="btn cancel">Cancel</a>
-				<a href="#" class="btn btn-primary save">Save</a>
-			</div>
-		</div>
-	</div>
+                <div class="modal">
+                        <div class="modal-header">
+                                <button type="button" class="close cancel">&times;</button>
+                                <h3>Add Championship</h3>
+                        </div>        
+                        <div class="modal-body">
+                                {{#if error}}
+                                        <div class="alert alert-error">{{error}}</div>
+                                {{/if}}
+                                <p>Title <input type="text" id="title" class="title span5" value="{{title}}"></p>
+                                <p>Juego: 
+                                        <select id="game" name="Juego">
+                                                <option selected value="elige">{{game}}</option>
+                                                {{#each juegos}}
+                                                        <option value="{{name}}">{{name}}</option>  
+                                                {{/each}}
+                                        </select>
+                                </p>
+                                <p>Date Start: <input type="text" id="date_start" value="{{date_start}}"></p>
+                                <p>Date Finish: <input type="text" id="date_finish" value="{{date_finish}}"></p>
+                                <p>Description: <textarea id="description" class="description span5">{{description}}</textarea> </p>
+                                <p>URL Imagen: <input type="text" id="pic" value="{{pic}}"></p>
+                        </div>
+                        <div class="modal-footer">
+                                <a href="#" class="btn cancel">Cancel</a>
+                                <a href="#" class="btn btn-primary save">Save</a>
+                        </div>
+                </div>
+        </div>
           {{/with}}
 </template>
-
-
