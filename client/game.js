@@ -623,16 +623,16 @@ Set = function (PiezaMapa) {
         }
         if (sonar == 1){
 			if (this.option == 1){
-				sonido_ladron.play();
+				sonido_granjero.play();
 				return 'granjero_' + color;
 			} else if (this.option == 2){
 				sonido_ladron.play();
 				return 'ladron_' + color;
 			} else if (this.option == 3){
-				sonido_ladron.play();
+				sonido_caballero.play();
 				return 'caballero_' + color;
 			} else if (this.option == 4){
-				sonido_ladron.play();
+				sonido_monje.play();
 				return 'cura_' + color;
 			}
 		}
