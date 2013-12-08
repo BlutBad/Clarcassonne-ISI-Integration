@@ -16,6 +16,9 @@ if (typeof Handlebars !== 'undefined') {
 	Handlebars.registerHelper('getUsername', function (userId) {
 		var user = _extractProfile(userId);
 		if (user) {
+			if (user.name){
+				return user.name;
+			};
 			if (user.username)
 				return user.username;
 			if (user.twitterUsername)
