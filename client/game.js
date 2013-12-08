@@ -72,6 +72,12 @@ img2.src = 'images/abajo.png';
 var img3 = new Image();
 img3.src = 'images/musica.png';
 
+var img4 = new Image();
+img4.src = 'images/ControlHelp.png';
+
+
+
+
 
 
 
@@ -122,6 +128,8 @@ startGame = function() {
 	Game.setBoard(5,new Ficha_abajo());
 	Game.setBoard(9,new Helptext()); 
 	Game.setBoard(10, new Time());	
+	Game.setBoard(11, new HelpScreen());
+
 	
 	
 };
@@ -410,6 +418,35 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 	}
 }  
 
+//Se encarga de pintar el fondo del juego
+HelpScreen = function() {
+	
+    this.enabled = false;
+    this.draw = function(ctx) {
+           if (this.enabled == true) {
+                ctx.save();
+                ctx.fillStyle = 'rgba(255,255,255,0.5)';
+                ctx.fillRect(140,90,520,320);
+                ctx.strokeStyle = "#ff9933";
+                ctx.strokeRect(140,90,520,320);
+                ctx.strokeRect(245,95,510,310);
+                ctx.drawImage(img4, 150, 100);  
+                ctx.restore();
+           }
+	};
+	
+		 var up = false;
+
+	this.step = function (dt) {
+    	if(!Game.keys['ayuda']) up = true;
+    	if(up && Game.keys['ayuda']) {
+         	up = false;
+         	this.enabled = !this.enabled;
+    	}
+	};
+
+
+};
 Seguidor = function (cx,cy, sprite, posx, posy) {
 	this.x = 100*cx;
 	this.y = 100*cy;
