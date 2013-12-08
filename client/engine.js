@@ -81,7 +81,7 @@
     if(Game.keys['silenciar'] && sonar == 1){ 
 		sonar = 0;
     }
-    console.log(sonar);
+    
     if(Game.keys['sonar'] && sonar == 0){
      	sonar = 1;
     }
