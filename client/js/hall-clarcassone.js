@@ -154,26 +154,38 @@ Template.hall_clarcassone.events({
 		}
     },
     'click .ready' : function() { 
-		usersJoined = PartidasVolatiles.findOne({
-		    _id : this._id
-		});
-		userCreator = usersJoined.creator_id;
-		usersJoined = usersJoined.jugadores;
-		usersJoined.forEach(function(each) {
-		    if (each.user_id == Meteor.userId()) {
-				if(each.estado == estadosU.listo){
-				    each.estado = estadosU.pendiente;
-				}else if(each.estado == estadosU.pendiente){
-				    each.estado = estadosU.listo;
-				}else{
-				    each.estado = estadosU.inactivo;
-				}
-		    }
-		}); 
-		PartidasVolatiles.update(this._id, {
-			creator_id: userCreator,
-		    jugadores : usersJoined
-		});
+
+    	if (Meteor.userId()) {
+			usersJoined = PartidasVolatiles.findOne({
+			    _id : this._id
+			});
+			userCreator = usersJoined.creator_id;
+			usersJoined = usersJoined.jugadores;
+			usersJoined.forEach(function(each) {
+			    if (each.user_id == Meteor.userId()) {
+					if(each.estado == estadosU.listo){
+					    each.estado = estadosU.pendiente;
+					}else if(each.estado == estadosU.pendiente){
+					    each.estado = estadosU.listo;
+					}else{
+					    each.estado = estadosU.inactivo;
+					}
+			    }
+			}); 
+			PartidasVolatiles.update(this._id, {
+				creator_id: userCreator,
+			    jugadores : usersJoined
+			});
+		} else {
+			$(".not-register").dialog({
+      			modal: true,
+      			buttons: {
+        			Ok: function() {
+          			$( this ).dialog( "close" );
+        			}
+      			}
+    		});
+		}
     }
 });
 
