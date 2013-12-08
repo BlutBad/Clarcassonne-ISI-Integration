@@ -239,7 +239,7 @@ Ficha_abajo = function(cx,cy) {
                 sonar = false;
         }*/
  
-		 if(Game.keys['sonar']&&sonar == 0){
+		 if(Game.keys['sonar']&& sonar == 0){
 		            console.log("doy a sonar");
 		            console.log(sonar);
 		            sonar = 1;
@@ -249,7 +249,6 @@ Ficha_abajo = function(cx,cy) {
 		            console.log(sonar);
 		            sonar = 0;
 		}
-		    
         
 	if(!Game.keys['sacar_ficha']) up = true;
 	
@@ -258,7 +257,7 @@ Ficha_abajo = function(cx,cy) {
     		if (CurrentMove == 0)  {
 			NuevaPieza = new PiezaMapa(CurrentScroll.x + 7,CurrentScroll.y + 5, "Tcruze",90);
 			
-			sonido_ladron.play();
+				sonido_ladron.play();
 			
 			Game.setBoard(7, NuevaPieza);
 			CurrentMove = 1;
@@ -614,16 +613,18 @@ Set = function (PiezaMapa) {
 							var color = ficha_color.indexOf("_") + 1; 
 							return ficha_color.slice(color);
 						})(); 
-		var sonar = 1;
-		if(Game.keys['silenciar'] && sonar == 1){ 
-                sonar = 0;
-        }
-        if(Game.keys['sonar'] && sonar == 0){
-        	sonar = 1;
-        }
+		 if(Game.keys['sonar']&& sonar == 0){
+		           
+		            sonar = 1;
+		 }
+		 if(Game.keys['silenciar']&&sonar == 1){
+		            sonar = 0;
+		}
+        
         if (sonar == 1){
+        
 			if (this.option == 1){
-				sonido_granjero.play();
+					sonido_granjero.play();
 				return 'granjero_' + color;
 			} else if (this.option == 2){
 				sonido_ladron.play();
@@ -635,8 +636,18 @@ Set = function (PiezaMapa) {
 				sonido_monje.play();
 				return 'cura_' + color;
 			}
+		}else if (sonar == 0){
+			if (this.option == 1){
+				sonido_granjero.pause();
+				return 'granjero_' + color;
+			} else if (this.option == 2){
+				return 'ladron_' + color;
+			} else if (this.option == 3){
+				return 'caballero_' + color;
+			} else if (this.option == 4){
+				return 'cura_' + color;
+			}
 		}
-	
 	}
 
 }
