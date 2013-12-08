@@ -148,9 +148,7 @@ Template.torneos.events = {
 	},	
     'click .btn_edit' : function() {
 		Session.set('tornToEdit', this._id);  
-    }
-
-	},
+    },
 	'click .editar' : function() {
 	 	Session.set('champToEdit', this._id);
 		console.log(this._id);
