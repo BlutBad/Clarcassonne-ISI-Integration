@@ -7,12 +7,27 @@ Template.messages.messages = function () {
     return Global_msgs.find({}, { sort: { time: -1 }});;
 }
 
+notRegisterChat = function () {
+	$(".not-register-chat").dialog({
+      		modal: true,
+      		buttons: {
+        		Ok: function() {
+          		$( this ).dialog( "close" );
+        	}
+      	}
+    });
+}
+
 Template.chat.events = {
 	'click input#hidechat': function () {
 		$("#boxchat").hide();
 	},
 	'click input#showchat': function () {
-		$("#boxchat").show("clip", 2000);
+		if (Meteor.userId()) {
+			$("#boxchat").show("clip", 2000);
+		} else {
+			notRegisterChat();
+		}
 	}
 }
 
@@ -32,11 +47,8 @@ Template.input.events = {
 				}
  			} else {
  				$("#message").val('');
-				$("#loginError").show("clip", 1000);
+ 				$("#boxchat").hide();
 			}
 		}
 	},
-	'click input#hidelogerror': function () {
-		$("#loginError").hide();
-	}
 }

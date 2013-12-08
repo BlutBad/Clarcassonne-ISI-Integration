@@ -14,6 +14,12 @@
         		{{> input}}
         	</div>
     	</div>
+        <div class="not-register-chat" title="Chat" style="display:none">
+            <p class="alert alert-error">
+            <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
+                Para poder chatear debes estar registrado en la plataforma.
+            </p>
+        </div>
     </div>
 </template>
 
@@ -28,8 +34,4 @@
 
 <template name="input">
 	<input type="text" id="message">
-	<div id="loginError" style="display:none">
-    	Debes registrarte.
-    	<input type="button" id="hidelogerror" value="X">
-  	</div>
 </template>
