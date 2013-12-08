@@ -144,19 +144,17 @@ Template.torneos.events = {
 			$("#" + this._id + ".muestra_part").switchClass("muestra_part", "oculta_part");
 		}
 		Session.set("showParticipantes", lista_show);
-<<<<<<< HEAD
+
 	},	
     'click .btn_edit' : function() {
 		Session.set('tornToEdit', this._id);  
     }
-=======
+
 	},
 	'click .editar' : function() {
 	 	Session.set('champToEdit', this._id);
 		console.log(this._id);
     },
-	 
->>>>>>> game
 };
 
 Template.createDialog.events({
@@ -213,7 +211,6 @@ Template.createDialog.events({
 	}
 });
 
-<<<<<<< HEAD
 Template.editTor.events({
 
     'click .save_edit' : function(event, template) {
