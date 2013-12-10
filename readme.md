@@ -16,7 +16,7 @@ Plataphorma ISI
 
 
 ## API entre IA, IU y PL
-###[Dudas, preguntas y sugerencias sobre la API y Plataforma](https://github.com/BlutBad/ISI-Clarcassonne-PL/issues "Dudas, preguntas y sugerencias")
+###[Dudas, preguntas y sugerencias sobre la API y Plataforma](https://github.com/BlutBad/Clarcassonne-ISI-Integration/issues "Dudas, preguntas y sugerencias")
 
 ### El protocolo de partidas
 1.
