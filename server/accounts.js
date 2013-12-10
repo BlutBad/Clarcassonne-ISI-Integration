@@ -31,8 +31,8 @@ Accounts.loginServiceConfiguration.insert({
 
 Accounts.loginServiceConfiguration.insert({ 
   service: "google", 
-  clientId: "717215542174-g4qcjn7qhcl0hoi3pf6t8mbnsva9i5mr.apps.googleusercontent.com",   
-  secret: "X45Ijyr5cdmYQ9J_FAUipf5e" 
+  clientId: "724991751581.apps.googleusercontent.com",   
+  secret: "gb8C5P8X37G0cwqNGy6G-wkK" 
 });
 
 Accounts.loginServiceConfiguration.insert({
