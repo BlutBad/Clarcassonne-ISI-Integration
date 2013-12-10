@@ -88,15 +88,6 @@ Deps.autorun(function(c) {
     }
 });
 
-Deps.autorun(function(c) {
-    if (Session.equals('showGameIdn', 'alien')) {
-		$('#gamecanvasAlien').show();
-    } else {
-		$('#gamecanvasAlien').hide();
-    }
-});
-
-
 //////////////////////
 
 

@@ -107,11 +107,21 @@ Template.hall_clarcassone.events({
     'click .startparty' : function() {
 
     	if (Meteor.userId()) {
-
+    		usersJoined = PartidasVolatiles.findOne({
+			    _id : this._id
+			}).jugadores;
+			if (usersJoined.length < 4 || usersJoined.length > 6) {
+				Session.set("createError",
+					"Para empezar una partida deben unirse de 4 a 6 jugadores");
+ 
+			} else {		
+				Session.set('showGameIdn', "clarki");
+			    Session.set('current_stage', Clarcassone);
+			    Session.set('load_game', this);
+				$('#gamecontainer').show();
+			}
 			// Hacer una entrada a la coleccion de Partidas,
 			// y llamar a ui y ai con ese _id de la partida.
-			console.log('Crear una partida de verdad');
-
 		} else {
 			notRegister();
 		}
@@ -194,6 +204,14 @@ Template.hall_clarcassone.events({
 		} else {
 			notRegister();
 		}
+    }
+});
+
+Deps.autorun(function(c) {
+    if (Session.equals('showGameIdn', 'clarki')) {
+		$('#klarki').show();
+    } else {
+		$('#klarki').hide();
     }
 });
 
