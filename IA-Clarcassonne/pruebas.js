@@ -4,7 +4,7 @@
 
 $(function() {
 
-
+/*
 	//iniciamos el tablero
 	Tablero.iniciar();
 
@@ -398,6 +398,96 @@ $(function() {
   console.log("cierra camino redondo repetido: ",Tablero.cierraCamino(nuevaficha,2));
   console.log("PTS-  j1:",Obj[0].puntos,"-",Obj[0].n_seguidores," j2:",Obj[1].puntos," j3:",Obj[2].puntos," j4:",Obj[3].puntos);
 
+*/
+ 
+ 
+ 
+ /// Prueba del código de game.js
+ 
+ 
+ var InicioJuego=function(){       
+
+       Tablero.iniciar();
+	     /*
+	      Meteor.subscribe("partidas",id_partida);
+	      Jugadores= Partidas.find();
+        */
+        //creamos la lista de jugadores
+        Tablero.listaJugadores.push(new ObjetoJugador(123,"Paco",23));
+        Tablero.listaJugadores.push(new ObjetoJugador(12,"Pepe",88));
+        Tablero.listaJugadores.push(new ObjetoJugador(45,"Mengano",34));
+        Tablero.listaJugadores.push(new ObjetoJugador(88,"Fulano",17));
+        Tablero.listaJugadores.push(new ObjetoJugador(128,"Zutano",12));
+        
+        //ordenamos a los jugadores por edad
+        Tablero.listaJugadores=_.sortBy(Tablero.listaJugadores, function(jugador){ return jugador.edad; });
+       
+       
+        //les asignamos el orden con el numero de jugador
+        var i=1;
+        _.each(Tablero.listaJugadores, function(jugador){jugador.numero=i; i++});
+       
+ 
+        return Tablero.listaJugadores;
+    };
+    
+    //Devuelve una lista de objetos jugador con todos los parametros
+    
+    
+  var Robar=function(id_partida){                    
+        var robar=Tablero.robarFicha(); 
+        var nuevaficha = new ObjetoFicha(0,0,0,robar);
+        Tablero.buscarCandidatos(nuevaficha);
+        return [nuevaficha.tipo,nuevaficha.encajaCon];
+    }
+    //Devuelve una lista del tipo [string,lista[]] string= tipo ficha, lista= coordenadas donde encaja
+    
+  var ColocarFicha=function(id_partida,tipoFicha, coordenada, n_giros){
+      var nuevaficha = new ObjetoFicha(0,0,0,tipoFicha);
+      for (var i=0; i<n_giros;i++){nuevaficha.girar()}
+      
+      var fichaColocada =Tablero.colocarficha(nuevaficha,coordenada.x,coordenada.y); 
+      if (fichaColocada == 0){return 0}
+      console.log("fichaColocada", fichaColocada);
+      var seguidores=Tablero.colocarseguidor(fichaColocada);
+      return seguidores;
+  }
+  
+
+  var ColocarSeguidor=function(id_partida, id_jugador, coordenada, seguidor){
+      
+      var Jugador = _.find(Tablero.listaJugadores,function(obj){return (obj.id == id_jugador)})
+      var ficha= Tablero.buscarxcoor(coordenada.x,coordenada.y);
+      var nuevoSeguidor = {t:seguidor.t, n:seguidor.n, j:Jugador.numero, f:ficha}
+      if (ficha.seguidores.push(nuevoSeguidor)) {
+        Tablero.cierraCamino(ficha,1);
+        Tablero.cierraClaustro(ficha,1);
+        Tablero.cierraCastillo(ficha,1);
+        return 1;
+      
+      } else {return 0}
+      
+      
+  }
+  
+  
+  
+  
+  console.log(InicioJuego());
+  var robar= Robar();
+  console.log(robar);
+  var lista=ColocarFicha(12,robar[0],{x:5,y:5},3);
+  console.log(lista);
+  
+  console.log(ColocarSeguidor(12,123, {x:5,y:5}, lista[0]));
+  
+  
+  
+
+/* var robar= Robar();
+  console.log(robar);
+  console.log(ColocarFicha(12,robar[0],{x:6,y:5},3));
+*/
 });
 
 
