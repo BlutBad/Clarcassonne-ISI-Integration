@@ -1,0 +1,53 @@
+<template name="profil">
+	{{#if showprofile}}
+		{{#if registrado}}
+			<div id="formu">
+				<h1>Perfil de Usuario</h1>
+				<div class="container">   
+					<label>
+					Nombre: <input class="form-control" id="nombre" value="{{getUsername getUserId}}" type="text" required/>
+					 </label>
+					 <label>
+           			Email: <input class="form-control" name="youremail" value="{{getUserEmail getUserId}}" type="email" required/>
+           			</label>
+            		<!--<input class="form-control" name="password" placeholder="New Password" type="password" />-->
+            		Fecha de nacimiento: <input type="text" id="datebirthday" value="{{datebirthday}}">
+            		<label>
+            		Género:
+					<select id="genero" name="list"> 
+						<option selected value="Elige">{{genero}}</option>
+						<option value="Male"> Male </option>
+						<option value="Female"> Female </option>
+					</select>
+					</label>
+					<br/>
+					<br/>
+					<button class="btn btn-primary" id="save" type="submit"> Guardar los cambios</button>
+				</div>
+			</div>
+			<h1>Premios</h1>
+
+			puntos conseguidos: 
+			{{#each scores}} 
+			<table>
+				<tbody>
+					<tr>
+						<td>{{game}}</td>
+						<td>{{user}}</td>
+						<td>{{maxScore}}</td> 
+						<td>{{totalScore}}</td> 
+						<td>{{rango}}</td> 
+					</tr>
+				</tbody>
+			</table>  
+		</div>
+		{{/each}}
+			partidas jugadas
+			partidas ganadas
+			(si se pudiese mejor con un gráfico)
+		{{else}}
+			<p>Debes estar registrado para ver tu perfil</p>
+		{{/if}}
+	{{/if}}
+</template>
+

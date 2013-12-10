@@ -1,0 +1,64 @@
+<template name="ranking">
+	{{#if show}}
+		<h1>Ranking</h1> 
+		<div class="game_filter">
+			<h3>Filtrar ranking por juegos!</h3>
+			<ul class="sub-navigation">
+				{{#each juegos}}
+					<li class = "sortBy"><a href="#" class="{{_id}}">{{name}}</a></li> 
+				{{/each}}
+			</ul> 	
+		<input type="button" id="mostrar_ranking" value="Mostrar todos"> 
+		</div> 
+		
+		<div id = "ranking_container">
+
+
+
+	<div class="btn-toolbar">
+	    <button class="btn btn-primary">Boton Funcional 1</button>
+	    <button class="btn">Boton Funcional 3</button>
+	    <button class="btn">Boton Funcional 2</button>
+	</div>
+
+<div class="well">
+    <table class="table">
+      <thead>
+        <tr>
+          		<th>#</th>
+				<th>GAME</th>
+				<th>USER</th>
+				<th>MAX SCORE</th> 
+				<th>Total SCORE</th> 
+				<th>RANGO</th> 
+        </tr>
+      </thead>
+      <tbody>
+      {{#each scores}} 
+        <tr>
+        	<td>{{No}}</td>
+			<td>{{game}}</td>
+			<td>{{user}}</td>
+			<td>{{maxScore}}</td> 
+			<td>{{totalScore}}</td> 
+			<td>{{rango}}</td> 
+		</tr>
+		{{/each}}
+      </tbody>
+    </table>
+</div>
+<div class="pagination">
+    <ul>
+        <li><a href="#">Prev</a></li>
+        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">Next</a></li>
+    </ul>
+</div>
+</div>
+		
+		
+{{/if}}
+</template> 
