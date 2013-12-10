@@ -424,11 +424,11 @@ HelpScreen = function() {
     this.draw = function(ctx) {
            if (this.enabled == true) {
                 ctx.save();
-                ctx.fillStyle = 'rgba(255,255,255,0.5)';
+                ctx.fillStyle = 'rgba(255,255,255,0.7)';
                 ctx.fillRect(140,90,520,320);
                 ctx.strokeStyle = "#ff9933";
                 ctx.strokeRect(140,90,520,320);
-                ctx.strokeRect(245,95,510,310);
+                ctx.strokeRect(145,95,510,310);
                 ctx.drawImage(img4, 150, 100);  
                 ctx.restore();
            }
