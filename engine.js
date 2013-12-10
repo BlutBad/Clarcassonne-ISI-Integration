@@ -1,4 +1,7 @@
-var Tiposfichas = {
+
+var Tablero = new function(){
+
+	this.Tiposfichas = {
     Rrecta: { Izq: "Campo", Der: "Campo", Arr: "Rue", Abaj: "Rue", Escudo: 0 }, //8
     Rcurva: {Izq: "Rue", Der: "Campo", Arr: "Campo", Abaj: "Rue", Escudo: 0 }, //9
     Catedral: { Izq: "Campo", Der: "Campo", Arr: "Campo", Abaj: "Campo", Escudo: 0 }, //4
@@ -22,72 +25,66 @@ var Tiposfichas = {
     Ciudad1lcruce: {Izq: "Rue", Der: "Rue", Arr: "Tierra", Abaj: "Rue", Escudo: 0},//3
     Ciudad1ll: { Izq: "Tierra", Der: "Campo", Arr: "Tierra", Abaj: "Campo", Escudo: 0},//2
     Ciudad1l: {Izq: "Campo", Der: "Campo", Arr: "Tierra", Abaj: "Campo", Escudo: 0},//5
-	Tcruce:   {Izq: "Rue", Der: "Rue", Arr: "Campo", Abaj: "Rue", Escudo: 0},//4
-};
+		Tcruce:   {Izq: "Rue", Der: "Rue", Arr: "Campo", Abaj: "Rue", Escudo: 0},//4
+	};
 
-var Seguidores = ["Caballero","Ladron","Granjero","Monje"];
+	this.Seguidores = ["Caballero","Ladron","Granjero","Monje"];
 
-var totalFichas = 72;
+	this.totalFichas = 72;
 
-var n_fichas = { //72
-    Rrecta: 8,
-    Rcurva: 9,
-    Catedral: 4,
-    Posada: 2,
-    Ccruce : 1,
-    CiudadE: 1,
-    Ciudad3lc: 1,
-    Ciudad3lcE: 2,
-    Ciudad3l:  3,
-    Ciudad3lE: 1,
-    Ciudad2lc: 3,
-    Ciudad2lcE:  2,
-    Ciudad2l: 3,
-    Ciudad2lE: 2,
-    CiudadPuerta: 1,
-    CiudadPuertaE: 2,
-    Ciudadext: 3,
-    Ciudad1l2crect: 4,
-    Ciudadcurvder: 3,
-    Ciudadcurvizq:3,
-    Ciudad1lcruce: 3,
-    Ciudad1ll: 2,
-    Ciudad1l: 5,
-	Tcruce: 4,
-};
+	this.n_fichas = { //72
+		  Rrecta: 8,
+		  Rcurva: 9,
+		  Catedral: 4,
+		  Posada: 2,
+		  Ccruce : 1,
+		  CiudadE: 1,
+		  Ciudad3lc: 1,
+		  Ciudad3lcE: 2,
+		  Ciudad3l:  3,
+		  Ciudad3lE: 1,
+		  Ciudad2lc: 3,
+		  Ciudad2lcE:  2,
+		  Ciudad2l: 3,
+		  Ciudad2lE: 2,
+		  CiudadPuerta: 1,
+		  CiudadPuertaE: 2,
+		  Ciudadext: 3,
+		  Ciudad1l2crect: 4,
+		  Ciudadcurvder: 3,
+		  Ciudadcurvizq:3,
+		  Ciudad1lcruce: 3,
+		  Ciudad1ll: 2,
+		  Ciudad1l: 5,
+		Tcruce: 4,
+	};
 
-var fichas = [ //72
-    'Rrecta',
-    'Rcurva',
-    'Catedral',
-    'Posada',
-    'Ccruce',
-    'CiudadE',
-    'Ciudad3lc',
-    'Ciudad3lcE',
-    'Ciudad3l',
-    'Ciudad3lE',
-    'Ciudad2lc',
-    'Ciudad2lcE',
-    'Ciudad2l',
-    'Ciudad2lE',
-    'CiudadPuerta',
-    'CiudadPuertaE',
-    'Ciudadext',
-    'Ciudad1l2crect', 
-    'Ciudadcurvder', 
-    'Ciudadcurvizq', 
-    'Ciudad1lcruce', 
-    'Ciudad1ll',
-    'Ciudad1l', 
-	'Tcruce',
-];
-
-
-
-
-
-var Tablero = new function(){
+	this.fichas = [ //72
+		  'Rrecta',
+		  'Rcurva',
+		  'Catedral',
+		  'Posada',
+		  'Ccruce',
+		  'CiudadE',
+		  'Ciudad3lc',
+		  'Ciudad3lcE',
+		  'Ciudad3l',
+		  'Ciudad3lE',
+		  'Ciudad2lc',
+		  'Ciudad2lcE',
+		  'Ciudad2l',
+		  'Ciudad2lE',
+		  'CiudadPuerta',
+		  'CiudadPuertaE',
+		  'Ciudadext',
+		  'Ciudad1l2crect', 
+		  'Ciudadcurvder', 
+		  'Ciudadcurvizq', 
+		  'Ciudad1lcruce', 
+		  'Ciudad1ll',
+		  'Ciudad1l', 
+		'Tcruce',
+	];
 
 	this.iniciar = function(){
 
@@ -1216,8 +1213,6 @@ var Tablero = new function(){
 
 };
 
-
-
 var ObjetoJugador = function(user_id,nombre,edad,n_jugador){
   this.numero=n_jugador;
   this.n_seguidores = 7;
@@ -1263,3 +1258,4 @@ var ObjetoFicha= function(x,y,i,tipoficha){
     this.n_giros;
     this.seguidores=[];
 }
+
