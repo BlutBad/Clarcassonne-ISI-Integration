@@ -1,13 +1,13 @@
+ //Metodos IA <-> IU
+  
+ Meteor.methods({
 
+    InicioJuego:function(id_partida){       
 
+ 	Tablero.iniciar();
+	Meteor.subscribe("partidas",id_partida);
+	Jugadores= Partidas.find();
 
-
-
-
-var Juego= new function(){
-    
-    this.iniciar=  function(){
-        Tablero.iniciar();
         //creamos la lista de jugadores
         Tablero.listaJugadores.push(new ObjetoJugador(123,"Paco",23));
         Tablero.listaJugadores.push(new ObjetoJugador(12,"Pepe",88));
@@ -22,30 +22,7 @@ var Juego= new function(){
         //les asignamos el orden con el numero de jugador
         var i=1;
         _.each(Tablero.listaJugadores, function(jugador){jugador.numero=i; i++});
-    }
-    
-
-
-
-
-  
-  
-  
-}  
-  
-  
-$(function() {
-  Juego.iniciar(); 
-
-
-
- 
- 
- //Metodos IA <-> IU
-  
- Meteor.methods({
-
-    InicioJuego:function(){              
+           
         return Tablero.listaJugadores;
     },
     
@@ -59,9 +36,9 @@ $(function() {
         return [nuevaficha.tipo,nuevaficha.encajaCon];
     }
     //Devuelve una lista del tipo [string,lista[]] string= tipo ficha, lista= coordenadas donde encaja
+})
 
-  });
   
 
-});
+
 

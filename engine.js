@@ -1,7 +1,4 @@
-
-var Tablero = new function(){
-
-	this.Tiposfichas = {
+var Tiposfichas = {
     Rrecta: { Izq: "Campo", Der: "Campo", Arr: "Rue", Abaj: "Rue", Escudo: 0 }, //8
     Rcurva: {Izq: "Rue", Der: "Campo", Arr: "Campo", Abaj: "Rue", Escudo: 0 }, //9
     Catedral: { Izq: "Campo", Der: "Campo", Arr: "Campo", Abaj: "Campo", Escudo: 0 }, //4
@@ -26,9 +23,36 @@ var Tablero = new function(){
     Ciudad1ll: { Izq: "Tierra", Der: "Campo", Arr: "Tierra", Abaj: "Campo", Escudo: 0},//2
     Ciudad1l: {Izq: "Campo", Der: "Campo", Arr: "Tierra", Abaj: "Campo", Escudo: 0},//5
 		Tcruce:   {Izq: "Rue", Der: "Rue", Arr: "Campo", Abaj: "Rue", Escudo: 0},//4
-	};
+};
 
-	this.Seguidores = ["Caballero","Ladron","Granjero","Monje"];
+var fichas = [ //72
+		  'Rrecta',
+		  'Rcurva',
+		  'Catedral',
+		  'Posada',
+		  'Ccruce',
+		  'CiudadE',
+		  'Ciudad3lc',
+		  'Ciudad3lcE',
+		  'Ciudad3l',
+		  'Ciudad3lE',
+		  'Ciudad2lc',
+		  'Ciudad2lcE',
+		  'Ciudad2l',
+		  'Ciudad2lE',
+		  'CiudadPuerta',
+		  'CiudadPuertaE',
+		  'Ciudadext',
+		  'Ciudad1l2crect', 
+		  'Ciudadcurvder', 
+		  'Ciudadcurvizq', 
+		  'Ciudad1lcruce', 
+		  'Ciudad1ll',
+		  'Ciudad1l', 
+		'Tcruce',
+];
+
+var Tablero = new function(){
 
 	this.totalFichas = 72;
 
@@ -58,33 +82,6 @@ var Tablero = new function(){
 		  Ciudad1l: 5,
 		Tcruce: 4,
 	};
-
-	this.fichas = [ //72
-		  'Rrecta',
-		  'Rcurva',
-		  'Catedral',
-		  'Posada',
-		  'Ccruce',
-		  'CiudadE',
-		  'Ciudad3lc',
-		  'Ciudad3lcE',
-		  'Ciudad3l',
-		  'Ciudad3lE',
-		  'Ciudad2lc',
-		  'Ciudad2lcE',
-		  'Ciudad2l',
-		  'Ciudad2lE',
-		  'CiudadPuerta',
-		  'CiudadPuertaE',
-		  'Ciudadext',
-		  'Ciudad1l2crect', 
-		  'Ciudadcurvder', 
-		  'Ciudadcurvizq', 
-		  'Ciudad1lcruce', 
-		  'Ciudad1ll',
-		  'Ciudad1l', 
-		'Tcruce',
-	];
 
 	this.iniciar = function(){
 
@@ -197,16 +194,17 @@ var Tablero = new function(){
 
     // Funcion de robar una ficha aleatoria
     this.robarFicha = function(){
-        if(totalFichas == 0){return -1}
-	    var n_rand = Math.floor(Math.random() *fichas.length);
+        if(this.totalFichas == 0){return -1}
+				else if (this.totalFichas == 72) { var n_rand=17}
+				else {var n_rand = Math.floor(Math.random() *fichas.length);}
         var rand = fichas[n_rand];
         console.log("ficha robada: ",rand);
-        console.log("numero de esa ficha: ",n_fichas[rand]);
-        n_fichas[rand] = n_fichas[rand]-1;
-		if (n_fichas[rand] == 0){fichas.splice(n_rand,1)}
-        console.log("numero de esa ficha actual: ",n_fichas[rand]);
-        totalFichas--;
-        console.log("Total de fichas: ",totalFichas);
+        console.log("numero de esa ficha: ",this.n_fichas[rand]);
+        this.n_fichas[rand] = this.n_fichas[rand]-1;
+		if (this.n_fichas[rand] == 0){fichas.splice(n_rand,1)}
+        console.log("numero de esa ficha actual: ",this.n_fichas[rand]);
+        this.totalFichas--;
+        console.log("Total de fichas: ",this.totalFichas);
         return rand;
     }
 
