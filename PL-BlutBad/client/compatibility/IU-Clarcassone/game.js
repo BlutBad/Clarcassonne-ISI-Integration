@@ -1,0 +1,1 @@
+../../../../IU-Clarcassonne/client/game.js

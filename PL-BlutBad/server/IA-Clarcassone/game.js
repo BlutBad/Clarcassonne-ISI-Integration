@@ -1,0 +1,1 @@
+../../../IA-Clarcassonne/game.js
