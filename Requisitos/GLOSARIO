@@ -1,0 +1,25 @@
+Abreviaturas, Acrónimos, Definiciones
+=====================================
+
+
+Cliente es la persona que paga al creador del juego, y que posteriormente quiere ganar dinero.
+
+Usuario: persona registrada en la plataforma de juegos
+Jugador: usuario en una partida en curso.
+clan: equipo de usuarios bajo el mismo nombre
+IA: inteligencia artificial, encargada de simular a un jugador en una partida, ayuda en movimientos, controla el chat, etc.
+JugadorTimeOut: Jugador que tarda más del tiempo correspondido para mover una nueva ficha.
+JugadorPro: Aquellos usuarios que les interesa jugar sin ayudas o sin puntuaciones.
+JugadorPlus: Aquellos usuarios que han pagado para tener una serie de ventajas.
+Observador: usuario registrado o no en la plataforma de juegos que observa una partida
+Administrador: responsable de la administración del juego
+Ranking: Sistema de puntuación de los usuarios(de plataforma, de juego y de clan)
+CFA: Correcto funcionamiento de la aplicación.
+Servidor: Parte automatizada de la Plataforma que controla el juego.
+GM: administrador general de la plataforma dicha.
+Ayuda: guia sobre un juego, a lo largo de la partida, por si dudas de algo.
+tutorial: video o documento de un juego, fuera de la partida, para aprender a jugar.
+fichas: todas las figuras, incluyendo tablero, del juego
+
+NOMBRE DEL JUEGO: Karssoline
+

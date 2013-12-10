@@ -1,0 +1,60 @@
+<head>
+	<title>Plataforma LL</title>
+	<!-- reubicacion
+	<link rel="stylesheet" href="../../jquery-ui-1.10.3.custom/css/cupertino/jquery-ui-1.10.3.custom.css" />
+	<script src="../../jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.js"></script>-->
+</head>
+
+<body>
+	<div id="div-login-button">{{loginButtons}}</div>
+	<h1>Plataforma LL</h1>
+	<p> Welcome to LowerLayers Games! </p>
+	{{> welcome}}
+    <div id="container">
+        {{> coin}}
+			{{> tabstemp}}
+    </div>
+</body>
+
+
+
+
+<template name="coin">
+	<div id="coin-slider">
+            <a> <IMG  SRC="angrybirds.jpg" border="8"> </a>
+            <a> <IMG  SRC="carcassonne.jpg" border="8"> </a>
+            <a> <IMG  SRC="alieninvasion.png" border="8"> </a>   
+   </div>
+</template>
+
+<template name="tabstemp">
+	<div id="tabs" style="display:none;">
+	
+		<!-- estructura de pestañas -->
+		<ul>
+			<li><a href="#amigos">Amigos</a></li>
+			<li><a href="#juegos">Juegos</a></li>
+		</ul>
+		
+		<!-- se respeta el nombre para indicar el contenido de cada pestaña -->
+		<div id="amigos"> {{> userstemp}} </div>
+      <div id="juegos"></div>
+		
+	</div>
+</template>
+
+<template name="userstemp">
+	<div id="users" style="display:none;">
+		{{# each users}}
+				{{username}}
+		{{/each}}
+		
+	</div>
+</template>
+
+<template name="welcome">
+	USUARIO:
+	{{# each myuser}}
+		<b>{{username}}</b>
+	{{/each}}
+</template>

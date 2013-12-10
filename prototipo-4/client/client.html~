@@ -1,0 +1,216 @@
+<head>
+	<title>X-ADrian</title>
+</head>
+
+<body>
+        <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/es_LA/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+	<div id="div-login-button">{{loginButtons}}</div>
+	<div id="titulo" Size="6">X-ADrian</div>
+	<div class="fb-like" data-href="http://lowerlayers.meteor.com/" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+	<div id="subtitulo">&nbsp&nbsp&nbsp Welcome to X-ADrian platform</div><br>
+	<div id="container">
+   		{{> cointemp}}
+		{{> tabstemp}}
+		{{> friendsTemp}}
+		{{> chatsTabsTemp}}
+   	</div>	
+
+</body>
+
+
+<template name="cointemp">
+	<div id="slider">
+		<div id="coin-slider">
+		    <IMG  SRC="frootwar.png">
+		    <IMG  SRC="carcassonne.jpg">
+		    <IMG  SRC="alieninvasion.png">
+		</div>
+	</div>
+	
+</template>
+
+<template name="tabstemp">
+	<div id="tabs" >
+		<ul>
+			<li><a href="#juegos">Juegos</a></li>
+			<li><a href="#ranking">Ranking</a></li>
+		</ul>
+		<div id="juegos">{{> gamestemp}} {{> matchestemp}} {{> roomgametemp}}</div>
+		<div id="ranking">Por juegos:{{> gamestemp}} Por Usuarios: {{> userstemp}} </div>
+	</div>
+</template>
+
+<template name="friendsTemp">
+		
+		<div id="accordion">
+			<h3>Conectados</h3>
+				<div>
+				{{> listaAmigosOnlineTemp}}
+				</div>
+			<h3>Desconectados</h3>
+				<div>
+				{{> listaAmigosOfflineTemp}}
+				</div>	
+			<h3>Buscar</h3>
+				<div>
+					<input type="text" id="formSearch">
+					<input type="button" id="buttonSearch" value="Buscar"/>
+				</div>
+		</div>
+		<a id="friends" class="escondido" style="cursor:pointer;" >
+			Amigos
+		</a>
+	
+</template>
+
+<template name="chatsTabsTemp">
+	<div id="chatTabs" >
+		<ul>
+		</ul>
+	</div>
+</template>
+
+<template name="userstemp">
+	<div id="users" >
+		{{# each users}}
+			<a href="#">{{username}}</a>
+		{{/each}}
+	</div>
+</template>
+
+<template name="input">
+	<div id="messagecont">
+		<p> Mensaje: <input type="text" id="message"></p>
+	</div>
+</template>
+
+<template name="messagestemp">
+	<div id="messages">
+		{{# each messages}}
+			<i>{{name}}: {{message}}</i></br>
+		{{/each}}
+	</div>
+</template>
+
+<template name="roomchattemp">
+	<div id="roomchat">
+	{{> input}}{{> messagestemp}}
+	</div>
+</template>
+
+<template name="loguserstemp">
+	<div id="logusers">
+		{{# each logusers}}
+			{{username}}
+		{{/ each}}
+	</div>
+</template>
+
+<template name="gamestemp" >
+	<div id="games">
+		{{# each games}}
+			<a style ="cursor:pointer;text-decoration:underline;" class="linkgame">{{name}}</a><br>
+			<IMG  SRC ={{name}} class="linkgame"><br>
+			<div class="fb-like" data-href="http://localhost:3000" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+			
+		{{/ each}}
+	</div>
+
+</template>
+
+<template name="matchestemp">
+	<div id="matches">
+		<h1> {{> gamenametemp}} </h1>
+		<table>
+			{{# each matches}}
+				<tr>
+					-<td><a class="linkmatch">{{name}}</a></td><td> {{created}}</td><td> {{num_players}} Jugadores</td>
+				</tr>
+			{{/ each}}
+		</table>
+		<p> Nueva partida: <input type="text" id="match_creator"></p>
+		<p><a style ="cursor:pointer;text-decoration:underline;" id="match_back">Atrás</a></p>
+	</div>
+</template>
+
+<template name="alientemp">
+	<div id="aliencontainer">
+		<canvas id='aliencanvas' width='320' height='480'></canvas>
+	</div>
+</template>
+
+<template name="frootwarstemp">
+	<div id="frootwarscontainer">
+		<canvas id="gamecanvas" width="640" height="480" class="gamelayer"></canvas>
+  		<div id="scorescreen" class="gamelayer">
+    		<img id="togglemusic" src="images/icons/sound.png" onclick="game.toggleBackgroundMusic();">
+    		<img src="images/icons/prev.png" onclick="game.restartLevel();">
+    		<span id="score">Score: 0</span>
+  		</div>
+  		<div id="gamestartscreen" class="gamelayer">
+    		<img src="images/icons/play.png" alt="Play Game" onclick = "game.showLevelScreen();"><br>
+    		<img src="images/icons/settings.png" alt="Settings">
+  		</div>
+  		<div id="levelselectscreen" class="gamelayer"></div>
+  		<div id="loadingscreen" class="gamelayer">
+   		<div id="loadingmessage"></div>
+  		</div>
+  		<div id="endingscreen" class="gamelayer">
+   		<div>
+   	   	<p id="endingmessage">The Level Is Over Message</p>
+   	   	<p id="playcurrentlevel" onclick="game.restartLevel();"><img src="images/icons/prev.png"> Replay Current Level</p>
+   	   	<p id="playnextlevel" onclick="game.startNextLevel();"><img src="images/icons/next.png"> Play Next Level </p> 
+      		<p id="returntolevelscreen"onclick="game.showLevelScreen();"><img src="images/icons/return.png"> Return to Level Screen</p>
+    		</div>
+  		</div>
+	</div>
+</template>
+
+<template name="roomgametemp">
+	<div id="roomcontainer">
+		<a style ="cursor:pointer;text-decoration:underline;" id="exitgame"> Salir </a>
+		<h1>{{> gamenametemp}} - {{> matchnametemp}}</h1> <!--{{> roomplayerstemp}}--> {{> roomchattemp}} {{> alientemp}} {{> frootwarstemp}}
+	</div>
+</template>
+
+<template name="gamenametemp">
+	{{gamename}}
+</template>
+
+<template name="matchnametemp">
+	{{matchname}}
+</template>
+
+<!--
+<template name="roomplayerstemp">
+	<b>Jugadores:</b><br></br>
+	{{#each players}}
+		{{ name }} - Puntuación: {{ score}} <br></br>
+	{{/ each}}
+</template>
+-->
+
+<template name="listaAmigosOnlineTemp">
+	<div id="listaAmigosOnline">
+		{{# each listaAmigosOnline}}
+		<a style ="cursor:pointer;text-decoration:underline;" class="linkchat">
+			{{username}}<br>
+		</a>
+		{{/ each}}
+	</div>	
+</template>
+
+<template name="listaAmigosOfflineTemp">
+	<div id="listaAmigosOffline">
+		{{# each listaAmigosOffline}}
+			{{username}}<br>
+		{{/ each}}
+	</div>	
+</template>
