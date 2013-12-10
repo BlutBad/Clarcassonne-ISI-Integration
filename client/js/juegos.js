@@ -30,8 +30,9 @@ Template.juegos.events({
 		}
     },
     'click .edit_game' : function() {
+    	console.log("clickkk");
 		Session.set('gameToEdit', this._id);
-		//console.log(this.name);
+		console.log(this._id);
     }
 });
 
@@ -103,6 +104,7 @@ Template.juegos.showEditGame = function() {
 
 Template.editGame.game = function() {
     var id = Session.get('gameToEdit');
+    console.log(id);
     return Juegos.findOne({
 		_id : id
     });

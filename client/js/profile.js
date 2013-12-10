@@ -31,11 +31,22 @@ Template.profil.events({
 	},
 
 	'click #save': function(){
-		console.log($("#nombre").val());
-		console.log($("#email").val());
-		console.log($("#datebirthday").val());		
-		console.log($("#genero").val());
 		console.log("guardar");
+		console.log(Meteor.user()._id);
+		id=Meteor.user()._id;
+		username=$("#nombre").val();
+		email=$("#email").val();
+		datebirthday=$("#datebirthday").val();
+		genero=$("#genero").val();
+		Meteor.users.update(id, {
+		    $set : {
+				"profile.name" : username,
+				"profile.email" : email,
+				"profile.datebirthday" : datebirthday,
+				"profile.genero" : genero,
+		    }
+		});
+
 	}
 });
 
