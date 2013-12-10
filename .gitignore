@@ -1,6 +1,7 @@
 
 .project
 *~
+.meteor/local
 
 /.buildpath
 # -- Symfony2 -----------------------------------------
