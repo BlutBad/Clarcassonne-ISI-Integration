@@ -1,4 +1,3 @@
-
 Plataphorma ISI
 =============================
 
@@ -28,11 +27,23 @@ En la plataforma:
 
 ```javascript
 Partidas.insert({
-                jugadores : [ {user_id: 11111, etc: etc},
-                              {user_id: 22222, etc: etc}, ... ],
+                jugadores : [ {user_id: 11111},
+                              {user_id: 22222}, ... ],
                 terminada: false,
                 });
 ```
+Para IU
+```
+Server.methods({
+                resolverUser(UserId): function (){
+                                                ...codigo
+                                                return {nombre: Pepe, fecha: dd/mm/aaaa}
+                                }
+                });
+
+```
+
+NOTA para PL's: Con el método _extractProfile (Userid) que obtenemos del servidor, se obtiene el nombre de usuario, fecha de nacimiento...
 
 2.
 Se llama a las funciones de inicializacion de IA e IU. 
@@ -48,10 +59,8 @@ ClarcassonneGameIA.iniciar(party_id);
 * Inicializacion de IU
 
 ```javascript
-ClarcassonneGameIU.initialize(idCanvasElement, sprite_url, callback, party_id);
+ClarcassonneGameIU.initialize(idCanvasElement, party_id);
     idCanvasElement  - El #id del canvas donde se va iniciar el juego
-    sprite_url       - Url del spritesheet del juego(ej: '/images/ClarcassonneSpriteSheet.png').
-    callback         - Función de inicio del juego despues de que se ha finalizado 'initialize'.
     party_id         - _id de la partida que va a jugar el usuario en cuestion,
                          el que esta ejecutando ese codigo en su browser.
 ```
