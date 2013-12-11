@@ -35,7 +35,7 @@
         var nuevaficha = new ObjetoFicha(0,0,0,robar);
         Tablero.buscarCandidatos(nuevaficha);
         return [nuevaficha.tipo,nuevaficha.encajaCon];
-    }
+    },
     //Devuelve una lista del tipo [string,lista[]] string= tipo ficha, lista= coordenadas donde encaja
     
     
@@ -49,7 +49,7 @@
       console.log("fichaColocada", fichaColocada);
       var seguidores=Tablero.colocarseguidor(fichaColocada);
       return seguidores; 
-    }
+    },
     //Coloca la ficha en el tablero, devuelve la lista de los posibles seguidores o 0 si no se produce error
     
     

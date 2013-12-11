@@ -1,4 +1,4 @@
-var Tiposfichas = {
+Tiposfichas = {
     Rrecta: { Izq: "Campo", Der: "Campo", Arr: "Rue", Abaj: "Rue", Escudo: 0 }, //8
     Rcurva: {Izq: "Rue", Der: "Campo", Arr: "Campo", Abaj: "Rue", Escudo: 0 }, //9
     Catedral: { Izq: "Campo", Der: "Campo", Arr: "Campo", Abaj: "Campo", Escudo: 0 }, //4
@@ -25,7 +25,7 @@ var Tiposfichas = {
 		Tcruce:   {Izq: "Rue", Der: "Rue", Arr: "Campo", Abaj: "Rue", Escudo: 0},//4
 };
 
-var fichas = [ //72
+fichas = [ //72
 		  'Rrecta',
 		  'Rcurva',
 		  'Catedral',
@@ -52,7 +52,7 @@ var fichas = [ //72
 		'Tcruce',
 ];
 
-var Tablero = new function(){
+Tablero = new function(){
 
 	this.totalFichas = 72;
 
@@ -1211,7 +1211,7 @@ var Tablero = new function(){
 
 };
 
-var ObjetoJugador = function(user_id,nombre,edad,n_jugador){
+ObjetoJugador = function(user_id,nombre,edad,n_jugador){
   this.numero=n_jugador;
   this.n_seguidores = 7;
 	this.nombre = nombre;
@@ -1223,7 +1223,7 @@ var ObjetoJugador = function(user_id,nombre,edad,n_jugador){
 
 
 
-var ObjetoFicha= function(x,y,i,tipoficha){
+ObjetoFicha= function(x,y,i,tipoficha){
 
   this.i=i; //nos indica la posición real en la lista tablero
 	this.x=x; // x e y nos indican la posición 
