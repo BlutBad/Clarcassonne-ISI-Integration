@@ -106,10 +106,10 @@ Meteor
 							name : 'Clarcassone',
 							wrapf : 'clarki',
 							logo_src : '/images/games_logo/clarkasone.jpg',
-							logo_alt : 'Juega es este juego',
+							logo_alt : 'Juega a este juego',
 							title_desc : 'Titulo para la descripcion del juego',
 							description : 'Descripcion del juego!',
-							idn : 'klarki',
+							idn : 'Clarca',
 							mode: 'multi',
 							hall: 'klarkiHall',
 							rangos : [ {

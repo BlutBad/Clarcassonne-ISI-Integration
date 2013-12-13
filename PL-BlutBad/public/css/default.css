@@ -830,3 +830,7 @@ td, th {
 	margin-left: 2%; 
 	margin-bottom: 5%;
 }
+
+#clarca {
+	display: none;
+}
