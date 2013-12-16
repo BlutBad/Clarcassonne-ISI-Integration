@@ -173,10 +173,16 @@
 	</div>
 </template>
 
+<template name="clarcassonnetemp">
+        <div id="clarcassonnecontainer">
+                <canvas id='clarcassonnecanvas' width='800' height='600'></canvas>
+        </div>
+</template>
+
 <template name="roomgametemp">
 	<div id="roomcontainer">
 		<a style ="cursor:pointer;text-decoration:underline;" id="exitgame"> Salir </a>
-		<h1>{{> gamenametemp}} - {{> matchnametemp}}</h1> {{> roomplayerstemp}} {{> roomchattemp}} {{> alientemp}} {{> frootwarstemp}}
+		<h1>{{> gamenametemp}} - {{> matchnametemp}}</h1> {{> roomplayerstemp}} {{> roomchattemp}} {{> alientemp}} {{> frootwarstemp}} {{> clarcassonnetemp}}
 	</div>
 </template>
 
@@ -196,6 +202,7 @@
 			<tr> <td>{{name}}</td> </tr>
 		{{/each}}
 	</table>
+	<input type="button" id="EmpezarCarca" value="Empezar"/>
 </template>
 
 
