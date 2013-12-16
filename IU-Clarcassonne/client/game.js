@@ -64,16 +64,16 @@ sprites = {
 
 
 var img = new Image();
-img.src = 'images/background.png';
+img.src = 'Clarcassonne/images/background.png';
 
 var img2 = new Image();
-img2.src = 'images/abajo.png';
+img2.src = 'Clarcassonne/images/abajo.png';
 
 var img3 = new Image();
-img3.src = 'images/musica.png';
+img3.src = 'Clarcassonne/images/musica.png';
 
 var img4 = new Image();
-img4.src = 'images/ControlHelp.png';
+img4.src = 'Clarcassonne/images/ControlHelp.png';
 
 
 
