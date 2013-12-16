@@ -27,14 +27,18 @@
 
 <template name="gamecontainer"> 
   <div id="gamecontainer"> 
-	  {{>idnClarca}}
 	  {{>idnAlien}}
 	  {{>idnFroot}}
+	  {{>idnClarca}}
   </div>
 </template>
 
 <template name="idnClarca"> 
+<<<<<<< HEAD
   <canvas id='CanvasclarcaGame' width='800' height='600' ></canvas>
+=======
+  <canvas id='klarki' width='320' height='480'></canvas>
+>>>>>>> 823c96279235faf2068857e64b6fcf7f3eb0a445
 </template>
 
 <template name="idnAlien"> 
@@ -42,36 +46,36 @@
 </template>
 
 <template name="idnFroot"> 
-	<div id="gameFrootcontainer" class="span7">
+	  <div id="gameFrootcontainer" class="span7">
 
-		<canvas id="gameFrootcanvas" width="640" height="480" class="gameFrootlayer"> </canvas>
-		  <div id="scorescreen" class="gameFrootlayer">
-			<img id="togglemusic" src="images/icons/sound.png" onclick="gameFroot.toggleBackgroundMusic();">
-			<img src="images/icons/prev.png" onclick="gameFroot.restartLevel();">
-			<span id="score">Score: 0</span>
-		  </div>
-		  
-		  <div id="gameFrootstartscreen" class="gameFrootlayer">
-			<img src="images/icons/play.png" alt="Play gameFroot" onclick = "gameFroot.showLevelScreen();"><br>
-			<img src="images/icons/settings.png" alt="Settings">
-		  </div>
-		  
-		  <div id="levelselectscreen" class="gameFrootlayer">
-		  </div>
-		  
-		  <div id="loadingscreen" class="gameFrootlayer">
-			<div id="loadingmessage"></div>
-		  </div>
-		  
-		  <div id="endingscreen" class="gameFrootlayer">
-			<div>
-			  <p id="endingmessage">The Level Is Over Message</p>
-			  <p id="playcurrentlevel" onclick="gameFroot.restartLevel();"><img src="images/icons/prev.png"> Replay Current Level</p>
-			  <p id="playnextlevel" onclick="gameFroot.startNextLevel();"><img src="images/icons/next.png"> Play Next Level </p> 
-			  
-			  <p id="returntolevelscreen"onclick="gameFroot.showLevelScreen();"><img src="images/icons/return.png"> Return to Level Screen</p>
-			</div>
-	</div> 
+<canvas id="gameFrootcanvas" width="640" height="480" class="gameFrootlayer"> </canvas>
+  <div id="scorescreen" class="gameFrootlayer">
+	<img id="togglemusic" src="images/icons/sound.png" onclick="gameFroot.toggleBackgroundMusic();">
+	<img src="images/icons/prev.png" onclick="gameFroot.restartLevel();">
+	<span id="score">Score: 0</span>
+  </div>
+  
+  <div id="gameFrootstartscreen" class="gameFrootlayer">
+	<img src="images/icons/play.png" alt="Play gameFroot" onclick = "gameFroot.showLevelScreen();"><br>
+	<img src="images/icons/settings.png" alt="Settings">
+  </div>
+  
+  <div id="levelselectscreen" class="gameFrootlayer">
+  </div>
+  
+  <div id="loadingscreen" class="gameFrootlayer">
+	<div id="loadingmessage"></div>
+  </div>
+  
+  <div id="endingscreen" class="gameFrootlayer">
+	<div>
+	  <p id="endingmessage">The Level Is Over Message</p>
+	  <p id="playcurrentlevel" onclick="gameFroot.restartLevel();"><img src="images/icons/prev.png"> Replay Current Level</p>
+	  <p id="playnextlevel" onclick="gameFroot.startNextLevel();"><img src="images/icons/next.png"> Play Next Level </p> 
+	  
+	  <p id="returntolevelscreen"onclick="gameFroot.showLevelScreen();"><img src="images/icons/return.png"> Return to Level Screen</p>
+	</div>
+</div> 
 	 
 </template>
 

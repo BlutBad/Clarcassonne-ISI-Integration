@@ -64,16 +64,16 @@ sprites = {
 
 
 var img = new Image();
-img.src = 'images/background.png';
+img.src = 'Clarcassonne/images/background.png';
 
 var img2 = new Image();
-img2.src = 'images/abajo.png';
+img2.src = 'Clarcassonne/images/abajo.png';
 
 var img3 = new Image();
-img3.src = 'images/musica.png';
+img3.src = 'Clarcassonne/images/musica.png';
 
 var img4 = new Image();
-img4.src = 'images/ControlHelp.png';
+img4.src = 'Clarcassonne/images/ControlHelp.png';
 
 
 
@@ -827,14 +827,15 @@ Blank = new function () {
 
 
 
-function initialize(idCanvasElement, sprite_url, callback, party_id) {
-	
-	Meteor.call("InicioJuego", party_id, SetPlayers);
-	idCanvas = idCanvasElement;
-	idParty = party_id;
-	urlSprite = sprite_url;
-	callback();
+ClarcassonneGameIU = function ()  {
 
+	this.initialize = function () (idCanvasElement, sprite_url, callback, party_id) {
+	
+		Meteor.call("InicioJuego", party_id, SetPlayers);
+		idCanvas = idCanvasElement;
+		idParty = party_id;
+	}
+	
 }
 
 //$(function () {
