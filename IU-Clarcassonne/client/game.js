@@ -827,7 +827,7 @@ Blank = new function () {
 
 
 
-ClarcassonneGameIU = function ()  {
+ClarcassonneGameIU = new function ()  {
 	
 	this.initialize = function (idCanvasElement, party_id) {
 		console.log("Estoy siendo llamado IU");
