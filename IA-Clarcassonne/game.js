@@ -63,7 +63,7 @@
         Tablero.cierraCamino(ficha,1);
         Tablero.cierraClaustro(ficha,1);
         Tablero.cierraCastillo(ficha,1);
-        return 1;
+        return Tablero.listaJugadores;
       
       } else {return 0}
       
