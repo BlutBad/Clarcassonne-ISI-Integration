@@ -12,6 +12,8 @@ Meteor.startup(function () {
 	$('#roomcontainer').hide();
 	$('#aliencontainer').hide();
 	$('#frootwarscontainer').hide();
+//---------------------------------------------
+	$('#clarcassonnecontainer').hide();
 });
 
 //Cargo el efecto slider y pestañas
@@ -46,6 +48,17 @@ $(document).ready(function() {
 			}	
 			
 		});
+//---------------------------------------------
+		$("#EmpezarCarca").click(function() {
+				$('#EmpezarCarca').hide();
+				$('#clarcassonnecontainer').show();
+				var matches_document = Partidas.findOne({_id : Session.get('match_id')});
+				party_id = matches_document._id;
+				console.log(party_id);
+
+				//ClarcassonneGameIU.initialize('clarcassonnecontainer', party_id);
+		});
+//---------------------------------------------
 });
 
 //Ordena los amigos alfabeticamente
