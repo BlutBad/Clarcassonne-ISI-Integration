@@ -828,9 +828,9 @@ Blank = new function () {
 
 
 ClarcassonneGameIU = function ()  {
-
-	this.initialize = function () (idCanvasElement, party_id) {
 	
+	this.initialize = function (idCanvasElement, party_id) {
+		console.log("Estoy siendo llamado IU");
 		Meteor.call("InicioJuego", party_id, SetPlayers);
 		idCanvas = idCanvasElement;
 		idParty = party_id;
@@ -838,9 +838,3 @@ ClarcassonneGameIU = function ()  {
 	
 }
 
-//$(function () {
-//	Meteor.call("InicioJuego", SetPlayers);
-//	idCanvas = "#game";
-//	urlSprite = 'images/sprites.png';
-//
-//});
