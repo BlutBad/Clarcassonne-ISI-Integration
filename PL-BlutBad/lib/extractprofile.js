@@ -52,3 +52,10 @@ _extractProfile = function (userObjId) {
     return null;
   }  
 }; //EO extractProfile
+
+
+
+
+resolverUser = function(id) {
+    return {nombre: "Pepito Grillo", fecha: "12/11/1983"}
+}

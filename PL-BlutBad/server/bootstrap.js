@@ -104,12 +104,12 @@ Meteor
 						},
 						{
 							name : 'Clarcassone',
-							wrapf : 'clarki',
+							wrapf : 'ClarcassonneGameIU.initialize(idCanvasElement, party_id);',
 							logo_src : '/images/games_logo/clarkasone.jpg',
-							logo_alt : 'Juega a este juego',
+							logo_alt : 'Juega es este juego',
 							title_desc : 'Titulo para la descripcion del juego',
 							description : 'Descripcion del juego!',
-							idn : 'Clarca',
+							idn : 'klarki',
 							mode: 'multi',
 							hall: 'klarkiHall',
 							rangos : [ {
@@ -128,7 +128,7 @@ Meteor
 								rango : "General",
 								minPoints : 7000,
 							}, {
-								rango : "Heroe",
+								rango : "MotherFucker",
 								minPoints : 9000,
 							} ],
 							insignias : [

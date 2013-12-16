@@ -110,13 +110,14 @@ Template.hall_clarcassone.events({
     		usersJoined = PartidasVolatiles.findOne({
 			    _id : this._id
 			}).jugadores;
-			if (usersJoined.length < 3 || usersJoined.length > 5) {
+			if (usersJoined.length < 1 || usersJoined.length > 5) {
 				Session.set("createError",
-					"Para empezar una partida deben unirse de 3 a 5 jugadores");
- 
-			} else {		 
-			    Session.set('current_stage', Clarcassone);
-			    Session.set('load_game', this); 
+					"Para empezar una partida deben unirse de 3 a 5 jugadores"); 
+			} else {		
+			    Session.set('showGameIdn', "clarki");
+			    Session.set('current_stage', "Clarcassone");
+			    //Session.set('load_game', this);
+			    $('#gamecontainer').show(); 
 			}
 			// Hacer una entrada a la coleccion de Partidas,
 			// y llamar a ui y ai con ese _id de la partida.
