@@ -2,13 +2,13 @@
  /// Prueba del código de game.js
  
  
- var InicioJuego=function(){       
+ var InicioJuego=function(id_partida){       
 
        Tablero.iniciar();
 
 	Meteor.subscribe("partidas",id_partida);
 	Jugadores_ID= Partidas.find();
-	
+	console.log(Jugadores_ID);
 	for(i=0;i<Jugadores_ID.length;i++){
 		Jugador=resolverUser(Jugadores_ID[i]);
 		//creamos la lista de jugadores

@@ -1279,7 +1279,7 @@ Tablero = new function(){
 
 };
 
-var ObjetoJugador = function(user_id,nombre,fecha,n_jugador){
+ObjetoJugador = function(user_id,nombre,fecha,n_jugador){
   this.numero=n_jugador;
   this.n_seguidores = 7;
 	this.nombre = nombre;

@@ -62,9 +62,7 @@
               var nuevoSeguidor = {t:seguidor.t, n:seguidor.n, j:Jugador.numero, f:ficha}
       }
       if (ficha.seguidores.push(nuevoSeguidor) || seguidor==0) {
-        Tablero.cierraCamino(ficha,1);
-        Tablero.cierraClaustro(ficha,1);
-        Tablero.cierraCastillo(ficha,1);
+
         return Tablero.listaJugadores;
       
       } else {return 0}

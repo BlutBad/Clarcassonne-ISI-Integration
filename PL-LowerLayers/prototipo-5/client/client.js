@@ -55,8 +55,8 @@ $(document).ready(function() {
 				var matches_document = Partidas.findOne({_id : Session.get('match_id')});
 				party_id = matches_document._id;
 				console.log(party_id);
-
-				//ClarcassonneGameIU.initialize('clarcassonnecontainer', party_id);
+				//InicioJuego(party_id);  
+				ClarcassonneGameIU.initialize('#clarcassonnecanvas', party_id);
 		});
 //---------------------------------------------
 });
