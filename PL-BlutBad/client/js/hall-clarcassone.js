@@ -116,8 +116,16 @@ Template.hall_clarcassone.events({
 			} else {		
 			    Session.set('showGameIdn', "clarki");
 			    Session.set('current_stage', "Clarcassone");
-			    //Session.set('load_game', this);
 			    $('#gamecontainer').show(); 
+			    idCanvasElement = "#gamecanvasAlien"; 
+			    party_id = Partidas.insert({
+                	jugadores : [ {user_id: 11111},
+                              	  {user_id: 22222}],
+                	terminada: false,
+                });
+
+	    		eval("ClarcassonneGameIU.initialize(idCanvasElement, party_id"); 
+			    //Session.set('load_game', this);
 			}
 			// Hacer una entrada a la coleccion de Partidas,
 			// y llamar a ui y ai con ese _id de la partida.
