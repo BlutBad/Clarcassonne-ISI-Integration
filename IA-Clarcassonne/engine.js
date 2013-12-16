@@ -333,16 +333,20 @@ Tablero = new function(){
 
 };
 
-ObjetoJugador = function(user_id,nombre,edad,n_jugador){
+var ObjetoJugador = function(user_id,nombre,fecha,n_jugador){
   this.numero=n_jugador;
   this.n_seguidores = 7;
 	this.nombre = nombre;
 	this.id=user_id;
-	this.edad = edad;
+	this.edad = function(fecha){
+									var dia= fecha.split('/');
+									var birthday = +new Date(dia[2],dia[1],dia[0]);
+									console.log("ccc",birthday);
+									return ~~((Date.now() - birthday) / (31557600000)); // 24*3600*365.25*1000
+	}(fecha);
 	this.puntos = 0;
 	
 };
-
 
 
 ObjetoFicha= function(x,y,i,tipoficha){
