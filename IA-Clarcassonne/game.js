@@ -5,16 +5,15 @@
     InicioJuego:function(id_partida){       
 
        	Tablero.iniciar();
-	     /*
-	      Meteor.subscribe("partidas",id_partida);
-	      Jugadores= Partidas.find();
-        */
-        //creamos la lista de jugadores
-        Tablero.listaJugadores.push(new ObjetoJugador(123,"Paco",23));
-        Tablero.listaJugadores.push(new ObjetoJugador(12,"Pepe",88));
-        Tablero.listaJugadores.push(new ObjetoJugador(45,"Mengano",34));
-        Tablero.listaJugadores.push(new ObjetoJugador(88,"Fulano",17));
-        Tablero.listaJugadores.push(new ObjetoJugador(128,"Zutano",12));
+
+	Meteor.subscribe("partidas",id_partida);
+	Jugadores_ID= Partidas.find();
+	
+	for(i=0;i<Jugadores_ID.length;i++){
+		Jugador=resolverUser(Jugadores_ID[i]);
+		//creamos la lista de jugadores
+		Tablero.listaJugadores.push(new ObjetoJugador(Jugadores_ID[i],Jugador.nombre,Jugador.fecha));
+	}
         
         //ordenamos a los jugadores por edad
         Tablero.listaJugadores=_.sortBy(Tablero.listaJugadores, function(jugador){ return jugador.edad; });
@@ -55,11 +54,14 @@
     
     
     ColocarSeguidor:function(id_partida, id_jugador, coordenada, seguidor){
+    
+      if (seguidor){
       
-      var Jugador = _.find(Tablero.listaJugadores,function(obj){return (obj.id == id_jugador)})
-      var ficha= Tablero.buscarxcoor(coordenada.x,coordenada.y);
-      var nuevoSeguidor = {t:seguidor.t, n:seguidor.n, j:Jugador.numero, f:ficha}
-      if (ficha.seguidores.push(nuevoSeguidor)) {
+              var Jugador = _.find(Tablero.listaJugadores,function(obj){return (obj.id == id_jugador)})
+              var ficha= Tablero.buscarxcoor(coordenada.x,coordenada.y);
+              var nuevoSeguidor = {t:seguidor.t, n:seguidor.n, j:Jugador.numero, f:ficha}
+      }
+      if (ficha.seguidores.push(nuevoSeguidor) || seguidor==0) {
         Tablero.cierraCamino(ficha,1);
         Tablero.cierraClaustro(ficha,1);
         Tablero.cierraCastillo(ficha,1);
