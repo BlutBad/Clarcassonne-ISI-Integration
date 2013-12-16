@@ -89,7 +89,6 @@ Deps.autorun(function(c) {
     }
 });
 
-<<<<<<< HEAD
 
 Deps.autorun(function(c) {
     if (Session.equals('showGameIdn', 'Clarca')) {
@@ -105,8 +104,6 @@ Template.gamecontainer.render = function() {
     $('#gamecontainer').show();
 };
 
-=======
->>>>>>> 823c96279235faf2068857e64b6fcf7f3eb0a445
 //////////////////////
 
 

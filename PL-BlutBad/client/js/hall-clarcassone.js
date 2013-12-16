@@ -115,10 +115,10 @@ Template.hall_clarcassone.events({
 					"Para empezar una partida deben unirse de 4 a 6 jugadores");
  
 			} else {		
-				Session.set('showGameIdn', "clarki");
+			    Session.set('showGameIdn', "clarki");
 			    Session.set('current_stage', Clarcassone);
 			    Session.set('load_game', this);
-				$('#gamecontainer').show();
+			    $('#gamecontainer').show();
 			}
 			// Hacer una entrada a la coleccion de Partidas,
 			// y llamar a ui y ai con ese _id de la partida.
