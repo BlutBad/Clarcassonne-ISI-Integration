@@ -29,12 +29,10 @@ Template.juegos.events({
 		    	Session.set('current_stage', this.name);
 		    	Session.set('load_game', this);
 			}
-		   // Session.set('load_game', true);
-		    //curGameHall
+
 		}
     },
     'click .edit_game' : function() {
-    	//console.log("clickkk");
 		Session.set('gameToEdit', this._id);
 		//console.log(this._id);
     }
@@ -46,7 +44,7 @@ Deps.autorun(function(c) {
 		$('#gamecontainer').show();
 		Session.set('showGameIdn', lg.idn);
 		Session.set("current_game", lg._id);
-	    eval(lg.wrapf); 
+		eval(lg.wrapf); 
     } else { 
 		$('#gamecontainer').hide();
 		Session.set('showGameIdn', null); 
@@ -82,7 +80,7 @@ Template.gamecontainer.render = function() {
     $('#gamecontainer').show();
 };
 
-///////
+///////////////////////////EDIT GAME DESCRIPTION//////////////////////////////
 
 Template.juegos.showEditGame = function() {
 	if (Meteor.user()){
