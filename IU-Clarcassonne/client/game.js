@@ -837,9 +837,9 @@ function initialize(idCanvasElement, sprite_url, callback, party_id) {
 
 }
 
-$(function () {
-	Meteor.call("InicioJuego", SetPlayers);
-	idCanvas = "#game";
-	urlSprite = 'images/sprites.png';
-
-});
+//$(function () {
+//	Meteor.call("InicioJuego", SetPlayers);
+//	idCanvas = "#game";
+//	urlSprite = 'images/sprites.png';
+//
+//});
