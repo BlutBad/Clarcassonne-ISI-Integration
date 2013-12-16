@@ -81,7 +81,6 @@ Template.gamecontainer.render = function() {
     $('#gamecontainer').show();
 };
 
-
 ///////
 
 Template.juegos.showEditGame = function() {

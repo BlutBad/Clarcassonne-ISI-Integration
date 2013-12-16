@@ -9,6 +9,7 @@ Session.setDefault("current_game",null);
 Meteor.startup(function() {
 	$('#gameFrootcontainer').hide();
 	$('#gamecanvasAlien').hide();
+	$('#CanvasclarcaGame').hide();
 });
 
 
