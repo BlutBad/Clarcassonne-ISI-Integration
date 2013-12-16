@@ -124,7 +124,7 @@ Template.hall_clarcassone.events({
                 	terminada: false,
                 });
 
-	    		eval("ClarcassonneGameIU.initialize(idCanvasElement, party_id"); 
+	    		eval("ClarcassonneGameIU.initialize(idCanvasElement, party_id)"); 
 			    //Session.set('load_game', this);
 			}
 			// Hacer una entrada a la coleccion de Partidas,
