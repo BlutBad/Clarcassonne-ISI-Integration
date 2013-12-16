@@ -54,11 +54,14 @@
     
     
     ColocarSeguidor:function(id_partida, id_jugador, coordenada, seguidor){
+    
+      if (seguidor){
       
-      var Jugador = _.find(Tablero.listaJugadores,function(obj){return (obj.id == id_jugador)})
-      var ficha= Tablero.buscarxcoor(coordenada.x,coordenada.y);
-      var nuevoSeguidor = {t:seguidor.t, n:seguidor.n, j:Jugador.numero, f:ficha}
-      if (ficha.seguidores.push(nuevoSeguidor)) {
+              var Jugador = _.find(Tablero.listaJugadores,function(obj){return (obj.id == id_jugador)})
+              var ficha= Tablero.buscarxcoor(coordenada.x,coordenada.y);
+              var nuevoSeguidor = {t:seguidor.t, n:seguidor.n, j:Jugador.numero, f:ficha}
+      }
+      if (ficha.seguidores.push(nuevoSeguidor) || seguidor==0) {
         Tablero.cierraCamino(ficha,1);
         Tablero.cierraClaustro(ficha,1);
         Tablero.cierraCastillo(ficha,1);

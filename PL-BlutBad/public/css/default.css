@@ -829,8 +829,8 @@ td, th {
 .btn_edit, .edit_game {
 	margin-left: 2%; 
 	margin-bottom: 5%;
-}
+} 
 
-#clarca {
-	display: none;
+#CanvasclarcaGame {
+	margin: 4% 10%;
 }

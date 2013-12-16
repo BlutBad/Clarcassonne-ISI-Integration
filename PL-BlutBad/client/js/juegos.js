@@ -70,7 +70,8 @@ Deps.autorun(function(c) {
 });
 
 Deps.autorun(function(c) {
-    if (Session.equals('showGameIdn', 'Clarca')) {
+	console.log(Session.get("showGameIdn"))
+    if (Session.equals('showGameIdn', 'clarki')) {
 		$('#CanvasclarcaGame').show();
     } else {
 		$('#CanvasclarcaGame').hide();
