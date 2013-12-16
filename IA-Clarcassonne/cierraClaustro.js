@@ -67,4 +67,4 @@ Tablero.cierraClaustro = function(ficha,flag){
 	 	ficha2 = Tablero.buscarxcoor(ficha.x-1, ficha.y-1);
 		if ((ficha2.tipo == "Catedral") || (ficha2.tipo == "Posada") ){return closeClaustro(ficha2)}
 		else{return [false,false,0]}
-  }
+  };

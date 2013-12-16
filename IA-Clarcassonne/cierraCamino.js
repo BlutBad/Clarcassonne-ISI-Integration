@@ -306,4 +306,4 @@ Tablero.cierraCamino = function(ficha,flag){
 				   }
 			}
 
-	}
+	};

@@ -557,4 +557,4 @@ Tablero.cierraCastillo = function(ficha, flag){
         return final;
     }
     else {return false}
-}
+};
