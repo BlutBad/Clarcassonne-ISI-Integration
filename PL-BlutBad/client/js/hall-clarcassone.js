@@ -115,8 +115,8 @@ Template.hall_clarcassone.events({
 					"Para empezar una partida deben unirse de 3 a 5 jugadores"); 
 			} else {		
 			    Session.set('showGameIdn', "clarki");
-			    Session.set('current_stage', Clarcassone);
-			    Session.set('load_game', this);
+			    Session.set('current_stage', "Clarcassone");
+			    //Session.set('load_game', this);
 			    $('#gamecontainer').show(); 
 			}
 			// Hacer una entrada a la coleccion de Partidas,
