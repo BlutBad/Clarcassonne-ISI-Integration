@@ -23,35 +23,55 @@ Template.juegos.events({
 		    Session.set('current_stage', 'Juegos');
 		    Session.set('load_game', null);
 		} else {
-			if (this.name == 'Clarcassone') {
-		    	Session.set('current_stage', "klarkiHall");
-			} else {
-		    	Session.set('current_stage', this.name);
-		    	Session.set('load_game', this);
-			}
+		    Session.set('current_stage', this.name);
+		    Session.set('load_game', this);
 		   // Session.set('load_game', true);
 		    //curGameHall
 		}
     },
     'click .edit_game' : function() {
-    	//console.log("clickkk");
+    	console.log("clickkk");
 		Session.set('gameToEdit', this._id);
-		//console.log(this._id);
-    }
-}); 
-
-Deps.autorun(function(c) {
-    lg = Session.get('load_game'); 
-    if (lg && lg.mode == "solo") {  
-		$('#gamecontainer').show();
-		Session.set('showGameIdn', lg.idn);
-		Session.set("current_game", lg._id);
-	    eval(lg.wrapf); 
-    } else { 
-		$('#gamecontainer').hide();
-		Session.set('showGameIdn', null); 
+		console.log(this._id);
     }
 });
+
+var canvas;
+
+Deps.autorun(function(c) {
+    lg = Session.get('load_game');
+    if (lg) { 
+		//console.log(lg);
+		/*x = Session.get('load_game');
+		gw = Juegos.findOne({
+		    wrapf : x
+		});*/
+
+		Session.set('showGameIdn', lg.idn);
+
+		$('#gamecontainer').show();
+
+		Session.set("current_game", lg._id);
+
+		
+		if (lg.mode === "solo") {
+		    eval(lg.wrapf);
+		} else if (lg.mode === "multi") {
+		    Session.set('current_stage','klarkiHall');
+		}
+    } else {
+		Session.set('showGameIdn', null);
+		canvas = null;
+		$('#gamecontainer').hide();
+    }
+});
+
+
+var canvasAlien, canvasFroot;
+
+Template.gamecontainer.render = function() {
+    $('#gamecontainer').show();
+};
 
 Deps.autorun(function(c) {
     if (Session.equals('showGameIdn', 'froot')) {
@@ -69,18 +89,6 @@ Deps.autorun(function(c) {
     }
 });
 
-Deps.autorun(function(c) {
-    if (Session.equals('showGameIdn', 'Clarca')) { 
-		$('#clarca').show(); 
-    } else {
-		$('#clarca').hide();
-    }
-});
-
-Template.gamecontainer.render = function() {
-    $('#gamecontainer').show();
-};
-
 //////////////////////
 
 
@@ -96,7 +104,7 @@ Template.juegos.showEditGame = function() {
 
 Template.editGame.game = function() {
     var id = Session.get('gameToEdit');
-    //console.log(id);
+    console.log(id);
     return Juegos.findOne({
 		_id : id
     });
