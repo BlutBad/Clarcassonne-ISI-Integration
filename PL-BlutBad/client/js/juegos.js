@@ -69,13 +69,16 @@ Deps.autorun(function(c) {
     }
 });
 
+
 Deps.autorun(function(c) {
-    if (Session.equals('showGameIdn', 'Clarca')) { 
-		$('#clarca').show(); 
+    if (Session.equals('showGameIdn', 'Clarca')) {
+		$('#CanvasclarcaGame').show();
     } else {
-		$('#clarca').hide();
+		$('#CanvasclarcaGame').hide();
     }
 });
+
+
 
 Template.gamecontainer.render = function() {
     $('#gamecontainer').show();
