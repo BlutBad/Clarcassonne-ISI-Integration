@@ -3,7 +3,7 @@ sprites = {
         Rcurva: { sx: 0, sy: 400, w: 100, h: 100, frames: 1 },
         Catedral: { sx: 0, sy: 500, w: 100, h: 100, frames: 1 },
         Posada: { sx: 200, sy: 400, w: 100, h: 100, frames: 1 },  
-        Ccruze: { sx: 200, sy: 200, w: 100, h: 100, frames: 1 },   
+        Ccruce: { sx: 200, sy: 200, w: 100, h: 100, frames: 1 },   
         CiudadE: { sx: 300, sy: 0, w: 100, h: 100, frames: 1 },    
         Ciudad3lc: { sx: 600, sy: 0, w: 100, h: 100, frames: 1 },  
         Ciudad3lcE: { sx: 500, sy: 0, w: 100, h: 100, frames: 1 },     
@@ -19,10 +19,10 @@ sprites = {
         Ciudad1l2crect: { sx: 700, sy: 0, w: 100, h: 100, frames: 1 },  
         Ciudadcurvder: { sx: 700, sy: 100, w: 100, h: 100, frames: 1 },  
         Ciudadcurvizq: { sx: 700, sy: 200, w: 100, h: 100, frames: 1 },
-        Ciudad1lcruze: { sx: 700, sy: 300, w: 100, h: 100, frames: 1 },
+        Ciudad1lcruce: { sx: 700, sy: 300, w: 100, h: 100, frames: 1 },
         Ciudad1ll: { sx: 1000, sy: 100, w: 100, h:100, frames:1},
         Ciudad1l: { sx: 1000, sy: 300, w: 100, h: 100, frames:1},
-        Tcruze: {sx: 1000, sy: 500, w: 100, h: 100, frames:1},
+        Tcruce: {sx: 1000, sy: 500, w: 100, h: 100, frames:1},
         
         ficha_rojo: { sx: 1152, sy: 0, w: 48, h: 48, frames: 1 },
         cura_rojo: { sx: 1200, sy: 0, w: 48, h: 48, frames: 1 },
@@ -78,36 +78,65 @@ img4.src = 'images/ControlHelp.png';
 
 
 
-
-
-
-Jugador1 = {nombre: "Carlos" , color: "ficha_rojo", puntos:0, turno:1};
-Jugador2 = {nombre: "Mario"  , color: "ficha_azul", puntos:10, turno: 0};
-Jugador3 = {nombre: "Maria"  , color: "ficha_amarillo", puntos:20, turno: 0};
-Jugador4 = {nombre: "Ana"    , color: "ficha_verde", puntos:30, turno: 0};
-Jugador5 = {nombre: "Niam"   , color: "ficha_gris", puntos:100, turno: 0};
-
 CurrentScroll = {x:70,y:70,active: true};
 
 CurrentMove = 0;
 CurrentTurn = 0;
 sonar = 1;
 
+
+
+function SetPlayers (err, data) {
+	Jugador1 = {nombre: data[0].nombre, color: "ficha_rojo", puntos: data[0].puntos, id: "DX6EHwZNZwLezftTz", turno:1};
+	Jugador2 = {nombre: data[1].nombre  , color: "ficha_azul", puntos:data[1].puntos, id: data[1].id, turno: 0};
+	Jugador3 = {nombre: data[2].nombre  , color: "ficha_amarillo", puntos:data[2].puntos, id: data[2].id, turno: 0};
+	if (data.length >= 4) {
+		Jugador4 = {nombre: data[3].nombre    , color: "ficha_verde", puntos:data[3].puntos, id: data[3].id, turno: 0};
+	}
+	if (data.length == 5) {
+		Jugador5 = {nombre: data[4].nombre   , color: "ficha_gris", puntos:data[4].puntos, id: data[4].id, turno: 0};
+	}
+	nJugadores = data.length;
+	Game.initialize(idCanvas.slice(1),sprites,startGame);
+}
+
+
 function getTurno () {
 	if (Jugador1.turno == 1) return Jugador1;
 	if (Jugador2.turno == 1) return Jugador2;
 	if (Jugador3.turno == 1) return Jugador3;
-	if (Jugador4.turno == 1) return Jugador4;
-	if (Jugador5.turno == 1) return Jugador5;
+	if (nJugadores >= 4) {
+		if (Jugador4.turno == 1) return Jugador4;
+	}
+	if (nJugadores == 5) {
+		if (Jugador5.turno == 1) return Jugador5;
+	}
 	
 }
 
 function pasarTurno () {
-	if (Jugador1.turno == 1) { Jugador2.turno = 1; Jugador1.turno = 0;}
-	else if (Jugador2.turno == 1) { Jugador3.turno = 1; Jugador2.turno = 0;}
-	else if (Jugador3.turno == 1) { Jugador4.turno = 1; Jugador3.turno = 0;}
-	else if (Jugador4.turno == 1) { Jugador5.turno = 1; Jugador4.turno = 0;}
-	else if (Jugador5.turno == 1) { Jugador1.turno = 1; Jugador5.turno = 0;}
+	
+	if (nJugadores == 3) {
+		if (Jugador1.turno == 1) { Jugador2.turno = 1; Jugador1.turno = 0;}
+		else if (Jugador2.turno == 1) { Jugador3.turno = 1; Jugador2.turno = 0;}
+		else if (Jugador3.turno == 1) { Jugador1.turno = 1; Jugador3.turno = 0;}
+	}
+	
+	if (nJugadores == 4) {
+		if (Jugador1.turno == 1) { Jugador2.turno = 1; Jugador1.turno = 0;}
+		else if (Jugador2.turno == 1) { Jugador3.turno = 1; Jugador2.turno = 0;}
+		else if (Jugador3.turno == 1) { Jugador4.turno = 1; Jugador3.turno = 0;}
+		else if (Jugador4.turno == 1) { Jugador1.turno = 1; Jugador4.turno = 0;}
+	}
+	
+	if (nJugadores == 5) {
+		if (Jugador1.turno == 1) { Jugador2.turno = 1; Jugador1.turno = 0;}
+		else if (Jugador2.turno == 1) { Jugador3.turno = 1; Jugador2.turno = 0;}
+		else if (Jugador3.turno == 1) { Jugador4.turno = 1; Jugador3.turno = 0;}
+		else if (Jugador4.turno == 1) { Jugador5.turno = 1; Jugador4.turno = 0;}
+		else if (Jugador5.turno == 1) { Jugador1.turno = 1; Jugador5.turno = 0;}
+	}
+	
 	CurrentMove = 0;
 	CurrentTurn += 1;
 }
@@ -262,16 +291,33 @@ Ficha_abajo = function(cx,cy) {
 	
     	if(up && Game.keys['sacar_ficha']) {
     		up = false;
-    		if (CurrentMove == 0)  {
-			NuevaPieza = new PiezaMapa(CurrentScroll.x + 7,CurrentScroll.y + 5, "Tcruze",90);
+    		//console.log(Meteor.userId());
+    		if (CurrentMove == 0 && getTurno().id == Meteor.userId())  {
+    			
+    			Meteor.call("Robar", function(err, data) { 
+    					NuevaPieza = new PiezaMapa(CurrentScroll.x + 7,CurrentScroll.y + 5, data[0],0);
 			
-				sonido_ladron.play();
+						sonido_ladron.play();
 			
-			Game.setBoard(7, NuevaPieza);
-			CurrentMove = 1;
-		} else if (CurrentMove == 1) {
-			Game.setBoard(8,new Set(NuevaPieza));
-			CurrentMove = 2;
+						Game.setBoard(7, NuevaPieza);
+						CurrentMove = 1; 
+						console.log(data);
+					});
+			
+		} else if (CurrentMove == 1 && getTurno().id == Meteor.userId()) {
+		
+			Meteor.call("ColocarFicha", idParty, NuevaPieza.sprite, {x: NuevaPieza.x, y: NuevaPieza.y}, function(err, data) { 
+			
+    					Game.setBoard(8,new Set(NuevaPieza));
+					CurrentMove = 2;
+					
+			});
+		
+		
+		
+		
+		
+			
 		}
 	}
 		
@@ -301,15 +347,18 @@ Jugadores = function() {
       SpriteSheet.draw(ctx,Jugador3.color,280,520,1,0,0.5);
       ctx.fillText(Jugador3.puntos,310,570);
       
-      ctx.fillStyle="rgb(255,255," + Jugador4.turno * 255 +")";
-      ctx.fillText(Jugador4.nombre,435,540);
-      SpriteSheet.draw(ctx,Jugador4.color,410,520,1,0,0.5);
-      ctx.fillText(Jugador4.puntos,440,570);
-      
-      ctx.fillStyle="rgb(255,255," + Jugador5.turno * 255 +")";
-      ctx.fillText(Jugador5.nombre,565,540);
-      SpriteSheet.draw(ctx,Jugador5.color,540,520,1,0,0.5);
-      ctx.fillText(Jugador5.puntos,570,570);
+      if (nJugadores >= 4) {
+      	 ctx.fillStyle="rgb(255,255," + Jugador4.turno * 255 +")";
+     	 ctx.fillText(Jugador4.nombre,435,540);
+      	 SpriteSheet.draw(ctx,Jugador4.color,410,520,1,0,0.5);
+     	 ctx.fillText(Jugador4.puntos,440,570);
+      }
+      if (nJugadores == 5) {
+      	 ctx.fillStyle="rgb(255,255," + Jugador5.turno * 255 +")";
+      	 ctx.fillText(Jugador5.nombre,565,540);
+      	 SpriteSheet.draw(ctx,Jugador5.color,540,520,1,0,0.5);
+      	 ctx.fillText(Jugador5.puntos,570,570);
+      }
 
       ctx.restore();
    
@@ -380,7 +429,7 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 			}
 	
 			if (init == false) {
-				$('#game').mousedown(function(e){
+				$(idCanvas).mousedown(function(e){
 	          	  	if (that.colocada == false ) {
 	         
 						if (e.clientX > that.x && e.clientY > that.y && e.clientX < that.x + 100 && e.clientY < that.y + 100){
@@ -392,7 +441,7 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 					}
 				})
 		
-				$('#game').mouseup(function(e){
+				$(idCanvas).mouseup(function(e){
        		 	 // cuando mueves. soltar ficha en una casilla
                 	if (that.colocada == false ) {
 						that.x = Math.floor(e.clientX/100)* 100;
@@ -402,7 +451,7 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 				})
                
 
-				$('#game').mousemove(function(e){
+				$(idCanvas).mousemove(function(e){
              
 					if(!mouseIsDown) return;
    					if (that.colocada == false ) {
@@ -517,7 +566,16 @@ Set = function (PiezaMapa) {
 			//ctx.fillRect(370+50*this.optionx,195+50*this.optiony,50,50);
 			
 			ctx.fillText("Colocar seguidor",350,160);
-			SpriteSheet.draw(ctx,this.pieza.sprite,420,195,1,this.pieza.rotation,1.5);
+			if (this.pieza.rotation == 0) {
+                		SpriteSheet.draw(ctx,this.pieza.sprite,370,195,1,this.pieza.rotation,1.5);
+            		} else if (this.pieza.rotation == -90) {
+                		SpriteSheet.draw(ctx,this.pieza.sprite,370,245,1,this.pieza.rotation,1.5);
+            		} else if (this.pieza.rotation == -180) {
+                		SpriteSheet.draw(ctx,this.pieza.sprite,420,245,1,this.pieza.rotation,1.5);
+            		} else if (this.pieza.rotation == -270) {
+                		SpriteSheet.draw(ctx,this.pieza.sprite,420,195,1,this.pieza.rotation,1.5);
+            		}
+			//SpriteSheet.draw(ctx,this.pieza.sprite,420,195,1,this.pieza.rotation,1.5);
 			ctx.font="bold 20px Arial";
 			for(var y=0; y<3; y=y+1){
 				for(var x=0; x<3; x=x+1){
@@ -767,6 +825,21 @@ Blank = new function () {
 	this.step = function() {};
 }
 
-$(function() {
-    Game.initialize("game",sprites,startGame);
-});
+
+
+function initialize(idCanvasElement, sprite_url, callback, party_id) {
+	
+	Meteor.call("InicioJuego", party_id, SetPlayers);
+	idCanvas = idCanvasElement;
+	idParty = party_id;
+	urlSprite = sprite_url;
+	callback();
+
+}
+
+//$(function () {
+//	Meteor.call("InicioJuego", SetPlayers);
+//	idCanvas = "#game";
+//	urlSprite = 'images/sprites.png';
+//
+//});
