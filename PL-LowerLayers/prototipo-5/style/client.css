@@ -103,9 +103,13 @@ html{
 	height: 420px;
 	
 }
+#clarcassonnecontainer{
 
+	
+}
 
 #clarcassonnecanvas{
+	float: right;
 	background-color:blue;
 }
 
