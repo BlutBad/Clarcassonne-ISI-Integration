@@ -1,26 +1,7 @@
 // if the database is empty on server start, create some sample data.
 
-Meteor
-	.startup(function() {
-	    fakeUsers = "Cheyrd_Inaurtle Oechi_Honomon Saml_Rodizard Ineh_Lorochu Tand_Knockeromon Quaq_Vorizard Elms_Kimizard Kell_Clotachu Cond_Aughamon Umy_Clotizard Lorrt_Denamon Scheas_Rodertle Ekalu_Goofortle Yinao_Sulachu Skeln_Wadezard Geal_Thimbleortle Schein_Snarkyzard Vun_Twerpirtle Oskelo_Thimbleechu Edyne_Undartle Yagea_Perozard Ros_Ashertle Erise_Ageychu Eingo_Faceemon Dars_Ardartle Clur_Twitymon Seev_Tasurtle Siy_Goofirtle Rayt_Numbachu Laeg_Boneurtle Ahini_Fumbleumon Inalo_Bumbleichu Wheuv_Footezard Tait_Ormichu Llaunt_Onartle Imy_Clodamon Osf_Wimpezard Chagh_Meatomon Rhey_Skullumon Shaid_Etochu Ett_Osymon Urado_Faceurtle Oite_Torichu Chrent_Faceomon Uma_Bumbleamon Ess_Ghaozard Aunta_Dumbyrtle Tanf_Loafechu Apere_Chauzard Oete_Footachu Ghat_Puffemon Luiz_Knuckleimon Uworo_Dipazard Avori_Untuzard Quek_Skeluchu Atnt_Angazard Ianga_Ballemon Reyd_Sulirtle Phew_Headazard Undn_Puffozard Orilu_Iamon Isk_Faceychu Ustn_Undyzard Suls_Twerpemon Eldrd_Draemon Yrano_Kimachu Nysr_Adochu Emc_Goofurtle Auski_Doofemon Eorma_Raymon Uemu_Ballomon Cheet_Sneezeamon Schiech_Tonuzard Irph_Ineertle Died_Numbuchu Ads_Ineamon Ymore_Ormazard Itb_Turychu Oathi_Imazard Iryni_Wadozard Ward_Denertle Weyk_Therortle Wark_Rayemon Inala_Oldemon Heik_Risamon Yieg_Verirtle Ads_Fingerozard Oia_Cloduzard Lab_Leromon Zhiec_Ustumon Bin_Enumon Rab_Nyurtle Lyenn_Doofychu Urnch_Knockizard Unyu_Atemon Atd_Wipeozard Nyv_Headortle Zhok_Boneortle Sayf_Enimon Thier_Ackortle Leis_Skelichu Gaiv_Thimbleizard Eemi_Bumbleirtle Quel_Wimpechu Ehini_Ghauchu Urilo_Boneichu Eml_Sneezeochu Ykimu_Oldimon Olyea_Airomon Emst_Inaymon Driel_Skullochu Reinn_Headyrtle Llooc_Sayachu Queal_Ankleazard Dais_Nyozard Samw_Draichu Zhoph_Faceachu Rakk_Echomon Osere_Lunkuchu";
-	    fakeUsersArray = fakeUsers.split(" ");
-	    console.log("Creando ("+fakeUsersArray.length +") usuarios falsos...");
-	    for ( var i = 0; i < fakeUsersArray.length; i++) {
-		fakeUser = fakeUsersArray[i];
-		fakeUserId = Meteor.users.insert({
-		    username : fakeUser,
-		    name : fakeUser,
-		    fakeUser : "true",
-		    services : {
-			password : {
-			    srp : '123123'
-			}
-		    }
-		});
-	    };
-	});
-
 Meteor.startup(function() {
+
 	    if (Menu.find().count() === 0) {
 		var data = [ {
 		    name : "Juegos",
@@ -42,6 +23,27 @@ Meteor.startup(function() {
 			name : data[i].name
 		    });
 		}
+		
+		fakeUsers = "Cheyrd_Inaurtle Oechi_Honomon Saml_Rodizard Ineh_Lorochu Tand_Knockeromon Quaq_Vorizard Elms_Kimizard Kell_Clotachu Cond_Aughamon Umy_Clotizard Lorrt_Denamon Scheas_Rodertle Ekalu_Goofortle Yinao_Sulachu Skeln_Wadezard Geal_Thimbleortle Schein_Snarkyzard Vun_Twerpirtle Oskelo_Thimbleechu Edyne_Undartle Yagea_Perozard Ros_Ashertle Erise_Ageychu Eingo_Faceemon Dars_Ardartle Clur_Twitymon Seev_Tasurtle Siy_Goofirtle Rayt_Numbachu Laeg_Boneurtle Ahini_Fumbleumon Inalo_Bumbleichu Wheuv_Footezard Tait_Ormichu Llaunt_Onartle Imy_Clodamon Osf_Wimpezard Chagh_Meatomon Rhey_Skullumon Shaid_Etochu Ett_Osymon Urado_Faceurtle Oite_Torichu Chrent_Faceomon Uma_Bumbleamon Ess_Ghaozard Aunta_Dumbyrtle Tanf_Loafechu Apere_Chauzard Oete_Footachu Ghat_Puffemon Luiz_Knuckleimon Uworo_Dipazard Avori_Untuzard Quek_Skeluchu Atnt_Angazard Ianga_Ballemon Reyd_Sulirtle Phew_Headazard Undn_Puffozard Orilu_Iamon Isk_Faceychu Ustn_Undyzard Suls_Twerpemon Eldrd_Draemon Yrano_Kimachu Nysr_Adochu Emc_Goofurtle Auski_Doofemon Eorma_Raymon Uemu_Ballomon Cheet_Sneezeamon Schiech_Tonuzard Irph_Ineertle Died_Numbuchu Ads_Ineamon Ymore_Ormazard Itb_Turychu Oathi_Imazard Iryni_Wadozard Ward_Denertle Weyk_Therortle Wark_Rayemon Inala_Oldemon Heik_Risamon Yieg_Verirtle Ads_Fingerozard Oia_Cloduzard Lab_Leromon Zhiec_Ustumon Bin_Enumon Rab_Nyurtle Lyenn_Doofychu Urnch_Knockizard Unyu_Atemon Atd_Wipeozard Nyv_Headortle Zhok_Boneortle Sayf_Enimon Thier_Ackortle Leis_Skelichu Gaiv_Thimbleizard Eemi_Bumbleirtle Quel_Wimpechu Ehini_Ghauchu Urilo_Boneichu Eml_Sneezeochu Ykimu_Oldimon Olyea_Airomon Emst_Inaymon Driel_Skullochu Reinn_Headyrtle Llooc_Sayachu Queal_Ankleazard Dais_Nyozard Samw_Draichu Zhoph_Faceachu Rakk_Echomon Osere_Lunkuchu";
+		fakeUsersArray = fakeUsers.split(" ");
+		console.log("Creando (" + fakeUsersArray.length
+			+ ") usuarios falsos...");
+		for ( var i = 0; i < fakeUsersArray.length; i++) {
+		    fakeUser = fakeUsersArray[i];
+		    fakeUserId = Meteor.users.insert({
+			username : fakeUser,
+			name : fakeUser,
+			fakeUser : "true",
+			services : {
+			    password : {
+				srp : '123123'
+			    }
+			}
+		    });
+		};
+		
+		
+		
 	    }
 
 	    if (Menu_user.find().count() === 0) {
@@ -120,8 +122,21 @@ Meteor.startup(function() {
 					description : "Has jugado 5 veces a este juego",
 					timesPlayed : 5,
 					insig_image_src : '/insignias/9.jpg'
-				    }, ]
+				    }, ],
+			    torneos : [
+
+			    {
+				title : "Torneo AlienInvasion",
+				game : 'AlienInvasion',
+				user_create : 'pepito_grillo',
+				date_start : "11/29/2013",
+				date_finish : "12/29/2013",
+				pic : '/images/games_logo/alieninvasion.jpg',
+				description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel'
+			    } ]
+
 			},
+
 			{
 			    name : 'Clarcassone',
 			    wrapf : 'ClarcassonneGameIU.initialize(idCanvasElement, party_id);',
@@ -176,7 +191,17 @@ Meteor.startup(function() {
 					description : "Has jugado una vez a este juego",
 					timesPlayed : 5,
 					insig_image_src : '/insignias/5.jpg'
-				    }, ]
+				    }, ],
+
+			    torneos : [ {
+				title : "Torneo Clarcassone",
+				game : 'Clarcassone',
+				user_create : 'pepito_grillo',
+				date_start : "11/29/2013",
+				date_finish : "12/29/2013",
+				pic : '/images/games_logo/clarkasone.jpg',
+				description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel'
+			    } ],
 			},
 
 			{
@@ -233,10 +258,20 @@ Meteor.startup(function() {
 					description : "Has jugado una vez a este juego",
 					timesPlayed : 5,
 					insig_image_src : '/insignias/6.jpg'
-				    }, ]
+				    }, ],
+			    torneos : [ {
+				title : "Torneo Froot War",
+				game : 'Froot Wars',
+				user_create : 'pepito_grillo',
+				date_start : "11/29/2013",
+				date_finish : "12/29/2013",
+				pic : '/images/games_logo/frootwars.jpg',
+				description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel'
+			    } ]
 			} ]
 
 		var timestamp = (new Date()).getTime();
+		//////////////////////AÑADIR JUEGOS//////////////////////////
 		for ( var i = 0; i < data.length; i++) {
 		    var juego_id = Juegos.insert({
 			name : data[i].name,
@@ -250,6 +285,8 @@ Meteor.startup(function() {
 			hall : data[i].hall,
 		    });
 
+		    
+		    //////////////////////RANGOS PARA JUEGOS//////////////////////////
 		    for ( var j = 0; j < data[i].rangos.length; j++) {
 			var info = data[i].rangos[j];
 			Rangos.insert({
@@ -260,6 +297,7 @@ Meteor.startup(function() {
 			timestamp += 1; // ensure unique timestamp.
 		    }
 
+		    //////////////////////INSIGNIAS PARA JUEGOS//////////////////////////
 		    for ( var j = 0; j < data[i].insignias.length; j++) {
 			var info = data[i].insignias[j];
 			Insignias.insert({
@@ -271,64 +309,44 @@ Meteor.startup(function() {
 			timestamp += 1; // ensure unique timestamp.
 		    }
 
-		}
-	    }
+		    
+		    
+		    
+		    
+		    //////////////////////TORNEOS//////////////////////////
+		    function ApuntameUsuariosFakes(torneoId) {
+			console.log("Añadiendo usuarios falsos a torneo: " + torneoId);
+			fakeUsers = Meteor.users.find({
+			    fakeUser : "true"
+			});
 
-	    if (Torneos.find().count() === 0) {
-		var data = [
-			{
-			    title : "Torneo AlienInvasion",
-			    game : 'AlienInvasion',
-			    user_create : 'pepito_grillo',
-			    date_start : "11/29/2013",
-			    date_finish : "12/29/2013",
-			    pic : '/images/games_logo/alieninvasion.jpg',
-			    description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel'
-			},
-			{
-			    title : "Torneo Clarcassone",
-			    game : 'Clarcassone',
-			    user_create : 'pepito_grillo',
-			    date_start : "11/29/2013",
-			    date_finish : "12/29/2013",
-			    pic : '/images/games_logo/clarkasone.jpg',
-			    description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel'
-			},
-
-			{
-			    title : "Torneo Froot War",
-			    game : 'Froot Wars',
-			    user_create : 'pepito_grillo',
-			    date_start : "11/29/2013",
-			    date_finish : "12/29/2013",
-			    pic : '/images/games_logo/frootwars.jpg',
-			    description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel'
-			} ];
-
-		for ( var i = 0; i < data.length; i++) {
-		    var torneoId = Torneos.insert(data[i]);
-		    ApuntameUsuariosFakes(torneoId);
-		}
-	    }
-	    // Crear unos cuantos usuarios falsos, para poder crear partidas de
-	    // los judarores que se apunten al torneo.
-
-	    function ApuntameUsuariosFakes(torneoId) {
-		console.log("Añadiendo usuarios falsos a torneo: " + torneoId);
-		fakeUsers = Meteor.users.find({
-		    fakeUser : "true"
-		});
-		
-
-		
-		fakeUsers.forEach(function(user) {
-		    if (Math.random() < 0.35) {
-			ChampUser.insert({
-			    id_torneo : torneoId,
-			    id_user : user._id
+			fakeUsers.forEach(function(user) {
+			    if (Math.random() < 0.35) {
+				ChampUser.insert({
+				    id_torneo : torneoId,
+				    id_user : user._id
+				});
+			    }
 			});
 		    }
-		});
-	    }
+	
+		    
+		    //Añadir torneos, enlazando cada torneo con su juego.
+		    for ( var j = 0; j < data[i].torneos.length; j++) {
+			var info = data[i].torneos[j];
+			var torneoId = Torneos.insert({
+			    game_id : juego_id,
+			    title : info.title,
+			    user_create : info.user_create,
+			    date_start : info.date_start,
+			    date_finish : info.date_finish,
+			    pic : info.pic,
+			    description : info.description
+			});
+			console.log(torneoId);
+			ApuntameUsuariosFakes(torneoId);
+		    }
 
+		}
+	    }
 	});

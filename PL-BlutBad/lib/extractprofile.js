@@ -57,5 +57,13 @@ _extractProfile = function (userObjId) {
 
 
 resolverUser = function(id) {
+    
+    function randomDate(start, end) {
+	    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()))
+    	}
+
+    fecha = randomDate(new Date(2003, 0, 1), new Date(1900,0,1))
+    
+    
     return {nombre: "Pepito Grillo", fecha: "12/11/1983"}
 }

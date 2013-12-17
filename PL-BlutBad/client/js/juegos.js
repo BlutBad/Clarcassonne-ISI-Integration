@@ -12,10 +12,8 @@ Template.juegos.editar = function() {
 	    return true;
 	} else {
 	    return false;
-	}
-	;
-    }
-    ;
+	};
+    };
 };
 
 Template.juegos.events({

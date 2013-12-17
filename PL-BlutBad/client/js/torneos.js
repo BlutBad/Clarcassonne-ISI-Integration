@@ -106,6 +106,15 @@ Template.torneos.showEditTorn = function() {
 }
 
 Template.torneos.events = {
+	//Acciones para empezar el torrneo
+	'click .empezarTorneo': function() {
+	    console.log(this);
+	},
+    
+	//Para finalizar el torrneo.
+        'click .finalizarTorneo': function() {
+            console.log(this);
+        },
 
         'click input#crear_torneo': function() {
                 openCreateDialog();
@@ -115,7 +124,7 @@ Template.torneos.events = {
                 Session.set("gametor", this.name);
         },
         'click #mostrar_torneos': function() {
-                Session.set("gametor", undefined);
+                Session.set("gametor", false);
         },
         'click .apunto': function (){       
                 if (!ChampUser.findOne({id_torneo: this._id, id_user: Meteor.user()._id})) {  
@@ -132,6 +141,7 @@ Template.torneos.events = {
                 }
         },
         'click .participantes': function(){  
+
                 lista_show = Session.get("showParticipantes");
                 if (lista_show == undefined) {
                         lista_show = [];
@@ -240,7 +250,7 @@ Template.editTor.events({
 
 });
 
-//EDIT CHAMPIONSHIP
+//////////////////////////EDIT CHAMPIONSHIP////////////////////////////////
 
 Template.torneos.showEditChamp = function() {
     console.log("here");
