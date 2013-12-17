@@ -1,4 +1,4 @@
-var sprites = {
+var spritesAlien = {
     ship: { sx: 0, sy: 0, w: 37, h: 42, frames: 1 },
     missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 },
     enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },
@@ -50,13 +50,13 @@ OBJECT_ENEMY = 4,
 OBJECT_ENEMY_PROJECTILE = 8,
 OBJECT_POWERUP = 16;
 
-var startGame = function() {
+var startGameAlien = function() {
     gameAlien.setBoard(0,new Starfield(20,0.4,100,true));
     gameAlien.setBoard(1,new Starfield(50,0.6,100));
     gameAlien.setBoard(2,new Starfield(100,1.0,50));
     gameAlien.setBoard(3,new TitleScreen("Alien Invasion", 
                                     "Press fire to start playing",
-                                    playGame));
+                                    playGameAlien));
 };
 
 
@@ -85,7 +85,7 @@ var level1 = [
 ];
 
 
-var playGame = function() {
+var playGameAlien = function() {
     var board = new gameAlienBoard();
     board.add(new PlayerShip());
 
@@ -104,7 +104,7 @@ var winGame = function() {
     Meteor.call("matchFinish", Session.get("current_game"), gameAlien.points);
     gameAlien.setBoard(3,new TitleScreen("You win!", 
                                     "Press fire to play again",
-                                    playGame));
+                                    playGameAlien));
 };
 
 
@@ -114,7 +114,7 @@ var loseGame = function() {
     Meteor.call("matchFinish", Session.get("current_game"), gameAlien.points);
     gameAlien.setBoard(3,new TitleScreen("You lose!", 
                                     "Press fire to play again",
-                                    playGame));
+                                    playGameAlien));
 };
 
 
@@ -283,7 +283,7 @@ PlayerMissile.prototype.step = function(dt)  {
 // existente o se crea una nueva, y se pasan opcionalmente en override
 // valores alternativos para los par�metros de la plantilla o de
 // baseParameters. Ver c�mo se a�aden 2 enemigos en la funci�n
-// playGame() de este fichero.
+// playGameAlien() de este fichero.
 
 var Enemy = function(blueprint,override) {
     // Cada instancia tendr� las propiedades definidas en baseParameters
@@ -419,6 +419,6 @@ Explosion.prototype.step = function(dt) {
 
 /*
 $(function() {
-    gameAlien.initialize("game",sprites,startGame);
+    gameAlien.initialize("game",spritesAlien,startGameAlien);
 });
 */

@@ -4,7 +4,7 @@
 // (m�todo step()).
 //
 // Estos dos m�todos son implementados por: las pantallas iniciales y
-// final del juego, los sprites que se muestran en la pantalla
+// final del juego, los spritesAlien que se muestran en la pantalla
 // (jugador, enemigo, proyectiles, y los elementos como el marcador de
 // puntuaci�n o el n�mero de vidas.
 
@@ -165,7 +165,7 @@ var SpriteSheet = new function() {
 	this.map = spriteData;
 	this.image = new Image();
 	this.image.onload = callback;
-	this.image.src = 'images/sprites2.png';
+	this.image.src = 'images/sprites.png';
     };
 
     

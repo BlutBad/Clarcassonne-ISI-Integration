@@ -70,7 +70,7 @@ Meteor.startup(function() {
 		var data = [
 			{
 			    name : 'AlienInvasion',
-			    wrapf : 'gameAlien.initialize("gamecanvasAlien",sprites,startGame)',
+			    wrapf : 'gameAlien.initialize("gamecanvasAlien",spritesAlien,startGameAlien)',
 			    logo_src : '/images/games_logo/alieninvasion.jpg',
 			    logo_alt : 'Juega es este juego',
 			    title_desc : 'Titulo para la descripcion del juego',

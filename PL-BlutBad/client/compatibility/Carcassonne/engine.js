@@ -1,18 +1,18 @@
 // Alien Invasion utiliza duck typing para implementar como dibujar
-// elementos en la pantalla (método draw()) y para que actualicen su
-// estado cada vez que el bucle de animación marca un nuevo paso
-// (método step()).
+// elementos en la pantalla (mï¿½todo draw()) y para que actualicen su
+// estado cada vez que el bucle de animaciï¿½n marca un nuevo paso
+// (mï¿½todo step()).
 //
-// Estos dos métodos son implementados por: las pantallas iniciales y
+// Estos dos mï¿½todos son implementados por: las pantallas iniciales y
 // final del juego, los sprites que se muestran en la pantalla
 // (jugador, enemigo, proyectiles, y los elementos como el marcador de
-// puntuación o el número de vidas.
+// puntuaciï¿½n o el nï¿½mero de vidas.
 
 
 
 
 // Objeto singleton Game: se guarda una unica instancia del
-// constructor anónimo en el objeto Game
+// constructor anï¿½nimo en el objeto Game
  Game = new function() {                                                                  
   var boards = [];
 
@@ -24,7 +24,7 @@
     sonidojuego = document.getElementById("sonidojuego");
     
 
-	// Propiedades para pantallas táctiles
+	// Propiedades para pantallas tï¿½ctiles
     this.playerOffset = 10;
     this.canvasMultiplier= 1;
     this.setupMobile();
@@ -39,18 +39,18 @@
 
     this.loop(); 
 
-      // Añadimos como un nuevo tablero al juego el panel con los
-      // botones para pantalla táctil, sólo si hemos detectado pantalla móvil
+      // Aï¿½adimos como un nuevo tablero al juego el panel con los
+      // botones para pantalla tï¿½ctil, sï¿½lo si hemos detectado pantalla mï¿½vil
     if(this.mobile) {
       this.setBoard(4,new TouchControls());
     }
 	console.log("llegamos aquiii");
-	console.log(callback);
+	console.log("callback: " + callback);
     SpriteSheet.load(sprite_data,callback);
   };
   
 
-    // Gestión de la entrada (teclas para izda/derecha y disparo)
+    // Gestiï¿½n de la entrada (teclas para izda/derecha y disparo)
     var KEY_CODES = { 37:'left', 39:'right', 38 :'up', 40:'down', 32:'sacar_ficha', 
     					27: 'back', 48:'rotar', 72: 'help', 77:'silenciar', 67:'ayuda'};
     this.keys = {};
@@ -91,7 +91,7 @@
 	}
 	
 	// Para cada board, de 0 en adelante, se 
-	// llama a su método step() y luego a draw()
+	// llama a su mï¿½todo step() y luego a draw()
 	for(var i=0,len = boards.length;i<len;i++) {
 	    if(boards[i]) { 
 			boards[i].step(dt);
@@ -156,16 +156,16 @@
 
 
 // Objeto singleton SpriteSheet: se guarda una unica instancia del
-// constructor anónimo en el objeto SpriteSheet
+// constructor anï¿½nimo en el objeto SpriteSheet
  SpriteSheet = new function() {
 
-    // Almacena nombre_de_sprite: rectángulo para que sea mas facil
+    // Almacena nombre_de_sprite: rectï¿½ngulo para que sea mas facil
     // gestionar los sprites del fichero images/sprite.png
     this.map = { }; 
 	
     // Para cargar hoja de sprites. 
     //
-    // Parámetros: spriteData: parejas con nombre de sprite, rectángulo
+    // Parï¿½metros: spriteData: parejas con nombre de sprite, rectï¿½ngulo
     // callback: para llamarla cuando se haya cargado la hoja de
     // sprites
     this.load = function(spriteData,callback) { 
@@ -180,7 +180,7 @@
     
     // Para dibujar sprites individuales en el contexto de canvas ctx
     //
-    // Parámetros: contexto, string con nombre de sprite para buscar
+    // Parï¿½metros: contexto, string con nombre de sprite para buscar
     //  en this.map, x e y en las que dibujarlo, y opcionalmente,
     //  frame para seleccionar el frame de un sprite que tenga varios
     //  como la explosion
@@ -237,7 +237,7 @@
 
 
 // GameBoard implementa un tablero de juego que gestiona la
-// interacción entre los elementos del juego sobre el que se disponen
+// interacciï¿½n entre los elementos del juego sobre el que se disponen
 // los elementos del juego (fichas, cartas, naves, proyectiles, etc.)
 
 // La clase GameBoard ofrece la interfaz step(), draw() para que sus
@@ -246,14 +246,14 @@
  GameBoard = function() {
     var board = this;
 
-    // Colección de objetos contenidos por este tablero
+    // Colecciï¿½n de objetos contenidos por este tablero
     this.objects = [];
 
-    // Propiedad que lleva la cuenta de cuántos objetos de cada tipo
+    // Propiedad que lleva la cuenta de cuï¿½ntos objetos de cada tipo
     // hay en el tablero de juegos
     this.cnt = {};
 
-    // Añade obj a objects
+    // Aï¿½ade obj a objects
     this.add = function(obj) { 
 	obj.board=this;  // Para que obj pueda referenciar el tablero
 	this.objects.push(obj); 
@@ -264,9 +264,9 @@
 	return obj; 
     };
 
-    // Los siguientes 3 métodos gestionan el borrado.  Cuando un board
-    // está siendo recorrido (en step()) podría eliminarse algún
-    // objeto, lo que interferiría en el recorrido. Por ello borrar se
+    // Los siguientes 3 mï¿½todos gestionan el borrado.  Cuando un board
+    // estï¿½ siendo recorrido (en step()) podrï¿½a eliminarse algï¿½n
+    // objeto, lo que interferirï¿½a en el recorrido. Por ello borrar se
     // hace en dos fases: marcado, y una vez terminado el recorrido,
     // se modifica objects.
 
@@ -288,11 +288,11 @@
     // Elimina de objects los objetos pendientes de ser borrados
     this.finalizeRemoved = function() {
 	for(var i=0, len=this.removed.length; i<len;i++) {
-	    // Buscamos qué índice tiene en objects[] el objeto i de
+	    // Buscamos quï¿½ ï¿½ndice tiene en objects[] el objeto i de
 	    // removed[]
 	    var idx = this.objects.indexOf(this.removed[i]);
 
-	    // splice elimina de objects el objeto en la posición idx
+	    // splice elimina de objects el objeto en la posiciï¿½n idx
 	    if(idx != -1) {
 		this.cnt[this.removed[i].type]--;
 		this.objects.splice(idx,1); 
@@ -301,7 +301,7 @@
     }
 
 
-    // Iterador que aplica el método funcName a todos los
+    // Iterador que aplica el mï¿½todo funcName a todos los
     // objetos de objects
     this.iterate = function(funcName) {
 	// Convertimos en un array args (1..)
@@ -323,9 +323,9 @@
 	 }
     };
 
-    // Cuando Game.loop() llame a step(), hay que llamar al método
+    // Cuando Game.loop() llame a step(), hay que llamar al mï¿½todo
     // step() de todos los objetos contenidos en el tablero.  Antes se
-    // inicializa la lista de objetos pendientes de borrar, y después
+    // inicializa la lista de objetos pendientes de borrar, y despuï¿½s
     // se borran los que hayan aparecido en dicha lista
     this.step = function(dt) { 
 	this.resetRemoved();
@@ -333,13 +333,13 @@
 	this.finalizeRemoved();
     };
 
-    // Cuando Game.loop() llame a draw(), hay que llamar al método
+    // Cuando Game.loop() llame a draw(), hay que llamar al mï¿½todo
     // draw() de todos los objetos contenidos en el tablero
     this.draw= function(ctx) {
 	this.iterate('draw',ctx);
     };
 
-    // Comprobar si hay intersección entre los rectángulos que
+    // Comprobar si hay intersecciï¿½n entre los rectï¿½ngulos que
     // circunscriben a los objetos o1 y o2
     this.overlap = function(o1,o2) {
 	// return !((o1 encima de o2)    || (o1 debajo de o2)   ||
@@ -407,25 +407,25 @@ Sprite.prototype.hit = function(damage) {
 // Clase para implementar los niveles de un juego. 
 
 // Al constructor del nivel se le pasan los datos que definen el nivel
-//   (p.ej. level1 en game.js) y una función a la que llamar si el
+//   (p.ej. level1 en game.js) y una funciï¿½n a la que llamar si el
 //   jugador gana (winGame en game.js).
  Level = function(levelData,callback) {
-    // Recuerda el formato de cada batería de enemigos definida en levelData
+    // Recuerda el formato de cada baterï¿½a de enemigos definida en levelData
     //  Comienzo, Fin,   Frecuencia,  Tipo,       Override
     //  [ 0,       4000,  500,         'step',     { x: 100 } ]
     this.levelData = [];
 
     // levelData, como todos los objetos en JavaScript, se pasa por
-    // referencia. Aquí realizamos una copia profunda de levelData. Es
+    // referencia. Aquï¿½ realizamos una copia profunda de levelData. Es
     // necesaria porque los datos del nivel se van modificando mientras
     // que se juega el nivel, por lo que si no hacemos una copia no se
-    // podría volver a jugar un mismo nivel
+    // podrï¿½a volver a jugar un mismo nivel
     for(var i =0; i<levelData.length; i++) {
-	// Para copiarla usamos este patrón JavaScript para realizar
+	// Para copiarla usamos este patrï¿½n JavaScript para realizar
 	// copias: Object.create() crea un nuevo objeto que tiene como
 	// prototipo el objeto pasado como argumento. Ese objeto, que
 	// a todos los efectos podemos considerar como una copia del
-	// argumento, se añade a this.levelData
+	// argumento, se aï¿½ade a this.levelData
 	this.levelData.push(Object.create(levelData[i]));
     }
 
@@ -436,65 +436,65 @@ Sprite.prototype.hit = function(damage) {
 };
 
 
-// Método que, junto a draw(), forma parte de la interfaz que tiene
-// que ofrecer cualquier objeto añadido como tablero a Game.boards.
-// En este método se lleva la cuenta del tiempo que ha transcurrido, y
-// se van añadiendo nuevos enemigos al tablero de juegos según lo
-// indicado en la definición del nivel almacenada en this.levelData
+// Mï¿½todo que, junto a draw(), forma parte de la interfaz que tiene
+// que ofrecer cualquier objeto aï¿½adido como tablero a Game.boards.
+// En este mï¿½todo se lleva la cuenta del tiempo que ha transcurrido, y
+// se van aï¿½adiendo nuevos enemigos al tablero de juegos segï¿½n lo
+// indicado en la definiciï¿½n del nivel almacenada en this.levelData
 Level.prototype.step = function(dt) {
     var idx = 0, remove = [], curShip = null;
 
     // Actualizamos el tiempo que ha pasado 
     this.t += dt * 1000;
 
-    // Recuerda el formato de cada batería de enemigos definida en levelData
+    // Recuerda el formato de cada baterï¿½a de enemigos definida en levelData
     //  Comienzo, Fin,   Frecuencia,  Tipo,       Override
     // [ 0,       4000,  500,         'step',     { x: 100 } ]
 
-    // Var recorriendo las baterías de enemigos (filas en levelData)
+    // Var recorriendo las baterï¿½as de enemigos (filas en levelData)
     while (curShip = this.levelData[idx]) {
 
 	// Si ya ha pasado el tiempo en el que hay que crear enemigos
-	// de esta batería, se añaden a remove para que sean borrados
-	// una vez acabado el bucle. ¡No se eliminan directamente
-	// porque el bucle está iterando sobre la estructura de datos!
-	// Es el mismo patrón que utilizamos cuando borramos sprites
+	// de esta baterï¿½a, se aï¿½aden a remove para que sean borrados
+	// una vez acabado el bucle. ï¿½No se eliminan directamente
+	// porque el bucle estï¿½ iterando sobre la estructura de datos!
+	// Es el mismo patrï¿½n que utilizamos cuando borramos sprites
 	// del tablero de juegos: marcamos en remove para borrar y
-	// borramos una vez concluído el bucle.
+	// borramos una vez concluï¿½do el bucle.
 	if(this.t > curShip[1]) {
 	    remove.push(curShip);
 	} else if(curShip[0] < this.t) {
-	    // Ha llegado la hora de crear un nuevo enemigo de esta batería
+	    // Ha llegado la hora de crear un nuevo enemigo de esta baterï¿½a
 	    var enemy = enemies[curShip[3]],
             override = curShip[4];
 
 	    this.board.add(new Enemy(enemy,override));
 
-	    // Recuerda el formato de cada batería de enemigos definida en levelData
+	    // Recuerda el formato de cada baterï¿½a de enemigos definida en levelData
 	    //  Comienzo, Fin,   Frecuencia,  Tipo,       Override
 	    // [ 0,       4000,  500,         'step',     { x: 100 } ]
 
-	    // Modificamos la definición de esta batería para
-	    // programar la creación del siguiente enemigo dentro de
+	    // Modificamos la definiciï¿½n de esta baterï¿½a para
+	    // programar la creaciï¿½n del siguiente enemigo dentro de
 	    // Frecuencia ms
 	    curShip[0] += curShip[2];
 	}
-	idx++; // Pasamos a la siguiente batería de enemigos
+	idx++; // Pasamos a la siguiente baterï¿½a de enemigos
     }
 
-    // Elimina del nivel una batería de enemigos del nivel si ha sido
-    // añadida a remove en el anterior bucle porque ya ha pasado su
+    // Elimina del nivel una baterï¿½a de enemigos del nivel si ha sido
+    // aï¿½adida a remove en el anterior bucle porque ya ha pasado su
     // ventana de tiempo en la que hay que crear enemigos de dicha
-    // batería
+    // baterï¿½a
     for(var i=0,len=remove.length;i<len;i++) {
 	var remIdx = this.levelData.indexOf(remove[i]);
 	if(remIdx != -1) this.levelData.splice(remIdx,1);
     }
 
-    // Comprueba si hay que terminar el nivel porque no quedan más
+    // Comprueba si hay que terminar el nivel porque no quedan mï¿½s
     // enemigos que generar, y no quedan enemigos en el tablero de
     // juegos.  Para ello se hace uso de la propiedad this.board.cnt
-    // que lleva la cuenta de cuántos objetos de cada tipo hay en el
+    // que lleva la cuenta de cuï¿½ntos objetos de cada tipo hay en el
     // tablero de juegos.
     if(this.levelData.length === 0 && this.board.cnt[OBJECT_ENEMY] === 0) {
 	if(this.callback) this.callback();
@@ -502,40 +502,40 @@ Level.prototype.step = function(dt) {
 
 };
 
-// Level implementa draw() porque al añadirse como tablero a Game el
+// Level implementa draw() porque al aï¿½adirse como tablero a Game el
 // bucle Game.loop() va a llamar a step() y a draw(). Pero no hay nada
 // que hacer en draw() para un nivel, ya que los sprites de los
-// enemigos los añade el nivel al tablero de juegos (GameBoard). 
+// enemigos los aï¿½ade el nivel al tablero de juegos (GameBoard). 
 Level.prototype.draw = function(ctx) { };
 
 
 
 
 // Clase para controlar el juego mediante botones en la pantalla
-// táctil de un móvil o una tableta
+// tï¿½ctil de un mï¿½vil o una tableta
  TouchControls = function() {
 
     
     // Consideraremos el ancho de la pantalla dividido en 5 franjas
     // verticales o columnas. En las dos de la izda situaremos los
-    // botones de dirección y en la derecha el de disparo
+    // botones de direcciï¿½n y en la derecha el de disparo
     var unitWidth = Game.width/5;
 
-    // Separación entre columnas
+    // Separaciï¿½n entre columnas
     var gutterWidth = 10;
 
     // Ancho de cada columna
     var blockWidth = unitWidth-gutterWidth;
 
-    // Dibuja un rectángulo con texto dentro. Usado para representar
+    // Dibuja un rectï¿½ngulo con texto dentro. Usado para representar
     // los botones. 
     // Los botones de las flechas izquierda y derecha usan los
     // caracteres Univode UTF-8 \u25C0 y \u25B6 respectivamente, que
-    // corresponden a sendos triángulos
+    // corresponden a sendos triï¿½ngulos
     this.drawSquare = function(ctx,x,y,txt,on) {
 	// Usamos un nivel de opacidad del fondo (globalAlpha)
-	// diferente para que cambie la apariencia del botón en
-	// función de si está presionado (opaco) o no (más
+	// diferente para que cambie la apariencia del botï¿½n en
+	// funciï¿½n de si estï¿½ presionado (opaco) o no (mï¿½s
 	// transparente)
 	ctx.globalAlpha = on ? 0.9 : 0.6;
 
@@ -555,8 +555,8 @@ Level.prototype.draw = function(ctx) { };
 
 	this.drawRectangle = function(ctx,x,y,txt,on) {
 	// Usamos un nivel de opacidad del fondo (globalAlpha)
-	// diferente para que cambie la apariencia del botón en
-	// función de si está presionado (opaco) o no (más
+	// diferente para que cambie la apariencia del botï¿½n en
+	// funciï¿½n de si estï¿½ presionado (opaco) o no (mï¿½s
 	// transparente)
 	ctx.globalAlpha = on ? 0.9 : 0.6;
 
@@ -588,7 +588,7 @@ Level.prototype.draw = function(ctx) { };
 	this.drawSquare(ctx,4*unitWidth,yLoc,"A",Game.keys['fire']);
 	this.drawRectangle(ctx,2*unitWidth + gutterWidth,yLoc,"B",Game.keys['leftFireBall'] || Game.keys['rigthFireBall'] );
 
-	// Recupera el estado salvado al principio del método
+	// Recupera el estado salvado al principio del mï¿½todo
 	ctx.restore();
     };
 
@@ -602,23 +602,23 @@ Level.prototype.draw = function(ctx) { };
 	// scrolling, clicking, zooming, etc.
 	e.preventDefault();
 
-	// Detección de eventos sobre las dos franjas de la izquierda
+	// Detecciï¿½n de eventos sobre las dos franjas de la izquierda
 	// correspondientes a flecha izquierda y flecha derecha
 	Game.keys['left'] = false;
 	Game.keys['right'] = false;
 	Game.keys["leftFireBall"] = false;
 	Game.keys["rightFireBall"] = false;
 	for(var i=0;i<e.targetTouches.length;i++) {
-	    // Independientemente de dónde se tocó originalmente, nos
+	    // Independientemente de dï¿½nde se tocï¿½ originalmente, nos
 	    // fijamos en todos los dedos y si hay alguno sobre los
-	    // botones de dirección, lo consideramos activado. Esto
+	    // botones de direcciï¿½n, lo consideramos activado. Esto
 	    // permite desplazar los dedos sin levantarlos, y que se
 	    // generen eventos cuando pasan por encima de los botones
-	    // de dirección
+	    // de direcciï¿½n
 	    touch = e.targetTouches[i];
 
-	    // Al fijarnos sólo en las coordenadas X hacemos que toda
-	    // la franja vertical de cada botón sea activa.
+	    // Al fijarnos sï¿½lo en las coordenadas X hacemos que toda
+	    // la franja vertical de cada botï¿½n sea activa.
 	    x = touch.pageX / Game.canvasMultiplier - Game.canvas.offsetLeft;
 	    if(x < unitWidth) {
 		Game.keys['left'] = true;
@@ -652,16 +652,16 @@ Level.prototype.draw = function(ctx) { };
 		};
 	}
 
-	// Detección de eventos sobre franja de la derecha: disparo
+	// Detecciï¿½n de eventos sobre franja de la derecha: disparo
 	if(e.type == 'touchstart' || e.type == 'touchend') {
 	    for(i=0;i<e.changedTouches.length;i++) {
-		// Sólo consideramos dedos que han intervenido en el
-		// evento actual (touchstart o touchend según
+		// Sï¿½lo consideramos dedos que han intervenido en el
+		// evento actual (touchstart o touchend segï¿½n
 		// comprobamos en el anterior if)
 		touch = e.changedTouches[i];
 
-		// Al fijarnos sólo en las coordenadas X hacemos que toda
-		// la franja vertical de cada botón sea activa.
+		// Al fijarnos sï¿½lo en las coordenadas X hacemos que toda
+		// la franja vertical de cada botï¿½n sea activa.
 		x = touch.pageX / Game.canvasMultiplier - Game.canvas.offsetLeft;
 		if(x > 4 * unitWidth) {
 		    Game.keys['fire'] = (e.type == 'touchstart');
@@ -670,7 +670,7 @@ Level.prototype.draw = function(ctx) { };
 	}
     };
 
-    // Registra los manejadores para los eventos táctiles asociados al
+    // Registra los manejadores para los eventos tï¿½ctiles asociados al
     // elemento Game.canvas del DOM
     Game.canvas.addEventListener('touchstart',this.trackTouch,true);
     Game.canvas.addEventListener('touchmove',this.trackTouch,true);
@@ -678,8 +678,8 @@ Level.prototype.draw = function(ctx) { };
 
     // Si ha habido un evento de toque es que estamos en una pantalla
     // tactil, en cuyo caso guardamos un offset para que la nave del
-    // jugador esté desplazada hacia arriba para dejar espacio para
-    // los botones en la pantalla tactil.  Ver en game.js cómo hemos
+    // jugador estï¿½ desplazada hacia arriba para dejar espacio para
+    // los botones en la pantalla tactil.  Ver en game.js cï¿½mo hemos
     // modificado PlayerShip para que tenga en cuenta este
     // offset.
     Game.playerOffset = unitWidth + 20;
