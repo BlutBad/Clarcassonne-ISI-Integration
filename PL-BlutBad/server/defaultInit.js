@@ -43,6 +43,12 @@ Meteor.startup(function() {
 		};
 		
 		
+		// USUARIOS POR DEFECTOs
+		Accounts.createUser({username:"admin",email:"admin@kaka.aka", password:"123"})
+		Accounts.createUser({username:"user",email:"user@kaka.aka", password:"123"})
+		Accounts.createUser({username:"sara",email:"sara@kaka.aka", password:"123"})
+		Accounts.createUser({username:"itzi",email:"itzi@kaka.aka", password:"123"})
+		Accounts.createUser({username:"dany",email:"dany@kaka.aka", password:"123"})
 		
 	    }
 
@@ -271,6 +277,7 @@ Meteor.startup(function() {
 			} ]
 
 		var timestamp = (new Date()).getTime();
+		
 		//////////////////////AÑADIR JUEGOS//////////////////////////
 		for ( var i = 0; i < data.length; i++) {
 		    var juego_id = Juegos.insert({
@@ -343,7 +350,6 @@ Meteor.startup(function() {
 			    pic : info.pic,
 			    description : info.description
 			});
-			console.log(torneoId);
 			ApuntameUsuariosFakes(torneoId);
 		    }
 
