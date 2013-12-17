@@ -1,7 +1,7 @@
 
 
 //Para guardar las partidas que se van a jugar
-Partidas = new Meteor.Collection('partidas', {autopublish: "false"});
+Partidas = new Meteor.Collection('partidas');
 
 //Guardas las partidas que se estan preparando en el hall,
 //antes de dar al botno de jugar partida, una coleccion de servicio, para no ensuciar 

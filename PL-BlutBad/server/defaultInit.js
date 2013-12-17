@@ -30,16 +30,8 @@ Meteor.startup(function() {
 			+ ") usuarios falsos...");
 		for ( var i = 0; i < fakeUsersArray.length; i++) {
 		    fakeUser = fakeUsersArray[i];
-		    fakeUserId = Meteor.users.insert({
-			username : fakeUser,
-			name : fakeUser,
-			fakeUser : "true",
-			services : {
-			    password : {
-				srp : '123123'
-			    }
-			}
-		    });
+		    var uId = Accounts.createUser({fakeUser : true,username:fakeUser,email:(fakeUser+"@kaka.aka"), password:"123"})
+		    Meteor.users.update(uId,{$set:{fakeUser:true}});
 		};
 		
 		
@@ -49,6 +41,7 @@ Meteor.startup(function() {
 		Accounts.createUser({username:"sara",email:"sara@kaka.aka", password:"123"})
 		Accounts.createUser({username:"itzi",email:"itzi@kaka.aka", password:"123"})
 		Accounts.createUser({username:"dany",email:"dany@kaka.aka", password:"123"})
+	
 		
 	    }
 
@@ -73,6 +66,7 @@ Meteor.startup(function() {
 	    }
 
 	    if (Juegos.find().count() === 0) {
+		var moder = Accounts.createUser({username:"moder",email:"moder@kaka.aka", password:"123"});
 		var data = [
 			{
 			    name : 'AlienInvasion',
@@ -134,7 +128,7 @@ Meteor.startup(function() {
 			    {
 				title : "Torneo AlienInvasion",
 				game : 'AlienInvasion',
-				user_create : 'pepito_grillo',
+				user_create : moder,
 				date_start : "11/29/2013",
 				date_finish : "12/29/2013",
 				pic : '/images/games_logo/alieninvasion.jpg',
@@ -202,7 +196,7 @@ Meteor.startup(function() {
 			    torneos : [ {
 				title : "Torneo Clarcassone",
 				game : 'Clarcassone',
-				user_create : 'pepito_grillo',
+				user_create : moder,
 				date_start : "11/29/2013",
 				date_finish : "12/29/2013",
 				pic : '/images/games_logo/clarkasone.jpg',
@@ -268,7 +262,7 @@ Meteor.startup(function() {
 			    torneos : [ {
 				title : "Torneo Froot War",
 				game : 'Froot Wars',
-				user_create : 'pepito_grillo',
+				user_create : moder,
 				date_start : "11/29/2013",
 				date_finish : "12/29/2013",
 				pic : '/images/games_logo/frootwars.jpg',
@@ -324,7 +318,7 @@ Meteor.startup(function() {
 		    function ApuntameUsuariosFakes(torneoId) {
 			console.log("Añadiendo usuarios falsos a torneo: " + torneoId);
 			fakeUsers = Meteor.users.find({
-			    fakeUser : "true"
+			    fakeUser : true
 			});
 
 			fakeUsers.forEach(function(user) {

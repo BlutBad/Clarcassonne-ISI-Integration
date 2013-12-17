@@ -12,6 +12,10 @@
 // tested with facebook, twitter, google, password
 // TODO: add picture / profile photo
 
+function getRandomInt (min, max) {
+	    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+    
 _extractProfile = function (userObjId) {
   if (!userObjId)
     return null;
@@ -57,13 +61,12 @@ _extractProfile = function (userObjId) {
 
 
 resolverUser = function(id) {
-    
-    function randomDate(start, end) {
-	    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()))
-    	}
+    result  = _extractProfile(id.user_id)
 
-    fecha = randomDate(new Date(2003, 0, 1), new Date(1900,0,1))
+
+   
+    fecha = getRandomInt(1,30) + "/"+getRandomInt(1,12) +"/"+getRandomInt(1900,2010)
+
     
-    
-    return {nombre: "Pepito Grillo", fecha: "12/11/1983"}
+    return {nombre: result.username, fecha: fecha}
 }

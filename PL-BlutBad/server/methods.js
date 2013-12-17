@@ -9,12 +9,20 @@ Meteor.methods({
 	
 	//Meteor.call("matchFinish", Session.get("current_game"), gameAlien.points);
 	
-	matchFinish : function(gameId, score) { 
- 
+	matchFinish : function(gameId, score, opts) { 
+	    console.log(opts);
 		if (this.userId != null) {
+		    
+		    	if(opts != null){
+		    	    userId = opts.user_id;
+		    	}else{
+		    	    userId = this.userId
+		    	}
+
 			curUser = Ranking.findOne({
 				gameId : gameId,
-				userId : this.userId});
+				userId : userId});
+			
 			if(curUser){
 				if (curUser.maxScore < score){
 					curUser.maxScore = score;
@@ -55,14 +63,12 @@ Meteor.methods({
 				
 				insig = Insignias.findOne({game_id:gameId, timesPlayed:{$gte: 1}});	
 				
-				InsigniasToUser.insert({user_id:this.userId,
-											game_id:gameId,
-											insignia_id: insig._id});
+				InsigniasToUser.insert({user_id:userId,game_id:gameId,insignia_id: insig._id});
 			
 				
 				Ranking.insert({
 					gameId : gameId,
-					userId : this.userId,
+					userId : userId,
 					maxScore : score,
 					totalScore: score, 
 					rango_id:rango._id,

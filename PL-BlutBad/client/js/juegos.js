@@ -25,6 +25,7 @@ Template.juegos.events({
 	} else {
 	    Session.set('current_stage', false);
 	    Session.set('load_game', this);
+	    Session.set('current_game', this._id);
 	}
     },
     'click .edit_game' : function() {
@@ -94,8 +95,11 @@ Deps.autorun(function(c) {
 	// Para los multijuegos, mostramos el contenedor junto con el juego.
 	$('#gamecontainer').show();
 	$('#CanvasclarcaGame').show();
+	//$('#ClarcaGame').show();
+	
     } else {
 	$('#CanvasclarcaGame').hide();
+	//$('#ClarcaGame').hide();
     }
 });
 
@@ -153,3 +157,4 @@ Template.editGame.events({
     }
 
 });
+
