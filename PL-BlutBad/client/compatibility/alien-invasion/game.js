@@ -9,7 +9,7 @@ var spritesAlien = {
     enemy_missile: { sx: 9, sy: 42, w: 3, h: 20, frame: 1 }
 };
 
-
+//BOOO
 var enemies = {
 
     // straight s�lo tiene el par�metro E para la velocidad vertical,
