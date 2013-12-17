@@ -119,19 +119,25 @@ Template.hall_clarcassone
 			Session.set("createError",
 					"Para empezar una partida deben unirse de 3 a 5 jugadores");
 		    } else {
-			Session.set('showGameIdn', "clarki");
-			Session.set('current_stage', "Clarcassone");
-			$('#gamecontainer').show();
+			
+			//Id del canvas donde se va a pintar el juego
 			idCanvasElement = "#gamecanvasAlien";
 			
+			//id de la partida que ha sido creada.
 			party_id = Partidas.insert({
 			    jugadores : [ {user_id : 11111}, {user_id : 22222} ],
 			    terminada : false,
 			});
 			
 			console.log("party_id -> " + party_id)
+			
+			
+			//Para que se muestre el canvas del juego, 
+			Session.set('showGameIdn', "clarki");
+			//Para esconder el hall, solo se ve el canvas
+			Session.set('current_stage', false);
+			
 			console.log('eval("ClarcassonneGameIU.initialize(idCanvasElement, party_id)");');
-			// Session.set('load_game', this);
 		    }
 		    // Hacer una entrada a la coleccion de Partidas,
 		    // y llamar a ui y ai con ese _id de la partida.
@@ -235,6 +241,7 @@ Template.hall_clarcassone.UsersInHall = function() {
 // El rango del usuario en la tabla de miembros de la partida
 Template.hall_clarcassone.userRango = function(user_id) {
     gid = Session.get("current_game");
+    console.log("gid:  "+gid);
     if (gid) {
 	rankingU = Ranking.findOne({
 	    gameId : gid,
