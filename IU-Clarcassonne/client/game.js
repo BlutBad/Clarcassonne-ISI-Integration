@@ -69,11 +69,13 @@ img.src = 'Clarcassonne/images/background.png';
 var img2 = new Image();
 img2.src = 'Clarcassonne/images/abajo.png';
 
-var img3 = new Image();
-img3.src = 'Clarcassonne/images/musica.png';
+//var img3 = new Image();
+//img3.src = 'images/musica.png';
 
 var img4 = new Image();
 img4.src = 'Clarcassonne/images/ControlHelp.png';
+
+
 
 
 
@@ -82,21 +84,137 @@ CurrentScroll = {x:70,y:70,active: true};
 
 CurrentMove = 0;
 CurrentTurn = 0;
-sonar = 1;
+sonar = true;
+
+function traducirSeguidor (x,y) {
+	if (x == 0 && y == 0) { return 7; } 
+	else if (x == 1 && y == 0) { return 0;} 
+	else if (x == 2 && y == 0) {return 1;} 
+	else if (x == 0 && y == 1) {return 6;} 
+	else if (x == 1 && y == 1) {return 8;}
+	else if (x == 2 && y == 1) {return 2;}
+	else if (x == 0 && y == 2) {return 5;}
+	else if (x == 1 && y == 2) {return 4;} 
+	else {return 3;}
+}
+
+function Seguidortraducir (pos) {
+	if (pos == 0) {return {x: 1, y: 0}; }
+	else if (pos == 1) {return  {x: 2, y: 0}; }
+	else if (pos == 2) {return  {x: 2, y: 1}; }
+	else if (pos == 7) {return  {x: 0, y: 0}; }
+	else if (pos == 8) {return  {x: 1, y: 1}; }
+	else if (pos == 3) {return  {x: 2, y: 2}; }
+	else if (pos == 6) {return  {x: 0, y: 1}; }
+	else if (pos == 5) { return {x: 0, y: 2}; }
+	else { return {x: 1, y:2 }; }
+}
+
+
+function traducirTipoSeguidor (x) {
+	if (x== 1) { return "Granjero"; } 
+	else if (x == 2) { return "Ladron";} 
+	else if (x == 3) {return "Caballero";} 
+	else if (x == 4) {return "Monje";} 
+}
+
+
+function SetSeguidorEn (Seguidor, Posiciones) {
+	var encaja = false;
+	var posible;
+	for (pos in Posiciones) {
+
+		posible = Seguidortraducir (Posiciones[pos].n);
+
+		if (posible.x == Seguidor.x && posible.y == Seguidor.y) {
+			encaja = true;	
+		}
+ 	}
+ 	return encaja;
+
+}
+
+
+
+
+function SetFichaEn (NuevaPieza, Posiciones) {
+	var encaja = false;
+
+	
+	for (pieza in Posiciones) {
+		
+		if (Posiciones[pieza].x == NuevaPieza.x/100 +CurrentScroll.x && Posiciones[pieza].y == NuevaPieza.y/100 +CurrentScroll.y) {
+			encaja = true;
+		}
+	}
+	
+	if (Posiciones.length == 0) {
+		encaja = true;
+	}
+	
+	return encaja;
+}
 
 
 
 function SetPlayers (err, data) {
-	Jugador1 = {nombre: data[0].nombre, color: "ficha_rojo", puntos: data[0].puntos, id: "DX6EHwZNZwLezftTz", turno:1};
-	Jugador2 = {nombre: data[1].nombre  , color: "ficha_azul", puntos:data[1].puntos, id: data[1].id, turno: 0};
-	Jugador3 = {nombre: data[2].nombre  , color: "ficha_amarillo", puntos:data[2].puntos, id: data[2].id, turno: 0};
+
+	Jugador1 = {nombre: data[0].nombre.slice(0,6), color: "ficha_rojo", puntos: data[0].puntos, id:data[0].id, turno:1};
+	Jugador2 = {nombre: data[1].nombre.slice(0,6) , color: "ficha_azul", puntos:data[1].puntos, id: data[1].id, turno: 0};
+	Jugador3 = {nombre: data[2].nombre.slice(0,6)  , color: "ficha_amarillo", puntos:data[2].puntos, id: data[2].id, turno: 0};
 	if (data.length >= 4) {
-		Jugador4 = {nombre: data[3].nombre    , color: "ficha_verde", puntos:data[3].puntos, id: data[3].id, turno: 0};
+		Jugador4 = {nombre: data[3].nombre.slice(0,6)    , color: "ficha_verde", puntos:data[3].puntos, id: data[3].id, turno: 0};
 	}
 	if (data.length == 5) {
-		Jugador5 = {nombre: data[4].nombre   , color: "ficha_gris", puntos:data[4].puntos, id: data[4].id, turno: 0};
+		Jugador5 = {nombre: data[4].nombre.slice(0,6)  , color: "ficha_gris", puntos:data[4].puntos, id: data[4].id, turno: 0};
 	}
 	nJugadores = data.length;
+	
+	Meteor.subscribe("partidas", idParty);
+	
+	var u = Partidas.findOne({_id:idParty})
+	console.log(u);
+	if (u.movimientos) {
+		console.log(u.movimientos.pop().jugador);
+		setTurno(u.movimientos.pop().jugador);
+		
+		for (moves in u.movimientos) {
+			if (u.movimientos[moves].ficha != 0) {
+				NP = new PiezaMapa(u.movimientos[moves].ficha.x,u.movimientos[moves].ficha.y, u.movimientos[moves].ficha.sprite,u.movimientos[moves].ficha.rotation);
+				NP.colocada = true;
+				Tablero.add(NP);
+			}
+			if (u.movimientos[moves].seguidor != 0) {
+				Tablero.add(new Seguidor (u.movimientos[moves].seguidor.fx, u.movimientos[moves].seguidor.fy,u.movimientos[moves].seguidor.t,u.movimientos[moves].seguidor.sx,u.movimientos[moves].seguidor.sy));
+			}
+		
+		}
+	
+	}
+	
+	
+	
+	Deps.autorun(function(){
+		
+		
+		console.log (Partidas.findOne({_id:idParty}));
+		var last = Partidas.findOne({_id:idParty}).movimientos;
+		if (last != undefined) {
+			var ultimo = last.pop();
+			if (ultimo.ficha != 0) {
+			NP = new PiezaMapa(ultimo.ficha.x,ultimo.ficha.y, ultimo.ficha.sprite,ultimo.ficha.rotation);
+			NP.colocada = true;
+			Tablero.add(NP);
+			}
+			if (ultimo.seguidor != 0) {
+				Tablero.add(new Seguidor (ultimo.seguidor.fx,ultimo.seguidor.fy,ultimo.seguidor.t,ultimo.seguidor.sx,ultimo.seguidor.sy));
+			}
+			console.log(ultimo);
+			pasarTurno();
+		}
+		
+	});
+
 	Game.initialize(idCanvas.slice(1),sprites,startGame);
 }
 
@@ -112,6 +230,32 @@ function getTurno () {
 		if (Jugador5.turno == 1) return Jugador5;
 	}
 	
+}
+
+function setTurno (jugador) {
+
+	if (nJugadores == 3) {
+		if (Jugador1.id == jugador.id) { getTurno().turno = 0; Jugador2.turno = 1; }
+		if (Jugador2.id == jugador.id) { getTurno().turno = 0; Jugador3.turno = 1; }
+		if (Jugador3.id == jugador.id) { getTurno().turno = 0; Jugador1.turno = 1; }
+
+	}
+	if (nJugadores == 4) {
+		if (Jugador1.id == jugador.id) { getTurno().turno = 0; Jugador2.turno = 1; }
+		if (Jugador2.id == jugador.id) { getTurno().turno = 0; Jugador3.turno = 1; }
+		if (Jugador3.id == jugador.id) { getTurno().turno = 0; Jugador4.turno = 1; }
+		if (Jugador4.id == jugador.id) { getTurno().turno = 0; Jugador1.turno = 1; }
+
+	}
+	if (nJugadores == 5) {
+		if (Jugador1.id == jugador.id) { getTurno().turno = 0; Jugador2.turno = 1; }
+		if (Jugador2.id == jugador.id) { getTurno().turno = 0; Jugador3.turno = 1; }
+		if (Jugador3.id == jugador.id) { getTurno().turno = 0; Jugador4.turno = 1; }
+		if (Jugador4.id == jugador.id) { getTurno().turno = 0; Jugador5.turno = 1; }
+		if (Jugador5.id == jugador.id) { getTurno().turno = 0; Jugador1.turno = 1; }
+	}
+	
+
 }
 
 function pasarTurno () {
@@ -181,7 +325,12 @@ Time = function () {
 
 		if (this.tiempo == 0) {
 			this.tiempo = 60;
-			pasarTurno();
+			//pasarTurno();
+			Partidas.update(idParty, {
+                            $push : {movimientos: {jugador: getTurno(), ficha: 0, seguidor: 0}}
+           });
+            //Session.set("turno", CurrentTurn+1);
+			
 			turno = CurrentTurn;
 			Game.setBoard(7, Blank);
 			Game.setBoard(8, Blank);
@@ -214,9 +363,8 @@ Helptext = function () {
 		ctx.fillStyle="rgb(255,255,255)";
 		ctx.font="bold 15px Arial";
 		
-		if(sonar == 1){
-		      ctx.fillText("pulsa 'm' para silenciar y 'n' para volver a sonar", 250,465);  
-		}
+		
+		ctx.fillText("pulsa 'm' para activar o desactivar sonido", 250,465);  
 		
 		if (CurrentMove == 0) {
 			
@@ -266,27 +414,13 @@ Ficha_abajo = function(cx,cy) {
     this.draw = function(ctx) {
 		ctx.drawImage(img2, 700, 500);
 	}
-    	
+    var sonido = true;
 	var up = false;
 	var NuevaPieza;
 	this.step = function(dt) {
-         /*if(!Game.keys['sonar']) sonar = true;
-        
-        if(sonar && Game.keys['sonar']) {
-                sonar = false;
-        }*/
- 
-		 if(Game.keys['sonar']&& sonar == 0){
-		            console.log("doy a sonar");
-		            console.log(sonar);
-		            sonar = 1;
-		 }
-		 if(Game.keys['sonar']&&sonar == 1){
-		            console.log("doy a mutar");
-		            console.log(sonar);
-		            sonar = 0;
-		}
-        
+    if(Game.keys['silenciar']){
+    	sonido = !sonido;
+   	}
 	if(!Game.keys['sacar_ficha']) up = true;
 	
     	if(up && Game.keys['sacar_ficha']) {
@@ -295,27 +429,26 @@ Ficha_abajo = function(cx,cy) {
     		if (CurrentMove == 0 && getTurno().id == Meteor.userId())  {
     			
     			Meteor.call("Robar", function(err, data) { 
-    					NuevaPieza = new PiezaMapa(CurrentScroll.x + 7,CurrentScroll.y + 5, data[0],0);
+    				NuevaPieza = new PiezaMapa(CurrentScroll.x + 7,CurrentScroll.y + 5, data[0],0);
 			
-						sonido_ladron.play();
+						//sonido_ladron.play();
 			
 						Game.setBoard(7, NuevaPieza);
 						CurrentMove = 1; 
+						Posiciones = data[1];
 						console.log(data);
-					});
-			
-		} else if (CurrentMove == 1 && getTurno().id == Meteor.userId()) {
-		
-			Meteor.call("ColocarFicha", idParty, NuevaPieza.sprite, {x: NuevaPieza.x, y: NuevaPieza.y}, function(err, data) { 
-			
-    					Game.setBoard(8,new Set(NuevaPieza));
-					CurrentMove = 2;
-					
 			});
-		
-		
-		
-		
+
+		} else if (CurrentMove == 1 && getTurno().id == Meteor.userId()) {
+			if (SetFichaEn(NuevaPieza, Posiciones)) {
+				Meteor.call("ColocarFicha", idParty, NuevaPieza.sprite, {x: NuevaPieza.x/100 + CurrentScroll.x, y: NuevaPieza.y/100 +CurrentScroll.y}, (NuevaPieza.rotation / -90), function(err, data) { 
+    				Game.setBoard(8,new Set(NuevaPieza));
+					CurrentMove = 2;
+					PosicionesSeg = data;
+					console.log(data);
+					
+				});
+			}
 		
 			
 		}
@@ -605,6 +738,8 @@ Set = function (PiezaMapa) {
 	
 	
 	this.step = function () { 
+		var that = this;
+		
 		if (CurrentScroll.active) CurrentScroll.active = false;
 		
 		if(!Game.keys['back']) up6 = true;
@@ -639,13 +774,24 @@ Set = function (PiezaMapa) {
 				if (this.option > 0) {
 					this.menu += 1;
 				} else {
-					// Coloco la ficha en el mapa
-					this.pieza.colocada = true;
-					Tablero.add(this.pieza);
-					Game.setBoard(8,Blank);
-					Game.setBoard(7, Blank);
-					CurrentScroll.active = true;
-					pasarTurno();
+				
+					Meteor.call("ColocarSeguidor", idParty, getTurno ().id, {x: this.pieza.x/100 + CurrentScroll.x, y: this.pieza.y/100 +CurrentScroll.y}, 0, function(err, data) { 				// Coloco la ficha en el mapa
+						that.pieza.colocada = true;
+						//Tablero.add(that.pieza);
+						Game.setBoard(8,Blank);
+						Game.setBoard(7, Blank);
+						CurrentScroll.active = true;
+						Partidas.update(idParty, {
+                            $push : {movimientos: {jugador: getTurno(), ficha: {x: that.pieza.x/100 + CurrentScroll.x, y: that.pieza.y/100 +CurrentScroll.y, sprite: that.pieza.sprite, rotation: that.pieza.rotation}, seguidor: 0}}
+                          });
+                          //Session.set("turno", CurrentTurn+1);
+						
+						//pasarTurno();
+			
+
+					
+				});
+					
 
 				}
 			}
@@ -690,13 +836,26 @@ Set = function (PiezaMapa) {
 			if(up3 && Game.keys['sacar_ficha']) {
 				up3 = false;
 				// Coloco la ficha en el mapa en la posicion optionx,optiony
-				this.pieza.colocada = true;
-				Tablero.add(this.pieza);
-				Tablero.add(new Seguidor (this.pieza.x/100,this.pieza.y/100,this.setSeguidorType(),this.optionx,this.optiony));
-				Game.setBoard(8,Blank);
-				Game.setBoard(7, Blank);
-				CurrentScroll.active = true;
-				pasarTurno();
+				if (SetSeguidorEn ( {x: this.optionx, y: this.optiony, t: console.log(this.option)}, PosicionesSeg)) {
+				
+					Meteor.call("ColocarSeguidor", idParty, getTurno().id, {x: this.pieza.x/100 + CurrentScroll.x, y: this.pieza.y/100 + CurrentScroll.y}, {t:traducirTipoSeguidor (this.option) ,n: traducirSeguidor (this.optionx,this.optiony)}, function(err, data) {
+					
+					 	// Coloco la ficha en el mapa
+						that.pieza.colocada = true;
+						//Tablero.add(that.pieza);
+						//Tablero.add(new Seguidor (that.pieza.x/100,that.pieza.y/100,that.setSeguidorType(),that.optionx,that.optiony));
+						Partidas.update(idParty, {
+                            $push : {movimientos: {jugador: getTurno(), ficha: {x: that.pieza.x/100 + CurrentScroll.x, y: that.pieza.y/100 +CurrentScroll.y, sprite: that.pieza.sprite, rotation: that.pieza.rotation}, seguidor: {fx: that.pieza.x/100 , fy: that.pieza.y/100,t: that.setSeguidorType(),sx:that.optionx,sy:that.optiony}}}
+                          });
+                         //Session.set("turno", CurrentTurn+1);
+						Game.setBoard(8,Blank);
+						Game.setBoard(7, Blank);
+						CurrentScroll.active = true;
+						//pasarTurno();
+					
+					});
+					
+				}
 				
 			}
 		}
@@ -708,16 +867,10 @@ Set = function (PiezaMapa) {
 							var color = ficha_color.indexOf("_") + 1; 
 							return ficha_color.slice(color);
 						})(); 
-		 if(Game.keys['sonar']&& sonar == 0){
-		           
-		            sonar = 1;
-		 }
-		 if(Game.keys['silenciar']&&sonar == 1){
-		            sonar = 0;
-		}
-        
-        if (sonar == 1){
-        
+		if(Game.keys['silenciar']){
+    		sonar = !sonar;
+   		}
+        if (sonar){
 			if (this.option == 1){
 					sonido_granjero.play();
 				return 'granjero_' + color;
@@ -731,7 +884,7 @@ Set = function (PiezaMapa) {
 				sonido_monje.play();
 				return 'cura_' + color;
 			}
-		}else if (sonar == 0){
+		}else if (!sonar){
 			if (this.option == 1){
 				sonido_granjero.pause();
 				return 'granjero_' + color;

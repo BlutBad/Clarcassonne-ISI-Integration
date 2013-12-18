@@ -49,49 +49,55 @@
 
     // Gestión de la entrada (teclas para izda/derecha y disparo)
     var KEY_CODES = { 37:'left', 39:'right', 38 :'up', 40:'down', 32:'sacar_ficha', 
-    					27: 'back', 48:'rotar', 72: 'help', 77:'silenciar', 78:'sonar', 67:'ayuda'};
+    					27: 'back', 48:'rotar', 72: 'help', 77:'silenciar', 67:'ayuda'};
     this.keys = {};
-
-    this.setupInput = function() {
-	$(window).keydown(function(event){
-	    if (KEY_CODES[event.which]) {
-		Game.keys[KEY_CODES[event.which]] = true;
-		return false;
-	    }
-	});
+    
 	
-	$(window).keyup(function(event){
-	    if (KEY_CODES[event.which]) {
-		Game.keys[KEY_CODES[event.which]] = false;
-		return false;
-	    }
-	});
+    this.setupInput = function() {
+    var focusCanvas = true;
+	$(window).click(function(event){
+          if (event.target.id == idCanvas.slice(1))
+            focusCanvas = true;
+          else
+            focusCanvas = false;
+        });
+
+        $(window).keydown(function(event){
+          if (focusCanvas)
+         if (KEY_CODES[event.which]) {
+                Game.keys[KEY_CODES[event.which]] = true;
+                return false;
+         }
+        });
+        
+        $(window).keyup(function(event){
+          if (focusCanvas)
+         if (KEY_CODES[event.which]) {
+                Game.keys[KEY_CODES[event.which]] = false;
+                return false;
+         }
+        });
 	
     }
 
 
     // Bucle del juego
     var boards = [];
-	/*var sonar = 1;*/
+	
     this.loop = function() { 
 	// segundos transcurridos
 	
 	var dt = 30 / 1000;
 	
-    /*if(Game.keys['silenciar'] && sonar == 1){ 
-		sonar = 0;
+    if(Game.keys['silenciar']){
+    	sonar = !sonar;
     }
-    
-    if(Game.keys['sonar'] && sonar == 0){
-     	sonar = 1;
-    }
-    
-    if (sonar == 1){
+	if(sonar){
 		sonidojuego.play();
-	}
-	if (sonar == 0){
+	}else{
 		sonidojuego.pause();
-	}*/	
+	}
+	
 	// Para cada board, de 0 en adelante, se 
 	// llama a su método step() y luego a draw()
 	for(var i=0,len = boards.length;i<len;i++) {
@@ -174,7 +180,7 @@
 	this.map = spriteData;
 	this.image = new Image();
 	this.image.onload = callback;
-	this.image.src = urlSprite;
+	this.image.src = 'Clarcassonne/images/sprites.png';
     };
 
     
