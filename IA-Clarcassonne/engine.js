@@ -25,15 +25,23 @@ Tiposfichas = {
 		Tcruce:   {Izq: "Rue", Der: "Rue", Arr: "Campo", Abaj: "Rue", Escudo: 0},//4
 };
 
-var fichas = [ //72
+fichas = [ //72
 		  'Rrecta', 'Rcurva', 'Catedral',  'Posada', 'Ccruce', 'CiudadE', 'Ciudad3lc', 'Ciudad3lcE', 'Ciudad3l', 'Ciudad3lE', 'Ciudad2lc', 'Ciudad2lcE', 'Ciudad2l', 'Ciudad2lE', 'CiudadPuerta', 'CiudadPuertaE', 'Ciudadext', 'Ciudad1l2crect', 'Ciudadcurvder', 'Ciudadcurvizq','Ciudad1lcruce', 'Ciudad1ll', 'Ciudad1l', 'Tcruce',
 ];
 
 Tablero = new function(){
 
-	this.totalFichas = 72;
+	
 
-	this.n_fichas = { //72
+	this.iniciar = function(){
+
+	  this.huecos=[];
+    this.candidatos=[];
+    this.listaJugadores=[];
+    
+    this.totalFichas = 72;
+
+	  this.n_fichas = { //72
 		  Rrecta: 8,
 		  Rcurva: 9,
 		  Catedral: 4,
@@ -57,15 +65,8 @@ Tablero = new function(){
 		  Ciudad1lcruce: 3,
 		  Ciudad1ll: 2,
 		  Ciudad1l: 5,
-		Tcruce: 4,
+		  Tcruce: 4,
 	};
-
-	this.iniciar = function(){
-
-	  this.huecos=[];
-    this.candidatos=[];
-    this.listaJugadores=[];
-    
     
 	  var i=0;
 	  this.huecos=[];
