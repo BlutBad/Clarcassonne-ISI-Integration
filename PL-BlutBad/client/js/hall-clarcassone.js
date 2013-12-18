@@ -113,22 +113,21 @@ Template.hall_clarcassone
 		    
 		    usersJoined = PartidasVolatiles.findOne({
 			_id : this._id
-		    });
+		    }).jugadores;
 		    
 		    
 		    
-		    if (usersJoined.jugadores.length < 1 || usersJoined.jugadores.length > 5) {
+		    if (usersJoined.length < 1 || usersJoined.length > 5) {
 			Session.set("createError","Para empezar una partida deben unirse de 3 a 5 jugadores");
 		    } else {
 			var party_jugadores = [];
 			
 			for (var i=0, l=usersJoined.length; i<l;i++){
-			    party_jugadores.push({user_id:usersJoined.jugadores[i].user_id});
+			    party_jugadores.push({user_id:usersJoined[i].user_id});
 			}
 
 			//id de la partida que ha sido creada.
 			party_id = Partidas.insert({
-			    _id :usersJoined._id,
 			    jugadores : party_jugadores,
 			    terminada : false,
 			});
