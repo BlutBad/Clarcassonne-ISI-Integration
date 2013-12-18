@@ -19,8 +19,6 @@
     // Inicializa el juego
   this.initialize = function(canvasElementId,sprite_data,callback) {
     this.canvas = document.getElementById(canvasElementId);
-	console.log("llegamos");
-	console.log(canvasElementId);
     sonidojuego = document.getElementById("sonidojuego");
     
 
@@ -44,8 +42,7 @@
     if(this.mobile) {
       this.setBoard(4,new TouchControls());
     }
-	console.log("llegamos aquiii");
-	console.log(callback);
+
     SpriteSheet.load(sprite_data,callback);
   };
   
@@ -54,21 +51,32 @@
     var KEY_CODES = { 37:'left', 39:'right', 38 :'up', 40:'down', 32:'sacar_ficha', 
     					27: 'back', 48:'rotar', 72: 'help', 77:'silenciar', 67:'ayuda'};
     this.keys = {};
-
-    this.setupInput = function() {
-	$(window).keydown(function(event){
-	    if (KEY_CODES[event.which]) {
-		Game.keys[KEY_CODES[event.which]] = true;
-		return false;
-	    }
-	});
+    
 	
-	$(window).keyup(function(event){
-	    if (KEY_CODES[event.which]) {
-		Game.keys[KEY_CODES[event.which]] = false;
-		return false;
-	    }
-	});
+    this.setupInput = function() {
+    var focusCanvas = true;
+	$(window).click(function(event){
+          if (event.target.id == idCanvas.slice(1))
+            focusCanvas = true;
+          else
+            focusCanvas = false;
+        });
+
+        $(window).keydown(function(event){
+          if (focusCanvas)
+         if (KEY_CODES[event.which]) {
+                Game.keys[KEY_CODES[event.which]] = true;
+                return false;
+         }
+        });
+        
+        $(window).keyup(function(event){
+          if (focusCanvas)
+         if (KEY_CODES[event.which]) {
+                Game.keys[KEY_CODES[event.which]] = false;
+                return false;
+         }
+        });
 	
     }
 
@@ -162,19 +170,17 @@
     // Almacena nombre_de_sprite: rectángulo para que sea mas facil
     // gestionar los sprites del fichero images/sprite.png
     this.map = { }; 
-	
+
     // Para cargar hoja de sprites. 
     //
     // Parámetros: spriteData: parejas con nombre de sprite, rectángulo
     // callback: para llamarla cuando se haya cargado la hoja de
     // sprites
     this.load = function(spriteData,callback) { 
-	console.log(callback);
 	this.map = spriteData;
 	this.image = new Image();
 	this.image.onload = callback;
-	this.image.src = "images/sprites2.png";
-	console.log("hola");
+	this.image.src = 'Clarcassonne/images/sprites.png';
     };
 
     
