@@ -64,16 +64,18 @@ sprites = {
 
 
 var img = new Image();
-img.src = 'images/background.png';
+img.src = 'Clarcassonne/images/background.png';
 
 var img2 = new Image();
-img2.src = 'images/abajo.png';
+img2.src = 'Clarcassonne/images/abajo.png';
 
 //var img3 = new Image();
 //img3.src = 'images/musica.png';
 
 var img4 = new Image();
-img4.src = 'images/ControlHelp.png';
+img4.src = 'Clarcassonne/images/ControlHelp.png';
+
+
 
 
 
@@ -121,11 +123,9 @@ function SetSeguidorEn (Seguidor, Posiciones) {
 	var encaja = false;
 	var posible;
 	for (pos in Posiciones) {
-		console.log("Pos= " + pos);
-		console.log("Posiciones= " + Posiciones);
-		console.log(Posiciones[pos]);
+
 		posible = Seguidortraducir (Posiciones[pos].n);
-		console.log(Seguidor.x, Seguidor.y, posible.x, posible.y);
+
 		if (posible.x == Seguidor.x && posible.y == Seguidor.y) {
 			encaja = true;	
 		}
@@ -139,10 +139,10 @@ function SetSeguidorEn (Seguidor, Posiciones) {
 
 function SetFichaEn (NuevaPieza, Posiciones) {
 	var encaja = false;
-	console.log(Posiciones);
+
 	
 	for (pieza in Posiciones) {
-		console.log (Posiciones[pieza].x, NuevaPieza.x/100 +CurrentScroll.x, Posiciones[pieza].y, NuevaPieza.y/100 +CurrentScroll.y);
+		
 		if (Posiciones[pieza].x == NuevaPieza.x/100 +CurrentScroll.x && Posiciones[pieza].y == NuevaPieza.y/100 +CurrentScroll.y) {
 			encaja = true;
 		}
@@ -158,18 +158,63 @@ function SetFichaEn (NuevaPieza, Posiciones) {
 
 
 function SetPlayers (err, data) {
-	console.log(data);
-	Jugador1 = {nombre: data[0].nombre.slice(0,4), color: "ficha_rojo", puntos: data[0].puntos, id:data[0].id, turno:1};
-	Jugador2 = {nombre: data[1].nombre.slice(0,4) , color: "ficha_azul", puntos:data[1].puntos, id: data[1].id, turno: 0};
-	Jugador3 = {nombre: data[2].nombre.slice(0,4)  , color: "ficha_amarillo", puntos:data[2].puntos, id: data[2].id, turno: 0};
+
+	Jugador1 = {nombre: data[0].nombre.slice(0,6), color: "ficha_rojo", puntos: data[0].puntos, id:data[0].id, turno:1};
+	Jugador2 = {nombre: data[1].nombre.slice(0,6) , color: "ficha_azul", puntos:data[1].puntos, id: data[1].id, turno: 0};
+	Jugador3 = {nombre: data[2].nombre.slice(0,6)  , color: "ficha_amarillo", puntos:data[2].puntos, id: data[2].id, turno: 0};
 	if (data.length >= 4) {
-		Jugador4 = {nombre: data[3].nombre.slice(0,4)    , color: "ficha_verde", puntos:data[3].puntos, id: data[3].id, turno: 0};
+		Jugador4 = {nombre: data[3].nombre.slice(0,6)    , color: "ficha_verde", puntos:data[3].puntos, id: data[3].id, turno: 0};
 	}
 	if (data.length == 5) {
-		Jugador5 = {nombre: data[4].nombre.slice(0,4)  , color: "ficha_gris", puntos:data[4].puntos, id: data[4].id, turno: 0};
+		Jugador5 = {nombre: data[4].nombre.slice(0,6)  , color: "ficha_gris", puntos:data[4].puntos, id: data[4].id, turno: 0};
 	}
-	nJugadores = data.length;	
-	console.log("inicio game");
+	nJugadores = data.length;
+	
+	Meteor.subscribe("partidas", idParty);
+	
+	var u = Partidas.findOne({_id:idParty})
+	console.log(u);
+	if (u.movimientos) {
+		console.log(u.movimientos.pop().jugador);
+		setTurno(u.movimientos.pop().jugador);
+		
+		for (moves in u.movimientos) {
+			if (u.movimientos[moves].ficha != 0) {
+				NP = new PiezaMapa(u.movimientos[moves].ficha.x,u.movimientos[moves].ficha.y, u.movimientos[moves].ficha.sprite,u.movimientos[moves].ficha.rotation);
+				NP.colocada = true;
+				Tablero.add(NP);
+			}
+			if (u.movimientos[moves].seguidor != 0) {
+				Tablero.add(new Seguidor (u.movimientos[moves].seguidor.fx, u.movimientos[moves].seguidor.fy,u.movimientos[moves].seguidor.t,u.movimientos[moves].seguidor.sx,u.movimientos[moves].seguidor.sy));
+			}
+		
+		}
+	
+	}
+	
+	
+	
+	Deps.autorun(function(){
+		
+		
+		console.log (Partidas.findOne({_id:idParty}));
+		var last = Partidas.findOne({_id:idParty}).movimientos;
+		if (last != undefined) {
+			var ultimo = last.pop();
+			if (ultimo.ficha != 0) {
+			NP = new PiezaMapa(ultimo.ficha.x,ultimo.ficha.y, ultimo.ficha.sprite,ultimo.ficha.rotation);
+			NP.colocada = true;
+			Tablero.add(NP);
+			}
+			if (ultimo.seguidor != 0) {
+				Tablero.add(new Seguidor (ultimo.seguidor.fx,ultimo.seguidor.fy,ultimo.seguidor.t,ultimo.seguidor.sx,ultimo.seguidor.sy));
+			}
+			console.log(ultimo);
+			pasarTurno();
+		}
+		
+	});
+
 	Game.initialize(idCanvas.slice(1),sprites,startGame);
 }
 
@@ -185,6 +230,32 @@ function getTurno () {
 		if (Jugador5.turno == 1) return Jugador5;
 	}
 	
+}
+
+function setTurno (jugador) {
+
+	if (nJugadores == 3) {
+		if (Jugador1.id == jugador.id) { getTurno().turno = 0; Jugador2.turno = 1; }
+		if (Jugador2.id == jugador.id) { getTurno().turno = 0; Jugador3.turno = 1; }
+		if (Jugador3.id == jugador.id) { getTurno().turno = 0; Jugador1.turno = 1; }
+
+	}
+	if (nJugadores == 4) {
+		if (Jugador1.id == jugador.id) { getTurno().turno = 0; Jugador2.turno = 1; }
+		if (Jugador2.id == jugador.id) { getTurno().turno = 0; Jugador3.turno = 1; }
+		if (Jugador3.id == jugador.id) { getTurno().turno = 0; Jugador4.turno = 1; }
+		if (Jugador4.id == jugador.id) { getTurno().turno = 0; Jugador1.turno = 1; }
+
+	}
+	if (nJugadores == 5) {
+		if (Jugador1.id == jugador.id) { getTurno().turno = 0; Jugador2.turno = 1; }
+		if (Jugador2.id == jugador.id) { getTurno().turno = 0; Jugador3.turno = 1; }
+		if (Jugador3.id == jugador.id) { getTurno().turno = 0; Jugador4.turno = 1; }
+		if (Jugador4.id == jugador.id) { getTurno().turno = 0; Jugador5.turno = 1; }
+		if (Jugador5.id == jugador.id) { getTurno().turno = 0; Jugador1.turno = 1; }
+	}
+	
+
 }
 
 function pasarTurno () {
@@ -218,7 +289,7 @@ function pasarTurno () {
 //loader.init(); 
 startGame = function() {   
 	
-	console.log("StartGAme()");
+	
 	Game.setBoard(0,new Background());
 	Game.setBoard(1,new Jugadores());
 	Game.setBoard(2,new Rejilla()); 
@@ -254,7 +325,12 @@ Time = function () {
 
 		if (this.tiempo == 0) {
 			this.tiempo = 60;
-			pasarTurno();
+			//pasarTurno();
+			Partidas.update(idParty, {
+                            $push : {movimientos: {jugador: getTurno(), ficha: 0, seguidor: 0}}
+           });
+            //Session.set("turno", CurrentTurn+1);
+			
 			turno = CurrentTurn;
 			Game.setBoard(7, Blank);
 			Game.setBoard(8, Blank);
@@ -355,7 +431,7 @@ Ficha_abajo = function(cx,cy) {
     			Meteor.call("Robar", function(err, data) { 
     				NuevaPieza = new PiezaMapa(CurrentScroll.x + 7,CurrentScroll.y + 5, data[0],0);
 			
-						sonido_ladron.play();
+						//sonido_ladron.play();
 			
 						Game.setBoard(7, NuevaPieza);
 						CurrentMove = 1; 
@@ -701,11 +777,16 @@ Set = function (PiezaMapa) {
 				
 					Meteor.call("ColocarSeguidor", idParty, getTurno ().id, {x: this.pieza.x/100 + CurrentScroll.x, y: this.pieza.y/100 +CurrentScroll.y}, 0, function(err, data) { 				// Coloco la ficha en el mapa
 						that.pieza.colocada = true;
-						Tablero.add(that.pieza);
+						//Tablero.add(that.pieza);
 						Game.setBoard(8,Blank);
 						Game.setBoard(7, Blank);
 						CurrentScroll.active = true;
-						pasarTurno();
+						Partidas.update(idParty, {
+                            $push : {movimientos: {jugador: getTurno(), ficha: {x: that.pieza.x/100 + CurrentScroll.x, y: that.pieza.y/100 +CurrentScroll.y, sprite: that.pieza.sprite, rotation: that.pieza.rotation}, seguidor: 0}}
+                          });
+                          //Session.set("turno", CurrentTurn+1);
+						
+						//pasarTurno();
 			
 
 					
@@ -755,19 +836,22 @@ Set = function (PiezaMapa) {
 			if(up3 && Game.keys['sacar_ficha']) {
 				up3 = false;
 				// Coloco la ficha en el mapa en la posicion optionx,optiony
-				console.log(PosicionesSeg);
 				if (SetSeguidorEn ( {x: this.optionx, y: this.optiony, t: console.log(this.option)}, PosicionesSeg)) {
 				
 					Meteor.call("ColocarSeguidor", idParty, getTurno().id, {x: this.pieza.x/100 + CurrentScroll.x, y: this.pieza.y/100 + CurrentScroll.y}, {t:traducirTipoSeguidor (this.option) ,n: traducirSeguidor (this.optionx,this.optiony)}, function(err, data) {
 					
 					 	// Coloco la ficha en el mapa
 						that.pieza.colocada = true;
-						Tablero.add(that.pieza);
-						Tablero.add(new Seguidor (that.pieza.x/100,that.pieza.y/100,that.setSeguidorType(),that.optionx,that.optiony));
+						//Tablero.add(that.pieza);
+						//Tablero.add(new Seguidor (that.pieza.x/100,that.pieza.y/100,that.setSeguidorType(),that.optionx,that.optiony));
+						Partidas.update(idParty, {
+                            $push : {movimientos: {jugador: getTurno(), ficha: {x: that.pieza.x/100 + CurrentScroll.x, y: that.pieza.y/100 +CurrentScroll.y, sprite: that.pieza.sprite, rotation: that.pieza.rotation}, seguidor: {fx: that.pieza.x/100 , fy: that.pieza.y/100,t: that.setSeguidorType(),sx:that.optionx,sy:that.optiony}}}
+                          });
+                         //Session.set("turno", CurrentTurn+1);
 						Game.setBoard(8,Blank);
 						Game.setBoard(7, Blank);
 						CurrentScroll.active = true;
-						pasarTurno();
+						//pasarTurno();
 					
 					});
 					
@@ -903,7 +987,6 @@ ClarcassonneGameIU = new function ()  {
 		Meteor.call("InicioJuego", party_id, SetPlayers);
 		idCanvas = idCanvasElement;
 		idParty = party_id;
-		urlSprite= "sprites2.png"
 	}
 	
 }
