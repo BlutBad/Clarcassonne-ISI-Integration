@@ -834,3 +834,7 @@ td, th {
 #CanvasclarcaGame {
 	margin: 4% 10%;
 }
+
+#oculto {	
+	visibility: hidden;
+}

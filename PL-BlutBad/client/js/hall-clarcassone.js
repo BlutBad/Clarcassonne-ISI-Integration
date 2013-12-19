@@ -116,14 +116,14 @@ Template.hall_clarcassone.events({
             }).jugadores;
             userCreator = PartidasVolatiles.findOne({
                 creator_id : Meteor.userId()
-            })
+            });
+            if (userCreator){
 
-            if (usersJoined.length < 1 || usersJoined.length > 5) {
-                Session
-                        .set("createError",
-                                "Para empezar una partida deben unirse de 3 a 5 jugadores");
-            } else {
-                if (userCreator){
+                if (usersJoined.length < 1 || usersJoined.length > 5) {
+                    Session
+                            .set("createError",
+                                    "Para empezar una partida deben unirse de 3 a 5 jugadores");
+                } else {
                     var party_jugadores = [];
 
                     for ( var i = 0, l = usersJoined.length; i < l; i++) {
@@ -155,7 +155,7 @@ Template.hall_clarcassone.events({
                     Session.set('showGameIdn', "clarki");
 
                     // Para esconder el hall, solo se ve el canvas
-                    Session.set('current_stage', false);
+                    Session.set('current_stage', false); 
                 }
             }
             // Hacer una entrada a la coleccion de Partidas,
@@ -201,8 +201,7 @@ Template.hall_clarcassone.events({
                     _id : this._id
                 }).creator_id;
                 if (userCreator == Meteor.userId()) {
-                    Session
-                            .set("createError",
+                    Session.set("createError",
                                     "Si quieres abandonar debes descartar la partida! Eres el creador...");
                 } else {
                     usersJoined = _.without(usersJoined, _.findWhere(
@@ -337,6 +336,17 @@ Template.hall_clarcassone.unir_aband = function(id_partida) {
         conten = "Unirse";
     }
     return conten;
+}
+
+Template.hall_clarcassone.muestro_oculto = function(id_partida) {
+     userCreator = PartidasVolatiles.findOne({
+        _id : id_partida
+    }).creator_id;
+    if (userCreator == Meteor.userId()) {
+        return "muestro";
+    } else {
+        return "oculto";
+    }
 }
 
 Template.hall_clarcassone.rol = function(id_user) {
