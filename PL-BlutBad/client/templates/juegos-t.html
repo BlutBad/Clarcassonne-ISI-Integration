@@ -1,26 +1,24 @@
 <template name="juegos">
-	{{#if show}}
-		<div class="full-page">
-			<h5 id = "hidden">Juegos disponibles en la plataforma</h5>
-			<h2>¡Nuestros juegos!</h2>
-			<div class="gallery">
-				{{#each juegos}}
-					<div class="gallery-item">
-						<h3>{{name}}</h3>
-						<img src="{{logo_src}}" class="gallery-image" alt="{{logo_alt}}" />
-						<div class="gallery-description">
-							<h5>{{title_desc}}</h5>
-							<p>{{description}}</p>
-						</div>	
-						{{#if editar}}
-							<input type="button" class="edit_game" value="Editar el juego">
-						{{/if}}		
-						{{#if showEditGame}}
-				  			{{> editGame}}
-						{{/if}}
-			  		</div>
-				{{/each}}
-	  		</div>
+	{{#if show}} 
+		<h5 id = "hidden">Juegos disponibles en la plataforma</h5>
+		<h2>¡Nuestros juegos!</h2> 
+		<div class = "container_juegos">
+			{{#each juegos}}
+				<div class="gallery-item">
+					<h3>{{name}}</h3>
+					<img src="{{logo_src}}" class="gallery-image" alt="{{logo_alt}}" />
+					<div class="gallery-description">
+						<h5>{{title_desc}}</h5>
+						<p>{{description}}</p>
+					</div>	
+					{{#if editar}}
+						<input type="button" class="edit_game" value="Editar el juego">
+					{{/if}}		
+					{{#if showEditGame}}
+			  			{{> editGame}}
+					{{/if}}
+		  		</div>
+			{{/each}} 
 		</div>
 	{{/if}} 
 </template>
@@ -59,7 +57,7 @@
 </template>
 
 <template name="idnAlien"> 
-  <canvas id='gamecanvasAlien' width='320' height='480'></canvas>
+  <canvas id='gamecanvasAlien' width='420' height='580'></canvas>
 </template>
 
 <template name="idnFroot"> 

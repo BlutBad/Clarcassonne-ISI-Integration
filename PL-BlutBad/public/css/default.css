@@ -337,12 +337,12 @@ h2.layout {
 /* layouts styles */
 .one-third {
 	float: right; 
-	margin: 3% 10%;
+	margin: 5% 6%;
 }
 
 .two-thirds {
 	float: left; 
-	margin-left: 3%;
+	margin-left: 5%;
 }
 
 .half-page {
@@ -368,12 +368,7 @@ h2.layout {
 	float: right;
 	margin-top: -20px;
 	margin-bottom: 20px; 
-}
-
-/* design width and position */
-.home {
-	height-min: 600px;
-}
+} 
 
 #top-content,#main-content,#footer-content {
 	margin: 0 auto;
@@ -421,8 +416,7 @@ h2.layout {
 
 /* main page structure  */
 #main {
-	background: #fff url("/images/bg/bg-purple.jpg") no-repeat 50% 0;
-	min-height: 650px;
+	background: #fff url("/images/bg/bg-purple.jpg") no-repeat 50% 0; 
 }
 
 #main-content {
@@ -471,8 +465,7 @@ h2.layout {
 	height: 11px;
 }
 
-#page-content {
-	min-height: 1000px;
+#page-content { 
 	margin: 0 12px 0 11px;
 	padding: 15px 22px 0 0;
 	border-top: 10px solid #333;
@@ -539,9 +532,10 @@ h2.layout {
 	height: auto;
 }
 
-.two-thirds .gallery {
+.gallery {
 	width: 630px;
-} /* stupid IE (version 7 only)  */
+}
+ /* stupid IE (version 7 only)  */
 .gallery-item {
 	float: left;
 	width: 293px;
@@ -716,7 +710,9 @@ h2.layout {
 }
  
 #crear_torneo { 
-	margin: 4% 7%;
+	margin-top: 1%;
+	margin-bottom: 1%;
+	margin-right: 10%;
 	cursor: pointer;  
     float: right;
     font-family: Arial, Helvetica, sans-serif;
@@ -841,3 +837,8 @@ td, th {
 #oculto {	
 	visibility: hidden;
 }
+
+.container_juegos, .container_ranking, #gamecontainer,
+.container_tor, #torneos_container {	
+	overflow: hidden; 
+} 
