@@ -776,7 +776,7 @@ td, th {
 }
 
 #ranking_container {
-	margin: 5% 2%;
+	margin: 1% 5%;
 }
 
 .sub-navigation, .game_filter {
@@ -791,6 +791,7 @@ td, th {
 }
 
 .game_filter {
+	margin-top: 10%;
 	float: right;
 	text-align: center;
 	width: 30%;

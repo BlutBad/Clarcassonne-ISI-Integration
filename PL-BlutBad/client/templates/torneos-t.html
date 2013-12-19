@@ -7,12 +7,11 @@
 				{{> createDialog}}
 			{{else}} <!--para que salga debajo sino sale a un lado el boton crear_torneo-->
 				<p></p>
-			{{/if}} 
-              
+			{{/if}}               
         </div>
         <div id = "torneos_container">     
             <div class="one-third">
-                <h3>Filtrar por juegos</h3> 
+                <h3>Torneos por juego</h3> 
                 <ul class="sub-navigation">
                 {{#each juegos}}
                     <li class = "sortBy"><a href="#" class="{{name}}">{{name}}</a></li>
@@ -64,11 +63,10 @@
                         </div>
                     {{/each}}
                 </div>
-		</div> 
-    		  
-    		{{#if showEditChamp}}
-    			{{> editChamp}}
-    		{{/if}} 
+            </div> 
+		{{#if showEditChamp}}
+			{{> editChamp}}
+		{{/if}} 
         </div>
 	{{/if}}
 </template> 
