@@ -32,7 +32,7 @@
 							<input type="button" id="{{_id}}" class = "participantes" value="{{participantes _id}}">
 							
 							{{#if editar}}
-								<input type="button" id="{{_id}}" class="editar" value="Editar el info del torneo">
+								<input type="button" id="{{_id}}" class="editar" value="Editar torneo">
 							{{/if}}
 							
 							{{#if currentUser}}
@@ -111,11 +111,11 @@
           </div>   
                
           <div class="modal-body">
-                        <p>Título: <input type="text" id="title" class="title span5" value = {{title}}></p>
-                        <p>Fecha comienzo: <input type="text" id="date_start" value = {{date_start}}></p>
-                        <p>Fecha fin: <input type="text" id="date_finish" value = {{date_finish}}></p>
-                        <p>Descripción: <textarea id="description" class="description span5">{{description}}</textarea></p>
-                        <p>URL de la imagen: <input type="text" id="pic" value = {{pic}}></p>
+            <p>Título: <input type="text" id="title" class="title span5" value = {{title}}></p>
+            <p>Fecha comienzo: <input type="text" id="date_start" value = {{date_start}}></p>
+            <p>Fecha fin: <input type="text" id="date_finish" value = {{date_finish}}></p>
+            <p>Descripción: <textarea id="description" class="description span5">{{description}}</textarea></p>
+            <p>URL de la imagen: <input type="text" id="pic" value = {{pic}}></p>
           </div>
           
           <div class="modal-footer">

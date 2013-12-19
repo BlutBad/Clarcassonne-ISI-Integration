@@ -119,9 +119,8 @@ Template.hall_clarcassone.events({
             });
             if (userCreator){
 
-                if (usersJoined.length < 1 || usersJoined.length > 5) {
-                    Session
-                            .set("createError",
+                if (usersJoined.length < 3 || usersJoined.length > 5) {
+                    Session.set("createError",
                                     "Para empezar una partida deben unirse de 3 a 5 jugadores");
                 } else {
                     var party_jugadores = [];

@@ -559,8 +559,7 @@ h2.layout {
 	border: 1px solid #C6C6C6;
 }
 
-.gallery-description {
-	height: 110px;
+.gallery-description { 
 	margin: 8px 0 0;
 	overflow: hidden;
 }
@@ -826,10 +825,14 @@ td, th {
  margin-bottom: 10px; 
 }
 
-.btn_edit, .edit_game {
-	margin-left: 2%; 
+.btn_edit{
 	margin-bottom: 5%;
 } 
+
+.edit_game { 
+	margin-left: 40px; 
+	margin-top: 10px;
+}
 
 #CanvasclarcaGame {
 	margin: 4% 10%;

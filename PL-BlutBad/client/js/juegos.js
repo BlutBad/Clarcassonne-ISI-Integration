@@ -8,11 +8,11 @@ Template.juegos.juegos = function() {
 
 Template.juegos.editar = function() {
     if (Meteor.user()) {
-	if (Meteor.user().username == "admin") {
-	    return true;
-	} else {
-	    return false;
-	};
+		if (Meteor.user().username == "admin") {
+		    return true;
+		} else {
+		    return false;
+		};
     };
 };
 
