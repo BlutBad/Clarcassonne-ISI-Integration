@@ -24,11 +24,11 @@
                     {{#each torneo}}
                         <div class="post-summary">
                             <h3 class="post-title">{{title}}</h3>
-                            <h5>Juego: {{game}}</h5>
+                            <h5>Juego: {{getnamegame game_id}}</h5>
                             <div class="post-details"> 
                                 <span class="date">Disponible desde {{date_start}}</span>
                                 <span class="date">hasta {{date_finish}}</span> 
-                                (creado por {{user_create}})
+                                (creado por {{getUsername user_create}})
                             </div>
                             
                             <img src={{pic}} class="post-image" alt="sample image" width="606" height="115" />

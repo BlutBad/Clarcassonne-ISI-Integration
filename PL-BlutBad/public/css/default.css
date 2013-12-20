@@ -839,7 +839,7 @@ td, th {
 	visibility: hidden;
 }
 
-.container_juegos, .container_ranking, #gamecontainer,
+.container_juegos, .container_ranking,
 .container_tor, #torneos_container {	
 	overflow: hidden; 
 } 

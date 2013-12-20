@@ -54,6 +54,12 @@ Template.torneos.apunto = function(t_id, u_id){
     }
 }
 
+Template.torneos.getnamegame = function(g_id) {  
+    return Juegos.findOne({
+        _id: g_id
+    }).name; 
+} 
+
 /*
 Template.torneos.lista_participantes = function(t_id){
     return ChampUser.find({id_torneo: t_id});
@@ -143,21 +149,20 @@ Template.torneos.events = {
     'click .editar' : function() {
         Session.set('tornToEdit', this._id);  
     }, 
-};
+}; 
 
 Template.createDialog.events({
     'click .save': function () {
         if (Meteor.user()) {
-            if (Meteor.user().username) {
-                var user_create = Meteor.user().username;
-            } else {
-                var user_create = Meteor.user().profile.name;
-            };
+            user_create = Meteor.userId();
             var title = $('input#title').val();
             var description = $('#description').val();
             var date_start = $('input#date_start').val();
             var date_finish = $('input#date_finish').val();
             var game = $('#game').val();
+            game_id = Juegos.find({
+                name: game
+            }).fetch()[0]._id; 
             var pic = $('input#pic').val();  
             if (title == '' | description == '' | date_start == '' |
                 date_finish == '' | game == 'elige' | pic == '') {
@@ -165,7 +170,7 @@ Template.createDialog.events({
             } else if (!date_compare(date_start, date_finish)) {
                 Session.set("createError", "La fecha de inicio no puede ser después que la de fin o antes que la de hoy"); 
             } else {
-                Torneos.insert({title:title, game: game, user_create: user_create, 
+                Torneos.insert({title:title, game_id: game_id, user_create: user_create, 
                     date_start: date_start, date_finish: date_finish, 
                     description: description, pic: pic});
                 Session.set("showCreateDialog", false);
@@ -246,7 +251,7 @@ Template.torneos.showEditTorn = function() {
 
 Template.torneos.editar=function(){
     if (Meteor.user()){
-        usuarios=Torneos.findOne({_id : this._id});
+        usuarios = Torneos.findOne({_id : this._id});
         //console.log(this._id);
         //console.log(usuarios.user_create);
         if (Meteor.user().username == usuarios.user_create) {

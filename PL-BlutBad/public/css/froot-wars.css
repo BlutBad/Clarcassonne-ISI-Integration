@@ -1,5 +1,6 @@
 #gameFrootcontainer {
     margin: 5% 22%;
+    float: center;
     width:640px;
     height:480px;
     background: url(/images/splashscreen.png);
