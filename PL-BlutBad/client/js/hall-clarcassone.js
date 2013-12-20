@@ -78,9 +78,8 @@ Template.hall_clarcassone.events({
                     UsersInHall.remove(userA._id);
                     Session.set("createError", undefined);
                 } else {
-                    Session
-                            .set("createError",
-                                    "Ya estás en una partida.... no crees otra! :D");
+                    Session.set("createError", 
+                        "Ya estás en una partida.... no crees otra! :D");
                 }
             }
         } else {
@@ -98,8 +97,7 @@ Template.hall_clarcassone.events({
                     PartidasVolatiles.remove(this._id);
                     Session.set("createError", undefined);
                 } else {
-                    Session
-                            .set("createError",
+                    Session.set("createError",
                                     "No borres partidas que no has creado tú.... o.o");
                 }
             }
@@ -155,6 +153,8 @@ Template.hall_clarcassone.events({
 
                     // Para esconder el hall, solo se ve el canvas
                     Session.set('current_stage', false); 
+
+                    setTimeout(removePartyV(this._id), 5000); 
                 }
             }
             // Hacer una entrada a la coleccion de Partidas,
@@ -246,6 +246,10 @@ Template.hall_clarcassone.events({
         }
     }
 });
+
+removePartyV = function(id) {
+    PartidasVolatiles.remove(id);
+}
 
 Deps.autorun(function(c) { 
     user =  Meteor.userId();

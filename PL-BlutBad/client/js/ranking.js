@@ -34,12 +34,12 @@ Template.ranking.events = {
 	'click .fakeRanking': function() {		
 		games = Juegos.find({});		
 		games.forEach(function (game) {
-			console.log(game.name);
+			//console.log(game.name);
 			fakeUsers = Meteor.users.find({});
-			console.log(games.count() + " "+ fakeUsers.count() );
+			//console.log(games.count() + " "+ fakeUsers.count() );
 			fakeUsers.forEach(function (user) {
 				if (Math.random() < 0.035) {
-					console.log(user.username);
+					//console.log(user.username);
 					maxScore = Math.floor((Math.random()*100)+1);
 					Meteor.call("matchFinish", game._id, maxScore, {user_id:user._id});
 				};
