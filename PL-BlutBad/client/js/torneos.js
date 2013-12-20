@@ -54,9 +54,11 @@ Template.torneos.apunto = function(t_id, u_id){
     }
 }
 
+/*
 Template.torneos.lista_participantes = function(t_id){
     return ChampUser.find({id_torneo: t_id});
 }
+*/
 
 Template.torneos.muestra_part = function(t_id){ 
     show_torneos = Session.get("showParticipantes");    
@@ -69,7 +71,7 @@ Template.torneos.muestra_part = function(t_id){
 
 Template.torneos.participantes = function(t_id){ 
     num_parts = (ChampUser.find({id_torneo: t_id})).count(); 
-    participantes = "Participantes (" + num_parts + ")";
+    participantes = "(" + num_parts + ")";
     return participantes;
 }
 

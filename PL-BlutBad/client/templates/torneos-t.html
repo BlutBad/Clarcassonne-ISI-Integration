@@ -36,8 +36,8 @@
                             <div class="post-description">
                                 <p>{{description}}</p>
                                 
-                                 <input type="button"  class="empezarTorneo" value="Empezar Torneo">
-                                 <input type="button"  class="finalizarTorneo" value="Finalizar Torneo">
+                                <input type="button"  class="empezarTorneo" value="Empezar Torneo">
+                                <input type="button"  class="finalizarTorneo" value="Finalizar Torneo">
                                  
                                 <!-- 
                                 <input type="button" id="{{_id}}" class = "participantes" value="{{participantes _id}}">
@@ -47,7 +47,10 @@
                                 {{/if}}
                                 
                                 {{#if currentUser}}
-                                    <input type="button" id="{{_id}}" class = "{{clase_Apuntada _id getUserId}}" value="{{apunto _id getUserId}}">
+                                    <input type="button" id="{{_id}}" class = "{{clase_Apuntada _id getUserId}}" value="{{apunto _id getUserId}} {{participantes _id}}">
+                                {{else}}
+                                    <i>Sign for add to this championship.</i>  
+                                {{/if}} 
                                     <!-- 
                                     <div id = "{{_id}}" class = "{{muestra_part _id}}">
                                         {{#each lista_participantes _id}}
@@ -55,9 +58,6 @@
                                         {{/each}}
                                     </div> 
                                     -->
-                                {{else}}
-                                    <i>Sign for add to this championship.</i>  
-                                {{/if}} 
                                 <p></p> 
                             </div>
                         </div>
