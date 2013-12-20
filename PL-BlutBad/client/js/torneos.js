@@ -76,9 +76,6 @@ Template.torneos.participantes = function(t_id){
 Template.createDialog.juegos = function(){
     return Juegos.find({});        
 }
-Template.editChamp.juegos = function(){
-    return Juegos.find({});        
-}
 
 function date_compare (init, fin) { 
     var inicio = Date.parse(init);  
@@ -91,18 +88,6 @@ function date_compare (init, fin) {
     } else {
         return true;
     }
-}
-
-Template.editTor.torneo = function() {
-    var id = Session.get('tornToEdit');
-    //console.log(id)
-    return Torneos.findOne({
-        _id : id
-    });
-};
-
-Template.torneos.showEditTorn = function() {
-    return Session.get('tornToEdit'); 
 }
 
 Template.torneos.events = {
@@ -153,13 +138,9 @@ Template.torneos.events = {
         }
         Session.set("showParticipantes", lista_show);
     },        
-    'click .btn_edit' : function() {
-        Session.set('tornToEdit', this._id);  
-    },
     'click .editar' : function() {
-         Session.set('champToEdit', this._id);
-        //console.log(this._id);
-    },
+        Session.set('tornToEdit', this._id);  
+    }, 
 };
 
 Template.createDialog.events({
@@ -249,27 +230,27 @@ Template.editTor.events({
 
 });
 
-Template.torneos.showEditChamp = function() {
-    //console.log("here");
-    return !Session.equals('champToEdit', null);
-}
-
-Template.editChamp.champ = function() {
-    var id = Session.get('champToEdit');
+Template.editTor.torneo = function() {
+    var id = Session.get('tornToEdit');
+    //console.log(id)
     return Torneos.findOne({
         _id : id
     });
-}; 
+};
+
+Template.torneos.showEditTorn = function() {
+    return Session.get('tornToEdit'); 
+}   
 
 Template.torneos.editar=function(){
     if (Meteor.user()){
         usuarios=Torneos.findOne({_id : this._id});
         //console.log(this._id);
         //console.log(usuarios.user_create);
-        if (Meteor.user().username==usuarios.user_create) {
+        if (Meteor.user().username == usuarios.user_create) {
             return true;
-         } else {
+        } else {
             return false;
-         };
+        };
      };
 };
