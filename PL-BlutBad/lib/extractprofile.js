@@ -33,8 +33,9 @@ _extractProfile = function (userObjId) {
       twitterUsername: null, //@username - kinda off that twitter dont do email
     };
     result.username = (user.profile && user.profile.name)?user.profile.name:result.username;
-    //result.datebirth=(user.profile)?user.profile.datebirth: result.datebirth;
-    //console.log(result.datebirth);
+    result.datebirth=(user.profile)?user.profile.datebirth: result.datebirth;
+    result.email=(user.profile)?user.profile.email: result.email;
+    console.log(result.email);
     result.genero=(user.profile)?user.profile.genero: result.genero;
     //Check if the user logged in via a service
     if (user.services) {
@@ -52,9 +53,7 @@ _extractProfile = function (userObjId) {
         } //EO serviceObject.id
       }  //EO for
     } //EO user.services
-    if (user.profile.email){
-        result.email=user.profile.email;
-    };
+
     return result;
   } else {
     console.log('user id or user object not found: '+userObjId);
