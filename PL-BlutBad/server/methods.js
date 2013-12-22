@@ -10,7 +10,7 @@ Meteor.methods({
 	//Meteor.call("matchFinish", Session.get("current_game"), gameAlien.points);
 	
 	matchFinish : function(gameId, score, opts) { 
-	    console.log(opts);
+	    //console.log(opts);
 		if (this.userId != null) {
 		    
 		    	if(opts != null){
