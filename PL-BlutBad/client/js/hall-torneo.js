@@ -26,6 +26,7 @@ Template.hall_torneo.numParticip = function() {
     return ChampUser.find({id_torneo:tid}).count();
 }
 
+
 Template.hall_torneo.participoClass = function() {
     var tid = Session.get('showTorneoId');
     u_id = Meteor.userId();
@@ -37,7 +38,6 @@ Template.hall_torneo.participoClass = function() {
     }
     return 'label';
 }
-
 
 
 Template.hall_torneo.soloTorneo = function() {
