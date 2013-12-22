@@ -99,7 +99,15 @@ function date_compare (init, fin) {
 }
 
 Template.torneos.events = {
-	//Acciones para empezar el torrneo
+    'click img': function() {
+
+        console.log("Pasar a la pagina de ver torneo");
+        // Poner lo a null, es decir celeccionar por defecto
+        Session.set('current_stage', 'showTorneo');
+        Session.set('showTorneoId', this._id);        
+    },
+        
+	//Acciones para empezar el torrneo      
 	'click .empezarTorneo': function() {
 	    //console.log(this);
 	},
