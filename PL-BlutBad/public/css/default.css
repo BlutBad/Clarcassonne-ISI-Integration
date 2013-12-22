@@ -709,12 +709,11 @@ h2.layout {
 	cursor: pointer;
 }
  
-#crear_torneo { 
+#crear_torneo, .crea_party { 
 	margin-top: 1%;
 	margin-bottom: 1%;
-	margin-right: 10%;
-	cursor: pointer;  
-    float: right;
+	margin-right: 5%;
+	cursor: pointer;   
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
     color: #050505;
@@ -848,4 +847,9 @@ td, th {
 	margin-right: 20%;
 	margin-left: 20%
 
+}
+
+.crea_party{
+	margin-bottom: 5%;
+	margin-left: 35%;
 }
