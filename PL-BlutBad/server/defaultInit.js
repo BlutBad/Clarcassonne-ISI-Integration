@@ -96,7 +96,7 @@ Meteor.startup(function() {
 					minPoints : 3999,
 			    }, {
 					rango : "General",
-					minPoints : 70000,
+					minPoints : 7000,
 			    }, {
 					rango : "Heroe",
 					minPoints : 9000,
@@ -133,7 +133,8 @@ Meteor.startup(function() {
 	                    date_start : "11/29/2013",
 	                    date_finish : "12/29/2013",
 	                    pic : '/images/games_logo/alieninvasion.jpg',
-	                    description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel'
+	                    description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel',
+	                    description_long:'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel, Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel'
 	                }
                 ]
 
@@ -202,7 +203,8 @@ Meteor.startup(function() {
                         date_start : "11/29/2013",
                         date_finish : "12/29/2013",
                         pic : '/images/games_logo/clarkasone.jpg',
-                        description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel'
+                        description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel',
+                        description_long:'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel, Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel'
                     }
 			    ],
 			},
@@ -231,7 +233,7 @@ Meteor.startup(function() {
 					minPoints : 4000,
 			    }, {
 					rango : "General",
-					minPoints : 70000,
+					minPoints : 7000,
 			    }, {
 					rango : "Heroe",
 					minPoints : 9000,
@@ -268,7 +270,8 @@ Meteor.startup(function() {
                         date_start : "11/29/2013",
                         date_finish : "12/29/2013",
                         pic : '/images/games_logo/frootwars.jpg',
-                        description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel'
+                        description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel',
+                        description_long:'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel, Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel'
                     }
 			    ]
 			} 
@@ -343,7 +346,8 @@ Meteor.startup(function() {
 				    date_start : info.date_start,
 				    date_finish : info.date_finish,
 				    pic : info.pic,
-				    description : info.description
+				    description : info.description,
+				    description_long: info.description_long
 				});
 				ApuntameUsuariosFakes(torneoId);
 		    }
