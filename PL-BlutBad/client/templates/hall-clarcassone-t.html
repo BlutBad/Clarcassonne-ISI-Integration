@@ -57,14 +57,16 @@ http://bootsnipp.com/snippets/featured/condensed-table-example -->
               {{/each}}           
             </tbody>
           </table>
-          <div class="btn-toolbar">
-            {{#if show_ab this._id}}
-    		      <button class="btn unirme">{{unir_aband this._id}}</button>
-            {{/if}}
-    		    <button class="btn ready">{{estadoUserAct this._id}}</button>
-            <button id = "{{muestro_oculto this._id}}" class="btn startparty">Empezar</button>
-            <button id = "{{muestro_oculto this._id}}" class="btn removeparty">Descartar</button>
-	        </div>
+          {{#if currentUser}}
+            <div class="btn-toolbar">
+              {{#if show_ab this._id}}
+      		      <button class="btn unirme">{{unir_aband this._id}}</button>
+              {{/if}}
+      		    <button class="btn ready">{{estadoUserAct this._id}}</button>
+              <button id = "{{muestro_oculto this._id}}" class="btn startparty">Empezar</button>
+              <button id = "{{muestro_oculto this._id}}" class="btn removeparty">Descartar</button>
+  	        </div>
+          {{/if}}
         {{/each}}
       </div>            
     </div>

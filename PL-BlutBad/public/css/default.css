@@ -712,7 +712,7 @@ h2.layout {
 #crear_torneo, .crea_party { 
 	margin-top: 1%;
 	margin-bottom: 1%;
-	margin-right: 5%;
+	margin-left: 5%;
 	cursor: pointer;   
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
