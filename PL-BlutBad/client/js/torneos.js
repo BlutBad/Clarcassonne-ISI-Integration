@@ -259,15 +259,13 @@ Template.torneos.showEditTorn = function() {
     return Session.get('tornToEdit'); 
 }   
 
-Template.torneos.editar=function(){
-    if (Meteor.user()){
-        usuarios = Torneos.findOne({_id : this._id});
-        //console.log(this._id);
-        //console.log(usuarios.user_create);
-        if (Meteor.user().username == usuarios.user_create) {
-            return true;
-        } else {
-            return false;
-        };
-     };
-};
+Template.torneos.current_creator = function(id_torneo) {   
+    id_userc = Torneos.findOne({
+        _id: id_torneo
+    }).user_create; 
+    if (Meteor.userId() == id_userc) {
+        return true;
+    } else {
+        return false;
+    }
+}

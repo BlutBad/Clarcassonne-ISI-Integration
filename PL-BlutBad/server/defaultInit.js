@@ -1,7 +1,7 @@
 // if the database is empty on server start, create some sample data.
 
 Meteor.startup(function() {
-
+ 
 	    if (Menu.find().count() === 0) {
 			var data = [ {
 			    name : "Juegos",
@@ -69,10 +69,8 @@ Meteor.startup(function() {
 	    } 
 
 	if (Juegos.find().count() === 0) {
-		var moder = Accounts.createUser({username:"moderador",email:"moder@kaka.aka", password:"123"});
-		moderid = Meteor.users.findOne({
-			username: "moderador"
-		})._id; 
+		var moder = Accounts.createUser({username:"moderador",email:"moder@kaka.aka", password:"123"});  
+		console.log("Creando moderadorrrr: " + moder)
 		var data = [
 			{
 			    name : 'AlienInvasion',
@@ -341,7 +339,7 @@ Meteor.startup(function() {
 				var torneoId = Torneos.insert({
 				    game_id : juego_id,
 				    title : info.title,
-				    user_create : moderid,
+				    user_create : moder,
 				    date_start : info.date_start,
 				    date_finish : info.date_finish,
 				    pic : info.pic,
