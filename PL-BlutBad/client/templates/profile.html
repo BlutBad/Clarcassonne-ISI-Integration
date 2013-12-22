@@ -1,6 +1,7 @@
 <template name="profil">
 	{{#if showprofile}}
 		{{#if registrado}}
+		<div id="profile-container">
 			<div id="formu">
 				<h1>Perfil de Usuario</h1>
 				<div class="container">   
@@ -21,12 +22,13 @@
 					</select>							
 					</label>
 					<br/>
-					<br/>
 					<button class="btn btn-primary" id="save" type="submit"> Guardar los cambios</button>
 				</div>
 			</div>
+			<br/>
+			<h2>Partidas jugadas: {{scores.length}}</h2>
 			<h1>Premios</h1>
-
+			
 			puntos conseguidos: 
 			{{#each scores}} 
 			<table>
@@ -42,12 +44,14 @@
 			</table>  
 		</div>
 		{{/each}}
-			partidas jugadas
-			partidas ganadas
+			
+			partidas ganadas no se donde se guarda si una partida se ha ganado o perdido
 			(si se pudiese mejor con un gráfico)
+			ISI-coins si se llega ha hacer
 		{{else}}
 			<p>Debes estar registrado para ver tu perfil</p>
 		{{/if}}
+		</div>
 	{{/if}}
 </template>
 

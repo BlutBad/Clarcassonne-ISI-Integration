@@ -843,3 +843,9 @@ td, th {
 .container_tor, #torneos_container {	
 	overflow: hidden; 
 } 
+
+#profile-container {
+	margin-right: 20%;
+	margin-left: 20%
+
+}
