@@ -38,7 +38,7 @@ Template.profil.events({
 		email=$("#email").val();
 		datebirthday=$("#datebirthday").val();
 		genero=$("#genero").val();
-		console.log(genero);
+		console.log(email);
 		Meteor.users.update(id, {
 		    $set : {
 				"profile.name" : username,

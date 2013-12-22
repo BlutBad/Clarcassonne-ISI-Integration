@@ -52,6 +52,9 @@ _extractProfile = function (userObjId) {
         } //EO serviceObject.id
       }  //EO for
     } //EO user.services
+    if (user.profile.email){
+        result.email=user.profile.email;
+    };
     return result;
   } else {
     console.log('user id or user object not found: '+userObjId);
