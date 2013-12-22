@@ -98,7 +98,7 @@ Meteor.startup(function() {
 					minPoints : 3999,
 			    }, {
 					rango : "General",
-					minPoints : 70000,
+					minPoints : 7000,
 			    }, {
 					rango : "Heroe",
 					minPoints : 9000,
@@ -235,7 +235,7 @@ Meteor.startup(function() {
 					minPoints : 4000,
 			    }, {
 					rango : "General",
-					minPoints : 70000,
+					minPoints : 7000,
 			    }, {
 					rango : "Heroe",
 					minPoints : 9000,
