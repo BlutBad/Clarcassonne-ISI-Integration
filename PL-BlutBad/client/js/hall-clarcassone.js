@@ -352,8 +352,21 @@ Template.hall_clarcassone.muestro_oculto = function(id_partida) {
     }
 }
 
-Template.hall_clarcassone.rol = function(id_user) {
-    usersJoined = PartidasVolatiles.find({});
+Template.hall_clarcassone.show_ab = function(id_partida) {
+     userCreator = PartidasVolatiles.findOne({
+        _id : id_partida
+    }).creator_id;
+    if (userCreator == Meteor.userId()) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+Template.hall_clarcassone.rol = function(id_user, id_partida) { 
+    usersJoined = PartidasVolatiles.find({
+        _id: id_partida
+    });
     usersJoined.forEach(function(each) {
         if (each.creator_id == id_user) {
             conte = "Creador";

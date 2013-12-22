@@ -1,6 +1,7 @@
 <template name="dashboard">
 	{{#if show}}
-		<h1>Dashboard</h1>
+		<h1>Dashboard</h1> 
+		<input type="button" class="crea_party" value="Crea una partida Clarcassone!">
 		{{>misInsignias}}
 	{{/if}}
 </template> 
@@ -8,7 +9,7 @@
 
 <template name="misInsignias">
 <div class="well">
-<h2>Insignias conseguidas en los juegos:</h2>
+	<h2>Insignias conseguidas en los juegos:</h2>
     <table class="table">
       <thead>
         <tr>

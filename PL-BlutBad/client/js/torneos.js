@@ -19,8 +19,10 @@ Template.torneos.torneo=function(){
     game_session = Session.get("gametor");  
     if (game_session == undefined) {
         sortTorneos = Torneos.find({});
-    } else {
-        sortTorneos = Torneos.find({game: game_session});
+    } else { 
+        sortTorneos = Torneos.find({
+            game_id: game_session
+        });  
     }        
 
     //champ = ChampUser.find({id_torneo: show_torneos});  
@@ -101,7 +103,7 @@ function date_compare (init, fin) {
 Template.torneos.events = {
     'click img': function() {
 
-        console.log("Pasar a la pagina de ver torneo");
+        //console.log("Pasar a la pagina de ver torneo");
         // Poner lo a null, es decir celeccionar por defecto
         Session.set('current_stage', 'showTorneo');
         Session.set('showTorneoId', this._id);        
@@ -122,10 +124,10 @@ Template.torneos.events = {
     },
     
     'click .sortBy': function () {
-        Session.set("gametor", this.name);
+        Session.set("gametor", this._id); 
     },
     'click #mostrar_torneos': function() {
-        Session.set("gametor", false);
+        Session.set("gametor", undefined);
     },
     'click .apunto': function (){       
         if (!ChampUser.findOne({id_torneo: this._id, id_user: Meteor.user()._id})) {  

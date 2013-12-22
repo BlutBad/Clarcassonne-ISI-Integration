@@ -2,7 +2,9 @@
 	{{#if show}} 
 		<div id = "torneos_container">
 			<h1>Creación de torneos</h1>
-			<input type="button" id="crear_torneo" value="Crear Torneos"> 
+            {{#if currentUser}}
+			     <input type="button" id="crear_torneo" value="Crear Torneos"> 
+            {{/if}}
 			{{#if showCreateDialog}}
 				{{> createDialog}}
 			{{else}} <!--para que salga debajo sino sale a un lado el boton crear_torneo-->
@@ -36,20 +38,18 @@
                             <div class="post-description">
                                 <p>{{description}}</p>
                                 
-                                <input type="button"  class="empezarTorneo" value="Empezar Torneo">
-                                <input type="button"  class="finalizarTorneo" value="Finalizar Torneo">
-                                 
-                                <!-- 
-                                <input type="button" id="{{_id}}" class = "participantes" value="{{participantes _id}}">
-                                -->
-                                {{#if editar}}
-                                    <input type="button" id="{{_id}}" class="editar" value="Editar torneo">
-                                {{/if}}
-                                
                                 {{#if currentUser}}
+                                    <input type="button"  class="empezarTorneo" value="Empezar Torneo">
+                                    <input type="button"  class="finalizarTorneo" value="Finalizar Torneo"> 
+                                    <!-- 
+                                    <input type="button" id="{{_id}}" class = "participantes" value="{{participantes _id}}">
+                                    -->
+                                    {{#if editar}}
+                                        <input type="button" id="{{_id}}" class="editar" value="Editar torneo">
+                                    {{/if}}                                    
                                     <input type="button" id="{{_id}}" class = "{{clase_Apuntada _id getUserId}}" value="{{apunto _id getUserId}} {{participantes _id}}">
                                 {{else}}
-                                    <i>Sign for add to this championship.</i>  
+                                    <i>Sign in para ver opciones de torneos</i>  
                                 {{/if}} 
                                     <!-- 
                                     <div id = "{{_id}}" class = "{{muestra_part _id}}">

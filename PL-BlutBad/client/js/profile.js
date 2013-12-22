@@ -53,7 +53,7 @@ Template.profil.events({
 
 Template.profil.scores=function(){
 	rankings = Ranking.find({userId: Meteor.user()._id});
-	console.log("here");
+	//console.log("here");
 	scores = [];
 	rankings.forEach(function(each,index) { 
 		sco = {};   
