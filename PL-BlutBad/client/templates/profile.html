@@ -11,14 +11,14 @@
            			Email: <input class="form-control" name="youremail" value="{{getUserEmail getUserId}}" type="email" required/>
            			</label>
             		<!--<input class="form-control" name="password" placeholder="New Password" type="password" />-->
-            		Fecha de nacimiento: <input type="text" id="datebirthday" value="{{datebirthday}}">
+            		Fecha de nacimiento: <input type="text" id="datebirth" value="{{getUserDateBirth getUserId}}">
             		<label>
-            		Género:
-					<select id="genero" name="list"> 
-						<option selected value="Elige">{{genero}}</option>
-						<option value="Male"> Male </option>
-						<option value="Female"> Female </option>
-					</select>
+            		Género: 
+            		<select id="genero" name="list">
+						<option selected>{{getUserGender getUserId}}</option>
+						<option> Male </option>
+						<option> Female</option>
+					</select>							
 					</label>
 					<br/>
 					<br/>

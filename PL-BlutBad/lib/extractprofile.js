@@ -33,7 +33,9 @@ _extractProfile = function (userObjId) {
       twitterUsername: null, //@username - kinda off that twitter dont do email
     };
     result.username = (user.profile && user.profile.name)?user.profile.name:result.username;
-
+    //result.datebirth=(user.profile)?user.profile.datebirth: result.datebirth;
+    //console.log(result.datebirth);
+    result.genero=(user.profile)?user.profile.genero: result.genero;
     //Check if the user logged in via a service
     if (user.services) {
       //Iterate through services

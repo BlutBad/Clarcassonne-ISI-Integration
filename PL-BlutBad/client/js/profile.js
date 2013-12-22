@@ -16,9 +16,9 @@ Template.profil.registrado=function(){
 };
 
 Template.profil.events({
-	'click #datebirthday': function(){
+	'click #datebirth': function(){
 		$(function() {
-			$("#datebirthday").datepicker({
+			$("#datebirth").datepicker({
 				showOn: "button",
 				buttonImage: "images/calendar.gif",
 				buttonImageOnly: true,
@@ -38,11 +38,12 @@ Template.profil.events({
 		email=$("#email").val();
 		datebirthday=$("#datebirthday").val();
 		genero=$("#genero").val();
+		console.log(genero);
 		Meteor.users.update(id, {
 		    $set : {
 				"profile.name" : username,
 				"profile.email" : email,
-				"profile.datebirthday" : datebirthday,
+				"profile.datebirth" : datebirth,
 				"profile.genero" : genero,
 		    }
 		});
@@ -55,7 +56,6 @@ Template.profil.scores=function(){
 	console.log("here");
 	scores = [];
 	rankings.forEach(function(each,index) { 
-		console.log("here");
 		sco = {};   
 		sco.No = index+1;
 		sco.game = Juegos.findOne({_id: each.gameId}).name;

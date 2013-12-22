@@ -51,4 +51,26 @@ if (typeof Handlebars !== 'undefined') {
 			return ' ';
 
 	});
+	Handlebars.registerHelper('getUserDateBirth', function (userId) {
+		var user = _extractProfile(userId);
+		if (user) {
+			if (user.datebirth){
+				return user.datebirth;
+			};
+
+		};
+			return ' ';
+
+	});
+	Handlebars.registerHelper('getUserGender', function (userId) {
+		var user = _extractProfile(userId);
+		if (user) {
+			if (user.genero){
+				return user.genero;
+			};
+
+		};
+			return ' ';
+
+	});
 }
