@@ -142,6 +142,7 @@ Template.torneos.events = {
             $("#" + this._id + ".selected_apunto").replaceWith("Me apunto!"); 
         }
     },
+    /*
     'click .participantes': function(){  
         lista_show = Session.get("showParticipantes");
         if (lista_show == undefined) {
@@ -155,9 +156,13 @@ Template.torneos.events = {
                 $("#" + this._id + ".muestra_part").switchClass("muestra_part", "oculta_part");
         }
         Session.set("showParticipantes", lista_show);
-    },        
+    },
+    */        
     'click .editar' : function() {
         Session.set('tornToEdit', this._id);  
+    },    
+    'click .borrar_tor' : function() {
+        Torneos.remove(this._id);
     }, 
 }; 
 
