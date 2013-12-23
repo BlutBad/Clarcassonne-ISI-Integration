@@ -25,6 +25,8 @@
 
 <template name="gamecontainer"> 
   <div id="gamecontainer"> 
+      {{> misTorneos}}
+      
 	  {{>idnClarca}}
 	  {{>idnAlien}}
 	  {{>idnFroot}}
@@ -33,7 +35,6 @@
 
 
 <template name="idnClarca">  
-
     <canvas id='CanvasclarcaGame' width='800' height='600'></canvas>
 
         <audio id="sonidojuego">
@@ -113,4 +114,24 @@
 			</div>
 		</div>
   	{{/with}}
+</template>
+
+
+
+
+
+
+<template name="misTorneos">
+    <div class="span12">
+        <p class="lead">Bare minimum radio button tabs example:</p>
+        <div id="tab" class="btn-group" data-toggle="buttons-radio">
+          <a href="#prices" class="btn active" data-toggle="tab">Modo Campaña</a>
+          {{#each torneos}}
+            <a href="#" class="btn miTorneo" data-toggle="tab">{{torneoName id_torneo}}</a>
+          {{/each}}
+          <a href="#features" class="btn" data-toggle="tab">Features</a>
+          <a href="#requests" class="btn" data-toggle="tab">Requestso</a>
+          <a href="#contact" class="btn"  data-toggle="tab">Contact</a>
+        </div>
+    </div>
 </template>

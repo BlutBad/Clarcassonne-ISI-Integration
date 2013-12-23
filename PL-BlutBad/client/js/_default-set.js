@@ -7,10 +7,12 @@ Session.setDefault('showGameIdn',null);
 Session.setDefault("current_game",null);
 
 Meteor.startup(function() {
+    $('#gamecontainer').hide();
+    
 	$('#gameFrootcontainer').hide();
 	$('#gamecanvasAlien').hide();
-	//$('#ClarcaGame').hide();
 	$('#CanvasclarcaGame').hide();
+
 });
 
 

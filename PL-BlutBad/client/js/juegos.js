@@ -65,6 +65,7 @@ Deps.autorun(function(c) {
 		    // Asi podemos tener muchos juego multi, cada uno con su HALL, y
 		    // cargarlo el hall si mucho sufrimiento.
 		    Session.set('current_stage', lg.hall)
+		    $('#gamecontainer').show();
 		}
 	} else {
 		// Se esconde el contenedor de juegos.
@@ -93,7 +94,7 @@ Deps.autorun(function(c) {
     //console.log(Session.get("showGameIdn"))
     if (Session.equals('showGameIdn', 'clarki')) {
 		// Para los multijuegos, mostramos el contenedor junto con el juego.
-		$('#gamecontainer').show();
+		
 		$('#CanvasclarcaGame').show();
 		//$('#ClarcaGame').show();
 		
@@ -153,5 +154,39 @@ Template.editGame.events({
 		Session.set('gameToEdit', null);
     }
 
+});
+
+
+
+// SI EL USER PARTICIPA EN LOS TORNEOS!!! 
+
+/*
+Template.misTorneos.show = function() {
+    uid = Meteor.userId();
+    if (uid){
+        
+    }
+    return false; 
+}
+*/
+
+Template.misTorneos.torneos = function() {
+    uid = Meteor.userId();
+    if (uid){
+        return ChampUser.find({id_user : uid});
+    }
+};
+
+
+Template.misTorneos.torneoName = function(id) {
+    return Torneos.findOne({_id:id}).title;
+};
+
+Template.misTorneos.events({
+    'click .miTorneo' : function() {
+        console.log(this);
+    }
+    
+    
 });
 
