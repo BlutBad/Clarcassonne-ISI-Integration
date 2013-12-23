@@ -1,5 +1,16 @@
 <template name="comunidad">
 	{{#if show}}
-		<h1>Comunidad</h1>
+		<h1>Tienda</h1>
+		{{#if registrado}}
+			Cambia los puntos por isi-coins 
+			<h2>Total puntos: {{total}}</h2>
+			Cambiar por:
+			<h2> Total ISI-Coins: {{isicoins}}</h2>
+			{{#if cambiar}}
+				<input type="button" id="change" value="Cambiar 100 puntos por 1 isicoin"> 
+			{{/if}}
+			Comprar insignias con isi-coins
+			
+		{{/if}}
 	{{/if}}
 </template> 
