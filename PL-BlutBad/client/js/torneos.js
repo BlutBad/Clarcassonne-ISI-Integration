@@ -23,15 +23,7 @@ Template.torneos.torneo=function(){
         sortTorneos = Torneos.find({
             game_id: game_session
         });  
-    }        
-
-    //champ = ChampUser.find({id_torneo: show_torneos});  
-    /*sortTorneos.forEach(function(each) {  
-            if (each._id == champ.id_torneo) {
-                    each.participantes = Meteor.user(champ.id_user).username;  
-            } 
-            console.log(each);
-    }); */  
+    }          
 
     return sortTorneos; 
 };  
@@ -41,15 +33,23 @@ Template.torneos.juegos=function(){
 };
 
 Template.torneos.clase_Apuntada = function(t_id, u_id){ 
-    if (ChampUser.findOne({id_torneo: t_id, id_user: u_id})) { 
+    // Array de jugadores.
+    parts = Torneos.findOne({
+        _id: t_id
+    }).participantes;    
+    if (_.contains(parts, u_id)) { 
         return "selected_apunto";
     } else {
         return "apunto";
     }
 }
 
-Template.torneos.apunto = function(t_id, u_id){ 
-    if (ChampUser.findOne({id_torneo: t_id, id_user: u_id})) { 
+Template.torneos.apunto = function(t_id, u_id){  
+    // Array de jugadores.
+    parts = Torneos.findOne({
+        _id: t_id
+    }).participantes;   
+    if (_.contains(parts, u_id)) { 
         return "Apuntado!";
     } else {
         return "Me apunto!";
@@ -60,26 +60,14 @@ Template.torneos.getnamegame = function(g_id) {
     return Juegos.findOne({
         _id: g_id
     }).name; 
-} 
-
-/*
-Template.torneos.lista_participantes = function(t_id){
-    return ChampUser.find({id_torneo: t_id});
-}
-*/
-
-Template.torneos.muestra_part = function(t_id){ 
-    show_torneos = Session.get("showParticipantes");    
-    if (show_torneos == undefined | !_.contains(show_torneos, t_id)) {
-        return "oculta_part";
-    } else { 
-        return "muestra_part"; 
-    } 
-}
+}  
 
 Template.torneos.participantes = function(t_id){ 
-    num_parts = (ChampUser.find({id_torneo: t_id})).count(); 
-    participantes = "(" + num_parts + ")";
+    parts = Torneos.findOne({
+        _id: t_id
+    }).participantes;   
+    num_parts = parts.length;
+    participantes = "(" + num_parts + ")"; 
     return participantes;
 }
 
@@ -129,35 +117,19 @@ Template.torneos.events = {
     'click #mostrar_torneos': function() {
         Session.set("gametor", undefined);
     },
-    'click .apunto': function (){       
-        if (!ChampUser.findOne({id_torneo: this._id, id_user: Meteor.user()._id})) {  
-            ChampUser.insert({id_torneo: this._id, id_user: Meteor.user()._id});  
-            $("#" + this._id + ".apunto").replaceWith("Apuntado!"); 
-        }  
+    'click .apunto': function (){    
+        Torneos.update(this._id, { 
+            $push : {participantes : Meteor.userId()}
+        });
+        $("#" + this._id + ".apunto").replaceWith("Apuntado!"); 
     },
     'click .selected_apunto': function () { 
-        if (ChampUser.findOne({id_torneo: this._id, id_user: Meteor.user()._id})) {  
-            id_torneo_rm = ChampUser.findOne({id_torneo: this._id, id_user: Meteor.user()._id}); 
-            ChampUser.remove(id_torneo_rm._id);
-            $("#" + this._id + ".selected_apunto").replaceWith("Me apunto!"); 
-        }
-    },
-    /*
-    'click .participantes': function(){  
-        lista_show = Session.get("showParticipantes");
-        if (lista_show == undefined) {
-                lista_show = [];
-        } 
-        if (!_.contains(show_torneos, this._id)) {
-                $("#" + this._id + ".oculta_part").switchClass("oculta_part", "muestra_part");
-                lista_show.push(this._id);
-        } else { 
-                lista_show = _.without(lista_show, _.findWhere(lista_show, this._id));
-                $("#" + this._id + ".muestra_part").switchClass("muestra_part", "oculta_part");
-        }
-        Session.set("showParticipantes", lista_show);
-    },
-    */        
+        Session.set("apuntado", false);   
+        Torneos.update(this._id, { 
+            $pull : {participantes : Meteor.userId()}
+        });        
+        $("#" + this._id + ".selected_apunto").replaceWith("Me apunto!"); 
+    },       
     'click .editar' : function() {
         Session.set('tornToEdit', this._id);  
     },    
@@ -187,7 +159,7 @@ Template.createDialog.events({
             } else {
                 Torneos.insert({title:title, game_id: game_id, user_create: user_create, 
                     date_start: date_start, date_finish: date_finish, 
-                    description: description, pic: pic});
+                    description: description, pic: pic, participantes: []});
                 Session.set("showCreateDialog", false);
             }
         } else {

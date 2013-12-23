@@ -344,7 +344,8 @@ Meteor.startup(function() {
 				    date_finish : info.date_finish,
 				    pic : info.pic,
 				    description : info.description,
-				    description_long: info.description_long
+				    description_long: info.description_long,
+				    participantes: []
 				});
 				ApuntameUsuariosFakes(torneoId);
 		    }

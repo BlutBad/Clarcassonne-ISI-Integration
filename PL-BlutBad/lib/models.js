@@ -83,16 +83,6 @@ Torneos= new Meteor.Collection("torneos");
 //	gameId : userId : maxScore : totalScore: score rango_id:rango._id
 Ranking = new Meteor.Collection("ranking");
 
-
-
-
-//Apuntarse a torneos 
-/* campos para champuser:
-	id_user
-	id_torneo
-*/
-ChampUser = new Meteor.Collection("champuser");
-
 //Para perfil de usuario
 /* campos para usuarios
 id_user

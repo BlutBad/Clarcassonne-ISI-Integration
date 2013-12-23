@@ -46,7 +46,7 @@
                                         <input type="button" id="{{_id}}" class="editar" value="Editar torneo">
                                         <input type="button" id="{{_id}}" class="borrar_tor" value="Borrar torneo">
                                     {{/if}}                                    
-                                   
+                                    <input type="button" id="{{_id}}" class = "{{clase_Apuntada _id getUserId}}" value="{{apunto _id getUserId}} {{participantes _id}}">
                                 {{else}}
                                     <i>Sign in para ver opciones de torneos</i>  
                                 {{/if}} 
