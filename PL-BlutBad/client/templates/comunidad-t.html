@@ -6,7 +6,9 @@
 			<h2>Total puntos: {{total}}</h2>
 			Cambiar por:
 			<h2> Total ISI-Coins: {{isicoins}}</h2>
-			<input type="button" id="change" value="Cambiar 100 puntos por 1 isicoin"> 
+			{{#if cambiar}}
+				<input type="button" id="change" value="Cambiar 100 puntos por 1 isicoin"> 
+			{{/if}}
 			Comprar insignias con isi-coins
 			
 		{{/if}}

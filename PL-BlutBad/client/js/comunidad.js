@@ -42,10 +42,10 @@ Template.comunidad.events = {
 		console.log("cambiar");
 		id=Meteor.user()._id;
 		isicoins=Meteor.users.findOne({_id: id}).profile.isicoins;
-		isi=isicoins+1
+		isi=isicoins+1;
 		Meteor.users.update(id, {
 		    $set : {
-				"profile.isicoins" : isi,
+				"profile.isicoins" : 1,
 			}
 		});
 	}
