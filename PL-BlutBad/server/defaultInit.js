@@ -13,7 +13,7 @@ Meteor.startup(function() {
 			    name : "Torneos",
 			    contents : []
 			}, {
-			    name : "Comunidad",
+			    name : "Tienda",
 			    contents : []
 			}, ];
 

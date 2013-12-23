@@ -36,14 +36,14 @@ Template.profil.events({
 		id=Meteor.user()._id;
 		username=$("#nombre").val();
 		email=$("#email").val();
-		//datebirth=$("#datebirth").val();
+		datebirth=$("#datebirth").val();
 		genero=$("#genero").val();
 		console.log(email);
 		Meteor.users.update(id, {
 		    $set : {
 				"profile.name" : username,
 				"profile.email" : email,
-		//		"profile.datebirth" : datebirth,
+				"profile.datebirth" : datebirth,
 				"profile.genero" : genero,
 		    }
 		});
