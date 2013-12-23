@@ -6,10 +6,10 @@
 				<h1>Perfil de Usuario</h1>
 				<div class="container">   
 					<label>
-					Nombre: <input class="form-control" id="nombre" value="{{getUsername getUserId}}" type="text" required/>
+					Nombre: {{getUsername getUserId}}
 					 </label>
 					 <label>
-           			Email: <input class="form-control" id="email" value="{{getUserEmail getUserId}}" type="email" required/>
+           			Email: {{getUserEmail getUserId}}
            			</label>
             		<!--<input class="form-control" name="password" placeholder="New Password" type="password" />-->
             		Fecha de nacimiento: <input type="text" id="datebirth" value="{{getUserDateBirth getUserId}}">
@@ -26,32 +26,39 @@
 				</div>
 			</div>
 			<br/>
-			<h2>Partidas jugadas: {{scores.length}}</h2>
-			<h1>Premios</h1>
-			
-			puntos conseguidos: 
-			{{#each scores}} 
 			<table>
-				<tbody>
-					<tr>
-						<td>{{game}}</td>
-						<td>{{user}}</td>
-						<td>{{maxScore}}</td> 
-						<td>{{totalScore}}</td> 
-						<td>{{rango}}</td> 
-					</tr>
-				</tbody>
-			</table>  
-		</div>
+	  <thead>
+        <tr>
+      		<th>Juego</th>
+			<th>Victorias</th>
+			<th>Derrotas</th>
+			<th>Nº Partidas</th>
+			<th>Puntuación total</th>
+        </tr>
+      </thead>
+      <tbody>
+      {{#each scores}} 
+				<tr>
+				<td><h4>{{game}}</h4></td>
+				<td><h4>{{win}}</h4></td>
+				<td><h4>{{lose}}</h4></td>
+				<td><h4>{{total}}</h4></td>
+				<td><h4>{{totalScore}}</h4></td> 			 
+				
+			</td>
+			</tr>		
 		{{/each}}
-			
-			partidas ganadas no se donde se guarda si una partida se ha ganado o perdido
-			(si se pudiese mejor con un gráfico)
+      </tbody>
+</table>
+			(Serhii se encarga del gráfico)
+			Si al final se guardan imagenes, poner el avatar
 			ISI-coins si se llega ha hacer
+		
 		{{else}}
 			<p>Debes estar registrado para ver tu perfil</p>
 		{{/if}}
 		</div>
 	{{/if}}
+
 </template>
 

@@ -9,6 +9,7 @@ Template.profil.showprofile = function() {
 Template.profil.registrado=function(){
 	if (Meteor.user()) {
 		return true;
+
 	}else{
 		return false;
 	}
@@ -34,35 +35,34 @@ Template.profil.events({
 		console.log("guardar");
 		console.log(Meteor.user()._id);
 		id=Meteor.user()._id;
-		username=$("#nombre").val();
-		email=$("#email").val();
 		datebirth=$("#datebirth").val();
 		genero=$("#genero").val();
 		console.log(email);
 		Meteor.users.update(id, {
 		    $set : {
-				"profile.name" : username,
-				"profile.email" : email,
 				"profile.datebirth" : datebirth,
 				"profile.genero" : genero,
 		    }
 		});
-
 	}
 });
 
+
+
 Template.profil.scores=function(){
-	rankings = Ranking.find({userId: Meteor.user()._id});
-	//console.log("here");
+	rankings = Ranking.find({user_id: Meteor.user()._id});
+	console.log("here");
 	scores = [];
 	rankings.forEach(function(each,index) { 
+		console.log("here this is");
 		sco = {};   
 		sco.No = index+1;
-		sco.game = Juegos.findOne({_id: each.gameId}).name;
-		sco.user = Meteor.users.findOne({_id: each.userId}).username;
-		sco.maxScore = each.maxScore;
+		sco.win=each.winTimes;
+		sco.lose=each.loseTimes;
+		sco.total=each.timesPlayed;
 		sco.totalScore = each.totalScore;
-		sco.rango = Rangos.findOne({_id: each.rango_id}).rango;
+		sco.game = Juegos.findOne({_id: each.game_id}).name;
+
 		scores.push(sco);
 	});  
 	return scores; 
@@ -71,4 +71,6 @@ Template.profil.scores=function(){
 gameId : gameId,
 userId : this.userId,
 score : score
+game_id" : "CoSMnvGLztupC8k5s
 });*/
+
