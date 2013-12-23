@@ -363,6 +363,18 @@ Template.hall_clarcassone.show_ab = function(id_partida) {
     }
 }
 
+Template.hall_clarcassone.show_ready = function() {
+    usersJoined = PartidasVolatiles.findOne({
+        _id : this._id
+    }).jugadores;
+    show = false;
+    usersJoined.forEach(function(each){
+        if (each.user_id == Meteor.userId())
+            show = true;
+    });
+    return show
+}
+
 Template.hall_clarcassone.rol = function(id_user, id_partida) { 
     usersJoined = PartidasVolatiles.find({
         _id: id_partida

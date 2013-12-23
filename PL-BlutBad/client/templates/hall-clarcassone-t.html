@@ -62,7 +62,9 @@ http://bootsnipp.com/snippets/featured/condensed-table-example -->
               {{#if show_ab this._id}}
       		      <button class="btn unirme">{{unir_aband this._id}}</button>
               {{/if}}
-      		    <button class="btn ready">{{estadoUserAct this._id}}</button>
+              {{#if show_ready}}
+      		      <button class="btn ready">{{estadoUserAct this._id}}</button>
+              {{/if}}
               <button id = "{{muestro_oculto this._id}}" class="btn startparty">Empezar</button>
               <button id = "{{muestro_oculto this._id}}" class="btn removeparty">Descartar</button>
   	        </div>
