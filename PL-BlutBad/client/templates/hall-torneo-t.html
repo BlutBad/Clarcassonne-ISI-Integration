@@ -1,26 +1,30 @@
 <template name="hall_torneo">
 
 {{#if show}}
-    Mostrar torneo: -> {{torneoId}}
-
-
     {{#with torneo}}
-
-
-
-    <div class="span8">
-        <h1> {{title}} </h1>
-            <div class="span4">
-                <img src="{{pic}}">  
+        <div class="blog">               
+            <div class="post-summary">
+                <h2 class="post-title">{{title}}</h2>
+                <img src="{{pic}}" class="post-image" alt="sample image" width="606" height="115" />
+                
+                <div class="post-description">
+                    <p>{{description_long}}</p>
+                </div>
+                
+               <div class="post-details">
+                    <div class="post-date">
+                        <span class="month">Dec</span>
+                        <span class="day">18</span>
+                    </div>
+        
+                    Posted by <a href="">{{getUsername user_create}}</a> en <a href="#">Torneos</a>  |  <a href="#">3 comments</a>
+                    
+                    <span class="badge badge-success">Empieza: {{date_start}}</span>
+                    <span class="badge badge-important">Termina: {{date_finish}}</span>
+                    <span class="{{participoClass}} apuntarme">Participantes: {{numParticip}}</span>
+                </div>
             </div>
-            <hr>
-        <p>{{description_long}}</p>
-        <div>
-            <span class="badge badge-success">Empieza: {{date_start}}</span><span class="badge badge-important">Termina: {{date_finish}}</span> <div class="pull-right"><span class="{{participoClass}}">Participantes: {{numParticip}}</span></div>
-        </div> 
-        <hr>
-       
-    </div>
+        </div>
     {{/with}}
 
 
@@ -29,12 +33,10 @@
 
     
     {{#if multiTorneo}}
-    
-    
-    
     <div class="container">
         <div class="row">        
-                <p class="lead">More complex content example:</p>
+        
+                <p class="lead">Etapas del torneo </p>
                 <div id="tab" class="btn-group" data-toggle="buttons-radio">
                   <a href="#prices2" class="btn btn-large btn-info active" data-toggle="tab">Preseleccion</a>
                   <a href="#features2" class="btn btn-large btn-info" data-toggle="tab">1/4 Final</a>
@@ -42,13 +44,7 @@
                   <a href="#contact2" class="btn btn-large btn-info"  data-toggle="tab">Final</a>
                 </div>
             
-        </div>
-    </div>
-    
-    
-    
-    <div class="container">
-        <div class="row">
+
             <div class="span5">
                 <table class="table table-striped table-condensed">
                       <thead>
@@ -170,45 +166,32 @@
 
 
     {{#if soloTorneo}}
-    
-    <table class="table table-striped table-condensed">
-                                      <thead>
-                                      <tr>
-                                          <th>Username</th>
-                                          <th>Date registered</th>
-                                          <th>Role</th>
-                                          <th>Status</th>                                          
-                                      </tr>
-                                  </thead>   
-                                  <tbody>
+        <div class="container">
+            <div class="row">
+                <div class="span5">
+                    <table class="table table-striped table-condensed">
+                          <thead>
+                              <tr>
+                                  <th>#</th>
+                                  <th>Nombre</th>
+                                  <th>Rango</th>
+                                  <th>Maxima Puntuacion</th>                                          
+                              </tr>
+                          </thead>   
+                          <tbody>
+                              {{#each soloRanking}}
                                     <tr>
-                                        <td>Donna R. Folse</td>
-                                        <td>2012/05/06</td>
+                                        <td>{{no}}</td>
+                                        <td>{{getUsername user_id}}</td>
                                         <td>Editor</td>
-                                        <td><span class="label label-success">Active</span>
-                                        </td>                                       
+                                        <td>{{maxScore}}</td>                                       
                                     </tr>
-                                    
-                                    
-                                    <tr>
-                                        <td>Donna R. Folse</td>
-                                        <td>2012/05/06</td>
-                                        <td>Editor</td>
-                                        <td><span class="label label-success">Active</span>
-                                        </td>                                       
-                                    </tr>
-                                    
-                                    
-                                    <tr>
-                                        <td>Donna R. Folse</td>
-                                        <td>2012/05/06</td>
-                                        <td>Editor</td>
-                                        <td><span class="label label-success">Active</span>
-                                        </td>                                       
-                                    </tr>
-                                    
-                                   </tbody>
-                                 </table>
+                                {{/each}}
+                           </tbody>
+                     </table>
+                 </div>
+            </div>
+        </div>                       
     {{/if}}
 {{/if}}
 </template>

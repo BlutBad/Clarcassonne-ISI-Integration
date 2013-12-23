@@ -70,11 +70,11 @@ Meteor.startup(function() {
 
 	if (Juegos.find().count() === 0) {
 		var moder = Accounts.createUser({username:"moderador",email:"moder@kaka.aka", password:"123"});  
-		console.log("Creando moderadorrrr: " + moder)
+		console.log("Creando moderador: " + moder)
 		var data = [
 			{
 			    name : 'AlienInvasion',
-			    wrapf : 'gameAlien.initialize("gamecanvasAlien",spritesAlien,startGameAlien)',
+			    wrapf : 'null', //'gameAlien.initialize("gamecanvasAlien",spritesAlien,startGameAlien)',
 			    logo_src : '/images/games_logo/alieninvasion.jpg',
 			    logo_alt : 'Juega es este juego',
 			    title_desc : 'Titulo para la descripcion del juego',
@@ -134,7 +134,7 @@ Meteor.startup(function() {
 	                    date_finish : "12/29/2013",
 	                    pic : '/images/games_logo/alieninvasion.jpg',
 	                    description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel',
-	                    description_long:'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel, Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel'
+	                    description_long:'Id vel sensibus honestatis omittantur, vel cu nobis commune patrioque. In accusata definiebas qui, id tale malorum dolorem sed, solum clita phaedrum ne his. Eos mutat ullum forensibus ex, wisi perfecto urbanitas cu eam, no vis dicunt impetus. Assum novum in pri, vix an suavitate moderatius, id has reformidans referrentur. Elit inciderint omittantur duo ut, dicit democritum signiferumque eu est, ad suscipit delectus mandamus duo. An harum equidem maiestatis nec.'
 	                }
                 ]
 
@@ -204,14 +204,14 @@ Meteor.startup(function() {
                         date_finish : "12/29/2013",
                         pic : '/images/games_logo/clarkasone.jpg',
                         description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel',
-                        description_long:'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel, Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel'
-                    }
+                        description_long:'Id vel sensibus honestatis omittantur, vel cu nobis commune patrioque. In accusata definiebas qui, id tale malorum dolorem sed, solum clita phaedrum ne his. Eos mutat ullum forensibus ex, wisi perfecto urbanitas cu eam, no vis dicunt impetus. Assum novum in pri, vix an suavitate moderatius, id has reformidans referrentur. Elit inciderint omittantur duo ut, dicit democritum signiferumque eu est, ad suscipit delectus mandamus duo. An harum equidem maiestatis nec.'
+				}
 			    ],
 			},
 
 			{
 			    name : 'Froot Wars',
-			    wrapf : 'gameFroot.init()',
+			    wrapf : 'null', //'gameFroot.init()',
 			    logo_src : '/images/games_logo/frootwars.jpg',
 			    logo_alt : 'Juega es este juego',
 			    title_desc : 'Titulo para la descripcion del juego',
@@ -271,8 +271,8 @@ Meteor.startup(function() {
                         date_finish : "12/29/2013",
                         pic : '/images/games_logo/frootwars.jpg',
                         description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel',
-                        description_long:'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel, Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel'
-                    }
+                        description_long:'Id vel sensibus honestatis omittantur, vel cu nobis commune patrioque. In accusata definiebas qui, id tale malorum dolorem sed, solum clita phaedrum ne his. Eos mutat ullum forensibus ex, wisi perfecto urbanitas cu eam, no vis dicunt impetus. Assum novum in pri, vix an suavitate moderatius, id has reformidans referrentur. Elit inciderint omittantur duo ut, dicit democritum signiferumque eu est, ad suscipit delectus mandamus duo. An harum equidem maiestatis nec.'
+                     }
 			    ]
 			} 
 		]
@@ -327,10 +327,7 @@ Meteor.startup(function() {
 
 				fakeUsers.forEach(function(user) {
 				    if (Math.random() < 0.35) {
-						ChampUser.insert({
-						    id_torneo : torneoId,
-						    id_user : user._id
-						});
+						Torneos.update(torneoId, { $push : {participantes : user._id}});
 				    }
 				});
 		    }

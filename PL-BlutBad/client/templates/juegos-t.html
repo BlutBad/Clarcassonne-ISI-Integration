@@ -122,16 +122,16 @@
 
 
 <template name="misTorneos">
-    <div class="span12">
-        <p class="lead">Bare minimum radio button tabs example:</p>
-        <div id="tab" class="btn-group" data-toggle="buttons-radio">
-          <a href="#prices" class="btn active" data-toggle="tab">Modo Campaña</a>
-          {{#each torneos}}
-            <a href="#" class="btn miTorneo" data-toggle="tab">{{torneoName id_torneo}}</a>
-          {{/each}}
-          <a href="#features" class="btn" data-toggle="tab">Features</a>
-          <a href="#requests" class="btn" data-toggle="tab">Requestso</a>
-          <a href="#contact" class="btn"  data-toggle="tab">Contact</a>
+    {{#if tengoTorneos}}
+        <div class="span12">
+            <p class="lead">Mis torneos:</p>
+            <div id="tab" class="btn-group" data-toggle="buttons-radio">
+              {{#each torneos}}
+                <a href="#" class="btn {{activeClassTorneo}} miTorneo" data-toggle="tab">{{title}}</a>
+              {{/each}}
+            </div>
         </div>
-    </div>
+     {{else}}
+     <h4>No participa en ningun torneo, apuntese a uno, lo pasara en grande!</h4>
+    {{/if}}
 </template>

@@ -7,14 +7,14 @@ Template.ranking.scores = function() {
 	if (idgame_session == null) {
 		rankings = Ranking.find({},{sort:{maxScore: -1}});
 	} else {
-		rankings = Ranking.find({gameId: idgame_session}, {sort:{maxScore: -1}})
+		rankings = Ranking.find({game_id: idgame_session}, {sort:{maxScore: -1}})
 	}
 	scores = [];
 	rankings.forEach(function(each,index) { 
 		sco = {};   
 		sco.No = index+1;
-		sco.game = Juegos.findOne({_id: each.gameId}).name;
-		sco.user = Meteor.users.findOne({_id: each.userId}).username;
+		sco.game = Juegos.findOne({_id: each.game_id}).name;
+		sco.user = Meteor.users.findOne({_id: each.user_id}).username;
 		sco.maxScore = each.maxScore;
         	sco.totalScore = each.totalScore;
         	sco.rango = Rangos.findOne({_id: each.rango_id}).rango;
@@ -41,7 +41,8 @@ Template.ranking.events = {
 				if (Math.random() < 0.035) {
 					//console.log(user.username);
 					maxScore = Math.floor((Math.random()*100)+1);
-					Meteor.call("matchFinish", game._id, maxScore, {user_id:user._id});
+					opts = {user_id: user._id, game_id: game._id, score:maxScore, torneo_id:null}
+					Meteor.call("matchFinish", opts);
 				};
 			});
 		});

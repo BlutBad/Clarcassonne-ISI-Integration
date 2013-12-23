@@ -9,41 +9,52 @@ Meteor.methods({
 	
 	//Meteor.call("matchFinish", Session.get("current_game"), gameAlien.points);
 	
-	matchFinish : function(gameId, score, opts) { 
-	    //console.log(opts);
+	matchFinish : function(opts) { 
+	    console.log(opts);
 		if (this.userId != null) {
-		    
-		    	if(opts != null){
-		    	    userId = opts.user_id;
-		    	}else{
-		    	    userId = this.userId
-		    	}
 
-			curUser = Ranking.findOne({
-				gameId : gameId,
-				userId : userId});
+        	if(opts.user_id != null){
+        	    user_id = opts.user_id;
+        	}else{
+        	    user_id = this.userId
+        	}
+    		
+            game_id = opts.game_id;
+            
+            curUser = Ranking.findOne({
+    				game_id : game_id,
+    				user_id : user_id});
 			
 			if(curUser){
-				if (curUser.maxScore < score){
-					curUser.maxScore = score;
+			    //Estadisticas de cuantas veces ha jugado, ganado, perdido, puntuacion total.
+				if (curUser.maxScore < opts.score){
+					curUser.maxScore = opts.score;
 				}
 				
-				curUser.totalScore +=score;
+				if (opts.win){
+				    curUser.winTimes +=1;
+				}else{
+				    curUser.loseTimes +=1;
+				}
+				curUser.timesPlayed +=1;
+				curUser.totalScore +=opts.score;
 
 				
-				rango = Rangos.findOne({game_id:gameId, minPoints:{$gte: curUser.totalScore}});
-				//curUser.rango_id = rango._id;
+				rango = Rangos.findOne({game_id:game_id, minPoints:{$gte: curUser.totalScore}});
+
 				
 				
-				curUser.timesPlayed +=1;
-				insig = Insignias.findOne({game_id:gameId, timesPlayed:{$gte: curUser.timesPlayed}});
+				/*
+				insig = Insignias.findOne({game_id:game_id, timesPlayed:{$gte: curUser.timesPlayed}});
 				
-				insigToUser = InsigniasToUser.findOne({user_id:curUser.userId, game_id:gameId});
+				insigToUser = InsigniasToUser.findOne({user_id:curUser.userId, game_id:game_id});
+				
 				if(!!insigToUser){
 					InsigniasToUser.insert({user_id:curUser.userId,
 											game_id:gameId,
 											insignia_id: insig._id});
 				}
+				*/
 				
 				
 				
@@ -52,29 +63,57 @@ Meteor.methods({
 					rango_id:rango._id,
 					totalScore:curUser.totalScore,
 					maxScore:curUser.maxScore,
-					timesPlayed: curUser.timesPlayed
+					timesPlayed: curUser.timesPlayed,
+					winTimes: curUser.winTimes,
+				    loseTimes: curUser.loseTimes,
 				}});
 				
 				
 				
 			}else{
-				rango = Rangos.findOne({game_id:gameId, minPoints:{$gte: score}});
+				rango = Rangos.findOne({game_id:game_id, minPoints:{$gte: opts.score}});
 				
 				
-				insig = Insignias.findOne({game_id:gameId, timesPlayed:{$gte: 1}});	
+				//insig = Insignias.findOne({game_id:gameId, timesPlayed:{$gte: 1}});	
 				
-				InsigniasToUser.insert({user_id:userId,game_id:gameId,insignia_id: insig._id});
+				//InsigniasToUser.insert({user_id:userId,game_id:gameId,insignia_id: insig._id});
 			
+				if (opts.win){
+				    winTimes=1;
+				    loseTimes=0;
+				}else{
+				    loseTimes = 1;
+				    winTimes = 0;
+				}
 				
 				Ranking.insert({
-					gameId : gameId,
-					userId : userId,
-					maxScore : score,
-					totalScore: score, 
+					game_id : game_id,
+					user_id : user_id,
+					maxScore : opts.score,
+					totalScore: opts.score, 
 					rango_id:rango._id,
-					timesPlayed: 1
+					timesPlayed: 1,
+					winTimes:winTimes,
+					loseTimes:loseTimes,
+					
 				});
 			}
+			
+			
+
+	                 
+	                 
+		    if (opts.torneo_id){
+		        var u = Torneos.findOne({_id:opts.torneo_id,"ranking.user_id":user_id});
+		        console.log(u);
+		        if (u){
+		           Torneos.update({_id:opts.torneo_id, "ranking.user_id": user_id},
+		                           {$set : {"ranking.$.maxScore" : opts.score}});
+		        }else{
+		            Torneos.update(opts.torneo_id, {$push: { ranking: {user_id:user_id, maxScore:opts.score} } });
+		        }
+		    }
+			
 			
 			return true;
 		} else {

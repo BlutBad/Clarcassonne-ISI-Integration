@@ -101,7 +101,18 @@ var playGameAlien = function() {
 // Llamada cuando han desaparecido todos los enemigos del nivel sin
 // que alcancen a la nave del jugador
 var winGame = function() {
-    Meteor.call("matchFinish", Session.get("current_game"), gameAlien.points);
+    
+//**************************CALL TO API********************************//
+    ifg = Session.get('infoForGame');
+    opt = {game_id: ifg.game_id,
+           torneo_id: ifg.torneo_id,
+           score:  gameAlien.points,
+           win: true,
+           }
+    
+    Meteor.call("matchFinish", opt);
+  //**********************************************************//    
+    
     gameAlien.setBoard(3,new TitleScreen("You win!", 
                                     "Press fire to play again",
                                     playGameAlien));
@@ -111,7 +122,19 @@ var winGame = function() {
 // Llamada cuando la nave del jugador ha sido alcanzada, para
 // finalizar el juego
 var loseGame = function() {
-    Meteor.call("matchFinish", Session.get("current_game"), gameAlien.points);
+    
+//**************************CALL TO API********************************//
+    ifg = Session.get('infoForGame');
+    opt = {game_id: ifg.game_id,
+           torneo_id: ifg.torneo_id,
+           score:  gameAlien.points,
+           win: false,
+           }
+    
+    Meteor.call("matchFinish", opt);
+//**********************************************************//   
+    
+    
     gameAlien.setBoard(3,new TitleScreen("You lose!", 
                                     "Press fire to play again",
                                     playGameAlien));
@@ -417,8 +440,8 @@ Explosion.prototype.step = function(dt) {
 }
 
 
-/*
+
+//Lanzar el juego de aline una vez
 $(function() {
-    gameAlien.initialize("game",spritesAlien,startGameAlien);
+    gameAlien.initialize("gamecanvasAlien",spritesAlien,startGameAlien);
 });
-*/

@@ -35,11 +35,14 @@ var b2DebugDraw = Box2D.Dynamics.b2DebugDraw;
 		};
 }());
 
-/*
+
+//Lanzar frootWars
 $(window).load(function() {
-	gameFroot.init();
+    gameFroot.init();
 });
-*/
+
+
+
 
 var gameFroot = {
 	// Start initializing objects, preloading assets and display start screen
@@ -283,15 +286,52 @@ var gameFroot = {
 				if(gameFroot.currentLevel.number<levels.data.length-1){
 					$('#endingmessage').html('Level Complete. Well Done!!!');
 					$("#playnextlevel").show();
+					
+                    //**************************CALL TO API********************************//
+                    ifg = Session.get('infoForGame');
+                    opt = {game_id: ifg.game_id,
+                           torneo_id: ifg.torneo_id,
+                           score:  gameFroot.score,
+                           win: true,
+                           }
+                    
+                    Meteor.call("matchFinish", opt);
+                  //**********************************************************// 
+					
+					
 				} else {
 					$('#endingmessage').html('All Levels Complete. Well Done!!!');
 					$("#playnextlevel").hide();
 
-   				        Meteor.call("matchFinish", Session.get("current_game"), gameFroot.score);				        
+
+   				        
+   				   //**************************CALL TO API********************************//
+   				     ifg = Session.get('infoForGame');
+   				     opt = {game_id: ifg.game_id,
+   				            torneo_id: ifg.torneo_id,
+   				            score:  gameFroot.score,
+   				            win: true,
+   				            }
+   				     
+   				     Meteor.call("matchFinish", opt);
+   				   //**********************************************************//    		        
+   				        
+   				        
+   				        
 
 				}
 			} else if (gameFroot.mode=="level-failure"){			
-   			    Meteor.call("matchFinish", Session.get("current_game"), gameFroot.score);				        
+			    
+                //**************************CALL TO API********************************//
+                ifg = Session.get('infoForGame');
+                opt = {game_id: ifg.game_id,
+                       torneo_id: ifg.torneo_id,
+                       score:  gameFroot.score,
+                       win: false,
+                       }
+                
+                Meteor.call("matchFinish", opt);
+              //**********************************************************//    			        
 			    
 			    $('#endingmessage').html('Failed. Play Again?');
 			    $("#playnextlevel").hide();

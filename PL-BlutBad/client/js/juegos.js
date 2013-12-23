@@ -1,3 +1,5 @@
+var CanvasGame = null;
+
 Template.juegos.show = function() {
     return Session.get('current_stage') == 'Juegos';
 };
@@ -18,15 +20,18 @@ Template.juegos.editar = function() {
 
 Template.juegos.events({
     'click img' : function() {
-	// Si estas pinchando sobre el mismo tag que ya esta seleccionado
-	if (Session.equals('current_stage', this.name)) {
-	    Session.set('current_stage', 'Juegos');
-	    Session.set('load_game', null);
-	} else {
-	    Session.set('current_stage', false);
-	    Session.set('load_game', this);
-	    Session.set('current_game', this._id);
-	}
+    	// Si estas pinchando sobre el mismo tag que ya esta seleccionado
+    	if (Session.equals('current_stage', this.name)) {
+    	    Session.set('current_stage', 'Juegos');
+    	    Session.set('load_game', null);
+    	} else {
+    	    Session.set('current_stage', false);
+    	    Session.set('load_game', this);
+    	    //Session.set('current_game', this._id);
+    	    
+    	  //El juego tendra que leer info desde esta variable, para apuntar puntuacion.
+            Session.set('infoForGame', {game_id: this._id, torneo_id: null});
+    	}
     },
     'click .edit_game' : function() {
 	Session.set('gameToEdit', this._id);
@@ -59,7 +64,10 @@ Deps.autorun(function(c) {
 		    // se apunta al jugador en el ranking.
 		    Session.set("current_game", lg._id);
 		    // Se lanza el juego.
-		    eval(lg.wrapf);
+		    CanvasGame = eval(lg.wrapf);
+		    
+
+		    
 		} else if (lg.mode == "multi") {
 		    // Si el modo el multi, vamos a pasarl al estado del HALL del juego,
 		    // Asi podemos tener muchos juego multi, cada uno con su HALL, y
@@ -68,7 +76,10 @@ Deps.autorun(function(c) {
 		    $('#gamecontainer').show();
 		}
 	} else {
+	    CanvasGame = null;
+	    
 		// Se esconde el contenedor de juegos.
+	    
 		$('#gamecontainer').hide();
 		Session.set('showGameIdn', false);
     }
@@ -160,33 +171,48 @@ Template.editGame.events({
 
 // SI EL USER PARTICIPA EN LOS TORNEOS!!! 
 
-/*
-Template.misTorneos.show = function() {
-    uid = Meteor.userId();
-    if (uid){
-        
-    }
-    return false; 
-}
-*/
 
 Template.misTorneos.torneos = function() {
     uid = Meteor.userId();
+    game_id = Session.get('current_game');
     if (uid){
-        return ChampUser.find({id_user : uid});
+        return Torneos.find({game_id:game_id, participantes:{$in:[uid]}}); 
     }
 };
 
-
-Template.misTorneos.torneoName = function(id) {
-    return Torneos.findOne({_id:id}).title;
-};
 
 Template.misTorneos.events({
     'click .miTorneo' : function() {
-        console.log(this);
+        if (Session.equals('gameTorneoSelectId', this._id)) {
+            Session.set('gameTorneoSelectId', false);
+            Session.set('infoForGame', {game_id: this.game_id, torneo_id: null});
+        } else {
+            Session.set('gameTorneoSelectId', this._id);
+            Session.set('infoForGame', {game_id: this.game_id, torneo_id: this._id});
+        }
     }
+});  
+
+
+
+Template.misTorneos.activeClassTorneo = function() {
+        gtsid = Session.get('gameTorneoSelectId');
+        console.log(gtsid, this._id);
+        if (!(!!gtsid) && !(!!this._id)){
+            return 'active';
+        }else{
+            return Session.equals('gameTorneoSelectId', this._id) ? 'active' : '';
+        }
+    };
+
+Template.misTorneos.tengoTorneos = function() {
+    uid = Meteor.userId();
+    game_id = Session.get('current_game');
+    if (Torneos.find({game_id:game_id, participantes:{$in:[uid]}})){
+        return true;
+    }else{
+        return false;
+    }
+};
     
-    
-});
 
