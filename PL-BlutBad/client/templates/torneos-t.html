@@ -39,13 +39,14 @@
                                 <p>{{description}}</p>
                                 
                                 {{#if currentUser}}
-                                    <input type="button"  class="empezarTorneo" value="Empezar Torneo">
-                                    <input type="button"  class="finalizarTorneo" value="Finalizar Torneo"> 
+                                    {{#if current_creator _id}}
+                                        <input type="button"  class="empezarTorneo" value="Empezar Torneo">
+                                        <input type="button"  class="finalizarTorneo" value="Finalizar Torneo">  
                                     <!-- 
                                     <input type="button" id="{{_id}}" class = "participantes" value="{{participantes _id}}">
                                     -->
-                                    {{#if editar}}
                                         <input type="button" id="{{_id}}" class="editar" value="Editar torneo">
+                                        <input type="button" id="{{_id}}" class="borrar_tor" value="Borrar torneo">
                                     {{/if}}                                    
                                     <input type="button" id="{{_id}}" class = "{{clase_Apuntada _id getUserId}}" value="{{apunto _id getUserId}} {{participantes _id}}">
                                 {{else}}
