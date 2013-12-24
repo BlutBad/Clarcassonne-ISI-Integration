@@ -49,10 +49,15 @@
 			</tr>		
 		{{/each}}
       </tbody>
-</table>
+</table>    
+            {{> stadisticGraphic}}
 			(Serhii se encarga del gráfico)
 			Si al final se guardan imagenes, poner el avatar
 			ISI-coins si se llega ha hacer
+			
+
+			
+			
 		
 		{{else}}
 			<p>Debes estar registrado para ver tu perfil</p>
@@ -62,3 +67,9 @@
 
 </template>
 
+
+
+
+<template name="stadisticGraphic">
+    <div id="graficoEstadisticas" style="width: 600px; height: 400px; margin: 0 auto"></div>
+</template>
