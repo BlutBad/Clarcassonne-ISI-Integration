@@ -277,9 +277,20 @@ Deps.autorun(function(c) {
     }
 })
 
+
+
 Template.hall_clarcassone.partidasVolatiles = function() {
-    return PartidasVolatiles.find({});
+    gtsid = Session.get('gameTorneoSelectId');
+    if (gtsid){
+        return PartidasVolatiles.find({ torneo_id : gtsid});
+    }else{
+        return PartidasVolatiles.find({ torneo_id: { $exists: false } });
+    }
+    
 }
+
+
+
 
 Template.hall_clarcassone.UsersInHall = function() {
     return UsersInHall.find({});
