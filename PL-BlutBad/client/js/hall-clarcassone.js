@@ -133,6 +133,7 @@ Template.hall_clarcassone.events({
                     party_id = Partidas.insert({
                         jugadores : party_jugadores,
                         terminada : false,
+                        create_at:  Data.now(),
                     });
                     PartidasVolatiles.update(this._id, {
                         creator_id : Meteor.userId(),
@@ -253,10 +254,8 @@ removePartyV = function(id) {
 
 Deps.autorun(function(c) { 
     user =  Meteor.userId();
-    // Debería funcionar....
-    /*partidav = PartidasVolatiles.find({
-        jugadores: {$elemMatch: {user_id: user}}
-    }); */ 
+
+    
     ready = false;
     PartidasVolatiles.find({}).forEach(function(each){
         each.jugadores.forEach(function(each2){
