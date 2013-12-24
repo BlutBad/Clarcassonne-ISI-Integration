@@ -50,6 +50,11 @@ Template.hall_torneo.events = {
                 Torneos.update(this._id, { $push : {participantes : u_id}});
             }
         }
+    },
+    
+    'click .startTorneo': function() {
+        console.log("Start Torneo");
+        startTorneo();
     }
 };
 
@@ -62,12 +67,24 @@ Template.hall_torneo.multiTorneo = function() {
     return gameM.mode == "multi";
 }
 
-Template.hall_torneo.events = {
-        'click .startTorneo': function() {
-            console.log("Start Torneo");
-            startTorneo();
-        }
+Template.hall_torneo.partidasTorneo = function() {
+    var tid = Session.get('showTorneoId');
+    var partys = PartidasVolatiles.find({torneo_id:tid});
+    pp  = [];
+    partys.forEach(function(each, index) {
+        each.no = (index+1);
+        pp.push(each);
+    });
+    return pp;
+}
 
+
+function insertPartyVolatiles(torid, participantes) {
+    PartidasVolatiles.insert({
+        torneo_id: torid,
+        jugadores :participantes,
+        listos: false,
+    });
 };
 
 function startTorneo() {
@@ -85,58 +102,67 @@ function startTorneo() {
     }
     
     var mod = numP % 4;
-    /*
-    console.log("Mod: "+mod);
-    if(mod == 2){
-        if (numP=>6){
-            console.log("x3");
-        }
 
-    }else if(mod == 2){
-        console.log("x2")    
-    }
-    */
-    var numP =33;
-    for (; numP % 4 && numP==0;) {
-        var mod = numP%4;
-        console.log("Mod: "+mod);
-            if(mod == 2){
-                numP -= 3;
-                console.log("x3");   
-            }else if(mod==3){
-                    numP -= 3;
-                console.log("x3"); 
-            }else if(mod==1){
-                numP -= 5;
-                console.log("x5"); 
-            }
-        }
-    console.log("Finish: NewMod:" + (numP%4))
-    
-    
-    var numP =7;
+    //var numP =6;
     for (var i=0;numP % 4 && i<100;i++) {
         var mod= numP % 4;
         console.log("Mod: "+mod);
         console.log("Mod = "+mod+", numP: "+numP);  
         if(mod == 2){
-            numP -= 3;
-            console.log("Mod=2, formado grupo x3, numP:"+numP);   
+            console.log("Mod=2, formado grupo x3, numP: "+numP);   
+            
+            jugadores = [];
+            for (var k=(numP-3); numP>k; numP--){
+                console.log("#:"+numP +'  '+tor.participantes[numP]);
+                jugadores.push({user_id:tor.participantes[numP], estado: "Inactivo"});
+            }
+            
+            insertPartyVolatiles(tid, jugadores)
+            
         }else if(mod == 3){
-            numP -= 3;
-            console.log("Mod=3, formado grupo x3, numP:"+numP); 
+            console.log("Mod=3, formado grupo x3, numP: "+numP); 
+
+            jugadores = [];
+            for (var k=(numP-3); numP>k; numP--){
+                console.log("#:"+numP +'  '+tor.participantes[numP]);
+                jugadores.push({user_id:tor.participantes[numP], estado: "Inactivo"});
+            }
+            
+            insertPartyVolatiles(tid, jugadores)
+
         }else if(mod==1){
-            numP -= 5;
-            console.log("Mod=1 formado grupo x5, numP:"+numP); 
+            console.log("Mod=1 formado grupo x5, numP: "+numP); 
+            
+            jugadores = [];
+            for (var k=(numP-5); numP>k; numP--){
+                console.log("#:"+numP +'  '+tor.participantes[numP]);
+                jugadores.push({user_id:tor.participantes[numP], estado: "Inactivo"});
+            }
+            
+            insertPartyVolatiles(tid, jugadores)
+
         }
 
         for (var j=0; numP!=0 && !(numP % 4) && j<100;j++) {
-            numP -=4;
-            console.log("Mod=0 formado grupo x4, numP:"+numP); 
+            console.log("Mod=0 formado grupo x4, numP: "+numP); 
+            
+            jugadores = [];
+            for (var k=(numP-4); numP>k; numP--){
+                console.log("#:"+numP +'  '+tor.participantes[numP]);
+                jugadores.push({user_id:tor.participantes[numP], estado: "Inactivo"});
+            }
+            
+            insertPartyVolatiles(tid, jugadores)
+            
         }
         
     }
     console.log("Finish: NewMod:" + (numP%4) + ", numP: "+numP)
+  
+    
+    
+    
+    
     /*
     tor.participantes.forEach(function(each, index) {
         if (index % 4){
