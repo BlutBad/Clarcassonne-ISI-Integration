@@ -326,7 +326,7 @@ Meteor.startup(function() {
 				});
 
 				fakeUsers.forEach(function(user) {
-				    if (Math.random() < 0.35) {
+				    if (Math.random() < 0.535) {
 						Torneos.update(torneoId, { $push : {participantes : user._id}});
 				    }
 				});

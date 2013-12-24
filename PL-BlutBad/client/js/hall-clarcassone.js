@@ -133,7 +133,7 @@ Template.hall_clarcassone.events({
                     party_id = Partidas.insert({
                         jugadores : party_jugadores,
                         terminada : false,
-                        create_at:  Data.now(),
+                        create_at:  Date.now(),
                     });
                     PartidasVolatiles.update(this._id, {
                         creator_id : Meteor.userId(),
@@ -313,6 +313,8 @@ Template.hall_clarcassone.estadoUser = function(estado) {
         clas = 'label label-warning'
     } else if (estado == estadosU.listo) {
         clas = 'label label-success'
+    } else if(estado == estadosU.inactivo){
+        clas = 'label'
     }
     return clas;
 };

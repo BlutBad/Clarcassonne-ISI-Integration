@@ -83,7 +83,7 @@ function insertPartyVolatiles(torid, participantes) {
     PartidasVolatiles.insert({
         torneo_id: torid,
         jugadores :participantes,
-        listos: false,
+        create_at:  Date.now(),
     });
 };
 
@@ -91,97 +91,48 @@ function startTorneo() {
     var tid = Session.get('showTorneoId');
     var tor = Torneos.findOne(tid);
     
-    var party_jugadores = [];
-    
     var numP = tor.participantes.length;
     
     if (numP < 3){
         console.log("Imposible crear al menos una partida");
     }else{
         console.log("Creando partidas");
-    }
-    
-    var mod = numP % 4;
-
-    //var numP =6;
-    for (var i=0;numP % 4 && i<100;i++) {
-        var mod= numP % 4;
-        console.log("Mod: "+mod);
-        console.log("Mod = "+mod+", numP: "+numP);  
-        if(mod == 2){
-            console.log("Mod=2, formado grupo x3, numP: "+numP);   
-            
-            jugadores = [];
-            for (var k=(numP-3); numP>k; numP--){
-                console.log("#:"+numP +'  '+tor.participantes[numP]);
-                jugadores.push({user_id:tor.participantes[numP], estado: "Inactivo"});
-            }
-            
-            insertPartyVolatiles(tid, jugadores)
-            
-        }else if(mod == 3){
-            console.log("Mod=3, formado grupo x3, numP: "+numP); 
-
-            jugadores = [];
-            for (var k=(numP-3); numP>k; numP--){
-                console.log("#:"+numP +'  '+tor.participantes[numP]);
-                jugadores.push({user_id:tor.participantes[numP], estado: "Inactivo"});
-            }
-            
-            insertPartyVolatiles(tid, jugadores)
-
-        }else if(mod==1){
-            console.log("Mod=1 formado grupo x5, numP: "+numP); 
-            
-            jugadores = [];
-            for (var k=(numP-5); numP>k; numP--){
-                console.log("#:"+numP +'  '+tor.participantes[numP]);
-                jugadores.push({user_id:tor.participantes[numP], estado: "Inactivo"});
-            }
-            
-            insertPartyVolatiles(tid, jugadores)
-
-        }
-
-        for (var j=0; numP!=0 && !(numP % 4) && j<100;j++) {
-            console.log("Mod=0 formado grupo x4, numP: "+numP); 
-            
-            jugadores = [];
-            for (var k=(numP-4); numP>k; numP--){
-                console.log("#:"+numP +'  '+tor.participantes[numP]);
-                jugadores.push({user_id:tor.participantes[numP], estado: "Inactivo"});
-            }
-            
-            insertPartyVolatiles(tid, jugadores)
-            
-        }
+        for (;numP>=3;) {
+            var mod= numP % 4;
+            if(mod == 2 || mod == 3){
+                console.log("Mod=2/3, formado grupo x3, numP: "+numP);   
+                
+                jugadores = [];
+                for (var k=(numP-3); numP>k; numP--){
+                    console.log("#:"+(numP-1) +'  '+tor.participantes[(numP-1)]);
+                    jugadores.push({user_id:tor.participantes[(numP-1)], estado: "Inactivo"});
+                }
+                insertPartyVolatiles(tid, jugadores);
         
-    }
-    console.log("Finish: NewMod:" + (numP%4) + ", numP: "+numP)
-  
+            }else if(mod==1){
+                console.log("Mod=1 formado grupo x5, numP: "+numP); 
+                
+                jugadores = [];
+                for (var k=(numP-5); numP>k; numP--){
+                    console.log("#:"+(numP-1) +'  '+tor.participantes[(numP-1)]);
+                    jugadores.push({user_id:tor.participantes[(numP-1)], estado: "Inactivo"});
+                }
+                insertPartyVolatiles(tid, jugadores);
     
-    
-    
-    
-    /*
-    tor.participantes.forEach(function(each, index) {
-        if (index % 4){
-            console.log("#"+index +" "+each)
-        }else{
-            console.log("#"+index +" "+each)
-            if(index!=0){
-                console.log("--\n")
+            }else if(mod == 0){
+                for (var j=0; numP!=0 && !(numP % 4) && j<100;j++) {
+                    console.log("Mod=0 formado grupo x4, numP: "+numP); 
+                    
+                    jugadores = [];
+                    for (var k=(numP-4); numP>k; numP--){
+                        console.log("#:"+(numP-1) +'  '+tor.participantes[(numP-1)]);
+                        jugadores.push({user_id:tor.participantes[(numP-1)], estado: "Inactivo"});
+                    }    
+                    insertPartyVolatiles(tid, jugadores);    
+                }
             }
         }
-      
-    })  */
-    /* id de la partida que ha sido creada.
-    party_id = Partidas.insert({
-        torneo_id : tid,
-        jugadores : party_jugadores,
-        terminada : false,
-        create_at :  Data.now(),
-    });*/
+    }
 }
 
 
