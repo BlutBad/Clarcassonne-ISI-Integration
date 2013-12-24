@@ -557,11 +557,7 @@ h2.layout {
 	margin: 8px 0 0;
 	overflow: hidden;
 }
-
-/* blog */
-.blog {
-	
-}
+ 
 
 .post-summary {
 	margin: 0 0 2em;
@@ -573,22 +569,14 @@ h2.layout {
 	font: 18px Arial, Helvetica, Garuda, sans-serif;
 	line-height: 0.9;
 	text-transform: uppercase;
-}
-
-.post-date .month {
-	
-}
-
-.post-date .day {
-	
-}
+} 
 
 .post-title {
 	margin-bottom: .3em;
 	border-bottom: 0;
 }
 
-.post-details {
+.post-details, .post-detailss {
 	margin: 0 0 1px;
 	padding: 4px 6px;
 	font-family: Verdana, Arial, Helvetica, Garuda, sans-serif;
@@ -598,7 +586,13 @@ h2.layout {
 }
 
 .post-details a,.post-details a:link,.post-details a:visited,.post-details a:hover,.post-details a:active
-	{
+{
+	color: #C6C6C6;
+	font-weight: bold;
+}
+
+.post-detailss a,.post-detailss a:link,.post-detailss a:visited,.post-details a:hover,.post-detailss a:active
+{
 	color: #C6C6C6;
 	font-weight: bold;
 }
@@ -852,4 +846,25 @@ td, th {
 .crea_party{
 	margin-bottom: 5%;
 	margin-left: 35%;
+}
+
+.container_hall_tor {
+	margin: 2% 5%;
+}
+
+.imgtor {
+	margin: 1% 15%;
+	border:2px solid black;
+}
+
+.post-detailss span {
+	margin: 0% 4%;
+}
+
+#tab {
+	margin: 3% 5%;
+}
+
+.startTorneo {
+	margin-bottom: 2%;
 }
