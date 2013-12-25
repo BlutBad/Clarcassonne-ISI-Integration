@@ -39,10 +39,10 @@ Template.profil.events({
 		genero=$("#genero").val();
 		console.log(email);
 		Meteor.users.update(id, {
-		    $set : {
+			$set : {
 				"profile.datebirth" : datebirth,
 				"profile.genero" : genero,
-		    }
+			}
 		});
 	}
 });
@@ -62,7 +62,6 @@ Template.profil.scores=function(){
 		sco.total=each.timesPlayed;
 		sco.totalScore = each.totalScore;
 		sco.game = Juegos.findOne({_id: each.game_id}).name;
-
 		scores.push(sco);
 	});  
 	return scores; 
@@ -76,108 +75,190 @@ game_id" : "CoSMnvGLztupC8k5s
 
 
 Template.stadisticGraphic.rendered =function(){
+	rankings = Ranking.find({user_id: Meteor.user()._id});
+	scores = [];
+	rankings.forEach(function(each,index) { 
+		sco = {};   
+		sco.No = index+1;
+		sco.win=each.winTimes;
+		sco.lose=each.loseTimes;
+		sco.total=each.timesPlayed;
+		sco.totalScore = each.totalScore;
+		sco.game = Juegos.findOne({_id: each.game_id}).name;
+		scores.push(sco);
+	});  
+	console.log(scores.length);
+	if (scores.length!==0){
+		if (scores.length===1){ 
+			var colors = Highcharts.getOptions().colors,
+			categories = [scores[0].game, 'Alien Invation', 'Froot Wars'],
+			name = 'Browser brands',
+			data = [{
+				y: scores[0].total,
+				color: colors[0],
+				drilldown: {
+					name: scores[0].game,
+					categories: ['Ganadas', 'Perdidas'],
+					data: [scores[0].win, scores[0].lose],
+					color: colors[0]
+				}
+			}, {
+				y: 0,
+				color: colors[1],
+				drilldown: {
+					name: 'Alien Invation',
+					categories: ['Ganadas', 'Perdidas'],
+					data: [0, 0],
+					color: colors[1]
+				}
+			}, {
+				y: 0,
+				color: colors[2],
+				drilldown: {
+					name: 'Froot Wars',
+					categories: ['Ganadas', 'Perdidas'],
+					data: [0, 0],
+					color: colors[2]
+				}
+			}];
 
-    var colors = Highcharts.getOptions().colors,
-        categories = ['Clarcassonne', 'Alien Invation', 'Froot Wars'],
-        name = 'Browser brands',
-        data = [{
-                y: 24,
-                color: colors[0],
-                drilldown: {
-                    name: 'Clarcassonne',
-                    categories: ['Ganadas', 'Perdidas'],
-                    data: [20, 4],
-                    color: colors[0]
-                }
-            }, {
-                y: 24,
-                color: colors[1],
-                drilldown: {
-                    name: 'Alien Invation',
-                    categories: ['Ganadas', 'Perdidas'],
-                    data: [20, 4],
-                    color: colors[1]
-                }
-            }, {
-                y: 24,
-                color: colors[2],
-                drilldown: {
-                    name: 'Froot Wars',
-                    categories: ['Ganadas', 'Perdidas'],
-                    data: [20, 4],
-                    color: colors[2]
-                }
-            
-            }];
+ 	}else if (scores.length===2){
+		var colors = Highcharts.getOptions().colors,
+		categories = [scores[0].game, scores[1].game, 'Froot Wars'],
+		name = 'Browser brands',
+		data = [{
+				y: scores[0].total,
+				color: colors[0],
+				drilldown: {
+					name: scores[0].game,
+					categories: ['Ganadas', 'Perdidas'],
+					data: [scores[0].win, scores[0].lose],
+					color: colors[0]
+				}
+			}, {
+				y: scores[1].total,
+				color: colors[1],
+				drilldown: {
+					name: scores[1].game,
+					categories: ['Ganadas', 'Perdidas'],
+					data: [scores[1].win, scores[1].lose],
+					color: colors[1]
+				}
+			}, {
+				y: 0,
+				color: colors[2],
+				drilldown: {
+					name: 'Froot Wars',
+					categories: ['Ganadas', 'Perdidas'],
+					data: [0, 0],
+					color: colors[2]
+				}
+			
+			}];
 
+		}else if (scores.length===3){
+			var colors = Highcharts.getOptions().colors,
+		categories = [scores[0].game, scores[1].game, scores[2].game],
+		name = 'Browser brands',
+		data = [{
+				y: scores[0].total,
+				color: colors[0],
+				drilldown: {
+					name: scores[0].game,
+					categories: ['Ganadas', 'Perdidas'],
+					data: [scores[0].win, scores[0].lose],
+					color: colors[0]
+				}
+			}, {
+				y: scores[1].total,
+				color: colors[1],
+				drilldown: {
+					name: scores[1].game,
+					categories: ['Ganadas', 'Perdidas'],
+					data: [scores[1].win, scores[1].lose],
+					color: colors[1]
+				}
+			}, {
+				y: scores[2].total,
+				color: colors[2],
+				drilldown: {
+					name: scores[2].game,
+					categories: ['Ganadas', 'Perdidas'],
+					data: [scores[2].win, scores[2].lose],
+					color: colors[2]
+				}
+			
+			}];
+		};
 
-    // Build the data arrays
-    var browserData = [];
-    var versionsData = [];
-    for (var i = 0; i < data.length; i++) {
+	// Build the data arrays
+	var browserData = [];
+	var versionsData = [];
+	for (var i = 0; i < data.length; i++) {
 
-        // add browser data
-        browserData.push({
-            name: categories[i],
-            y: data[i].y,
-            color: data[i].color
-        });
+		// add browser data
+		browserData.push({
+			name: categories[i],
+			y: data[i].y,
+			color: data[i].color
+		});
 
-        // add version data
-        for (var j = 0; j < data[i].drilldown.data.length; j++) {
-            var brightness = 0.2 - (j / data[i].drilldown.data.length) / 5 ;
-            versionsData.push({
-                name: data[i].drilldown.categories[j],
-                y: data[i].drilldown.data[j],
-                color: Highcharts.Color(data[i].color).brighten(brightness).get()
-            });
-        }
-    }
+		// add version data
+		for (var j = 0; j < data[i].drilldown.data.length; j++) {
+			var brightness = 0.2 - (j / data[i].drilldown.data.length) / 5 ;
+			versionsData.push({
+				name: data[i].drilldown.categories[j],
+				y: data[i].drilldown.data[j],
+				color: Highcharts.Color(data[i].color).brighten(brightness).get()
+			});
+		}
+	}
 
-    // Create the chart
-    $('#graficoEstadisticas').highcharts({
-        chart: {
-            type: 'pie'
-        },
-        title: {
-            text: 'Estadisticas de tiempo perdido en los juegos'
-        },
-        yAxis: {
-            title: {
-                text: 'Procentaje raro'
-            }
-        },
-        plotOptions: {
-            pie: {
-                shadow: false,
-                center: ['50%', '50%']
-            }
-        },
-        tooltip: {
-            valueSuffix: '%'
-        },
-        series: [{
-            name: 'Browsers',
-            data: browserData,
-            size: '60%',
-            dataLabels: {
-                formatter: function() {
-                    return this.y > 5 ? this.point.name : null;
-                },
-                color: 'white',
-                distance: -30
-            }
-        }, {
-            name: 'Versions',
-            data: versionsData,
-            size: '80%',
-            innerSize: '60%',
-            dataLabels: {
-                formatter: function() {
-                    // display only if larger than 1
-                    return this.y > 1 ? '<b>'+ this.point.name +':</b> '+ this.y +'%'  : null;
-                }
-            }
-        }]
-    });
+	// Create the chart
+	$('#graficoEstadisticas').highcharts({
+		chart: {
+			type: 'pie'
+		},
+		title: {
+			text: 'Estadísticas de tiempo perdido en los juegos'
+		},
+		yAxis: {
+			title: {
+				text: 'Procentaje raro'
+			}
+		},
+		plotOptions: {
+			pie: {
+				shadow: false,
+				center: ['50%', '50%']
+			}
+		},
+		tooltip: {
+			valueSuffix: '%'
+		},
+		series: [{
+			name: 'Browsers',
+			data: browserData,
+			size: '60%',
+			dataLabels: {
+				formatter: function() {
+					return this.y >= 1 ? this.point.name : null;
+				},
+				color: 'white',
+				distance: -30
+			}
+		}, {
+			name: 'Versions',
+			data: versionsData,
+			size: '80%',
+			innerSize: '60%',
+			dataLabels: {
+				formatter: function() {
+					// display only if larger than 1
+					return this.y >= 1 ? '<b>'+ this.point.name +':</b> '+ this.y +'%'  : null;
+				}
+			}
+		}]
+	});
+};
 };
