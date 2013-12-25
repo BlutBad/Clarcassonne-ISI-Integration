@@ -24,7 +24,9 @@
       
     {{#if multiTorneo}} 
       <div class="container">
-        <span class="badge badge-success startTorneo">Empezar el torneo</span> 
+        {{#if creador}}
+          <span class="badge badge-success startTorneo">Empezar el torneo</span> 
+        {{/if}}
         <h2>Etapas del torneo </h2> 
         <div id="tab" class="btn-group" data-toggle="buttons-radio">
           <a href="#" class="btn btn-large btn-info active" data-toggle="tab">Preseleccion</a>
@@ -46,7 +48,7 @@
             <tbody>
               {{#each partidasTorneo}}
                 <tr>
-                  <td>{{no}}</td>
+                  <td><span class="label label-success" id = "num">{{no}}</span></td>
                   <td>
                     <div class="span5">
                       <table class="table table-striped table-condensed">
@@ -71,7 +73,7 @@
                       </table>
                      </div>
                   </td>                    
-                  <td><span class="label label-success">Donna R. Folse</span> </td>                                             
+                  <td><span class="label label-success" id = "winner">Donna R. Folse</span></td>                                             
                 </tr>
               {{/each}}
             </tbody>    
