@@ -863,8 +863,23 @@ td, th {
 
 #tab {
 	margin: 3% 5%;
+	display: block;
 }
 
 .startTorneo {
 	margin-bottom: 2%;
+} 
+
+#winner {
+	margin-top: 90%;
+}
+
+#num {
+	font-weight: bold;
+	margin-top: 350%;
+}
+
+#mistor {
+	margin-top: 1%;
+	float: left;
 }
