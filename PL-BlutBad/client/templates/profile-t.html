@@ -25,43 +25,48 @@
 					<button class="btn btn-primary" id="save" type="submit"> Guardar los cambios</button>
 				</div>
 			</div>
+		</div>
 			<br/>
+			<div>
 			<table>
-	  <thead>
-        <tr>
-      		<th>Juego</th>
-			<th>Victorias</th>
-			<th>Derrotas</th>
-			<th>Nº Partidas</th>
-			<th>Puntuación total</th>
-        </tr>
-      </thead>
-      <tbody>
-      {{#each scores}} 
-				<tr>
-				<td><h4>{{game}}</h4></td>
-				<td><h4>{{win}}</h4></td>
-				<td><h4>{{lose}}</h4></td>
-				<td><h4>{{total}}</h4></td>
-				<td><h4>{{totalScore}}</h4></td> 			 
-				
+			
+			<td>
+				<table>
+	  				<thead>
+       					<tr>
+      						<th>Juego</th>
+							<th>Victorias</th>
+							<th>Derrotas</th>
+							<th>Nº Partidas</th>
+							<th>Puntuación total</th>
+						</tr>
+					</thead>
+					<tbody>
+      					{{#each scores}} 
+							<tr>
+								<td><h4>{{game}}</h4></td>
+								<td><h4>{{win}}</h4></td>
+								<td><h4>{{lose}}</h4></td>
+								<td><h4>{{total}}</h4></td>
+								<td><h4>{{totalScore}}</h4></td> 			 
+							</tr>		
+						{{/each}}
+      				</tbody>
+				</table>    
+            </td>
+			<td>
+			{{> stadisticGraphic}}
 			</td>
-			</tr>		
-		{{/each}}
-      </tbody>
-</table>    
-            {{> stadisticGraphic}}
+			</table>
+
+			</div>
 			Si al final se guardan imagenes, poner el avatar
 			ISI-coins si se llega ha hacer
-			
-
-			
-			
 		
 		{{else}}
 			<p>Debes estar registrado para ver tu perfil</p>
 		{{/if}}
-		</div>
+		
 	{{/if}}
 
 </template>
@@ -70,5 +75,5 @@
 
 
 <template name="stadisticGraphic">
-    <div id="graficoEstadisticas" style="width: 600px; height: 400px; margin: 0 auto"></div>
+    <div id="graficoEstadisticas" style="width: 550px; height: 400px; margin: 0 auto"></div>
 </template>
