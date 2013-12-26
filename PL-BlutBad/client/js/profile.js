@@ -35,26 +35,23 @@ Template.profil.events({
 		console.log("guardar");
 		console.log(Meteor.user()._id);
 		id=Meteor.user()._id;
-		datebirth=$("#datebirth").val();
-		genero=$("#genero").val();
-		console.log(email);
-		Meteor.users.update(id, {
-			$set : {
-				"profile.datebirth" : datebirth,
-				"profile.genero" : genero,
-			}
-		});
-	}
+     	datebirth=$("#datebirth").val();
+      	genero=$("#genero").val();
+      	Meteor.users.update(id, {
+          $set : {
+       		"profile.datebirth" : datebirth,
+          	"profile.genero" : genero,
+          }
+      })
+  }
 });
 
 
 
 Template.profil.scores=function(){
 	rankings = Ranking.find({user_id: Meteor.user()._id});
-	console.log("here");
 	scores = [];
 	rankings.forEach(function(each,index) { 
-		console.log("here this is");
 		sco = {};   
 		sco.No = index+1;
 		sco.win=each.winTimes;
@@ -91,22 +88,22 @@ Template.stadisticGraphic.rendered =function(){
 	if (scores.length!==0){
 		if (scores.length===1){ 
 			var colors = Highcharts.getOptions().colors,
-			categories = [scores[0].game, 'Alien Invation', 'Froot Wars'],
+			categories = [scores[0].game, ' ', ' '],
 			name = 'Browser brands',
 			data = [{
-				y: scores[0].total,
+				y: 100,
 				color: colors[0],
 				drilldown: {
 					name: scores[0].game,
 					categories: ['Ganadas', 'Perdidas'],
-					data: [scores[0].win, scores[0].lose],
+					data: [scores[0].win*100/scores[0].total, scores[0].lose*100/scores[0].total],
 					color: colors[0]
 				}
 			}, {
 				y: 0,
 				color: colors[1],
 				drilldown: {
-					name: 'Alien Invation',
+					name: ' ',
 					categories: ['Ganadas', 'Perdidas'],
 					data: [0, 0],
 					color: colors[1]
@@ -115,40 +112,40 @@ Template.stadisticGraphic.rendered =function(){
 				y: 0,
 				color: colors[2],
 				drilldown: {
-					name: 'Froot Wars',
+					name: ' ',
 					categories: ['Ganadas', 'Perdidas'],
 					data: [0, 0],
 					color: colors[2]
 				}
 			}];
 
- 	}else if (scores.length===2){
+ 		}else if (scores.length===2){
 		var colors = Highcharts.getOptions().colors,
-		categories = [scores[0].game, scores[1].game, 'Froot Wars'],
+		categories = [scores[0].game, scores[1].game, ' '],
 		name = 'Browser brands',
 		data = [{
-				y: scores[0].total,
+				y: scores[0].total*100/(scores[0].total+scores[1].total),
 				color: colors[0],
 				drilldown: {
 					name: scores[0].game,
 					categories: ['Ganadas', 'Perdidas'],
-					data: [scores[0].win, scores[0].lose],
+					data: [scores[0].win*100/(scores[0].total), scores[0].lose*100/scores[0].total],
 					color: colors[0]
 				}
 			}, {
-				y: scores[1].total,
+				y: scores[1].total*100/(scores[0].total+scores[1].total),
 				color: colors[1],
 				drilldown: {
 					name: scores[1].game,
 					categories: ['Ganadas', 'Perdidas'],
-					data: [scores[1].win, scores[1].lose],
+					data: [1*scores[1].total*100/scores[1].total, scores[1].lose*100/scores[1].total],
 					color: colors[1]
 				}
 			}, {
 				y: 0,
 				color: colors[2],
 				drilldown: {
-					name: 'Froot Wars',
+					name: ' ',
 					categories: ['Ganadas', 'Perdidas'],
 					data: [0, 0],
 					color: colors[2]
@@ -161,30 +158,30 @@ Template.stadisticGraphic.rendered =function(){
 		categories = [scores[0].game, scores[1].game, scores[2].game],
 		name = 'Browser brands',
 		data = [{
-				y: scores[0].total,
+				y: scores[0].total*100/(scores[0].total+scores[1].total+scores[2].total),
 				color: colors[0],
 				drilldown: {
 					name: scores[0].game,
 					categories: ['Ganadas', 'Perdidas'],
-					data: [scores[0].win, scores[0].lose],
+					data: [scores[0].win*100/scores[0].total, scores[0].lose*100/scores[0].total],
 					color: colors[0]
 				}
 			}, {
-				y: scores[1].total,
+				y: scores[1].total*100/(scores[0].total+scores[1].total+scores[2].total),
 				color: colors[1],
 				drilldown: {
 					name: scores[1].game,
 					categories: ['Ganadas', 'Perdidas'],
-					data: [scores[1].win, scores[1].lose],
+					data: [scores[1].win*100/scores[1].total, scores[1].lose*100/scores[1].total],
 					color: colors[1]
 				}
 			}, {
-				y: scores[2].total,
+				y: scores[2].total*100/(scores[0].total+scores[1].total+scores[2].total),
 				color: colors[2],
 				drilldown: {
 					name: scores[2].game,
 					categories: ['Ganadas', 'Perdidas'],
-					data: [scores[2].win, scores[2].lose],
+					data: [scores[2].win*100/scores[2].total, scores[2].lose*100/scores[2].total],
 					color: colors[2]
 				}
 			
@@ -237,9 +234,9 @@ Template.stadisticGraphic.rendered =function(){
 			valueSuffix: '%'
 		},
 		series: [{
-			name: 'Browsers',
+			name: ' ',
 			data: browserData,
-			size: '60%',
+			size: '50%',
 			dataLabels: {
 				formatter: function() {
 					return this.y >= 1 ? this.point.name : null;
@@ -248,10 +245,10 @@ Template.stadisticGraphic.rendered =function(){
 				distance: -30
 			}
 		}, {
-			name: 'Versions',
+			name: ' ',
 			data: versionsData,
-			size: '80%',
-			innerSize: '60%',
+			size: '70%',
+			innerSize: '50%',
 			dataLabels: {
 				formatter: function() {
 					// display only if larger than 1
@@ -259,6 +256,6 @@ Template.stadisticGraphic.rendered =function(){
 				}
 			}
 		}]
-	});
-};
+	})
+}
 };
