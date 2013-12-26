@@ -37,6 +37,7 @@ Template.hall_torneo.participoClass = function() {
     return 'label';
 }
 
+/*
 Template.hall_torneo.creador = function() {
     var tid = Session.get('showTorneoId');
     creator = Torneos.findOne(tid).user_create; 
@@ -44,6 +45,7 @@ Template.hall_torneo.creador = function() {
         return true;
     return false;
 }
+*/
 
 Template.hall_torneo.events = {
     //Apuntarme o Salir del torneo

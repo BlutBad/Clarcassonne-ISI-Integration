@@ -400,3 +400,13 @@ Template.hall_clarcassone.rol = function(id_user, id_partida) {
     });
     return conte;
 }
+
+/*
+
+Template.hall_clarcassone.notorneo = function() {     
+    gtsid = Session.get('gameTorneoSelectId');
+    console.log(getUserId("admin"))
+    return true;
+}
+
+*/

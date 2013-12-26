@@ -196,19 +196,23 @@ Template.misTorneos.events({
 
 
 Template.misTorneos.activeClassTorneo = function() {
-        gtsid = Session.get('gameTorneoSelectId');
-        console.log(gtsid, this._id);
-        if (!(!!gtsid) && !(!!this._id)){
-            return 'active';
-        }else{
-            return Session.equals('gameTorneoSelectId', this._id) ? 'active' : '';
-        }
-    };
+    gtsid = Session.get('gameTorneoSelectId');
+    //console.log(gtsid, this._id);
+    if (!(!!gtsid) && !(!!this._id)){
+        return 'active';
+    }else{
+        return Session.equals('gameTorneoSelectId', this._id) ? 'active' : '';
+    }
+};
 
 Template.misTorneos.tengoTorneos = function() {
     uid = Meteor.userId();
     game_id = Session.get('current_game');
-    if (Torneos.find({game_id:game_id, participantes:{$in:[uid]}})){
+    tor = Torneos.find({
+    	game_id:game_id, 
+    	participantes:{$in:[uid]}
+    }).fetch(); 
+    if (tor.length != 0){
         return true;
     }else{
         return false;

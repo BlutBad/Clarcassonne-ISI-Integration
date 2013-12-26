@@ -878,3 +878,8 @@ td, th {
 	font-weight: bold;
 	margin-top: 350%;
 }
+
+#mistor {
+	margin-top: 1%;
+	float: left;
+}
