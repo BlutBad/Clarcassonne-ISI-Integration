@@ -4,7 +4,7 @@ Template.chat.chatName = function () {
 }
 
 Template.messages.messages = function () {
-    return Global_msgs.find({}, { sort: { time: -1 }});;
+    return Global_msgs.find({}, { sort: { time: -1 }});
 }
 
 notRegisterChat = function () {
