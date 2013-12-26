@@ -96,7 +96,7 @@ Template.stadisticGraphic.rendered =function(){
 				drilldown: {
 					name: scores[0].game,
 					categories: ['Ganadas', 'Perdidas'],
-					data: [scores[0].win*100/scores[0].total, scores[0].lose*100/scores[0].total],
+					data: [scores[0].win, scores[0].lose],
 					color: colors[0]
 				}
 			}, {
@@ -124,21 +124,21 @@ Template.stadisticGraphic.rendered =function(){
 		categories = [scores[0].game, scores[1].game, ' '],
 		name = 'Browser brands',
 		data = [{
-				y: scores[0].total*100/(scores[0].total+scores[1].total),
+				y: scores[0].total,
 				color: colors[0],
 				drilldown: {
 					name: scores[0].game,
 					categories: ['Ganadas', 'Perdidas'],
-					data: [scores[0].win*100/(scores[0].total), scores[0].lose*100/scores[0].total],
+					data: [scores[0].win, scores[0].lose],
 					color: colors[0]
 				}
 			}, {
-				y: scores[1].total*100/(scores[0].total+scores[1].total),
+				y: scores[1].total,
 				color: colors[1],
 				drilldown: {
 					name: scores[1].game,
 					categories: ['Ganadas', 'Perdidas'],
-					data: [1*scores[1].total*100/scores[1].total, scores[1].lose*100/scores[1].total],
+					data: [1*scores[1].total, scores[1].lose],
 					color: colors[1]
 				}
 			}, {
@@ -158,30 +158,30 @@ Template.stadisticGraphic.rendered =function(){
 		categories = [scores[0].game, scores[1].game, scores[2].game],
 		name = 'Browser brands',
 		data = [{
-				y: scores[0].total*100/(scores[0].total+scores[1].total+scores[2].total),
+				y: scores[0].total,
 				color: colors[0],
 				drilldown: {
 					name: scores[0].game,
 					categories: ['Ganadas', 'Perdidas'],
-					data: [scores[0].win*100/scores[0].total, scores[0].lose*100/scores[0].total],
+					data: [scores[0].win, scores[0].lose],
 					color: colors[0]
 				}
 			}, {
-				y: scores[1].total*100/(scores[0].total+scores[1].total+scores[2].total),
+				y: scores[1].total,
 				color: colors[1],
 				drilldown: {
 					name: scores[1].game,
 					categories: ['Ganadas', 'Perdidas'],
-					data: [scores[1].win*100/scores[1].total, scores[1].lose*100/scores[1].total],
+					data: [scores[1].win, scores[1].lose],
 					color: colors[1]
 				}
 			}, {
-				y: scores[2].total*100/(scores[0].total+scores[1].total+scores[2].total),
+				y: scores[2].total,
 				color: colors[2],
 				drilldown: {
 					name: scores[2].game,
 					categories: ['Ganadas', 'Perdidas'],
-					data: [scores[2].win*100/scores[2].total, scores[2].lose*100/scores[2].total],
+					data: [scores[2].win, scores[2].lose],
 					color: colors[2]
 				}
 			
@@ -231,7 +231,7 @@ Template.stadisticGraphic.rendered =function(){
 			}
 		},
 		tooltip: {
-			valueSuffix: '%'
+			valueSuffix: ' partidas'
 		},
 		series: [{
 			name: ' ',
@@ -252,7 +252,7 @@ Template.stadisticGraphic.rendered =function(){
 			dataLabels: {
 				formatter: function() {
 					// display only if larger than 1
-					return this.y >= 1 ? '<b>'+ this.point.name +':</b> '+ this.y +'%'  : null;
+					return this.y >= 1 ? '<b>'+ this.point.name +':</b> '+ this.y + 'partidas' : null;
 				}
 			}
 		}]
