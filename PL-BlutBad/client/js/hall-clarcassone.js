@@ -73,7 +73,8 @@ Template.hall_clarcassone.events({
                             user_id : Meteor.userId(),
                             estado : estadosU.pendiente,
                         } ],
-                        listos: false
+                        listos: false,
+                        torneo_id: false
                     });
                     UsersInHall.remove(userA._id);
                     Session.set("createError", undefined);
@@ -114,7 +115,10 @@ Template.hall_clarcassone.events({
             }).jugadores;
             userCreator = PartidasVolatiles.findOne({
                 creator_id : Meteor.userId()
-            });
+            }); 
+            tor_id = PartidasVolatiles.findOne({
+                _id : this._id
+            }).torneo_id;
             if (userCreator){
 
                 if (usersJoined.length < 3 || usersJoined.length > 5) {
@@ -132,14 +136,14 @@ Template.hall_clarcassone.events({
                     // id de la partida que ha sido creada.
                     party_id = Partidas.insert({
                         jugadores : party_jugadores,
-                        terminada : false,
-                        create_at:  Date.now(),
+                        terminada : false, 
                     });
                     PartidasVolatiles.update(this._id, {
                         creator_id : Meteor.userId(),
                         jugadores : usersJoined,
                         listos: true,
-                        partyid: party_id
+                        partyid: party_id,
+                        torneo_id: tor_id
                     });
 
                     //console.log('eval("ClarcassonneGameIU.initialize(idCanvasElement, party_id)");');
@@ -208,10 +212,12 @@ Template.hall_clarcassone.events({
                             usersJoined, {
                                 user_id : Meteor.userId()
                             }));
+                    // En la sección partidas de torneos no se puede unir nadie más --> torneo_id false
                     PartidasVolatiles.update(this._id, {
                         creator_id : userCreator,
                         jugadores : usersJoined,
-                        listos: false
+                        listos: false,
+                        torneo_id: false
                     });
                     Session.set("createError", undefined);
                 }
@@ -225,22 +231,24 @@ Template.hall_clarcassone.events({
             usersJoined = PartidasVolatiles.findOne({
                 _id : this._id
             });
+            tor_id = usersJoined.torneo_id;
             userCreator = usersJoined.creator_id;
             usersJoined = usersJoined.jugadores;
             usersJoined.forEach(function(each) {
                 if (each.user_id == Meteor.userId()) {
                     if (each.estado == estadosU.listo) {
                         each.estado = estadosU.pendiente;
-                    } else if (each.estado == estadosU.pendiente) {
+                    } else if (each.estado == estadosU.pendiente || each.estado == estadosU.inactivo) {
                         each.estado = estadosU.listo;
                     } else {
                         each.estado = estadosU.inactivo;
                     }
                 }
-            });
+            }); 
             PartidasVolatiles.update(this._id, {
                 creator_id : userCreator,
-                jugadores : usersJoined
+                jugadores : usersJoined,
+                torneo_id: tor_id
             });
         } else {
             notRegister();
@@ -399,14 +407,4 @@ Template.hall_clarcassone.rol = function(id_user, id_partida) {
         }
     });
     return conte;
-}
-
-/*
-
-Template.hall_clarcassone.notorneo = function() {     
-    gtsid = Session.get('gameTorneoSelectId');
-    console.log(getUserId("admin"))
-    return true;
-}
-
-*/
+} 
