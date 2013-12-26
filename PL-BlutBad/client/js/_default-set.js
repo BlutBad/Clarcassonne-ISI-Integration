@@ -76,6 +76,7 @@ if (typeof Handlebars !== 'undefined') {
 
 	});
 
+	/*
 	Handlebars.registerHelper('noTorneo',function(){
 	  gt = Session.get('gameTorneoSelectId'); 
 	  if (gt == undefined || gt == false) {
@@ -83,4 +84,5 @@ if (typeof Handlebars !== 'undefined') {
 	  }
 	  return false;
 	});
+	*/
 } 
