@@ -8,6 +8,7 @@ Template.profil.showprofile = function() {
 
 Template.profil.registrado=function(){
 	if (Meteor.user()) {
+		console.log(Meteor.user()._id);
 		return true;
 
 	}else{
@@ -32,18 +33,18 @@ Template.profil.events({
 	},
 
 	'click #save': function(){
-		console.log("guardar");
-		console.log(Meteor.user()._id);
+		//console.log("guardar");
+		//console.log(Meteor.user()._id);
 		id=Meteor.user()._id;
      	datebirth=$("#datebirth").val();
       	genero=$("#genero").val();
-      	Meteor.users.update(id, {
-          $set : {
-       		"profile.datebirth" : datebirth,
-          	"profile.genero" : genero,
-          }
-      })
-  }
+      	Meteor.users.update({_id:Meteor.user()._id}, {
+          $set : {"profile.datebirth" : datebirth}
+      });
+      	Meteor.users.update({_id:Meteor.user()._id}, {
+          $set : {"profile.genero" : genero}
+      });
+	}
 });
 
 
@@ -84,14 +85,14 @@ Template.stadisticGraphic.rendered =function(){
 		sco.game = Juegos.findOne({_id: each.game_id}).name;
 		scores.push(sco);
 	});  
-	console.log(scores.length);
+	//console.log(scores.length);
 	if (scores.length!==0){
 		if (scores.length===1){ 
 			var colors = Highcharts.getOptions().colors,
 			categories = [scores[0].game, ' ', ' '],
 			name = 'Browser brands',
 			data = [{
-				y: 100,
+				y: scores[0].total,
 				color: colors[0],
 				drilldown: {
 					name: scores[0].game,
@@ -138,7 +139,7 @@ Template.stadisticGraphic.rendered =function(){
 				drilldown: {
 					name: scores[1].game,
 					categories: ['Ganadas', 'Perdidas'],
-					data: [1*scores[1].total, scores[1].lose],
+					data: [scores[1].win, scores[1].lose],
 					color: colors[1]
 				}
 			}, {
