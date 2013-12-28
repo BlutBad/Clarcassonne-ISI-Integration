@@ -1,38 +1,32 @@
 #chat {
-	width: 20%;
-	position:fixed;
-	top:75%;
-	left:90%;
-	margin-left: -150px;
-	margin-top: -250px;
-}
-
-#showchat {
-	float: right;
-	margin: 5px;
+	width: 250px;
+	position: fixed;
+	bottom: 5px;
+	right: 3px;
 }
 
 #boxchat {
-	clear: both;
+	background-color: #819FF7;
+	margin: 2px;
+	padding: 5px;
+	border-radius:3px;
+	border: #6E6E6E 1px solid;
 }
 
 #nameChat {
 	float: left;
-	border-radius:3px;
-	background: #819FF7;
 	padding: 10px;
-	width: 75%;
+	width: 70%;
 	margin-bottom: 2px;
 }
 
 #hidechat {
-	float: left;
-	margin: 2px;
+	float: right;
 }
 
 #contentchat {
-	background: white;
 	clear: both;
+	background: white;
 	border-radius:3px;
 	padding: 10px;
 	border: #6E6E6E 1px solid;
@@ -41,14 +35,8 @@
 	margin-bottom: 5px;
 }
 
-#msgchat {
-	background: #BDBDBD;
-	border-radius:3px;
-}
-
-#message {
-	width: 80%;	
-	margin: 5px;
+#showchat {
+	float: right;
 }
 
 .msg {

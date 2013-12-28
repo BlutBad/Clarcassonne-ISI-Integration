@@ -1,11 +1,10 @@
 
 <template name="chat">
     <div id="chat">
-        <input type="button" id="showchat" class="btn btn-primary" value="Chat"></input>
         <div id="boxchat" style="display:none">
         	<div id="headerchat">
         		<h4 id="nameChat"> {{chatName}} </h4>
-        		<input type="button" id="hidechat" value="X">
+        		<input type="button" id="hidechat" class="btn btn-primary" value="X">
         	</div>
         	<div id="contentchat">
         		{{> messages}}
@@ -14,6 +13,7 @@
         		{{> input}}
         	</div>
     	</div>
+        <input type="button" id="showchat" class="btn btn-primary" value="Chat"></input>
         <div class="not-register-chat" title="Chat" style="display:none">
             <p class="alert alert-error">
             <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
