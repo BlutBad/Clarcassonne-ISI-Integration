@@ -59,14 +59,16 @@ http://bootsnipp.com/snippets/featured/condensed-table-example -->
           </table>
           {{#if currentUser}}
             <div class="btn-toolbar">
-              {{#if show_ab this._id}}
-      		      <button class="btn unirme">{{unir_aband this._id}}</button>
-              {{/if}}
               {{#if show_ready}}
-      		      <button class="btn ready">{{estadoUserAct this._id}}</button>
+                <button class="btn ready">{{estadoUserAct this._id}}</button>
               {{/if}}
-              <button id = "{{muestro_oculto this._id}}" class="btn startparty">Empezar</button>
-              <button id = "{{muestro_oculto this._id}}" class="btn removeparty">Descartar</button>
+              {{#if noTorneo}}
+                {{#if show_ab this._id}}
+        		      <button class="btn unirme">{{unir_aband this._id}}</button>
+                {{/if}}
+                <button id = "{{muestro_oculto this._id}}" class="btn startparty">Empezar</button>
+                <button id = "{{muestro_oculto this._id}}" class="btn removeparty">Descartar</button>
+              {{/if}}
   	        </div>
           {{/if}}
         {{/each}}

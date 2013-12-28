@@ -37,6 +37,15 @@ Template.hall_torneo.participoClass = function() {
     return 'label';
 }
 
+/*
+Template.hall_torneo.creador = function() {
+    var tid = Session.get('showTorneoId');
+    creator = Torneos.findOne(tid).user_create; 
+    if (creator == Meteor.userId())
+        return true;
+    return false;
+}
+*/
 
 Template.hall_torneo.events = {
     //Apuntarme o Salir del torneo
@@ -53,7 +62,7 @@ Template.hall_torneo.events = {
     },
     
     'click .startTorneo': function() {
-        console.log("Start Torneo");
+        //console.log("Start Torneo");
         startTorneo();
     }
 };
@@ -83,7 +92,8 @@ function insertPartyVolatiles(torid, participantes) {
     PartidasVolatiles.insert({
         torneo_id: torid,
         jugadores :participantes,
-        create_at:  Date.now(),
+        creator_id:  Date.now(),
+        listos: false
     });
 };
 

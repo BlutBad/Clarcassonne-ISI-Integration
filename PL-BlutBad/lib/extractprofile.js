@@ -34,7 +34,6 @@ _extractProfile = function (userObjId) {
     };
     result.username = (user.profile && user.profile.name)?user.profile.name:result.username;
     result.datebirth=(user.profile)?user.profile.datebirth: result.datebirth;
-    result.email=(user.profile)?user.profile.email: result.email;
     //console.log(result.email);
     result.genero=(user.profile)?user.profile.genero: result.genero;
     //Check if the user logged in via a service

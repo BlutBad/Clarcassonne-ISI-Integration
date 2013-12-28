@@ -75,4 +75,14 @@ if (typeof Handlebars !== 'undefined') {
 			return ' ';
 
 	});
-}
+
+	/*
+	Handlebars.registerHelper('noTorneo',function(){
+	  gt = Session.get('gameTorneoSelectId'); 
+	  if (gt == undefined || gt == false) {
+	  	return true;
+	  }
+	  return false;
+	});
+	*/
+} 

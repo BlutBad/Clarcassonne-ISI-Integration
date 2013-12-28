@@ -3,7 +3,7 @@ Plataphorma ISI
 
 ## Información General
 ###Deploys
-* [Deploy de la Plataforma BlutBad](http://blutbad.meteor.com/ "Deploy de la Plataforma BlutBad")
+* [Deploy de la Plataforma BlutBad (Actualizado el 27 de diciembre)](http://blutbad.meteor.com/ "Deploy de la Plataforma BlutBad") 
 * [Deploy de la Plataforma Lowerlayers](http://lowerlayers.meteor.com/ "Plataforma de Juegos LowerLayers")
 
 ###Repositorios

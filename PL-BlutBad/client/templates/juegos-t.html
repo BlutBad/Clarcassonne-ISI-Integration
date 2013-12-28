@@ -24,9 +24,8 @@
 </template>
 
 <template name="gamecontainer"> 
-  <div id="gamecontainer"> 
-      {{> misTorneos}}
-      
+  <div id="gamecontainer">    
+  	  {{> misTorneos}}   
 	  {{>idnClarca}}
 	  {{>idnAlien}}
 	  {{>idnFroot}}
@@ -119,19 +118,19 @@
 
 
 
-
+ 
 
 <template name="misTorneos">
-    {{#if tengoTorneos}}
-        <div class="span12">
-            <p class="lead">Mis torneos:</p>
+    <div class="span12" id = "mistor">
+    <p class="lead">Mis torneos:</p>
+		{{#if tengoTorneos}}
             <div id="tab" class="btn-group" data-toggle="buttons-radio">
               {{#each torneos}}
                 <a href="#" class="btn {{activeClassTorneo}} miTorneo" data-toggle="tab">{{title}}</a>
               {{/each}}
             </div>
-        </div>
-     {{else}}
-     <h4>No participa en ningun torneo, apuntese a uno, lo pasara en grande!</h4>
-    {{/if}}
+        {{else}}
+	     	<p>No participa en ningún torneo, apúntese a uno, lo pasará en grande!</p>
+	    {{/if}}
+    </div>     
 </template>
