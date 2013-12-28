@@ -1,4 +1,4 @@
 
-// Template.connected.userConnected = function () {
-// 	return "daniel";
-// }
+Template.connected.userConnected = function(){
+	return Meteor.users.find({});
+};
