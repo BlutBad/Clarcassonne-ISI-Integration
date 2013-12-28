@@ -1,3 +1,27 @@
 #users-connected {
-	background-color: red;
+	width: 200px;
+	position: fixed;
+	bottom: 5px;
+	left:3px;
+}
+
+#connected {
+	clear: both;
+	background-color: white;
+	overflow-y: scroll;
+	width: 95%;
+	height: 450px;
+	margin: 1px;
+	padding: 4px;
+	border-radius:3px;
+	border: #6E6E6E 1px solid;
+}
+
+#hide-users-connected {
+	float: right;
+	margin: 3px;
+}
+
+.user-connected {
+	border-bottom: solid 1px blue;
 }

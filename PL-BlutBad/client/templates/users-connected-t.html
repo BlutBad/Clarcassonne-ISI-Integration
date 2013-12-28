@@ -1,7 +1,7 @@
 
 <template name="usersConnected">
 	<div id="users-connected">
-		<input type="button" id="hide-users-connected" class="btn btn-primary" value="X">
+		<input type="button" id="hide-users-connected" class="btn btn-primary" value="X" style="display:none">
 		<div id="connected" style="display:none">
 			{{> connected}}
 		</div>
@@ -11,8 +11,8 @@
 
 <template name="connected">
 	{{#each userConnected}}
-		<p>
-			username: <strong>{{username}}</strong>
+		<p class="user-connected">
+			<strong>{{username}}</strong>
 		</p>
 	{{/each}}
 </template>
