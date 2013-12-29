@@ -11,6 +11,21 @@ Template.user_menu.current = function() {
   return Session.equals('current_stage', this.name) ? 'user-menu-current' : '';
 };
 
+Template.ffind.events({
+  'keydown input#tags': function(e){
+    if (e.which == 13) {
+      var name=$("#tags").val();
+      if (Meteor.users.findOne({username: name})){
+        console.log("esta");
+        console.log(Meteor.users.findOne({username: name})._id);
+        return Session.set('showprofile', this._id); 
+      }else{
+        console.log("no esta");
+      }
+    };
+  }
+});
+
 Template.user_menu.events({
   // Si esta pulsado el boton del raton sobre alguno de los menus
   // Si estas pinchando sobre el mismo tag que ya esta seleccionado

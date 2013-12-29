@@ -3,5 +3,12 @@
   <ul>
 	{{#each user_menu}}
 	<li class="{{current}}"><a href="">{{name}}</a></li> {{/each}}
+  	{{>ffind}}
   </ul>  
+
+
+</template>
+
+<template name="ffind">
+	<input type="text" id="tags">
 </template>
