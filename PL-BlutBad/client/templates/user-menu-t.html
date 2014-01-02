@@ -3,12 +3,48 @@
   <ul>
 	{{#each user_menu}}
 	<li class="{{current}}"><a href="">{{name}}</a></li> {{/each}}
-  	{{>ffind}}
+  <input type="text" id="tags">
   </ul>  
-
-
+{{#if showprofilfriend}}
+      {{> friendprofil}}
+    {{/if}}
 </template>
 
 <template name="ffind">
 	<input type="text" id="tags">
+</template>
+
+<template name="friendprofil">
+  {{#with torneo}}
+    <div class="mask"> </div>
+        <div class="modal">
+        
+          <div class="modal-header">
+            <button type="button" class="close cancel">&times;</button>
+            <h3>Perfil</h3>
+          </div>   
+               
+         <div class="container">   
+          <label>
+          Nombre:
+           </label>
+           <label>
+                Email: 
+                </label>
+                <!--<input class="form-control" name="password" placeholder="New Password" type="password" />-->
+                Fecha de nacimiento: 
+                <label>
+                Género: 
+                     
+          </label>
+          <br/>
+        </div>
+          
+          <div class="modal-footer">
+            <a href="#" class="btn cancel">Cancelar</a>
+            <a href="#" class="btn btn-primary save_edit">Salvar</a>
+          </div>
+        </div>
+    </div>
+  {{/with}}
 </template>
