@@ -1,0 +1,29 @@
+<template name="friends">
+	{{#if show}}
+		{{#if register}}
+			<div id="friends">
+				<h1>Amigos</h1>
+				<div id="my-friends">
+					<h3>Mis amigos</h3>
+					<p>Faltan cosasssssss</p>
+				</div>
+				<div id="list-of-users">
+					<h3>Usuarios registrados</h3>
+					<div id="all-users">
+						{{> allUsers}}
+					</div>
+				</div>
+			</div>
+		{{else}}
+			<div>
+				<p>Registrate coño</p>
+			</div>
+		{{/if}}
+	{{/if}}
+</template>
+
+<template name="allUsers">
+	{{#each userRegister}}
+		<p> {{username}} </p>
+	{{/each}}
+</template>

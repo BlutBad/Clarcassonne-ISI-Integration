@@ -24,7 +24,7 @@ Template.chat.events = {
 	},
 	'click input#showchat': function () {
 		if (Meteor.userId()) {
-			$("#boxchat").show("clip", 2000);
+			$("#boxchat").show();
 		} else {
 			notRegisterChat();
 		}

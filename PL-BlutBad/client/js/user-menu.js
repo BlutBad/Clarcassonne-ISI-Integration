@@ -24,5 +24,4 @@ Template.user_menu.events({
     // De otra manera apuntar nuevo id del tag seleccionado
       Session.set('current_stage', this.name);}
     }
-
 });
