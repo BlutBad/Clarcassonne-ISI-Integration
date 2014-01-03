@@ -5,7 +5,9 @@
 				<h1>Amigos</h1>
 				<div id="my-friends">
 					<h3>Mis amigos</h3>
-					<p>Faltan cosasssssss</p>
+					<div id="list-of-friends">
+						{{>myFriends}}
+					</div>
 				</div>
 				<div id="list-of-users">
 					<h3>Usuarios registrados</h3>
@@ -24,6 +26,13 @@
 
 <template name="allUsers">
 	{{#each userRegister}}
-		<p class="userRegister" id="user-{{username}}" > {{username}} </p>
+		<p class="userRegister"> {{username}} </p>
+	{{/each}}
+</template>
+
+<template name="myFriends">
+	<p>my usarname: <strong>{{username}}</strong></p>
+	{{#each showFriends}}
+		<p>{{usarname}}</p>
 	{{/each}}
 </template>
