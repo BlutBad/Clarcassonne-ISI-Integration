@@ -11,3 +11,7 @@ Template.friends.register = function() {
 		return false;
 	}
 }
+
+Template.allUsers.userRegister = function() {
+	return Meteor.users.find({});
+}
