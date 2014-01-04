@@ -2,12 +2,13 @@
 <template name="user_menu">
 	<ul>
 	{{#each user_menu}}
+
 	<li class="{{current}}"><a href="">{{name}}</a></li> {{/each}}
 	<input type="text" id="tags">
-	</ul>  
-{{#if showprofilfriend}}
-			{{> friendprofil}}
-		{{/if}}
+	</ul> 
+	{{#if showprofilfriend}}
+		{{> friendprofil}}
+	{{/if}}
 </template>
 
 <template name="ffind">

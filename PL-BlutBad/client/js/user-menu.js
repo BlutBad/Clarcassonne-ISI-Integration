@@ -35,21 +35,22 @@ Template.user_menu.events({
        // return Session.set('current_stage', 'PerfilAmigo');
   
       }else{
-        console.log("no esta");
+        alert(name + " isn't a user! Please try again!");
+
       }
     };
   }
 
 });
 
-Template.friendprofil.events({
 
-   
+
+
+Template.friendprofil.events({
 
     'click .cancel' : function() {
         Session.set('profilfriend', null); 
     }
-
 });
 
 Template.friendprofil.usuario = function() {
@@ -62,7 +63,7 @@ Template.friendprofil.usuario = function() {
 
 Template.user_menu.showprofilfriend = function() {
     return Session.get('profilfriend', this._id); 
-}   
+};
 
 
 
@@ -82,3 +83,5 @@ Template.friendprofil.scores=function(){
   });  
   return scores; 
 };
+
+

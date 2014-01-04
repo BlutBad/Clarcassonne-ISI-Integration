@@ -1,0 +1,73 @@
+#friends {
+	background-color: #CEE3F6;
+	border-radius: 10px;
+	border: black 1px solid; 
+	width: 95%;
+	height: 500px;
+	margin: 15px;
+	padding: 5px;
+}
+
+#my-friends {
+	text-align: center;
+	float: left;
+	margin: 10px 5px 10px 20px;
+	width: 55%;
+	height: 80%;
+	border-radius: 5px;
+	border: black 1px solid;
+	padding: 5px;
+	background-color: white;
+}
+
+#my-friends-perfil {
+	background-color: #FAFAFA;
+	margin: 5px;
+	padding: 5px;
+}
+
+#my-friends-username {
+	text-align: left;
+}
+
+#my-friends-allfriends {
+	border: #6E6E6E 1px solid;
+	margin: 5px;
+	padding: 5px;
+	border-radius: 5px;
+	overflow-y: scroll;
+	height: 240px;
+}
+
+.list-of-friends {
+	background-color: white;
+	margin: 7px 0 7px 0;
+}
+
+#list-of-users {
+	text-align: center;
+	float: left;
+	margin: 10px 10px 10px 5px;
+	width: 35%;
+	height: 80%;
+	border-radius: 5px;
+	border: black 1px solid;
+	padding: 5px;
+	background-color: white;
+}
+
+#all-users {
+	background-color: #FAFAFA;
+	border: #6E6E6E 1px solid;
+	border-radius: 3px;
+	overflow-y: scroll;
+	width: 90%;
+	height: 85%;
+	margin: 5px;
+	padding: 5px;
+}
+
+.userRegister {
+	background-color: white;
+	margin: 7px 0 7px 0;
+}

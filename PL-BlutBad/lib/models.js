@@ -83,9 +83,17 @@ Torneos= new Meteor.Collection("torneos");
 //	gameId : userId : maxScore : totalScore: score rango_id:rango._id
 Ranking = new Meteor.Collection("ranking");
 
-//Para perfil de usuario
-/* campos para usuarios
-id_user
-id_user amigo
+
+Friends = new Meteor.Collection("friends");
+
+/* Modelo de la coleccion Friends:
+{
+	_id: ***,
+	userid: _id,
+	username: username,
+	friends: [
+		{name: username},
+		{name: username}, ...
+	]
+}
 */
-Amigos = new Meteor.Collection("amigos");
