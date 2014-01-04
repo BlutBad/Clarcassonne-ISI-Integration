@@ -90,8 +90,8 @@ Friends = new Meteor.Collection("friends");
 
 {
 	_id: ***,
-	id: _id,
+	userid: _id,
 	username: username,
-	friends: [id, id, id, ....]
+	friends: [_id, _id, _id, ....]
 }
 */

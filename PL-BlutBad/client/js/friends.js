@@ -11,7 +11,6 @@ Template.friends.register = function() {
 			var userName = Meteor.user().username;
 			var userId = Meteor.userId();
 			var listFriends = [];
-			//friends.push("danny");
 			Friends.insert({
 				username: userName,
 				userid: userId,
@@ -33,7 +32,7 @@ Template.myFriends.username = function() {
 };
 
 Template.myFriends.showFriends = function() {
-
+	return Friends.findOne({username: Meteor.user().username}).friends;
 };
 
 //Events
@@ -41,9 +40,14 @@ Template.myFriends.showFriends = function() {
 Template.allUsers.events({
 
 	'click p.userRegister': function() {
-		var userRegisterId = this._id;
+		var userRegister = Meteor.users.findOne({_id: this._id}).username;
 		var myFriendsId = Friends.findOne({username: Meteor.user().username})._id;
-		Friends.update(myFriendsId, {$push: {friends: userRegisterId}});
+		var newFriend = {name: userRegister};
+		Friends.update(myFriendsId, {
+			$push: {
+				friends: newFriend
+			}
+		});
 	}
 
 });
