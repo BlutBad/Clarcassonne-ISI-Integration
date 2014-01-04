@@ -40,15 +40,18 @@ if (typeof Handlebars !== 'undefined') {
 
 	Handlebars.registerHelper('getUserEmail', function (userId) {
 		var user = _extractProfile(userId);
+		console.log(user);
 		if (user) {
 			if (user.email){
+				console.log(user.email);
 				return user.email;
-			}else if (user.services.google.email){
-				return user.services.google.email;
-			}else if (user.services.facebook.email){
-				return user.services.facebook.email;
+			}else if (user.services){
+				if (user.services.google.email){
+					return user.services.google.email;
+				}else if (user.services.facebook.email){
+					return user.services.facebook.email;
+				};
 			};
-
 		};
 			return ' ';
 

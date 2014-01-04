@@ -52,7 +52,7 @@ Template.friendprofil.events({
 
 });
 
-Template.friendprofil.torneo = function() {
+Template.friendprofil.usuario = function() {
     var id = Session.get('profilfriend');
     //console.log(id)
     return Meteor.users.findOne({
@@ -66,3 +66,19 @@ Template.user_menu.showprofilfriend = function() {
 
 
 
+Template.friendprofil.scores=function(){
+  var id = Session.get('profilfriend');
+  rankings = Ranking.find({user_id: id});
+  scores = [];
+  rankings.forEach(function(each,index) { 
+    sco = {};   
+    sco.No = index+1;
+    sco.win=each.winTimes;
+    sco.lose=each.loseTimes;
+    sco.total=each.timesPlayed;
+    sco.totalScore = each.totalScore;
+    sco.game = Juegos.findOne({_id: each.game_id}).name;
+    scores.push(sco);
+  });  
+  return scores; 
+};
