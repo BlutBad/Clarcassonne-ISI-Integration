@@ -27,36 +27,19 @@
 					<label>
 						Nombre: {{getUsername _id}}
 					</label>
+				
 					<label>
 						Fecha de nacimiento: {{getUserDateBirth _id}}
 					</label>
+
 					<label>
 						Género: {{getUserGender _id}}
 					</label>
-					<br/>
 				{{/with}}
-				<table>
-	  				<thead>
-       				<tr>
-      					<th>Juego</th>
-							<th>Victorias</th>
-							<th>Derrotas</th>
-							<th>Nº Partidas</th>
-							<th>Puntuación total</th>
-						</tr>
-					</thead>
-					<tbody>
-      				{{#each scores}} 
-							<tr>
-								<td><h4>{{game}}</h4></td>
-								<td><h4>{{win}}</h4></td>
-								<td><h4>{{lose}}</h4></td>
-								<td><h4>{{total}}</h4></td>
-								<td><h4>{{totalScore}}</h4></td> 			 
-							</tr>		
-						{{/each}}
-      			</tbody>
-				</table>   
+					<br/>
+				
+				 
+				{{> stadGraphic}}
 			</div>
 			<div class="modal-footer">
 				<a href="#" class="btn cancel">Cancelar</a>
@@ -66,3 +49,7 @@
 	</div>	
 </template>
 
+
+<template name="stadGraphic">
+    <div id="graficoEstadisticas" style="width: 400px; height: 400px "></div>
+</template>
