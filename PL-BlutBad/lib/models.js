@@ -86,12 +86,14 @@ Ranking = new Meteor.Collection("ranking");
 
 Friends = new Meteor.Collection("friends");
 
-/* Modelo de la coleccion:
-
+/* Modelo de la coleccion Friends:
 {
 	_id: ***,
 	userid: _id,
 	username: username,
-	friends: [_id, _id, _id, ....]
+	friends: [
+		{name: username},
+		{name: username}, ...
+	]
 }
 */

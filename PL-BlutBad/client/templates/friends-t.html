@@ -3,18 +3,21 @@
 		{{#if register}}
 			<div id="friends">
 				<h1>Amigos</h1>
+
 				<div id="my-friends">
 					<h3>Mis amigos</h3>
-					<div id="list-of-friends">
+					<div id="my-friends-perfil">
 						{{>myFriends}}
 					</div>
 				</div>
+
 				<div id="list-of-users">
-					<h3>Usuarios registrados</h3>
+					<h3>Usuarios registrados: {{numUsersRegister}}</h3>
 					<div id="all-users">
 						{{> allUsers}}
 					</div>
 				</div>
+
 			</div>
 		{{else}}
 			<div>
@@ -31,8 +34,13 @@
 </template>
 
 <template name="myFriends">
-	<p>my usarname: <strong>{{username}}</strong></p>
-	{{#each showFriends}}
-		<p>{{name}}</p>
-	{{/each}}
+	<p id="my-friends-username">Username: <strong>{{username}}</strong></p>
+	<div id="my-friends-list">
+		<p> Tienes {{numFriends}} amigos en tu lista de amigos: </p>
+		<div id="my-friends-allfriends">
+			{{#each showFriends}}
+				<p class="list-of-friends">{{name}}</p>
+			{{/each}}
+		</div>
+	</div>
 </template>

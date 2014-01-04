@@ -23,6 +23,10 @@ Template.friends.register = function() {
 	}
 };
 
+Template.friends.numUsersRegister = function() {
+	return Meteor.users.find({}).count();
+};
+
 Template.allUsers.userRegister = function() {
 	return Meteor.users.find({});
 };
@@ -34,6 +38,10 @@ Template.myFriends.username = function() {
 Template.myFriends.showFriends = function() {
 	return Friends.findOne({username: Meteor.user().username}).friends;
 };
+
+Template.myFriends.numFriends = function() {
+	return Friends.findOne({username: Meteor.user().username}).friends.length;
+}
 
 //Events
 
