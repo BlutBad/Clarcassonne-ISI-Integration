@@ -31,13 +31,13 @@ Template.user_menu.events({
       if (Meteor.users.findOne({username: name})){
         console.log("esta");
         console.log(Meteor.users.findOne({username: name})._id);
-         Session.set("profilfriend", Meteor.users.findOne({username: name})._id);
+        Session.set("profilfriend", Meteor.users.findOne({username: name})._id);
        // return Session.set('current_stage', 'PerfilAmigo');
-  
       }else{
-        alert(name + " isn't a user! Please try again!");
-
+        alert(name + " isn't a user! Please try again!");  
       }
+      var name=$("#tags")
+      name.val('')
     };
   }
 
