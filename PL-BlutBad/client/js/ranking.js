@@ -13,8 +13,8 @@ Template.ranking.scores = function() {
 	rankings.forEach(function(each,index) { 
 		sco = {};   
 		sco.No = index+1;
-		sco.game = Juegos.findOne({_id: each.game_id}).name;
-		sco.user = Meteor.users.findOne({_id: each.user_id}).username;
+		sco.game = Juegos.find({_id: each.gameId}).name; //el error estaba aqui he cambiado finOne por find
+		sco.user = Meteor.users.find({_id: each.userId}).username; //el error estaba aqui he cambiado findOne por find
 		sco.maxScore = each.maxScore;
         	sco.totalScore = each.totalScore;
         	sco.rango = Rangos.findOne({_id: each.rango_id}).rango;

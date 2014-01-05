@@ -66,7 +66,7 @@ Template.torneos.participantes = function(t_id){
     parts = Torneos.findOne({
         _id: t_id
     }).participantes;   
-    num_parts = parts.length;
+    num_parts = parts.length; //el error esta aqui y no se como arreglarlo desde aqui la solucion que se me ha ocurrido y que funciona porque lo he probado es que cuando se cree un torneo se ponga el campo participantes vacio
     participantes = "(" + num_parts + ")"; 
     return participantes;
 }

@@ -72,7 +72,7 @@ Template.hall_torneo.events = {
 Template.hall_torneo.multiTorneo = function() {
     var tid = Session.get('showTorneoId');
     var tor = Torneos.findOne(tid);
-    var gameM = Juegos.findOne(tor.game_id);
+    var gameM = Juegos.findOne(tor.game_id); //aqui esta el error
     return gameM.mode == "multi";
 }
 
