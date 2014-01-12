@@ -103,25 +103,19 @@ html{
 	height: 420px;
 	
 }
-#clarcassonnecontainer{
 
-	
-}
-
-#clarcassonnecanvas{
-	float: right;
-	background-color:blue;
-}
 
 #alaputaizq{
 	float:left;
+	width:20%;
 }
 
 #alaputader{
 	float:right;
+	width:80%;
 }
 
-.coin-slider { overflow: hidden; zoom: 1; position: relative; }
+.coin-slider { overflow: hidden; zoom: 1; position: relative;z-index:-1; }
 .coin-slider a{ text-decoration: none; outline: none; border: none; }
 
 .cs-buttons { font-size: 0px; padding: 10px; float: left; }

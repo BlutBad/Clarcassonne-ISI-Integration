@@ -97,12 +97,12 @@
 
 <template name="input">
 	<div id="messagecont">
-		<p> Mensaje: <input type="text" id="message" ></p>
+		<p> Mensaje: <input type="text" id="message" style="width:50%"></p>
 	</div>
 </template>
 
 <template name="messagestemp" >
-	<div id="messages">
+	<div id="messages" style="overflow:auto;height:50%;">
 		{{# each messages}}
 			<i>{{name}}: {{message}}</i></br>
 		{{/each}}
@@ -155,7 +155,7 @@
 </template>
 
 <template name="frootwarstemp">
-	<div id="frootwarscontainer">
+	<div id="frootwarscontainer" style="backgroud-color:green">
 		<canvas id="gamecanvas" width="640" height="480" class="gamelayer"></canvas>
   		<div id="scorescreen" class="gamelayer">
     		<img id="togglemusic" src="images/icons/sound.png" onclick="game.toggleBackgroundMusic();">
