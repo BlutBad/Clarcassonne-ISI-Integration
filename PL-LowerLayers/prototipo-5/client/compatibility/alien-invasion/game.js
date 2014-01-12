@@ -48,7 +48,7 @@ OBJECT_ENEMY = 4,
 OBJECT_ENEMY_PROJECTILE = 8,
 OBJECT_POWERUP = 16;
 
-var startGame = function() {
+var startGameAlien = function() {
     Game.setBoard(0,new Starfield(20,0.4,100,true));
     Game.setBoard(1,new Starfield(50,0.6,100));
     Game.setBoard(2,new Starfield(100,1.0,50));
@@ -499,6 +499,6 @@ Explosion.prototype.step = function(dt) {
 
 
 $(function() {
-    Game.initialize("aliencanvas",sprites,startGame);
+    Game.initialize("aliencanvas",sprites,startGameAlien);
 });
 

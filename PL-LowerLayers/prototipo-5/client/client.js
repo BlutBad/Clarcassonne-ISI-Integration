@@ -28,12 +28,12 @@ $(document).ready(function() {
 			$( "#chatTabs" ).tabs({collapsible: true});
 		});
 		
-		$("#friends").css("top",$(window).height()-57);
+		$("#friends").css({"top": $(window).height()-57, "position":"fixed"});
 		$("#friends").css("left",$(window).width()-182);
 		$("#accordion").css("top",10);
-		$("#accordion").css("left",$(window).width()-183);
-		$("#tabs").css("width",$(window).width()-200);
-		$("#chatTabs").css("width",$(window).width()-200);
+		$("#accordion").css({"left":$(window).width()-183, "position":"fixed"});
+		$("#tabs").css("width",$(window).width()-240);
+		$("#chatTabs").css("width",$(window).width()-240);
 		$("#chatTabs").css("top",$(window).height()-58);
 
 

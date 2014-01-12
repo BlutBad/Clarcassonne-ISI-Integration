@@ -39,7 +39,7 @@ html{
 }
 
 #coin-slider{
-
+	z-index:-1;
     width: 800px;
     height:400px;
     margin: auto;
@@ -111,6 +111,14 @@ html{
 #clarcassonnecanvas{
 	float: right;
 	background-color:blue;
+}
+
+#alaputaizq{
+	float:left;
+}
+
+#alaputader{
+	float:right;
 }
 
 .coin-slider { overflow: hidden; zoom: 1; position: relative; }
