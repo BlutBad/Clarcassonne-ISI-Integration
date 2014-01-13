@@ -6,12 +6,11 @@
 
        	Tablero.iniciar();
 
-	Meteor.subscribe("partidas",id_partida);
-	Jugadores_ID= Partidas.find();
+	Jugadores_ID= Partidas.findOne({_id: id_partida}).jugadores;
 	
 	for(i=0;i<Jugadores_ID.length;i++){
-		[Nombre,date]=ResolverUserID(Jugadores_ID[i]);
-		Tablero.listaJugadores.push(new ObjetoJugador(Jugadores_ID[i],Nombre,date));
+		var player =resolverUser(Jugadores_ID[i]);
+		Tablero.listaJugadores.push(new ObjetoJugador(Jugadores_ID[i],player.nombre,player.fecha));
 	}
         
         //creamos la lista de jugadores
@@ -24,16 +23,16 @@
         //ordenamos a los jugadores por edad
         Tablero.listaJugadores=_.sortBy(Tablero.listaJugadores, function(jugador){ return jugador.edad; });
        
-       
         //les asignamos el orden con el numero de jugador
         var i=1;
         _.each(Tablero.listaJugadores, function(jugador){jugador.numero=i; i++});
-           
+        
 
 	Partidas.update(id_partida, {
-                            $push : {Tablero : Tablero}
+                            $push : {endTablero : Tablero}
                 });
 
+	console.log(Tablero.listaJugadores);
         return Tablero.listaJugadores;
     },
     
@@ -42,16 +41,16 @@
     
     Robar:function(id_partida){    
 	var partida= Partidas.findOne({_id: id_partida});      
-	Tablero= partida.Tablero; 
+	Tablero= partida.endTablero;
 	console.log("ESTE ES NUESTRO TABLERO: " + Tablero.huecos);         
         var robar=Tablero.robarFicha(); 
         var nuevaficha = new ObjetoFicha(0,0,0,robar);
         Tablero.buscarCandidatos(nuevaficha);
 	Partidas.update(id_partida, {
-                            $push : {Tablero : Tablero}
+                            $set : {Tablero : Tablero}
                 });
         return [nuevaficha.tipo,nuevaficha.encajaCon];
-    }
+    },
     //Devuelve una lista del tipo [string,lista[]] string= tipo ficha, lista= coordenadas donde encaja
     
     
@@ -68,49 +67,11 @@
       console.log("fichaColocada", fichaColocada);
       var seguidores=Tablero.colocarseguidor(fichaColocada);
       Partidas.update(id_partida, {
-                            $push : {Tablero : Tablero}
+                            $set : {Tablero : Tablero}
                 });
       return seguidores; 
-    }
+    },
     //Coloca la ficha en el tablero, devuelve la lista de los posibles seguidores o 0 si no se produce error
     
     
     
-    ColocarSeguidor:function(id_partida, id_jugador, coordenada, seguidor){
-      var partida= Partidas.findOne({_id: id_partida});      
-      Tablero= partida.Tablero;
-      console.log("ESTE ES NUESTRO TABLERO: " + Tablero.huecos); 
-      var Jugador = _.find(Tablero.listaJugadores,function(obj){return (obj.id == id_jugador)})
-      var ficha= Tablero.buscarxcoor(coordenada.x,coordenada.y);
-      var nuevoSeguidor = {t:seguidor.t, n:seguidor.n, j:Jugador.numero, f:ficha}
-      if (ficha.seguidores.push(nuevoSeguidor)) {
-        Tablero.cierraCamino(ficha,1);
-        Tablero.cierraClaustro(ficha,1);
-        Tablero.cierraCastillo(ficha,1);
-	Partidas.update(id_partida, {
-                            $push : {Tablero : Tablero}
-                });
-        return 1;
-      
-      }else {
-	    Partidas.update(id_partida, {
-                            $push : {Tablero : Tablero}
-                });
-	    return 0
-      }
-      
-    }
-    //Coloca el seguidor en la ficha indicada y suma los correspondientes puntos. Acaba el turno. 
-    
-    
-})
-
-
-
-
-
-
-  
-
-
-
