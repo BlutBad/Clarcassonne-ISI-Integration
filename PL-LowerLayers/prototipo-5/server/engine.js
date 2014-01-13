@@ -1287,7 +1287,6 @@ ObjetoJugador = function(user_id,nombre,fecha,n_jugador){
 	this.edad = function(fecha){
 									var dia= fecha.split('/');
 									var birthday = +new Date(dia[2],dia[1],dia[0]);
-									console.log("ccc",birthday);
 									return ~~((Date.now() - birthday) / (31557600000)); // 24*3600*365.25*1000
 	}(fecha);
 	this.puntos = 0;

@@ -159,6 +159,7 @@ function SetFichaEn (NuevaPieza, Posiciones) {
 
 function SetPlayers (err, data) {
 
+	console.log(data);
 	Jugador1 = {nombre: data[0].nombre.slice(0,6), color: "ficha_rojo", puntos: data[0].puntos, id:data[0].id, turno:1};
 	Jugador2 = {nombre: data[1].nombre.slice(0,6) , color: "ficha_azul", puntos:data[1].puntos, id: data[1].id, turno: 0};
 	Jugador3 = {nombre: data[2].nombre.slice(0,6)  , color: "ficha_amarillo", puntos:data[2].puntos, id: data[2].id, turno: 0};
@@ -428,7 +429,7 @@ Ficha_abajo = function(cx,cy) {
     		//console.log(Meteor.userId());
     		if (CurrentMove == 0 && getTurno().id == Meteor.userId())  {
     			
-    			Meteor.call("Robar", function(err, data) { 
+    			Meteor.call("Robar", idParty, function(err, data) { 
     				NuevaPieza = new PiezaMapa(CurrentScroll.x + 7,CurrentScroll.y + 5, data[0],0);
 			
 						//sonido_ladron.play();
