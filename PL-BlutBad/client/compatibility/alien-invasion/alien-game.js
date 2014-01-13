@@ -51,10 +51,10 @@ OBJECT_ENEMY_PROJECTILE = 8,
 OBJECT_POWERUP = 16;
 
 var startGameAlien = function() {
-    gameAlien.setBoard(0,new Starfield(20,0.4,100,true));
-    gameAlien.setBoard(1,new Starfield(50,0.6,100));
-    gameAlien.setBoard(2,new Starfield(100,1.0,50));
-    gameAlien.setBoard(3,new TitleScreen("Alien Invasion", 
+    gameAlien.setBoard(0,new AlienStarfield(20,0.4,100,true));
+    gameAlien.setBoard(1,new AlienStarfield(50,0.6,100));
+    gameAlien.setBoard(2,new AlienStarfield(100,1.0,50));
+    gameAlien.setBoard(3,new AlienTitleScreen("Alien Invasion", 
                                     "Press fire to start playing",
                                     playGameAlien));
 };
@@ -92,7 +92,7 @@ var playGameAlien = function() {
     // Se un nuevo nivel al tablero de juego, pasando la definici�n de
     // nivel level1 y la funci�n callback a la que llamar si se ha
     // ganado el juego
-    board.add(new Level(level1,winGame));
+    board.add(new AlienLevel(level1,winGame));
     gameAlien.setBoard(3,board);
     gameAlien.setBoard(5,new gameAlienPoints(0));
 };
@@ -113,7 +113,7 @@ var winGame = function() {
     Meteor.call("matchFinish", opt);
   //**********************************************************//    
     
-    gameAlien.setBoard(3,new TitleScreen("You win!", 
+    gameAlien.setBoard(3,new AlienTitleScreen("You win!", 
                                     "Press fire to play again",
                                     playGameAlien));
 };
@@ -135,7 +135,7 @@ var loseGame = function() {
 //**********************************************************//   
     
     
-    gameAlien.setBoard(3,new TitleScreen("You lose!", 
+    gameAlien.setBoard(3,new AlienTitleScreen("You lose!", 
                                     "Press fire to play again",
                                     playGameAlien));
 };
@@ -144,7 +144,7 @@ var loseGame = function() {
 
 // Si se construye con clear==true no se pintan estrellas con fondo
 // transparente, sino fondo en negro
-var Starfield = function(speed,opacity,numStars,clear) {
+var AlienStarfield = function(speed,opacity,numStars,clear) {
 
     // Creamos un objeto canvas, no visible en la p�gina Web
     var stars = $('<canvas/>')
@@ -249,8 +249,8 @@ var PlayerShip = function() {
 };
 
 
-// Heredamos del prototipo new Sprite()
-PlayerShip.prototype = new Sprite();
+// Heredamos del prototipo new AlienSprite()
+PlayerShip.prototype = new AlienSprite();
 PlayerShip.prototype.type = OBJECT_PLAYER;
 
 
@@ -272,7 +272,7 @@ var PlayerMissile = function(x,y) {
     this.y = y - this.h; 
 };
 
-PlayerMissile.prototype = new Sprite();
+PlayerMissile.prototype = new AlienSprite();
 PlayerMissile.prototype.type = OBJECT_PLAYER_PROJECTILE;
 
 PlayerMissile.prototype.step = function(dt)  {
@@ -323,7 +323,7 @@ var Enemy = function(blueprint,override) {
     this.merge(override);
 };
 
-Enemy.prototype = new Sprite();
+Enemy.prototype = new AlienSprite();
 Enemy.prototype.type = OBJECT_ENEMY;
 
 // Inicializa los par�metros de las ecuacione de velocidad, y t, que
@@ -344,7 +344,6 @@ Enemy.prototype.step = function(dt) {
     // vx tiene una componente constante A, y otra que va variando
     // c�clicamente en funci�n de la edad del enemigo (t), seg�n la
     // sinuisoide definida por las constantes B, C y D.
-    // A: componente constante de la velocidad horizontal
     // B: fuerza de la velocidad horizontal sinusoidal
     // C: periodo de la velocidad horizontal sinusoidal
     // D: desplazamiento en el tiempo de la velocidad horizontal sinusoidal
@@ -405,7 +404,7 @@ var EnemyMissile = function(x,y) {
     this.y = y;
 };
 
-EnemyMissile.prototype = new Sprite();
+EnemyMissile.prototype = new AlienSprite();
 EnemyMissile.prototype.type = OBJECT_ENEMY_PROJECTILE;
 
 EnemyMissile.prototype.step = function(dt)  {
@@ -430,7 +429,7 @@ var Explosion = function(centerX,centerY) {
     this.subFrame = 0;
 };
 
-Explosion.prototype = new Sprite();
+Explosion.prototype = new AlienSprite();
 
 Explosion.prototype.step = function(dt) {
     this.frame = Math.floor(this.subFrame++ / 2);

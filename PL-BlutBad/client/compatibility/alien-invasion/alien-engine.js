@@ -38,10 +38,10 @@ var gameAlien = new function() {
       // A�adimos como un nuevo tablero al juego el panel con los
       // botones para pantalla t�ctil, s�lo si hemos detectado pantalla m�vil
     if(this.mobile) {
-      this.setBoard(4,new TouchControls());
+      this.setBoard(4,new AlienTouchControls());
     }
 
-    SpriteSheet.load(sprite_data,callback);
+    AlienSpriteSheet.load(sprite_data,callback);
   };
   
 
@@ -150,7 +150,7 @@ var gameAlien = new function() {
 
 // Objeto singleton SpriteSheet: se guarda una unica instancia del
 // constructor an�nimo en el objeto SpriteSheet
-var SpriteSheet = new function() {
+var AlienSpriteSheet = new function() {
 
     // Almacena nombre_de_sprite: rect�ngulo para que sea mas facil
     // gestionar los sprites del fichero images/sprite.png
@@ -195,7 +195,7 @@ var SpriteSheet = new function() {
 // rel='stylesheet' type='text/css'> Otros fonts:
 // http://www.google.com/fonts
 
-var TitleScreen = function TitleScreen(title,subtitle,callback) {
+var AlienTitleScreen = function AlienTitleScreen(title,subtitle,callback) {
     var up = false;
 
     // En cada paso, comprobamos si la tecla ha pasado de no pulsada a
@@ -347,17 +347,17 @@ var gameAlienBoard = function() {
 
 
 // Constructor Sprite 
-var Sprite = function() { }
+var AlienSprite = function() { }
 
-Sprite.prototype.setup = function(sprite,props) {
+AlienSprite.prototype.setup = function(sprite,props) {
     this.sprite = sprite;
     this.merge(props);
     this.frame = this.frame || 0;
-    this.w =  SpriteSheet.map[sprite].w;
-    this.h =  SpriteSheet.map[sprite].h;
+    this.w =  AlienSpriteSheet.map[sprite].w;
+    this.h =  AlienSpriteSheet.map[sprite].h;
 }
 
-Sprite.prototype.merge = function(props) {
+AlienSprite.prototype.merge = function(props) {
     if(props) {
 	for (var prop in props) {
 	    this[prop] = props[prop];
@@ -365,11 +365,11 @@ Sprite.prototype.merge = function(props) {
     }
 }
 
-Sprite.prototype.draw = function(ctx) {
-    SpriteSheet.draw(ctx,this.sprite,this.x,this.y,this.frame);
+AlienSprite.prototype.draw = function(ctx) {
+    AlienSpriteSheet.draw(ctx,this.sprite,this.x,this.y,this.frame);
 }
 
-Sprite.prototype.hit = function(damage) {
+AlienSprite.prototype.hit = function(damage) {
     this.board.remove(this);
 }
 
@@ -379,7 +379,7 @@ Sprite.prototype.hit = function(damage) {
 // Al constructor del nivel se le pasan los datos que definen el nivel
 //   (p.ej. level1 en gameAlien.js) y una funci�n a la que llamar si el
 //   jugador gana (wingameAlien en gameAlien.js).
-var Level = function(levelData,callback) {
+var AlienLevel = function(levelData,callback) {
     // Recuerda el formato de cada bater�a de enemigos definida en levelData
     //  Comienzo, Fin,   Frecuencia,  Tipo,       Override
     //  [ 0,       4000,  500,         'step',     { x: 100 } ]
@@ -411,7 +411,7 @@ var Level = function(levelData,callback) {
 // En este m�todo se lleva la cuenta del tiempo que ha transcurrido, y
 // se van a�adiendo nuevos enemigos al tablero de juegos seg�n lo
 // indicado en la definici�n del nivel almacenada en this.levelData
-Level.prototype.step = function(dt) {
+AlienLevel.prototype.step = function(dt) {
     var idx = 0, remove = [], curShip = null;
 
     // Actualizamos el tiempo que ha pasado 
@@ -476,14 +476,14 @@ Level.prototype.step = function(dt) {
 // bucle gameAlien.loop() va a llamar a step() y a draw(). Pero no hay nada
 // que hacer en draw() para un nivel, ya que los sprites de los
 // enemigos los a�ade el nivel al tablero de juegos (gameAlienBoard). 
-Level.prototype.draw = function(ctx) { };
+AlienLevel.prototype.draw = function(ctx) { };
 
 
 
 
 // Clase para controlar el juego mediante botones en la pantalla
 // t�ctil de un m�vil o una tableta
-var TouchControls = function() {
+var AlienTouchControls = function() {
 
     
     // Consideraremos el ancho de la pantalla dividido en 5 franjas
