@@ -5,14 +5,14 @@
 		<div id="connected" style="display:none">
 			{{> connected}}
 		</div>
-		<input type="button" id="show-users-connected" class="btn btn-primary" value="Usuarios Conectados">
+		<input type="button" id="show-users-connected" class="btn btn-primary" value="Amigos">
 	</div>
 </template>
 
 <template name="connected">
 	{{#each userConnected}}
 		<p class="user-connected">
-			<strong>{{username}}</strong>
+			<strong>{{name}}</strong>
 		</p>
 	{{/each}}
 </template>

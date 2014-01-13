@@ -41,7 +41,7 @@ Template.myFriends.showFriends = function() {
 
 Template.myFriends.numFriends = function() {
 	return Friends.findOne({username: Meteor.user().username}).friends.length;
-}
+};
 
 //Events
 

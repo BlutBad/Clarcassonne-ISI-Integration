@@ -1,7 +1,7 @@
 // Templates
-Template.connected.userConnected = function(){
-	return Meteor.users.find({});
-};
+// Template.connected.userConnected = function() {
+// 	return Friends.findOne({username: Meteor.user().username}).friends;
+// };
 
 
 // Events
