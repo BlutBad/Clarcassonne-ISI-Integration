@@ -5,42 +5,69 @@
 				<h1>Amigos</h1>
 
 				<div id="my-friends">
+
 					<h3>Mis amigos</h3>
 					<div id="my-friends-perfil">
 						{{>myFriends}}
 					</div>
+
+					<div id="delete-confirm" title="Amigos" style="display:none">
+						<p>
+							<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+							¿Quieres borrarlo de tu lista de amigos?
+						</p>
+					</div>
+
 				</div>
 
 				<div id="list-of-users">
+
 					<h3>Usuarios registrados: {{numUsersRegister}}</h3>
 					<div id="all-users">
 						{{> allUsers}}
 					</div>
+
+					<div id="add-confirm" title="Amigos" style="display:none">
+						<p>
+							<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+							¿Quiere añadirlo como tu amigo?
+						</p>
+					</div>
+
 				</div>
 
 			</div>
 		{{else}}
-			<div>
-				<p>Registrate coño</p>
+			<div id="notRegisterDialog">
+			  	<p>
+			  		Debes estar registrado en la aplicación.
+			  	</p>
 			</div>
 		{{/if}}
 	{{/if}}
 </template>
 
 <template name="allUsers">
+
 	{{#each userRegister}}
 		<p class="userRegister"> {{username}} </p>
 	{{/each}}
+
 </template>
 
 <template name="myFriends">
+
 	<p id="my-friends-username">Username: <strong>{{username}}</strong></p>
 	<div id="my-friends-list">
+
 		<p> Tienes {{numFriends}} amigos en tu lista de amigos: </p>
 		<div id="my-friends-allfriends">
 			{{#each showFriends}}
 				<p class="list-of-friends">{{name}}</p>
 			{{/each}}
 		</div>
+
 	</div>
+	<p id="my-friends-username">Selecciona un amigo para borrarlo.</p>
+
 </template>
