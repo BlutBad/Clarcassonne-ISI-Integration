@@ -3,7 +3,8 @@
  Meteor.methods({
 
     InicioJuego:function(id_partida){       
-	 
+	
+	console.log("llegar");
        	Tablero.iniciar();
 
 	Jugadores_ID = Partidas.findOne({_id: id_partida}).jugadores;
@@ -11,7 +12,9 @@
 	console.log(Jugadores_ID);
 	
 	for(i=0;i<Jugadores_ID.length;i++){
-		Jugador=resolverUser(Jugadores_ID[i]); 
+		Jugador=resolverUser(Jugadores_ID[i]);
+		console.log(Jugador.nombre);
+		console.log(Jugador.fecha);
 		//creamos la lista de jugadores
 		Tablero.listaJugadores.push(new ObjetoJugador(Jugadores_ID[i],Jugador.nombre,Jugador.fecha));
 	}
