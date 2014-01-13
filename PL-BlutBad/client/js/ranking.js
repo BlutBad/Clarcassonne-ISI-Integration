@@ -2,6 +2,28 @@ Template.ranking.show = function() {
 	return Session.get('current_stage') == 'Ranking';
 };
 
+
+var levelsPosition = {
+        i:"label label-important",
+        ii:"label label-warning",
+        iii:"label label-success",
+        o:"label",
+};
+
+function getClass(index){
+    if(index == 0){
+        clacc  = levelsPosition.i;
+    }else if(index ==1){
+        clacc  = levelsPosition.ii;
+    }else if (index ==2){
+        clacc  = levelsPosition.iii;
+    }else{
+        clacc  = levelsPosition.o;
+    }
+    return clacc;
+}
+
+
 Template.ranking.scores = function() { 
 	idgame_session = Session.get("gamerank");
 	if (idgame_session == null) {
@@ -18,6 +40,7 @@ Template.ranking.scores = function() {
 		sco.maxScore = each.maxScore;
     	sco.totalScore = each.totalScore;
     	sco.rango = Rangos.findOne({_id: each.rango_id}).rango;
+    	sco.clacc = getClass(index);
     	scores.push(sco);
     });  
     return scores;  
@@ -79,6 +102,7 @@ Template.ranking.bestPlayers3=function(idgame_session){
         sco.maxScore = each.maxScore;
         sco.totalScore = each.totalScore;
         sco.rango = Rangos.findOne({_id: each.rango_id}).rango;
+        sco.clacc = getClass(index);
         scores.push(sco);
     });  
     return scores;  

@@ -5,6 +5,28 @@ Template.hall_torneo.show = function() {
   return Session.get('current_stage') == 'showTorneo';
 };
 
+var levelsPosition = {
+        i:"label label-important",
+        ii:"label label-warning",
+        iii:"label label-success",
+        o:"label",
+};
+
+function getClass(index){
+    if(index == 0){
+        clacc  = levelsPosition.i;
+    }else if(index ==1){
+        clacc  = levelsPosition.ii;
+    }else if (index ==2){
+        clacc  = levelsPosition.iii;
+    }else{
+        clacc  = levelsPosition.o;
+    }
+    return clacc;
+}
+
+
+
 
 Template.hall_torneo.torneoId = function() {
     return Session.get('showTorneoId');
@@ -173,6 +195,7 @@ Template.hall_torneo.soloRanking = function() {
     ranking  = [];
     tran.forEach(function(each, index) {
         each.no = index+1;
+        each.clacc = getClass(index);
         ranking.push(each);
     });
     return ranking;
