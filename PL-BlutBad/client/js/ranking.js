@@ -16,9 +16,9 @@ Template.ranking.scores = function() {
 		sco.game = Juegos.findOne({_id: each.game_id}).name; //el error estaba aqui he cambiado finOne por find
 		sco.user = Meteor.users.findOne({_id: each.user_id}).username; //el error estaba aqui he cambiado findOne por find
 		sco.maxScore = each.maxScore;
-        	sco.totalScore = each.totalScore;
-        	sco.rango = Rangos.findOne({_id: each.rango_id}).rango;
-        	scores.push(sco);
+    	sco.totalScore = each.totalScore;
+    	sco.rango = Rangos.findOne({_id: each.rango_id}).rango;
+    	scores.push(sco);
     });  
     return scores;  
 }; 
@@ -54,3 +54,52 @@ Template.ranking.events = {
 Template.ranking.juegos=function(){
 	return Juegos.find({}); 
 };
+
+
+Template.ranking.gameName=function(){
+    idgame_session = Session.get("gamerank");
+    return Juegos.findOne({_id: idgame_session}).name; 
+};
+
+
+
+
+//Devuelve a los 3 mejores jugadores en el ranking del juego en cuestion
+Template.ranking.bestPlayers3=function(idgame_session){
+
+    var rank3 = Ranking.find({game_id: idgame_session}, {sort:{maxScore: -1}}).fetch();
+    rank3 =  rank3.slice(0,3);
+    
+
+    scores = [];
+    rank3.forEach(function(each,index) { 
+        sco = {};   
+        sco.No = index+1;
+        sco.user = Meteor.users.findOne({_id: each.user_id}).username; //el error estaba aqui he cambiado findOne por find
+        sco.maxScore = each.maxScore;
+        sco.totalScore = each.totalScore;
+        sco.rango = Rangos.findOne({_id: each.rango_id}).rango;
+        scores.push(sco);
+    });  
+    return scores;  
+    
+    
+    
+    
+};
+
+
+//Comprueba si hay algun jugador que ha jugado al juego, para saber si mostrarlo(el juego) en el top3 o no.
+Template.ranking.anyGamer = function(game_id){
+    var gamers = Ranking.find({game_id: game_id}).fetch();
+     if (gamers.length > 0){
+         return true;
+     }else{
+         return false;
+     }
+};
+
+Template.ranking.show3BestRanking=function(){
+    return Session.equals("gamerank", null);
+};
+

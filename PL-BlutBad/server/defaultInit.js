@@ -12,10 +12,14 @@ Meteor.startup(function() {
 			}, {
 			    name : "Torneos",
 			    contents : []
-			}, {
+			},
+			/*
+			{
 			    name : "Tienda",
 			    contents : []
-			}, ];
+			},*/ 
+			
+			];
 
 			var timestamp = (new Date()).getTime();
 			for ( var i = 0; i < data.length; i++) {

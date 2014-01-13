@@ -6,6 +6,10 @@ Session.setDefault('load_game', null);
 Session.setDefault('showGameIdn',null);
 Session.setDefault("current_game",null);
 
+Session.setDefault("gamerank", null);
+
+
+
 Meteor.startup(function() {
     $('#gamecontainer').hide();
     

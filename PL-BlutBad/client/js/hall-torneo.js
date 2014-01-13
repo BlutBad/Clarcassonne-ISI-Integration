@@ -64,8 +64,18 @@ Template.hall_torneo.events = {
     'click .startTorneo': function() {
         //console.log("Start Torneo");
         startTorneo();
+    },
+    
+    'click .finalizarTorneo': function() {
+        stopTorneo();
     }
 };
+
+
+function stopTorneo() {
+    var tid = Session.get('showTorneoId');
+    var tor = Torneos.findOne(tid);
+}
 
 //******************MULTI TORNEO*************************
 
