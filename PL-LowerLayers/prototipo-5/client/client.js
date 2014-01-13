@@ -49,17 +49,7 @@ $(document).ready(function() {
 			}	
 			
 		});
-//---------------------------------------------
-		$("#EmpezarCarca").click(function() {
-				$('#EmpezarCarca').hide();
-				$('#clarcassonnecontainer').show();
-				var matches_document = Partidas.findOne({_id : Session.get('match_id')});
-				party_id = matches_document._id;
-				console.log(party_id);
-				//InicioJuego(party_id);  
-				ClarcassonneGameIU.initialize('#clarcassonnecanvas', party_id);
-		});
-//---------------------------------------------
+
 });
 
 ////// RELLENAR PLANTILLAS /////////
@@ -253,6 +243,19 @@ Deps.autorun(function () {
 	}		
 });
 
+
+//Mira si la partida ha comenzado
+Deps.autorun(function() {
+	var doc_partidas = Partidas.findOne({_id : Session.get('match_id')});
+	if(doc_partidas){
+		var empezada = doc_partidas.initiated;
+		if(empezada == 'true'){
+			$('#clarcassonnecontainer').show();
+			ClarcassonneGameIU.initialize('#clarcassonnecanvas', Session.get('match_id'));
+		};
+	};
+});
+
 var mychats = new Array();
 //Cada vez que hago click en un amigo conectado se inserta una pestaña de chat
 //y se añade a un array el id del usuario clickeado para saber las conversaciones
@@ -398,26 +401,32 @@ Template.matchestemp.events = {
 	// Creamos una partida nueva en la base de datos y nos unimos automáticamente
 	'keydown input#match_creator':function(event){
 		if(event.which==13){
-			if ($("#match_creator").val()!=''){
-				Partidas.insert({
-					name: $("#match_creator").val(),
-					game_id: Session.get("game_id"),
-					created: new Date(),
-					initiated: false,
-					finish: false
-				});
-				var current_match_id = Partidas.findOne({name: $("#match_creator").val()})._id;
-				Session.set('match_id', current_match_id);
-				$('#matches').hide();
-				$('#roomcontainer').fadeIn();
-				if (Games.findOne({_id : Session.get("game_id")}).name=="Alien_Invasion")
-					$('#aliencontainer').show();
-				else if (Games.findOne({_id :Session.get("game_id")}).name=="Froot_Wars")
-					$('#frootwarscontainer').show();
-				Partidas.update({_id : Session.get('match_id')},{$push: {jugadores: Meteor.userId()},$inc:{num_players :1}});
-				$("#match_creator").val('');
-			}
-		}
+			if(!Partidas.findOne({name : $("#match_creator").val()})){
+				if ($("#match_creator").val()!=''){
+					Partidas.insert({
+						name: $("#match_creator").val(),
+						game_id: Session.get("game_id"),
+						created: new Date(),
+						initiated: false,
+						finish: false,
+						admin_by: Meteor.userId()
+					});
+
+					var current_match_id = Partidas.findOne({name: $("#match_creator").val()})._id;
+					Session.set('match_id', current_match_id);
+					$('#matches').hide();
+					$('#roomcontainer').fadeIn();
+					if (Games.findOne({_id : Session.get("game_id")}).name=="Alien_Invasion")
+						$('#aliencontainer').show();
+					else if (Games.findOne({_id :Session.get("game_id")}).name=="Froot_Wars")
+						$('#frootwarscontainer').show();
+					Partidas.update({_id : Session.get('match_id')},{$push: {jugadores: Meteor.userId()},$inc:{num_players :1}});
+					$("#match_creator").val('');
+				};
+			} else {
+				alert("Ya existe una partida con ese nombre. Pruebe con otro.");
+			};
+		};
 	},
 	// Entramos en una partida
 	'click a.linkmatch':function(event){
@@ -425,12 +434,17 @@ Template.matchestemp.events = {
 		var no_limit = Partidas.findOne({_id : $(this)[0]._id}).num_players < lim;
 		var players_array = Partidas.findOne({_id : $(this)[0]._id}).jugadores;
 		var already_into = players_array.indexOf(Meteor.userId()) != -1;
-		if(already_into)
-			console.log("YA ESTABA DENTRO");
-		if(no_limit || already_into){  
+		if(no_limit || already_into){
 			Session.set('match_id', $(this)[0]._id);
 			$('#matches').hide();
 			$('#roomcontainer').fadeIn();
+			$('#empezarboton').hide();
+			console.log('AAA');
+			if(Partidas.findOne({_id : Session.get('match_id')}).admin_by == Meteor.userId()){
+				console.log('BBB');
+				$('#empezarboton').show();
+			};
+
 			if (Games.findOne({_id : Session.get('game_id')}).name=="Alien_Invasion")
 				$('#aliencontainer').show();
 			else if (Games.findOne({_id : Session.get('game_id')}).name=="Froot_Wars")
@@ -471,6 +485,17 @@ Template.roomgametemp.events = {
 		$('#aliencontainer').hide();
 		$('#frootwars').hide();
 		$('#matches').fadeIn();
+	}
+};
+
+
+// Pone la partida en "empezada"
+Template.roomplayerstemp.events = {
+	'click #EmpezarCarca' : function(event){
+				if(Partidas.findOne({_id : Session.get('match_id')}).admin_by == Meteor.userId()){
+					$('#empezarboton').hide();	
+					Partidas.update({_id: Session.get('match_id')}, {$set: {initiated: 'true'}});
+				};
 	}
 };
 
