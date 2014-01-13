@@ -48,27 +48,32 @@ Template.myFriends.numFriends = function() {
 Template.allUsers.events({
 // Aniade a un usuario registrado a la lista de amigos
 	'click p.userRegister': function() {
-		var userRegister = Meteor.users.findOne({_id: this._id}).username;		
-		$( "#add-confirm" ).dialog({
-			resizable: false,
-			height:170,
-			modal: true,
-			buttons: {
-				"Añadir como amigo": function() {
-				  	$( this ).dialog( "close" );
-			  		var myFriendsId = Friends.findOne({username: Meteor.user().username})._id;
-					var newFriend = {name: userRegister};
-					Friends.update(myFriendsId, {
-						$push: {
-							friends: newFriend
-						}
-					});
-				},
-				Cancelar: function() {
-				  	$( this ).dialog( "close" );
+		var userRegister = Meteor.users.findOne({_id: this._id}).username;
+		if (userRegister !== Meteor.user().username) {	
+			$( "#add-confirm" ).dialog({
+				resizable: false,
+				height:170,
+				modal: true,
+				buttons: {
+					"Añadir como amigo": function() {
+					  	$( this ).dialog( "close" );
+				  		var myFriendsId = Friends.findOne({username: Meteor.user().username})._id;
+						var newFriend = {name: userRegister};
+						Friends.update(myFriendsId, {
+							$push: {
+								friends: newFriend
+							}
+						});
+					},
+					Cancelar: function() {
+					  	$( this ).dialog( "close" );
+					}
 				}
-			}
-		});
+			});
+		} else {
+			console.log("Son iguales");
+			$( "#ifSelectMe" ).dialog();
+		}
 	}
 
 });
