@@ -30,7 +30,7 @@
         _.each(Tablero.listaJugadores, function(jugador){jugador.numero=i; i++});
            
 
-	Partidas.update(party_id, {
+	Partidas.update(id_partida, {
                             $push : {Tablero : Tablero}
                 });
 
@@ -41,10 +41,15 @@
     
     
     Robar:function(id_partida){    
-	var partida= Partidas.findOne({id_partida});                
+	var partida= Partidas.findOne({_id: id_partida});      
+	Tablero= partida.Tablero; 
+	console.log("ESTE ES NUESTRO TABLERO: " + Tablero.huecos);         
         var robar=Tablero.robarFicha(); 
         var nuevaficha = new ObjetoFicha(0,0,0,robar);
         Tablero.buscarCandidatos(nuevaficha);
+	Partidas.update(id_partida, {
+                            $push : {Tablero : Tablero}
+                });
         return [nuevaficha.tipo,nuevaficha.encajaCon];
     }
     //Devuelve una lista del tipo [string,lista[]] string= tipo ficha, lista= coordenadas donde encaja
@@ -52,6 +57,9 @@
     
     
     ColocarFicha:function(id_partida,tipoFicha, coordenada, n_giros){
+      var partida= Partidas.findOne({_id: id_partida});      
+      Tablero= partida.Tablero;
+      console.log("ESTE ES NUESTRO TABLERO: " + Tablero.huecos); 
       var nuevaficha = new ObjetoFicha(0,0,0,tipoFicha);
       for (var i=0; i<n_giros;i++){nuevaficha.girar()}
       
@@ -59,6 +67,9 @@
       if (fichaColocada == 0){return 0}
       console.log("fichaColocada", fichaColocada);
       var seguidores=Tablero.colocarseguidor(fichaColocada);
+      Partidas.update(id_partida, {
+                            $push : {Tablero : Tablero}
+                });
       return seguidores; 
     }
     //Coloca la ficha en el tablero, devuelve la lista de los posibles seguidores o 0 si no se produce error
@@ -66,7 +77,9 @@
     
     
     ColocarSeguidor:function(id_partida, id_jugador, coordenada, seguidor){
-      
+      var partida= Partidas.findOne({_id: id_partida});      
+      Tablero= partida.Tablero;
+      console.log("ESTE ES NUESTRO TABLERO: " + Tablero.huecos); 
       var Jugador = _.find(Tablero.listaJugadores,function(obj){return (obj.id == id_jugador)})
       var ficha= Tablero.buscarxcoor(coordenada.x,coordenada.y);
       var nuevoSeguidor = {t:seguidor.t, n:seguidor.n, j:Jugador.numero, f:ficha}
@@ -74,17 +87,23 @@
         Tablero.cierraCamino(ficha,1);
         Tablero.cierraClaustro(ficha,1);
         Tablero.cierraCastillo(ficha,1);
+	Partidas.update(id_partida, {
+                            $push : {Tablero : Tablero}
+                });
         return 1;
       
-      } else {return 0}
+      }else {
+	    Partidas.update(id_partida, {
+                            $push : {Tablero : Tablero}
+                });
+	    return 0
+      }
       
     }
     //Coloca el seguidor en la ficha indicada y suma los correspondientes puntos. Acaba el turno. 
     
     
 })
-
-  
 
 
 
