@@ -51,14 +51,15 @@ $(document).ready(function() {
 		});
 
 		$("#buttVideoSt").click(function() {
-			if ($("#buttVideoSt").val() == "Start VideoChat"){
-				$("#buttVideoSt").val("Stop VideoChat");
+			if ($("#buttVideoSt").hasClass("StartVC")){
+				$("#buttVideoSt").html("Stop VideoChat");
+				$("#buttVideoSt").css("background-color","#DF0101");
+				$("#buttVideoSt").css("border","2px solid #DF0101");
+				$("#buttVideoSt").removeClass();
 				var nameRoom = Partidas.findOne({_id : Session.get('match_id')}).name;
 				startVideoChat(nameRoom);
 			}else{
-				$("#buttVideoSt").val("Start VideoChat");
-				webrtc.stopLocalVideo();
-				$("#localVideo").attr("src", "");
+				endVideoChat()
 			}	
 		});
 
@@ -499,9 +500,7 @@ Template.roomgametemp.events = {
 		$('#matches').fadeIn();
 
 		///ocultar videochat
-		$("#buttVideoSt").val("Start VideoChat");
-		webrtc.stopLocalVideo();
-		$("#localVideo").attr("src", "");
+		endVideoChat();
 	}
 };
 
@@ -532,6 +531,15 @@ function startVideoChat(nameRoom){
 		// you can name it anything
 		webrtc.joinRoom(nameRoom);
 	});
+}
+
+function endVideoChat(){
+	$("#buttVideoSt").html("Start VideoChat");
+	$("#buttVideoSt").css("background-color","#2EFE2E");
+	$("#buttVideoSt").css("border","2px solid #2EFE2E");
+	$("#buttVideoSt").addClass("StartVC");
+	webrtc.stopLocalVideo();
+	$("#localVideo").attr("src", "");
 }
 
 //Configuracion cuentas

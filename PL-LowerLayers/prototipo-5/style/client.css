@@ -65,6 +65,16 @@ html{
 	position: absolute;
 }
 
+#buttVideoSt {
+	width: 176px;
+	height:	40px;
+	font-weight:bold;
+	text-align: center;
+	line-height: 50px;
+	border-radius:7px;	
+	background-color: #2EFE2E;
+	border: 2px solid #2EFE2E;
+}
 
 
 #chatTabs{

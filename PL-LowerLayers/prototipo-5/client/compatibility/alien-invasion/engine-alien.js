@@ -1,4 +1,4 @@
-// Alien Invasion utiliza duck typing para implementar como dibujar
+/*// Alien Invasion utiliza duck typing para implementar como dibujar
 // elementos en la pantalla (método draw()) y para que actualicen su
 // estado cada vez que el bucle de animación marca un nuevo paso
 // (método step()).
@@ -662,4 +662,4 @@ var GameAlienPoints = function() {
   };
 
   this.step = function(dt) { };
-};
+};*/
