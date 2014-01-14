@@ -265,6 +265,15 @@
 	</div>	
 </template>
 
+<template name='privatemessagestemp'>
+	<div class="privatemessages">
+		{{# each listaprivatemessages}}
+			<i><font size=-4>({{date}})</font> {{orig}}</i>: {{text}} <br>
+		{{/ each}}	
+	</div>
+</template>
+
+
 <template name="my-video">
     <video id="localVideo"></video>
 </template>

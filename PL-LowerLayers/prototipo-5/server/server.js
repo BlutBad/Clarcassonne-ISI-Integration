@@ -23,6 +23,12 @@ Meteor.publish("messages", function(current_match_id) {
 	return Messages.find({match_id: current_match_id});
 });
 
+
+Meteor.publish("private_messages", function(orig_name) { 	
+	return Private_Messages.find({$or: [ {orig: orig_name} , {dest: orig_name} ] });
+});
+
+
 Meteor.publish("games", function() {	
 	return Games.find();
 });

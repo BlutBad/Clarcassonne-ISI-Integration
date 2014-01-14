@@ -175,6 +175,12 @@ Deps.autorun(function () {
 	Meteor.subscribe("partidas", current_game_id);
 });
 
+//Subscripcion selectiva a los mensajes privados
+Deps.autorun(function () {
+	if (Meteor.user())
+		Meteor.subscribe("private_messages", Meteor.user().username);
+});
+
 //Subscripción selectiva a los mensajes de la sala
 Deps.autorun(function () {
 	var current_match_id = Session.get("match_id")
@@ -232,41 +238,49 @@ Template.input.events = {
 /////////// CHAT PRIVADO //////////
 
 //Pinta lista de amigos conectados, tiene que ser reactivo porque no esta disponible desde el comienzo
-Deps.autorun(function () {
-	Template.listaAmigosOnlineTemp.listaAmigosOnline = function(){
-		if (Meteor.user()){
-			if (Meteor.user().amigos!=undefined){
-				amigos=Meteor.user().amigos;
-				return Meteor.users.find({$and: [{_id: {$in: amigos}},{"services.resume.loginTokens" : {$not : []}}]});
-			}	
+
+Template.listaAmigosOnlineTemp.listaAmigosOnline = function(){
+	if (Meteor.user()){
+		if (Meteor.user().amigos!=undefined){
+			amigos=Meteor.user().amigos;
+			return Meteor.users.find({$and: [{_id: {$in: amigos}},{"services.resume.loginTokens" : {$not : []}}]});
 		}	
-	}		
-});
+	}	
+}		
+
 
 
 //Pinta lista de amigos desconectados, tiene que ser reactivo porque no esta disponible desde el comienzo
-Deps.autorun(function () {
-	Template.listaAmigosOfflineTemp.listaAmigosOffline = function(){
-		if (Meteor.user()){
-			if (Meteor.user().amigos!=undefined){
-				amigos=Meteor.user().amigos;
-				return Meteor.users.find({$and: [{_id: {$in: amigos}},{"services.resume.loginTokens" :  []}]});
-			}	
+
+Template.listaAmigosOfflineTemp.listaAmigosOffline = function(){
+	if (Meteor.user()){
+		if (Meteor.user().amigos!=undefined){
+			amigos=Meteor.user().amigos;
+			return Meteor.users.find({$and: [{_id: {$in: amigos}},{"services.resume.loginTokens" :  []}]});
 		}	
-	}		
-});
+	}	
+}		
+
+Template.privatemessagestemp.listaprivatemessages=function(){
+	var privatemessages=Private_Messages.find({$or: [ {$and:[{orig: Session.get('origname')},{dest:Session.get('destname')}]} , {$and:[{orig:Session.get('destname')},{dest: Session.get('origname')}]}  ] },{sort: {date:-1}});
+	return privatemessages;	
+}
 
 
-//Mira si la partida ha comenzado
-Deps.autorun(function() {
-	var doc_partidas = Partidas.findOne({_id : Session.get('match_id')});
-	if(doc_partidas){
-		var empezada = doc_partidas.initiated;
-		if(empezada == 'true'){
-			$('#clarcassonnecontainer').show();
-			ClarcassonneGameIU.initialize('#clarcassonnecanvas', Session.get('match_id'));
-		};
-	};
+Deps.autorun(function () {
+	if (Meteor.user()){
+		var newprivatemessages = Private_Messages.find({$and: [{dest: Meteor.user().username},{recibido: 0}] });
+		console.log("recv")
+		newprivatemessages.forEach(function(newprivatemessage){
+			Private_Messages.update({_id: newprivatemessage._id}, {$set: {recibido: 1}});
+			console.log(newprivatemessage.orig)
+			var chatabiertodeorig = $("div[tipo='contenidochat'][id='"+newprivatemessage.orig+"']");
+			if (chatabiertodeorig.css("display")!="block"){
+				$.ambiance({message: "New private message received from "+newprivatemessage.orig, fade: true, timeout: 4});
+				console.log("notif")
+			}			
+		});
+	}	
 });
 
 var mychats = new Array();
@@ -277,21 +291,36 @@ var mychats = new Array();
 //al mismo evento de insertar ventana y modificar el array.
 Template.listaAmigosOnlineTemp.events = {
 	'click a.linkchat':function(event){
-		Session.set('userdest_id', $(this)[0]._id);
-		var indice=mychats.indexOf(Session.get('userdest_id'));
-		var userdest=Meteor.users.findOne({_id: Session.get('userdest_id')});
+		var userdest_id = $(this)[0]._id;
+		var indice=mychats.indexOf(userdest_id);
+		var userdest=Meteor.users.findOne({_id: userdest_id});
+		var PlantillaMensajesPrivados = Meteor.render(function () {
+			return Template.privatemessagestemp();
+		});
+		
 		if (indice==-1){
-			mychats.push(Session.get('userdest_id'));
-			$("#chatTabs ul").append("<li id='"+Session.get('userdest_id')+"'> <a href='#"+userdest.username+"'>"+userdest.username+"</a><button type='button' class='closechattab'>x</button></li>");
-			$("#chatTabs").append("<div id='"+userdest.username+"'> mensajes con "+userdest.username+"</div>")
+			mychats.push(userdest_id);
+			$("#chatTabs ul").append("<li id='"+userdest_id+"'> <a tipo='titulochat' href='#"+userdest.username+"'>"+userdest.username+"</a><button type='button' class='closechattab'>x</button></li>");
+			$("#chatTabs").append("<div tipo='contenidochat' id='"+userdest.username+"'> <textarea rows='2' cols='50'  maxlength='103' style='font-size: 12pt;' class='privatemessagecont'></textarea></br></div>");
+			$("#"+userdest.username).append(PlantillaMensajesPrivados);
 			$("#chatTabs").tabs("refresh");
-		}else{
-			$("#"+Session.get('userdest_id')+" a").trigger('click');
 		}
+
+		$("#"+userdest_id+" a").trigger('click');
+
 		if (mychats.length!=0)
-			$("#chatTabs").fadeIn();	
+			$("#chatTabs").fadeIn();		
 	}
 }
+
+$(document).on("click","a[tipo='titulochat']", function(){
+	var userdest_id = $(this).parent().attr("id");
+	var userdest=Meteor.users.findOne({_id: userdest_id});
+	console.log("has abierto el chat de "+userdest.username);
+	Session.set("origname",Meteor.user().username);
+	Session.set("destname",userdest.username);
+});
+
 
 //Si hago click en la cruz de la pestaña se cierra ésta y se elimina del array
 //la conversacion. Si no quedan conversaciones se oculta la plantilla
@@ -299,14 +328,47 @@ $(document).on("click", ".closechattab", function() {
         var userdest_id=($(this).parent().attr("id"));
         var indice=mychats.indexOf(userdest_id);
         var userdest=Meteor.users.findOne({_id: userdest_id});
+
         mychats.splice(indice,1);
 
 		$("#"+userdest_id).remove();
 		$("#"+userdest.username).remove();
-		$("#chatTabs").tabs("refresh");
-		if (mychats.length==0)
+
+		if (mychats.length==0){
 			$("#chatTabs").hide();
+		}else{
+			var nombrechatabierto = $("div[tipo='contenidochat'][style='display: block;']").attr("id");
+			if (nombrechatabierto != undefined){
+				console.log("conversacion restante abierta de "+nombrechatabierto);
+				Session.set("origname",Meteor.user().username);
+				Session.set("destname",nombrechatabierto);
+			}
+		}	
 });
+
+$(document).on("keydown",".privatemessagecont", function(event){
+	if ( event.which == 13 ) {
+		var privatemessage = $(this);
+		if (privatemessage.val()!=''){
+			Private_Messages.insert({
+				orig: Session.get('origname'),
+				dest: Session.get('destname'),
+				text: privatemessage.val(),
+				date: new Date(),
+				recibido: 0
+			});
+			privatemessage.val(''); //dejamos la caja de texto vacia
+		}
+	}
+});
+
+
+
+
+
+
+
+
 
 
 //Para buscar y añadir usuarios, esta detecta cuando se escribe en el formulario
@@ -400,6 +462,19 @@ function deleteFriend(idUser,idAborrar) {
 }
 
 //////// JUEGOS ////////
+//Mira si la partida ha comenzado
+Deps.autorun(function() {
+	var doc_partidas = Partidas.findOne({_id : Session.get('match_id')});
+	if(doc_partidas){
+		var empezada = doc_partidas.initiated;
+		if(empezada == 'true'){
+			$('#clarcassonnecontainer').show();
+			ClarcassonneGameIU.initialize('#clarcassonnecanvas', Session.get('match_id'));
+		};
+	};
+});
+
+
 
 // Abrimos sesión en uno de los juegos
 Template.gamestemp.events = {
