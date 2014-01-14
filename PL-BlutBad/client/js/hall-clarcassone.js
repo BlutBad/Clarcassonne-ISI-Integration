@@ -142,19 +142,18 @@ Template.hall_clarcassone.events({
 
     'click .unirme' : function() {  
         // Encontrar el user actual en alguna partida volátil normal (no de torneo)
-        userInparty = PartidasVolatiles.findOne({ 
-            _id: this._id,
+        userInparty = PartidasVolatiles.find({  
             jugadores: { 
                 $elemMatch: { 
                     user_id: Meteor.userId() 
                 } 
             },
             torneo_id: false 
-        }); 
+        }).fetch();  
         userA = UsersInHall.findOne({
             user_id : Meteor.userId()
         });
-        if (!userInparty) {
+        if (userInparty.length == 0) {
             // UNIRSE A PARTIDA!
             PartidasVolatiles.update(this._id, {
                 $push : {
@@ -241,6 +240,19 @@ Template.hall_clarcassone.partidasVolatiles = function() {
     }    
 } 
 
+Template.hall_clarcassone.CurrentParty = function() { 
+    userin = Partidas.find({  
+        jugadores: { 
+            $elemMatch: { 
+                user_id: Meteor.userId() 
+            } 
+        },
+    }).fetch(); 
+    if (userin.length != 0) {
+        return userin
+    }
+} 
+
 Template.hall_clarcassone.noTorneo = function() {
     gtsid = Session.get('gameTorneoSelectId');
     if (gtsid){
@@ -322,7 +334,7 @@ Template.hall_clarcassone.muestro_oculto = function(id_partida) {
 Template.hall_clarcassone.show_ab = function(id_partida) {
      userCreator = PartidasVolatiles.findOne({
         _id : id_partida
-    }).creator_id;
+    }).creator_id; 
     if (userCreator == Meteor.userId()) {
         return false;
     }
@@ -340,7 +352,7 @@ Template.hall_clarcassone.show_ready = function() {
     });
     if (userInparty) {
         return true;
-    } 
+    }
     return false;
 }
 
@@ -353,4 +365,4 @@ Template.hall_clarcassone.rol = function(id_user, id_partida) {
         return "Creador";
     }
     return "Participante"; 
-} 
+}  
