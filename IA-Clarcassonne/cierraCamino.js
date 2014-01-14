@@ -2,7 +2,7 @@
 // FUNCION CIERRA CAMINO
 
 
-Tablero.cierraCamino = function(ficha,flag){
+cierraCamino = function(ficha,flag,vienede){
 
 			var cierracamino = ['Ccruce', 'Posada', 'Ciudad3lc', 'Ciudad3lcE', 'Ciudad1lcruce', 'Tcruce'];
 			var jugadores=[];
@@ -158,7 +158,15 @@ Tablero.cierraCamino = function(ficha,flag){
 
 				  if (ficha.tipo=="Ccruce" || ficha.tipo=="Tcruce" || ficha.tipo == "Ciudad1lcruce"){
 				  puntos++;
-				    
+				     if (flag==0){
+				        
+				        ladron =_.find(ficha.seguidores,function(obj){return (obj.t=="Ladron")});
+				        if (vienede=="arriba" && ladron && ladron.n==0){return [true,true]}
+				        else if (vienede=="abajo" && ladron && ladron.n==4){return [true,true]}
+				        else if (vienede=="derecha" && ladron && ladron.n==2){return [true,true]}
+				        else if (vienede=="izquierda" && ladron && ladron.n==6){return [true,true]}
+				        else { return [true,false]}			        
+				      }
 				      Cerrado=undefined;
 				  
 				      if (ficha.arriba=="Rue"){	
@@ -306,4 +314,4 @@ Tablero.cierraCamino = function(ficha,flag){
 				   }
 			}
 
-	};
+	}

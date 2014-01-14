@@ -2,7 +2,7 @@
 // Comprueba si tenemos un monje y si esta rodeado un claustro.
 
 
-Tablero.cierraClaustro = function(ficha,flag){
+cierraClaustro = function(ficha,flag){
 		var puntos = 0;
 		var monje;
 
@@ -39,14 +39,16 @@ Tablero.cierraClaustro = function(ficha,flag){
 					ficha2 = Tablero.buscarxcoor(ficha.x-1, ficha.y-1);
 				if (ficha2.lleno){puntos++;rodeado++}
 
-			if (flag == 1 || flag == 2){			
+			if (flag == 1){			
 				if(rodeado==8 && haymonje == true){             
 						sumarpuntos();
+						console.log("ENTRA FLAG 1");
 						return [true,haymonje];}
-				else{
+			}else if (flag == 2){
 					sumarpuntos();
-					return [false,haymonje];}
-			}else{return [false,haymonje];}
+console.log("ENTRA FLAG 2");
+					return [false,haymonje];
+			}else{console.log("ENTRA SIN FLAG");return [false,haymonje];}
 		}
 	
 		if ((ficha.tipo == "Catedral") || (ficha.tipo == "Posada")){return closeClaustro(ficha)}
@@ -67,4 +69,4 @@ Tablero.cierraClaustro = function(ficha,flag){
 	 	ficha2 = Tablero.buscarxcoor(ficha.x-1, ficha.y-1);
 		if ((ficha2.tipo == "Catedral") || (ficha2.tipo == "Posada") ){return closeClaustro(ficha2)}
 		else{return [false,false,0]}
-  };
+  }
