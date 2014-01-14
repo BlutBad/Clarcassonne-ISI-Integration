@@ -1,78 +1,77 @@
 <template name="profil">
 	{{#if showprofile}}
 		{{#if registrado}}
-		<div id="profile-container">
-			<div id="formu">
+
+			<div id="profile-container">
+
 				<h1>Perfil de Usuario</h1>
-				<div class="container">   
-					<label>
-					Nombre: {{getUsername getUserId}}
-					 </label>
-					 <label>
-           			Email: {{getUserEmail getUserId}}
-           			</label>
-            		<!--<input class="form-control" name="password" placeholder="New Password" type="password" />-->
-            		Fecha de nacimiento: <input type="text" id="datebirth" value="{{getUserDateBirth getUserId}}">
-            		<label>
-            		Género: 
-            		<select id="genero" name="list">
-						<option selected>{{getUserGender getUserId}}</option>
-						<option> Male </option>
-						<option> Female</option>
-					</select>							
-					</label>
-					<br/>
-					<button class="btn btn-primary" id="save" type="submit"> Guardar los cambios</button>
+
+				<div id="datosPerfilUsuario">
+
+					<div id="formu">
+						<h3>Mi perfil</h3>
+						<label>
+							Nombre: {{getUsername getUserId}}
+						 </label>
+						 <label>
+	           				Email: {{getUserEmail getUserId}}
+	           			</label>
+	            		<!--<input class="form-control" name="password" placeholder="New Password" type="password" />-->
+	            		Fecha de nacimiento: <input type="text" id="datebirth" value="{{getUserDateBirth getUserId}}">
+	            		<label>
+	            			Género: 
+		            		<select id="genero" name="list">
+								<option selected>{{getUserGender getUserId}}</option>
+								<option> Male </option>
+								<option> Female</option>
+							</select>							
+						</label>
+						<br/>
+						<button class="btn btn-primary" id="save" type="submit"> Guardar los cambios</button>
+					</div>
+
+					{{> stadisticGraphic}}
+
 				</div>
-			</div>
-		</div>
-			<br/>
-			<div>
-			<table>
-			
-			<td>
-				<table>
-	  				<thead>
-       					<tr>
-      						<th>Juego</th>
-							<th>Victorias</th>
-							<th>Derrotas</th>
-							<th>Nº Partidas</th>
-							<th>Puntuación total</th>
-						</tr>
-					</thead>
-					<tbody>
-      					{{#each scores}} 
-							<tr>
-								<td><h4>{{game}}</h4></td>
-								<td><h4>{{win}}</h4></td>
-								<td><h4>{{lose}}</h4></td>
-								<td><h4>{{total}}</h4></td>
-								<td><h4>{{totalScore}}</h4></td> 			 
-							</tr>		
-						{{/each}}
-      				</tbody>
-				</table>    
-            </td>
-			<td>
-			{{> stadisticGraphic}}
-			</td>
-			</table>
+
+				<div id="partidas">
+
+					<table>
+		  				<thead>
+	       					<tr>
+	      						<th>Juego</th>
+								<th>Victorias</th>
+								<th>Derrotas</th>
+								<th>Nº Partidas</th>
+								<th>Puntuación total</th>
+							</tr>
+						</thead>
+						<tbody>
+	      					{{#each scores}} 
+								<tr>
+									<td><h4>{{game}}</h4></td>
+									<td><h4>{{win}}</h4></td>
+									<td><h4>{{lose}}</h4></td>
+									<td><h4>{{total}}</h4></td>
+									<td><h4>{{totalScore}}</h4></td> 			 
+								</tr>		
+							{{/each}}
+	      				</tbody>
+					</table> 
+
+				</div>
 
 			</div>
-			Si al final se guardan imagenes, poner el avatar
-			ISI-coins si se llega ha hacer
-		
+
 		{{else}}
-			<p>Debes estar registrado para ver tu perfil</p>
+			<div id="notRegisterDialog">
+			  	<p>
+			  		Debes estar registrado en la aplicación.
+			  	</p>
+			</div>
 		{{/if}}
-		
 	{{/if}}
-
 </template>
-
-
-
 
 <template name="stadisticGraphic">
     <div id="graficoEstadisticas" style="width: 550px; height: 400px; margin: 0 auto"></div>

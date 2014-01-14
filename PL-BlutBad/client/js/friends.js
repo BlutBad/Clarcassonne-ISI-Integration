@@ -71,7 +71,6 @@ Template.allUsers.events({
 				}
 			});
 		} else {
-			console.log("Son iguales");
 			$( "#ifSelectMe" ).dialog();
 		}
 	}
