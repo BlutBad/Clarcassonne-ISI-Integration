@@ -588,8 +588,12 @@ Template.roomgametemp.events = {
 Template.roomplayerstemp.events = {
 	'click #EmpezarCarca' : function(event){
 				if(Partidas.findOne({_id : Session.get('match_id')}).admin_by == Meteor.userId()){
-					$('#empezarboton').hide();	
-					Partidas.update({_id: Session.get('match_id')}, {$set: {initiated: 'true'}});
+					if(Partidas.findOne({_id : Session.get('match_id')}).num_players >= 3){
+						$('#empezarboton').hide();	
+						Partidas.update({_id: Session.get('match_id')}, {$set: {initiated: 'true'}});
+					} else {
+						alert("Se necesitan al menos tres jugadores.");
+					}
 				} else {
 					alert("No eres el administrador de esta partida. Espera hasta que el administrador comience.");
 				};
