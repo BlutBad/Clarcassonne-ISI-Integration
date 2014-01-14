@@ -1,7 +1,7 @@
 //Templates
 
 Template.buscador.show = function() {
-  return Session.get('current_stage') == 'Buscador';
+  return Session.get('current_stage') == 'Buscar amigos';
 };
 
 Template.buscador.register = function() {
