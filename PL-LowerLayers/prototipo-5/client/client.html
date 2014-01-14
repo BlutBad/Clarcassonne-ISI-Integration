@@ -97,6 +97,7 @@
 
 <template name="input">
 	<div id="messagecont">
+		<input type="button" id="buttVideoSt" value="Start VideoChat"/>
 		<p> Mensaje: <input type="text" id="message" style="width:50%"></p>
 	</div>
 </template>
@@ -207,12 +208,16 @@
 
 <template name="roomgametemp">
 	<div id="roomcontainer">
-		<a style ="cursor:pointer;text-decoration:underline;" id="exitgame"> Salir </a>
-		<h1>{{> gamenametemp}}  {{> matchnametemp}}</h1>
-		{{> roomplayerstemp}}
-		<br>
-		<div id="alaputaizq"> {{> roomchattemp}} </div>
-		<div id="alaputader">{{> alientemp}} {{> frootwarstemp}} {{> clarcassonnetemp}}</div>
+		<div class="alaputaizqtop"> 
+			<a style ="cursor:pointer;text-decoration:underline;" id="exitgame"> Salir </a>
+			<h1>{{> gamenametemp}}  {{> matchnametemp}}</h1>
+			{{> roomplayerstemp}}
+		</div>
+		<div class="alaputadertop">{{> my-video }} {{> remote-videos }}</div>
+		<br style="clear:both;"/>
+
+		<div class="alaputaizq"> {{> roomchattemp}} </div>
+		<div class="alaputader">{{> alientemp}} {{> frootwarstemp}} {{> clarcassonnetemp}}</div>
 		<br style="clear:both;"/>
 	</div>
 </template>
@@ -255,4 +260,12 @@
 			{{username}}<br>
 		{{/ each}}
 	</div>	
+</template>
+
+<template name="my-video">
+    <video id="localVideo"></video>
+</template>
+
+<template name="remote-videos">
+    <div id="remotesVideos"></div>
 </template>

@@ -49,13 +49,13 @@ OBJECT_ENEMY_PROJECTILE = 8,
 OBJECT_POWERUP = 16;
 
 var startGameAlien = function() {
-    Game.setBoard(0,new Starfield(20,0.4,100,true));
-    Game.setBoard(1,new Starfield(50,0.6,100));
-    Game.setBoard(2,new Starfield(100,1.0,50));
-    Game.setBoard(3,new TitleScreen("Alien Invasion", 
+    GameAlien.setBoard(0,new Starfield(20,0.4,100,true));
+    GameAlien.setBoard(1,new Starfield(50,0.6,100));
+    GameAlien.setBoard(2,new Starfield(100,1.0,50));
+    GameAlien.setBoard(3,new TitleScreen("Alien Invasion", 
                                     "Press fire to start playing",
-                                    playGame1));
-	Game.setBoard(5,new GamePoints(0));
+                                    playGameAlien1));
+	GameAlien.setBoard(5,new GameAlienPoints(0));
 };
 
 var collision1;
@@ -102,47 +102,47 @@ var level2 = [
 ];
 
 
-var playGame1 = function() {
-    var board = new GameBoard();
+var playGameAlien1 = function() {
+    var board = new GameAlienBoard();
     board.add(new PlayerShip());
 
     // Se añade un nuevo nivel al tablero de juego, pasando la definición de
     // nivel level1 y la función callback a la que llamar si se ha
     // ganado el juego
     board.add(new Level(level1, nextLevel));
-    Game.setBoard(3,board);
-	Game.points =0;
+    GameAlien.setBoard(3,board);
+	GameAlien.points =0;
 };
 
-var playGame2 = function() {
-    var board = new GameBoard();
+var playGameAlien2 = function() {
+    var board = new GameAlienBoard();
     board.add(new PlayerShip());
 
-    board.add(new Level(level2, winGame));
-    Game.setBoard(3,board);
+    board.add(new Level(level2, winGameAlien));
+    GameAlien.setBoard(3,board);
 };
 
 // Llamada cuando han desaparecido todos los enemigos del nivel sin
 // que alcancen a la nave del jugador
-var winGame = function() {
-    Game.setBoard(3,new TitleScreen("You win!", 
+var winGameAlien = function() {
+    GameAlien.setBoard(3,new TitleScreen("You win!", 
                                     "Press fire to play again",
-                                    playGame1));
+                                    playGameAlien1));
 };
 
 
 // Llamada cuando la nave del jugador ha sido alcanzada, para
 // finalizar el juego
-var loseGame = function() {
-    Game.setBoard(3,new TitleScreen("You lose!", 
+var loseGameAlien = function() {
+    GameAlien.setBoard(3,new TitleScreen("You lose!", 
                                     "Press fire to play again",
-                                    playGame1));
+                                    playGameAlien1));
 };
 
 var nextLevel = function() {
-    Game.setBoard(3,new TitleScreen("Level 1 Completed!",
+    GameAlien.setBoard(3,new TitleScreen("Level 1 Completed!",
                                     "Press fire to play level 2",
-                                    playGame2));
+                                    playGameAlien2));
 };
 
 
@@ -153,12 +153,12 @@ var Starfield = function(speed,opacity,numStars,clear) {
 
     // Creamos un objeto canvas, no visible en la página Web
     var stars = $('<canvas/>')
-	.attr('width', Game.width)
-	.attr('height', Game.height)[0];
+	.attr('width', GameAlien.width)
+	.attr('height', GameAlien.height)[0];
     // Sin jQuery lo hacemos asi:
     //    var stars = document.createElement("canvas");
-    //    stars.width = Game.width; 
-    //    stars.height = Game.height;
+    //    stars.width = GameAlien.width; 
+    //    stars.height = GameAlien.height;
 
 
     var starCtx = stars.getContext("2d");
@@ -225,41 +225,41 @@ var PlayerShip = function() {
     this.setup('ship', { vx: 0, reloadTime: 0.25, maxVel: 200 });
 
     this.reload = this.reloadTime;
-    this.x = Game.width/2 - this.w / 2;
-    this.y = Game.height - Game.playerOffset - this.h;
+    this.x = GameAlien.width/2 - this.w / 2;
+    this.y = GameAlien.height - GameAlien.playerOffset - this.h;
 
 	this.pressed = true;
 
     this.step = function(dt) {
-		if(Game.keys['left']) { this.vx = -this.maxVel; }
-		else if(Game.keys['right']) { this.vx = this.maxVel; }
+		if(GameAlien.keys['left']) { this.vx = -this.maxVel; }
+		else if(GameAlien.keys['right']) { this.vx = this.maxVel; }
 		else { this.vx = 0; }
 
 		this.x += this.vx * dt;
 
 		if(this.x < 0) { this.x = 0; }
-		else if(this.x > Game.width - this.w) { 
-			this.x = Game.width - this.w;
+		else if(this.x > GameAlien.width - this.w) { 
+			this.x = GameAlien.width - this.w;
 		}
 
 		this.reload-=dt;
-		if(!Game.keys['fire']) { this.pressed=true; }
+		if(!GameAlien.keys['fire']) { this.pressed=true; }
 
-		if(Game.keys['fire'] && this.reload < 0 && this.pressed) {
+		if(GameAlien.keys['fire'] && this.reload < 0 && this.pressed) {
 			// Esta pulsada la tecla de disparo y ya ha pasado el tiempo reload
 			//
 			this.pressed = false;
 			this.reload = this.reloadTime;
 
-			// Se añaden al gameboard 2 misiles 
+			// Se añaden al GameAlienboard 2 misiles 
 			this.board.add(new PlayerMissile(this.x,this.y+this.h/2));
 			this.board.add(new PlayerMissile(this.x+this.w,this.y+this.h/2));
 		}
-		if (Game.keys['fireleft'] && this.reload < 0) {
+		if (GameAlien.keys['fireleft'] && this.reload < 0) {
 			this.board.add(new FireBall(this.x,this.y+this.h/2,"left"));
 			this.reload = this.reloadTime;	
 		} 
-		if (Game.keys['fireright'] && this.reload < 0) {
+		if (GameAlien.keys['fireright'] && this.reload < 0) {
 			this.board.add(new FireBall(this.x+this.w,this.y+this.h/2,"right"));
 			this.reload = this.reloadTime;
 		}
@@ -276,7 +276,7 @@ PlayerShip.prototype.type = OBJECT_PLAYER;
 PlayerShip.prototype.hit = function(damage) {
     if(this.board.remove(this)) {
         this.board.add(new Explosion(this.x + this.w/2, this.y + this.h/2));
-        setTimeout(loseGame,800);    
+        setTimeout(loseGameAlien,800);    
     }
 };
 
@@ -358,7 +358,7 @@ FireBall.prototype.hit = function (){
 // existente o se crea una nueva, y se pasan opcionalmente en override
 // valores alternativos para los parámetros de la plantilla o de
 // baseParameters. Ver cómo se añaden 2 enemigos en la función
-// playGame() de este fichero.
+// playGameAlien() de este fichero.
 
 var Enemy = function(blueprint,override) {
     // Cada instancia tendrá las propiedades definidas en baseParameters
@@ -432,9 +432,9 @@ Enemy.prototype.step = function(dt) {
     }
     this.reload-=dt;
 
-    if(this.y > Game.height ||
+    if(this.y > GameAlien.height ||
        this.x < -this.w ||
-       this.x > Game.width) {
+       this.x > GameAlien.width) {
 	this.board.remove(this);
     }
 };
@@ -443,7 +443,7 @@ Enemy.prototype.hit = function(damage) {
     this.health -= damage;
     if(this.health <=0) {
 	if(this.board.remove(this)) {
-	    Game.points += this.points || 100;
+	    GameAlien.points += this.points || 100;
 	    this.board.add(new Explosion(this.x + this.w/2, 
 					 this.y + this.h/2));
 	}
@@ -466,7 +466,7 @@ EnemyMissile.prototype.step = function(dt)  {
     if(collision1) {
 		collision1.hit(this.damage);
 	 this.board.remove(this);
-    	} else if(this.y > Game.height) {
+    	} else if(this.y > GameAlien.height) {
 		this.board.remove(this); 
     }
 	collision2 = this.board.collide(this,OBJECT_POWERUP)
@@ -499,6 +499,6 @@ Explosion.prototype.step = function(dt) {
 
 
 $(function() {
-    Game.initialize("aliencanvas",sprites,startGameAlien);
+    GameAlien.initialize("aliencanvas",sprites,startGameAlien);
 });
 

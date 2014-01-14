@@ -1,26 +1,26 @@
 // Alien Invasion utiliza duck typing para implementar como dibujar
-// elementos en la pantalla (mÈtodo draw()) y para que actualicen su
-// estado cada vez que el bucle de animaciÛn marca un nuevo paso
-// (mÈtodo step()).
+// elementos en la pantalla (m√©todo draw()) y para que actualicen su
+// estado cada vez que el bucle de animaci√≥n marca un nuevo paso
+// (m√©todo step()).
 //
-// Estos dos mÈtodos son implementados por: las pantallas iniciales y
+// Estos dos m√©todos son implementados por: las pantallas iniciales y
 // final del juego, los sprites que se muestran en la pantalla
 // (jugador, enemigo, proyectiles, y los elementos como el marcador de
-// puntuaciÛn o el n˙mero de vidas.
+// puntuaci√≥n o el n√∫mero de vidas.
 
 
 
 
-// Objeto singleton Game: se guarda una unica instancia del
-// constructor anÛnimo en el objeto Game
-var Game = new function() {                                                                  
+// Objeto singleton GameAlien: se guarda una unica instancia del
+// constructor an√≥nimo en el objeto GameAlien
+var GameAlien = new function() {                                                                  
   var boards = [];
 
     // Inicializa el juego
   	this.initialize = function(canvasElementId,sprite_data,callback) {
     this.canvas = document.getElementById(canvasElementId);
 
-	// Propiedades para pantallas t·ctiles
+	// Propiedades para pantallas t√°ctiles
     this.playerOffset = 10;
     this.canvasMultiplier= 1;
     this.setupMobile();
@@ -35,8 +35,8 @@ var Game = new function() {
 
     this.loop(); 
 
-      // AÒadimos como un nuevo tablero al juego el panel con los
-      // botones para pantalla t·ctil, sÛlo si hemos detectado pantalla mÛvil
+      // A√±adimos como un nuevo tablero al juego el panel con los
+      // botones para pantalla t√°ctil, s√≥lo si hemos detectado pantalla m√≥vil
     if(this.mobile) {
       this.setBoard(4,new TouchControls());
     }
@@ -45,7 +45,7 @@ var Game = new function() {
   };
   
 
-    // GestiÛn de la entrada (teclas para izda/derecha y disparo)
+    // Gesti√≥n de la entrada (teclas para izda/derecha y disparo)
     var KEY_CODES = { 37:'left', 39:'right', 32 :'fire', 66: 'fireleft', 78: 'fireright' };
     this.keys = {};
 
@@ -63,7 +63,7 @@ var Game = new function() {
 	$(window).keydown(function(event){
 		if (focusCanvas)
 			if (KEY_CODES[event.which]) {
-				Game.keys[KEY_CODES[event.which]] = true;
+				GameAlien.keys[KEY_CODES[event.which]] = true;
 				return false;
 			}
 	});
@@ -71,7 +71,7 @@ var Game = new function() {
 	$(window).keyup(function(event){	
 		if (focusCanvas)
 			if (KEY_CODES[event.which]) {
-				Game.keys[KEY_CODES[event.which]] = false;
+				GameAlien.keys[KEY_CODES[event.which]] = false;
 				return false;
 			}
 		});
@@ -86,16 +86,16 @@ var Game = new function() {
 	var dt = 30 / 1000;
 
 	// Para cada board, de 0 en adelante, se 
-	// llama a su mÈtodo step() y luego a draw()
+	// llama a su m√©todo step() y luego a draw()
 	for(var i=0,len = boards.length;i<len;i++) {
 	    if(boards[i]) { 
 		boards[i].step(dt);
-		boards[i].draw(Game.ctx);
+		boards[i].draw(GameAlien.ctx);
 	    }
 	}
 
 	// Ejecutar dentro de 30 ms
-	setTimeout(Game.loop,30);
+	setTimeout(GameAlien.loop,30);
     };
     
     // Para cambiar el panel activo en el juego.
@@ -149,16 +149,16 @@ var Game = new function() {
 
 
 // Objeto singleton SpriteSheet: se guarda una unica instancia del
-// constructor anÛnimo en el objeto SpriteSheet
+// constructor an√≥nimo en el objeto SpriteSheet
 var SpriteSheet = new function() {
 
-    // Almacena nombre_de_sprite: rect·ngulo para que sea mas facil
+    // Almacena nombre_de_sprite: rect√°ngulo para que sea mas facil
     // gestionar los sprites del fichero images/sprite.png
     this.map = { }; 
 
     // Para cargar hoja de sprites. 
     //
-    // Par·metros: spriteData: parejas con nombre de sprite, rect·ngulo
+    // Par√°metros: spriteData: parejas con nombre de sprite, rect√°ngulo
     // callback: para llamarla cuando se haya cargado la hoja de
     // sprites
     this.load = function(spriteData,callback) { 
@@ -171,7 +171,7 @@ var SpriteSheet = new function() {
     
     // Para dibujar sprites individuales en el contexto de canvas ctx
     //
-    // Par·metros: contexto, string con nombre de sprite para buscar
+    // Par√°metros: contexto, string con nombre de sprite para buscar
     //  en this.map, x e y en las que dibujarlo, y opcionalmente,
     //  frame para seleccionar el frame de un sprite que tenga varios
     //  como la explosion
@@ -209,8 +209,8 @@ var TitleScreen = function TitleScreen(title,subtitle,callback) {
     // pulsada. Si comienza el juego con la tecla pulsada, hay que
     // soltarla y
     this.step = function(dt) {
-	if(!Game.keys['fire']) up = true;
-	if(up && Game.keys['fire'] && callback) callback();
+	if(!GameAlien.keys['fire']) up = true;
+	if(up && GameAlien.keys['fire'] && callback) callback();
     };
 
     this.draw = function(ctx) {
@@ -218,33 +218,33 @@ var TitleScreen = function TitleScreen(title,subtitle,callback) {
 	ctx.textAlign = "center";
 
 	ctx.font = "bold 40px bangers";
-	ctx.fillText(title,Game.width/2,Game.height/2);
+	ctx.fillText(title,GameAlien.width/2,GameAlien.height/2);
 
 	ctx.font = "bold 20px bangers";
-	ctx.fillText(subtitle,Game.width/2,Game.height/2 + 40);
+	ctx.fillText(subtitle,GameAlien.width/2,GameAlien.height/2 + 40);
     };
 };
 
 
 
-// GameBoard implementa un tablero de juego que gestiona la
-// interacciÛn entre los elementos del juego sobre el que se disponen
+// GameAlienBoard implementa un tablero de juego que gestiona la
+// interacci√≥n entre los elementos del juego sobre el que se disponen
 // los elementos del juego (fichas, cartas, naves, proyectiles, etc.)
 
-// La clase GameBoard ofrece la interfaz step(), draw() para que sus
+// La clase GameAlienBoard ofrece la interfaz step(), draw() para que sus
 // elementos puedan ser mostrados desde el bucle principal del juego.
 
-var GameBoard = function() {
+var GameAlienBoard = function() {
     var board = this;
 
-    // ColecciÛn de objetos contenidos por este tablero
+    // Colecci√≥n de objetos contenidos por este tablero
     this.objects = [];
 
-    // Propiedad que lleva la cuenta de cu·ntos objetos de cada tipo
+    // Propiedad que lleva la cuenta de cu√°ntos objetos de cada tipo
     // hay en el tablero de juegos
     this.cnt = {};
 
-    // AÒade obj a objects
+    // A√±ade obj a objects
     this.add = function(obj) { 
 	obj.board=this;  // Para que obj pueda referenciar el tablero
 	this.objects.push(obj); 
@@ -255,9 +255,9 @@ var GameBoard = function() {
 	return obj; 
     };
 
-    // Los siguientes 3 mÈtodos gestionan el borrado.  Cuando un board
-    // est· siendo recorrido (en step()) podrÌa eliminarse alg˙n
-    // objeto, lo que interferirÌa en el recorrido. Por ello borrar se
+    // Los siguientes 3 m√©todos gestionan el borrado.  Cuando un board
+    // est√° siendo recorrido (en step()) podr√≠a eliminarse alg√∫n
+    // objeto, lo que interferir√≠a en el recorrido. Por ello borrar se
     // hace en dos fases: marcado, y una vez terminado el recorrido,
     // se modifica objects.
 
@@ -279,11 +279,11 @@ var GameBoard = function() {
     // Elimina de objects los objetos pendientes de ser borrados
     this.finalizeRemoved = function() {
 	for(var i=0, len=this.removed.length; i<len;i++) {
-	    // Buscamos quÈ Ìndice tiene en objects[] el objeto i de
+	    // Buscamos qu√© √≠ndice tiene en objects[] el objeto i de
 	    // removed[]
 	    var idx = this.objects.indexOf(this.removed[i]);
 
-	    // splice elimina de objects el objeto en la posiciÛn idx
+	    // splice elimina de objects el objeto en la posici√≥n idx
 	    if(idx != -1) {
 		this.cnt[this.removed[i].type]--;
 		this.objects.splice(idx,1); 
@@ -292,7 +292,7 @@ var GameBoard = function() {
     }
 
 
-    // Iterador que aplica el mÈtodo funcName a todos los
+    // Iterador que aplica el m√©todo funcName a todos los
     // objetos de objects
     this.iterate = function(funcName) {
 	// Convertimos en un array args (1..)
@@ -312,9 +312,9 @@ var GameBoard = function() {
 	return false;
     };
 
-    // Cuando Game.loop() llame a step(), hay que llamar al mÈtodo
+    // Cuando GameAlien.loop() llame a step(), hay que llamar al m√©todo
     // step() de todos los objetos contenidos en el tablero.  Antes se
-    // inicializa la lista de objetos pendientes de borrar, y despuÈs
+    // inicializa la lista de objetos pendientes de borrar, y despu√©s
     // se borran los que hayan aparecido en dicha lista
     this.step = function(dt) { 
 	this.resetRemoved();
@@ -322,13 +322,13 @@ var GameBoard = function() {
 	this.finalizeRemoved();
     };
 
-    // Cuando Game.loop() llame a draw(), hay que llamar al mÈtodo
+    // Cuando GameAlien.loop() llame a draw(), hay que llamar al m√©todo
     // draw() de todos los objetos contenidos en el tablero
     this.draw= function(ctx) {
 	this.iterate('draw',ctx);
     };
 
-    // Comprobar si hay intersecciÛn entre los rect·ngulos que
+    // Comprobar si hay intersecci√≥n entre los rect√°ngulos que
     // circunscriben a los objetos o1 y o2
     this.overlap = function(o1,o2) {
 	// return !((o1 encima de o2)    || (o1 debajo de o2)   ||
@@ -384,25 +384,25 @@ Sprite.prototype.hit = function(damage) {
 // Clase para implementar los niveles de un juego. 
 
 // Al constructor del nivel se le pasan los datos que definen el nivel
-//   (p.ej. level1 en game.js) y una funciÛn a la que llamar si el
-//   jugador gana (winGame en game.js).
+//   (p.ej. level1 en GameAlien.js) y una funci√≥n a la que llamar si el
+//   jugador gana (winGameAlien en GameAlien.js).
 var Level = function(levelData,callback) {
-    // Recuerda el formato de cada baterÌa de enemigos definida en levelData
+    // Recuerda el formato de cada bater√≠a de enemigos definida en levelData
     //  Comienzo, Fin,   Frecuencia,  Tipo,       Override
     //  [ 0,       4000,  500,         'step',     { x: 100 } ]
     this.levelData = [];
 
     // levelData, como todos los objetos en JavaScript, se pasa por
-    // referencia. AquÌ realizamos una copia profunda de levelData. Es
+    // referencia. Aqu√≠ realizamos una copia profunda de levelData. Es
     // necesaria porque los datos del nivel se van modificando mientras
     // que se juega el nivel, por lo que si no hacemos una copia no se
-    // podrÌa volver a jugar un mismo nivel
+    // podr√≠a volver a jugar un mismo nivel
     for(var i =0; i<levelData.length; i++) {
-	// Para copiarla usamos este patrÛn JavaScript para realizar
+	// Para copiarla usamos este patr√≥n JavaScript para realizar
 	// copias: Object.create() crea un nuevo objeto que tiene como
 	// prototipo el objeto pasado como argumento. Ese objeto, que
 	// a todos los efectos podemos considerar como una copia del
-	// argumento, se aÒade a this.levelData
+	// argumento, se a√±ade a this.levelData
 	this.levelData.push(Object.create(levelData[i]));
     }
 
@@ -413,65 +413,65 @@ var Level = function(levelData,callback) {
 };
 
 
-// MÈtodo que, junto a draw(), forma parte de la interfaz que tiene
-// que ofrecer cualquier objeto aÒadido como tablero a Game.boards.
-// En este mÈtodo se lleva la cuenta del tiempo que ha transcurrido, y
-// se van aÒadiendo nuevos enemigos al tablero de juegos seg˙n lo
-// indicado en la definiciÛn del nivel almacenada en this.levelData
+// M√©todo que, junto a draw(), forma parte de la interfaz que tiene
+// que ofrecer cualquier objeto a√±adido como tablero a GameAlien.boards.
+// En este m√©todo se lleva la cuenta del tiempo que ha transcurrido, y
+// se van a√±adiendo nuevos enemigos al tablero de juegos seg√∫n lo
+// indicado en la definici√≥n del nivel almacenada en this.levelData
 Level.prototype.step = function(dt) {
     var idx = 0, remove = [], curShip = null;
 
     // Actualizamos el tiempo que ha pasado 
     this.t += dt * 1000;
 
-    // Recuerda el formato de cada baterÌa de enemigos definida en levelData
+    // Recuerda el formato de cada bater√≠a de enemigos definida en levelData
     //  Comienzo, Fin,   Frecuencia,  Tipo,       Override
     // [ 0,       4000,  500,         'step',     { x: 100 } ]
 
-    // Var recorriendo las baterÌas de enemigos (filas en levelData)
+    // Var recorriendo las bater√≠as de enemigos (filas en levelData)
     while (curShip = this.levelData[idx]) {
 
 	// Si ya ha pasado el tiempo en el que hay que crear enemigos
-	// de esta baterÌa, se aÒaden a remove para que sean borrados
-	// una vez acabado el bucle. °No se eliminan directamente
-	// porque el bucle est· iterando sobre la estructura de datos!
-	// Es el mismo patrÛn que utilizamos cuando borramos sprites
+	// de esta bater√≠a, se a√±aden a remove para que sean borrados
+	// una vez acabado el bucle. ¬°No se eliminan directamente
+	// porque el bucle est√° iterando sobre la estructura de datos!
+	// Es el mismo patr√≥n que utilizamos cuando borramos sprites
 	// del tablero de juegos: marcamos en remove para borrar y
-	// borramos una vez concluÌdo el bucle.
+	// borramos una vez conclu√≠do el bucle.
 	if(this.t > curShip[1]) {
 	    remove.push(curShip);
 	} else if(curShip[0] < this.t) {
-	    // Ha llegado la hora de crear un nuevo enemigo de esta baterÌa
+	    // Ha llegado la hora de crear un nuevo enemigo de esta bater√≠a
 	    var enemy = enemies[curShip[3]],
             override = curShip[4];
 
 	    this.board.add(new Enemy(enemy,override));
 
-	    // Recuerda el formato de cada baterÌa de enemigos definida en levelData
+	    // Recuerda el formato de cada bater√≠a de enemigos definida en levelData
 	    //  Comienzo, Fin,   Frecuencia,  Tipo,       Override
 	    // [ 0,       4000,  500,         'step',     { x: 100 } ]
 
-	    // Modificamos la definiciÛn de esta baterÌa para
-	    // programar la creaciÛn del siguiente enemigo dentro de
+	    // Modificamos la definici√≥n de esta bater√≠a para
+	    // programar la creaci√≥n del siguiente enemigo dentro de
 	    // Frecuencia ms
 	    curShip[0] += curShip[2];
 	}
-	idx++; // Pasamos a la siguiente baterÌa de enemigos
+	idx++; // Pasamos a la siguiente bater√≠a de enemigos
     }
 
-    // Elimina del nivel una baterÌa de enemigos del nivel si ha sido
-    // aÒadida a remove en el anterior bucle porque ya ha pasado su
+    // Elimina del nivel una bater√≠a de enemigos del nivel si ha sido
+    // a√±adida a remove en el anterior bucle porque ya ha pasado su
     // ventana de tiempo en la que hay que crear enemigos de dicha
-    // baterÌa
+    // bater√≠a
     for(var i=0,len=remove.length;i<len;i++) {
 	var remIdx = this.levelData.indexOf(remove[i]);
 	if(remIdx != -1) this.levelData.splice(remIdx,1);
     }
 
-    // Comprueba si hay que terminar el nivel porque no quedan m·s
+    // Comprueba si hay que terminar el nivel porque no quedan m√°s
     // enemigos que generar, y no quedan enemigos en el tablero de
     // juegos.  Para ello se hace uso de la propiedad this.board.cnt
-    // que lleva la cuenta de cu·ntos objetos de cada tipo hay en el
+    // que lleva la cuenta de cu√°ntos objetos de cada tipo hay en el
     // tablero de juegos.
     if(this.levelData.length === 0 && this.board.cnt[OBJECT_ENEMY] === 0) {
 	if(this.callback) this.callback();
@@ -479,40 +479,40 @@ Level.prototype.step = function(dt) {
 
 };
 
-// Level implementa draw() porque al aÒadirse como tablero a Game el
-// bucle Game.loop() va a llamar a step() y a draw(). Pero no hay nada
+// Level implementa draw() porque al a√±adirse como tablero a GameAlien el
+// bucle GameAlien.loop() va a llamar a step() y a draw(). Pero no hay nada
 // que hacer en draw() para un nivel, ya que los sprites de los
-// enemigos los aÒade el nivel al tablero de juegos (GameBoard). 
+// enemigos los a√±ade el nivel al tablero de juegos (GameAlienBoard). 
 Level.prototype.draw = function(ctx) { };
 
 
 
 
 // Clase para controlar el juego mediante botones en la pantalla
-// t·ctil de un mÛvil o una tableta
+// t√°ctil de un m√≥vil o una tableta
 var TouchControls = function() {
 
     
     // Consideraremos el ancho de la pantalla dividido en 5 franjas
     // verticales o columnas. En las dos de la izda situaremos los
-    // botones de direcciÛn y en la derecha el de disparo
-    var unitWidth = Game.width/5;
+    // botones de direcci√≥n y en la derecha el de disparo
+    var unitWidth = GameAlien.width/5;
 
-    // SeparaciÛn entre columnas
+    // Separaci√≥n entre columnas
     var gutterWidth = 10;
 
     // Ancho de cada columna
     var blockWidth = unitWidth-gutterWidth;
 
-    // Dibuja un rect·ngulo con un car·cter dentro. Usado para representar
+    // Dibuja un rect√°ngulo con un car√°cter dentro. Usado para representar
     // los botones. 
     // Los botones de las flechas izquierda y derecha usan los
     // caracteres Unicode UTF-8 \u25C0 y \u25B6 respectivamente, que
-    // corresponden a sendos tri·ngulos
+    // corresponden a sendos tri√°ngulos
     this.drawSquare = function(ctx,x,y,txt,on) {
 		// Usamos un nivel de opacidad del fondo (globalAlpha)
-		// diferente para que cambie la apariencia del botÛn en
-		// funciÛn de si est· presionado (opaco) o no (m·s
+		// diferente para que cambie la apariencia del bot√≥n en
+		// funci√≥n de si est√° presionado (opaco) o no (m√°s
 		// transparente)
 		ctx.globalAlpha = on ? 0.9 : 0.6;
 
@@ -548,19 +548,19 @@ var TouchControls = function() {
 	// del canvas
 	ctx.save();
 
-	var yLoc = Game.height - unitWidth;
-	this.drawSquare(ctx,gutterWidth,yLoc,"\u25C0", Game.keys['left']);
-	this.drawSquare(ctx,unitWidth + gutterWidth,yLoc,"\u25B6", Game.keys['right']);
-	this.drawSquare(ctx,2*unitWidth +gutterWidth,yLoc,"*",Game.keys['fireleft','fireright']);
-	this.drawSquare(ctx,4*unitWidth,yLoc,"''",Game.keys['fire']);
+	var yLoc = GameAlien.height - unitWidth;
+	this.drawSquare(ctx,gutterWidth,yLoc,"\u25C0", GameAlien.keys['left']);
+	this.drawSquare(ctx,unitWidth + gutterWidth,yLoc,"\u25B6", GameAlien.keys['right']);
+	this.drawSquare(ctx,2*unitWidth +gutterWidth,yLoc,"*",GameAlien.keys['fireleft','fireright']);
+	this.drawSquare(ctx,4*unitWidth,yLoc,"''",GameAlien.keys['fire']);
 
-	// Recupera el estado salvado al principio del mÈtodo
+	// Recupera el estado salvado al principio del m√©todo
 	ctx.restore();
     };
 
     this.step = function(dt) { };
 
-    // Manejador para eventos de la pantalla t·ctil
+    // Manejador para eventos de la pantalla t√°ctil
     this.trackTouch = function(e) {
 		var touch, x;
 	
@@ -568,57 +568,57 @@ var TouchControls = function() {
 		// scrolling, clicking, zooming, etc.
 		e.preventDefault();
 
-		// DetecciÛn de eventos sobre las dos franjas de la izquierda
+		// Detecci√≥n de eventos sobre las dos franjas de la izquierda
 		// correspondientes a flecha izquierda y flecha derecha
-		Game.keys['left'] = false;
-		Game.keys['right'] = false;
-		Game.keys['fireleft'] = false;
-		Game.keys['fireright'] = false;
+		GameAlien.keys['left'] = false;
+		GameAlien.keys['right'] = false;
+		GameAlien.keys['fireleft'] = false;
+		GameAlien.keys['fireright'] = false;
 
 		for(var i=0;i<e.targetTouches.length;i++) {
-			// Independientemente de dÛnde se tocÛ originalmente, y
+			// Independientemente de d√≥nde se toc√≥ originalmente, y
 			// del tipo de evento, nos fijamos en todos los dedos
 			// (targetTouches), y si hay alguno sobre los botones de
-			// direcciÛn, lo consideramos activado. Esto permite
+			// direcci√≥n, lo consideramos activado. Esto permite
 			// desplazar los dedos sin levantarlos, y que se generen
 			// eventos cuando pasan por encima de los botones de
-			// direcciÛn
+			// direcci√≥n
 			touch = e.targetTouches[i];
 			
-			// Al fijarnos sÛlo en las coordenadas X hacemos que toda
-			// la franja vertical de cada botÛn sea activa.
-			x = touch.pageX / Game.canvasMultiplier - Game.canvas.offsetLeft;
+			// Al fijarnos s√≥lo en las coordenadas X hacemos que toda
+			// la franja vertical de cada bot√≥n sea activa.
+			x = touch.pageX / GameAlien.canvasMultiplier - GameAlien.canvas.offsetLeft;
 			if(x < unitWidth) {
-			Game.keys['left'] = true;
+			GameAlien.keys['left'] = true;
 			} 
 			if(x > unitWidth && x < 2*unitWidth) {
-			Game.keys['right'] = true;
+			GameAlien.keys['right'] = true;
 			} 
 
 			if(e.type == 'touchmove' ) {
 				if(x > 2*unitWidth && x < 4 * unitWidth) {					
-					if (x < 3*unitWidth && touch.pageY < Game.height-200){
-						Game.keys['fireleft'] = true;
-					}else if (x > 3*unitWidth && touch.pageY < Game.height-200){
-						Game.keys['fireright'] = true;
+					if (x < 3*unitWidth && touch.pageY < GameAlien.height-200){
+						GameAlien.keys['fireleft'] = true;
+					}else if (x > 3*unitWidth && touch.pageY < GameAlien.height-200){
+						GameAlien.keys['fireright'] = true;
 					}
 				}
 			}
 		}
 
-		// DetecciÛn de eventos sobre franja de la derecha: disparo
+		// Detecci√≥n de eventos sobre franja de la derecha: disparo
 		if(e.type == 'touchstart' || e.type == 'touchend') {
 			for(i=0;i<e.changedTouches.length;i++) {
-				// SÛlo consideramos dedos que han intervenido en el
+				// S√≥lo consideramos dedos que han intervenido en el
 				// evento actual (touchstart o touchend), por lo que 
 				        // miramos en changedTouches
 				touch = e.changedTouches[i];
 
-				// Al fijarnos sÛlo en las coordenadas X hacemos que toda
-				// la franja vertical de cada botÛn sea activa.
-				x = touch.pageX / Game.canvasMultiplier - Game.canvas.offsetLeft;
+				// Al fijarnos s√≥lo en las coordenadas X hacemos que toda
+				// la franja vertical de cada bot√≥n sea activa.
+				x = touch.pageX / GameAlien.canvasMultiplier - GameAlien.canvas.offsetLeft;
 				if(x > 4 * unitWidth) {
-					Game.keys['fire'] = (e.type == 'touchstart');
+					GameAlien.keys['fire'] = (e.type == 'touchstart');
 				}
 			}
 		}
@@ -626,24 +626,24 @@ var TouchControls = function() {
 		
     };
 
-    // Registra los manejadores para los eventos t·ctiles asociados al
-    // elemento Game.canvas del DOM
-    Game.canvas.addEventListener('touchstart',this.trackTouch,true);
-    Game.canvas.addEventListener('touchmove',this.trackTouch,true);
-    Game.canvas.addEventListener('touchend',this.trackTouch,true);
+    // Registra los manejadores para los eventos t√°ctiles asociados al
+    // elemento GameAlien.canvas del DOM
+    GameAlien.canvas.addEventListener('touchstart',this.trackTouch,true);
+    GameAlien.canvas.addEventListener('touchmove',this.trackTouch,true);
+    GameAlien.canvas.addEventListener('touchend',this.trackTouch,true);
 
     // Si ha habido un evento de toque es que estamos en una pantalla
     // tactil, en cuyo caso guardamos un offset para que la nave del
-    // jugador estÈ desplazada hacia arriba para dejar espacio para
-    // los botones en la pantalla tactil.  Ver en game.js cÛmo hemos
+    // jugador est√© desplazada hacia arriba para dejar espacio para
+    // los botones en la pantalla tactil.  Ver en GameAlien.js c√≥mo hemos
     // modificado PlayerShip para que tenga en cuenta este
     // offset.
-    Game.playerOffset = unitWidth + 20;
+    GameAlien.playerOffset = unitWidth + 20;
 };
 
 
-var GamePoints = function() {
-  Game.points = 0;
+var GameAlienPoints = function() {
+  GameAlien.points = 0;
 
   var pointsLength = 8;
 
@@ -652,7 +652,7 @@ var GamePoints = function() {
     ctx.font = "bold 18px arial";
     ctx.fillStyle= "#FFFFFF";
 
-    var txt = "" + Game.points;
+    var txt = "" + GameAlien.points;
     var i = pointsLength - txt.length, zeros = "";
     while(i-- > 0) { zeros += "0"; }
 

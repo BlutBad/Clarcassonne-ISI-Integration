@@ -101,18 +101,28 @@ html{
 #accordion .ui-accordion-content{
 	width: 103px;
 	height: 420px;
-	
 }
 
 
-#alaputaizq{
+.alaputaizq{
 	float:left;
 	width:20%;
 }
 
-#alaputader{
+.alaputader{
 	float:right;
 	width:80%;
+}
+
+.alaputaizqtop{
+	float:left;
+	width:30%;
+	
+}
+
+.alaputadertop{
+	float:right;
+	width:70%;
 }
 
 .coin-slider { overflow: hidden; zoom: 1; position: relative;z-index:-1; }

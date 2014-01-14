@@ -50,6 +50,18 @@ $(document).ready(function() {
 			
 		});
 
+		$("#buttVideoSt").click(function() {
+			if ($("#buttVideoSt").val() == "Start VideoChat"){
+				$("#buttVideoSt").val("Stop VideoChat");
+				var nameRoom = Partidas.findOne({_id : Session.get('match_id')}).name;
+				startVideoChat(nameRoom);
+			}else{
+				$("#buttVideoSt").val("Start VideoChat");
+				webrtc.stopLocalVideo();
+				$("#localVideo").attr("src", "");
+			}	
+		});
+
 });
 
 ////// RELLENAR PLANTILLAS /////////
@@ -485,6 +497,11 @@ Template.roomgametemp.events = {
 		$('#aliencontainer').hide();
 		$('#frootwars').hide();
 		$('#matches').fadeIn();
+
+		///ocultar videochat
+		$("#buttVideoSt").val("Start VideoChat");
+		webrtc.stopLocalVideo();
+		$("#localVideo").attr("src", "");
 	}
 };
 
@@ -498,6 +515,24 @@ Template.roomplayerstemp.events = {
 				};
 	}
 };
+
+//Video WebRTC
+function startVideoChat(nameRoom){
+	webrtc = new SimpleWebRTC({
+		// the id/element dom element that will hold "our" video
+		localVideoEl: 'localVideo',
+		// the id/element dom element that will hold remote videos
+		remoteVideosEl: 'remotesVideos',
+		// immediately ask for camera access
+		autoRequestMedia: true
+	});
+
+	// we have to wait until it's ready
+	webrtc.on('readyToCall', function () {
+		// you can name it anything
+		webrtc.joinRoom(nameRoom);
+	});
+}
 
 //Configuracion cuentas
 Accounts.ui.config({
