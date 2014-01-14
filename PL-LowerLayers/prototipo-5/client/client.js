@@ -566,7 +566,11 @@ Template.roomgametemp.events = {
 
 		if(Partidas.findOne({_id : quited_match_id}).num_players == 0){
 			Partidas.remove({_id : quited_match_id});
-		}
+		} else {
+			if(quiter_id == Partidas.findOne({_id : quited_match_id}).admin_by){
+				Partidas.update({_id : quited_match_id}, {$set:{admin_by : players_array[0]}});
+			};
+		};
 
 		Session.set('match_id', undefined);
 		$('#roomcontainer').hide();
@@ -586,6 +590,8 @@ Template.roomplayerstemp.events = {
 				if(Partidas.findOne({_id : Session.get('match_id')}).admin_by == Meteor.userId()){
 					$('#empezarboton').hide();	
 					Partidas.update({_id: Session.get('match_id')}, {$set: {initiated: 'true'}});
+				} else {
+					alert("No eres el administrador de esta partida. Espera hasta que el administrador comience.");
 				};
 	}
 };
