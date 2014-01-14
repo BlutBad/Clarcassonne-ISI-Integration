@@ -1,4 +1,4 @@
-var sprites = {
+/*var sprites = {
     ship: { sx: 0, sy: 0, w: 37, h: 42, frames: 1 },
     missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 },
     enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },
@@ -501,4 +501,4 @@ Explosion.prototype.step = function(dt) {
 $(function() {
     GameAlien.initialize("aliencanvas",sprites,startGameAlien);
 });
-
+*/
