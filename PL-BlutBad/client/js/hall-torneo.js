@@ -12,7 +12,7 @@ var levelsPosition = {
         o:"label",
 };
 
-function getClass(index){
+var getClass = function(index){
     if(index == 0){
         clacc  = levelsPosition.i;
     }else if(index ==1){
@@ -75,10 +75,14 @@ Template.hall_torneo.events = {
         u_id = Meteor.userId();
         if (u_id){
             var u = Torneos.findOne({_id:this._id, participantes: {$in: [u_id]}});
-            if (u) {
-                Torneos.update(this._id, {$pull: {participantes: u_id}});
+            if (!u.finalizado){
+                if (u) {
+                    Torneos.update(this._id, {$pull: {participantes: u_id}});
+                }else{
+                    Torneos.update(this._id, { $push : {participantes : u_id}});
+                }
             }else{
-                Torneos.update(this._id, { $push : {participantes : u_id}});
+                console.log("El torneo se ha terminado ya");
             }
         }
     },
@@ -96,7 +100,7 @@ Template.hall_torneo.events = {
 
 function stopTorneo() {
     var tid = Session.get('showTorneoId');
-    var tor = Torneos.findOne(tid);
+    Torneos.update(tid, {$set:{finalizado: true}});
 }
 
 //******************MULTI TORNEO*************************
@@ -189,9 +193,15 @@ Template.hall_torneo.soloTorneo = function() {
 }
 
 
-Template.hall_torneo.soloRanking = function() {
+Template.hall_torneo.soloRanking = function(limit) {
     var tid  = Session.get('showTorneoId');
     var tran = Torneos.findOne(tid).ranking;
+    
+    if (limit){
+        console.log("slice");
+        tran =  tran.slice(0,3);
+    }
+    
     ranking  = [];
     tran.forEach(function(each, index) {
         each.no = index+1;
@@ -199,5 +209,13 @@ Template.hall_torneo.soloRanking = function() {
         ranking.push(each);
     });
     return ranking;
-
 };
+
+Template.hall_torneo.finishTorneo = function() {
+    var tid = Session.get('showTorneoId');
+    var tor = Torneos.findOne({_id:tid, finalizado:true});
+    if (tor){
+        return true;
+    }
+    return false;
+}

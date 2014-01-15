@@ -97,16 +97,6 @@ Template.torneos.events = {
         Session.set('showTorneoId', this._id);        
     },
         
-	//Acciones para empezar el torrneo      
-	'click .empezarTorneo': function() {
-	    //console.log(this);
-	},
-    
-	//Para finalizar el torrneo.
-    'click .finalizarTorneo': function() {
-        //console.log(this);
-    },
-
     'click input#crear_torneo': function() {
         openCreateDialog();
     },
@@ -121,6 +111,7 @@ Template.torneos.events = {
         Torneos.update(this._id, { 
             $push : {participantes : Meteor.userId()}
         });
+        
         $("#" + this._id + ".apunto").replaceWith("Apuntado!"); 
     },
     'click .selected_apunto': function () { 

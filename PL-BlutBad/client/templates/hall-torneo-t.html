@@ -85,8 +85,47 @@
     {{/if}}
 
     {{#if soloTorneo}}
-      <div class="container">
-     
+    
+    {{#if finishTorneo}}
+          <div class="container">   
+            <div class="row">
+              <div class="span5">
+               <div class="well">
+                <table class="table">                         
+                    <h3>Los campeones del torneo!</h3>
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Nombre</th>
+                      <th>Rango</th>
+                      <th>Maxima Puntuacion</th>                                          
+                    </tr>
+                  </thead>   
+                  <tbody>
+                    {{#each soloRanking 3}}
+                      <tr>
+                        <td>{{no}}</td>
+                        <td><span class="{{clacc}}">{{getUsername user_id}}</span>
+                        <td>--</td>
+                        <td>{{maxScore}}</td>                                       
+                      </tr>
+                    {{/each}}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>    
+          </div>  
+      {{/if}}
+    
+    
+    
+    
+    
+    
+    
+    
+      <div class="container">   
         <div class="row">
           <div class="span5">
            <div class="well">
@@ -101,7 +140,7 @@
                 </tr>
               </thead>   
               <tbody>
-                {{#each soloRanking}}
+                {{#each soloRanking null}}
                   <tr>
                     <td>{{no}}</td>
                     <td><span class="{{clacc}}">{{getUsername user_id}}</span>

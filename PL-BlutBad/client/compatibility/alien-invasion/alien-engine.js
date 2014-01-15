@@ -46,31 +46,31 @@ var gameAlien = new function() {
   
 
     // Gesti�n de la entrada (teclas para izda/derecha y disparo)
-    var KEY_CODES = { 37:'left', 39:'right', 32 :'fire' };
+    var AlienKEY_CODES = { 37:'left', 39:'right', 32 :'fire' };
     this.keys = {};
 
-    var focusCanvas = true;
+    var alienfocusCanvas = true;
 
     this.setupInput = function() {
         $(window).click(function(event){
           if (event.target.id == "gamecanvasAlien")
-            focusCanvas = true;
+            alienfocusCanvas = true;
           else 
-            focusCanvas = false;
+             alienfocusCanvas = false;
         });
 
 	$(window).keydown(function(event){
-          if (focusCanvas)
-	    if (KEY_CODES[event.which]) {
-		gameAlien.keys[KEY_CODES[event.which]] = true;
+          if (alienfocusCanvas)
+	    if (AlienKEY_CODES[event.which]) {
+		gameAlien.keys[AlienKEY_CODES[event.which]] = true;
 		return false;
 	    }
 	});
 	
 	$(window).keyup(function(event){
-          if (focusCanvas)
-	    if (KEY_CODES[event.which]) {
-		gameAlien.keys[KEY_CODES[event.which]] = false;
+          if (alienfocusCanvas)
+	    if (AlienKEY_CODES[event.which]) {
+	        gameAlien.keys[AlienKEY_CODES[event.which]] = false;
 		return false;
 	    }
 	});

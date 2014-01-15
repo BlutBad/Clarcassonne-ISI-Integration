@@ -122,7 +122,7 @@
 
 <template name="misTorneos">
     <div class="span12" id = "mistor">
-    <p class="lead">Mis torneos:</p>
+    <h3 class="lead">Mis torneos:</h3>
 		{{#if tengoTorneos}}
             <div id="tab" class="btn-group" data-toggle="buttons-radio">
               {{#each torneos}}
@@ -130,7 +130,7 @@
               {{/each}}
             </div>
         {{else}}
-	     	<p>No participa en ningún torneo, apúntese a uno, lo pasará en grande!</p>
+	     	<h4>No participa en ningún torneo, apúntese a uno, lo pasará en grande!</h4>
 	    {{/if}}
     </div>     
 </template>

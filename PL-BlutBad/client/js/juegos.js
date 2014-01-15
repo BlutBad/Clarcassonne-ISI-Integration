@@ -210,7 +210,8 @@ Template.misTorneos.tengoTorneos = function() {
     game_id = Session.get('current_game');
     tor = Torneos.find({
     	game_id:game_id, 
-    	participantes:{$in:[uid]}
+    	participantes:{$in:[uid]},
+    	finalizado:false,
     }).fetch(); 
     if (tor.length != 0){
         return true;
