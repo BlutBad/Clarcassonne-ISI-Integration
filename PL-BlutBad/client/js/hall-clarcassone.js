@@ -9,7 +9,8 @@ Template.hall_clarcassone.show = function() {
     userA = UsersInHall.findOne({
         user_id : Meteor.userId()
     });
-    if (Session.get('current_stage') == 'klarkiHall') {
+    if (Session.get('current_stage') == 'klarkiHall') { 
+        $('#gamecontainer').show(); 
         // Encontrar el user actual en alguna partida volátil normal (no de torneo)
         userInparty = PartidasVolatiles.find({ 
             jugadores: { 

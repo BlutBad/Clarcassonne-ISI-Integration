@@ -72,7 +72,7 @@ Deps.autorun(function(c) {
 		    // Si el modo el multi, vamos a pasarl al estado del HALL del juego,
 		    // Asi podemos tener muchos juego multi, cada uno con su HALL, y
 		    // cargarlo el hall si mucho sufrimiento.
-		    Session.set('current_stage', lg.hall)
+		    Session.set('current_stage', lg.hall);
 		    $('#gamecontainer').show();
 		}
 	} else {
