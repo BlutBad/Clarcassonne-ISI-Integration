@@ -12,38 +12,9 @@ Template.buscador.register = function() {
   }
 };
 
-
-
-
-// lo nuevo
-
-
-Template.buscador.events({
-  'keydown input#tags': function(e){
-    if (e.which == 13) {
-      var name=$("#tags").val();
-      if (Meteor.users.findOne({username: name})){
-        console.log("esta");
-        console.log(Meteor.users.findOne({username: name})._id);
-        Session.set("profilfriend", Meteor.users.findOne({username: name})._id);
-       // return Session.set('current_stage', 'PerfilAmigo');
-      }else{
-        alert(name + " isn't a user! Please try again!");  
-      }
-      var name=$("#tags")
-      name.val('')
-    };
-  }
-
-});
-
-
-Template.friendprofil.events({
-
-    'click .cancel' : function() {
-        Session.set('profilfriend', null); 
-    }
-});
+Template.buscador.showprofilfriend = function() {
+    return Session.get('profilfriend', this._id); 
+};
 
 Template.friendprofil.usuario = function() {
     var id = Session.get('profilfriend');
@@ -52,13 +23,6 @@ Template.friendprofil.usuario = function() {
         _id : id
     });
 };
-
-
-Template.buscador.showprofilfriend = function() {
-    return Session.get('profilfriend', this._id); 
-};
-
-
 
 Template.stadGraphic.rendered =function(){
   var id= Session.get('profilfriend');
@@ -249,3 +213,42 @@ Template.stadGraphic.rendered =function(){
   })
 }
 };
+
+
+
+//Events
+
+Template.buscador.events({
+  'keydown input#tags': function(e){
+    if (e.which == 13) {
+      var name=$("#tags").val();
+      if (Meteor.users.findOne({username: name})){
+        console.log("esta");
+        console.log(Meteor.users.findOne({username: name})._id);
+        Session.set("profilfriend", Meteor.users.findOne({username: name})._id);
+       // return Session.set('current_stage', 'PerfilAmigo');
+      }else{
+        //$( "#noExisteAmigo" ).dialog();
+        // No funciona, antes habia un alarm()  
+      }
+      var name=$("#tags")
+      name.val('')
+    };
+  }
+
+});
+
+Template.friendprofil.events({
+
+    'click .cancel' : function() {
+        Session.set('profilfriend', null); 
+    }
+});
+
+
+
+
+
+
+
+

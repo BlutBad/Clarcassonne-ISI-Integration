@@ -8,6 +8,7 @@
 
 				<div id="buscador">
 
+					<p>Introduce el nombre de un usuario para buscarlo</p>
 					<input type="text" id="tags">
 
 				</div>
@@ -28,33 +29,40 @@
 			  		Debes estar registrado en la aplicación.
 			  	</p>
 			</div>
+
+			<div id="noExisteAmigo" title="Buscar amigos" style="display:none">
+				<p>
+					No existe ese usuario.
+				</p>
+			</div>
+
 		{{/if}}
 	{{/if}}
 </template>
 
 
 <template name="friendprofil">
-	<div class="mask"> </div>
 		<div class="modal">
 			<div class="modal-header">
 				<button type="button" class="close cancel">&times;</button>
 				<h3>Perfil</h3>
 			</div>   
 		 	<div class="container">  
-				{{#with usuario}}
-					<label>
-						Nombre: {{getUsername _id}}
-					</label>
-				
-					<label>
-						Fecha de nacimiento: {{getUserDateBirth _id}}
-					</label>
+		 		<div id="datos-usuario-buscado">
+					{{#with usuario}}
+						<label>
+							Nombre: {{getUsername _id}}
+						</label>
+					
+						<label>
+							Fecha de nacimiento: {{getUserDateBirth _id}}
+						</label>
 
-					<label>
-						Género: {{getUserGender _id}}
-					</label>
-				{{/with}}
-					<br/>
+						<label>
+							Género: {{getUserGender _id}}
+						</label>
+					{{/with}}
+				</div>
 				
 				 
 				{{> stadGraphic}}
@@ -69,5 +77,5 @@
 
 
 <template name="stadGraphic">
-    <div id="graficoEstadisticas" style="width: 400px; height: 400px "></div>
+    <div id="graficoEstadisticas" style="width: 400px; height: 360px "></div>
 </template>
