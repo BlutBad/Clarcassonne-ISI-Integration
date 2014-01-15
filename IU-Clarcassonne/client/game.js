@@ -69,14 +69,8 @@ img.src = 'Clarcassonne/images/background.png';
 var img2 = new Image();
 img2.src = 'Clarcassonne/images/abajo.png';
 
-//var img3 = new Image();
-//img3.src = 'images/musica.png';
-
 var img4 = new Image();
 img4.src = 'Clarcassonne/images/ControlHelp.png';
-
-
-
 
 
 
@@ -170,6 +164,11 @@ function SetPlayers (err, data) {
 	}
 	nJugadores = data.length;
 	
+	
+	
+	
+	
+	
 	Meteor.subscribe("partidas", idParty);
 	
 	var u = Partidas.findOne({_id:idParty})
@@ -187,11 +186,11 @@ function SetPlayers (err, data) {
 			if (u.movimientos[moves].seguidor != 0) {
 				Tablero.add(new Seguidor (u.movimientos[moves].seguidor.fx, u.movimientos[moves].seguidor.fy,u.movimientos[moves].seguidor.t,u.movimientos[moves].seguidor.sx,u.movimientos[moves].seguidor.sy));
 			}
+			setPoint (u.movimientos[moves].puntos);
 		
 		}
 	
-	}
-	
+	} 
 	
 	
 	Deps.autorun(function(){
@@ -202,13 +201,14 @@ function SetPlayers (err, data) {
 		if (last != undefined) {
 			var ultimo = last.pop();
 			if (ultimo.ficha != 0) {
-			NP = new PiezaMapa(ultimo.ficha.x,ultimo.ficha.y, ultimo.ficha.sprite,ultimo.ficha.rotation);
-			NP.colocada = true;
-			Tablero.add(NP);
+				NP = new PiezaMapa(ultimo.ficha.x,ultimo.ficha.y, ultimo.ficha.sprite,ultimo.ficha.rotation);
+				NP.colocada = true;
+				Tablero.add(NP);
 			}
 			if (ultimo.seguidor != 0) {
 				Tablero.add(new Seguidor (ultimo.seguidor.fx,ultimo.seguidor.fy,ultimo.seguidor.t,ultimo.seguidor.sx,ultimo.seguidor.sy));
 			}
+			setPoint (ultimo.puntos);
 			console.log(ultimo);
 			pasarTurno();
 		}
@@ -216,6 +216,23 @@ function SetPlayers (err, data) {
 	});
 
 	Game.initialize(idCanvas.slice(1),sprites,startGame);
+}
+
+
+
+function setPoint (data) {
+	Jugador1.puntos = data[0].puntos;
+	Jugador2.puntos = data[1].puntos;
+	Jugador3.puntos = data[2].puntos;
+	if (nJugadores >= 4) {
+		Jugador4.puntos = data[3].puntos;
+	}
+	if (nJugadores == 5) {
+		Jugador5.puntos = data[4].puntos;
+	}
+
+
+
 }
 
 
@@ -286,7 +303,6 @@ function pasarTurno () {
 }
 
 
-//loader.init(); 
 startGame = function() {   
 	
 	
@@ -431,21 +447,23 @@ Ficha_abajo = function(cx,cy) {
     			Meteor.call("Robar", function(err, data) { 
     				NuevaPieza = new PiezaMapa(CurrentScroll.x + 7,CurrentScroll.y + 5, data[0],0);
 			
-						//sonido_ladron.play();
 			
 						Game.setBoard(7, NuevaPieza);
 						CurrentMove = 1; 
 						Posiciones = data[1];
 						console.log(data);
+						Game.setBoard(6, new Highlight(data[1]));
 			});
 
 		} else if (CurrentMove == 1 && getTurno().id == Meteor.userId()) {
 			if (SetFichaEn(NuevaPieza, Posiciones)) {
 				Meteor.call("ColocarFicha", idParty, NuevaPieza.sprite, {x: NuevaPieza.x/100 + CurrentScroll.x, y: NuevaPieza.y/100 +CurrentScroll.y}, (NuevaPieza.rotation / -90), function(err, data) { 
-    				Game.setBoard(8,new Set(NuevaPieza));
-					CurrentMove = 2;
-					PosicionesSeg = data;
-					console.log(data);
+					if (data != 0) {
+    					Game.setBoard(8,new Set(NuevaPieza));
+						CurrentMove = 2;
+						PosicionesSeg = data;
+						console.log(data);
+					}
 					
 				});
 			}
@@ -457,6 +475,24 @@ Ficha_abajo = function(cx,cy) {
 }
 };
 
+
+Highlight = function (positions) {
+	this.position = positions;
+
+	this.draw = function(ctx) {
+		if (CurrentMove == 1) {
+			ctx.save();
+            ctx.fillStyle = 'rgba(255,255,255,0.5)';
+			for (i in this.position) {
+            	ctx.fillRect((this.position[i].x - CurrentScroll.x) * 100,(this.position[i].y-CurrentScroll.y) * 100 ,100,100);
+            }
+            ctx.restore();
+        }
+	};
+	this.step= function(dt) {};
+
+
+}
 
 
 Jugadores = function() {  
@@ -587,6 +623,8 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 				$(idCanvas).mousemove(function(e){
              
 					if(!mouseIsDown) return;
+					
+					
    					if (that.colocada == false ) {
 						that.x = e.clientX - posicion_x;
 						that.y = e.clientY - posicion_y;
@@ -599,7 +637,7 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 	}
 }  
 
-//Se encarga de pintar el fondo del juego
+
 HelpScreen = function() {
 	
     this.enabled = false;
@@ -782,8 +820,14 @@ Set = function (PiezaMapa) {
 						Game.setBoard(7, Blank);
 						CurrentScroll.active = true;
 						Partidas.update(idParty, {
-                            $push : {movimientos: {jugador: getTurno(), ficha: {x: that.pieza.x/100 + CurrentScroll.x, y: that.pieza.y/100 +CurrentScroll.y, sprite: that.pieza.sprite, rotation: that.pieza.rotation}, seguidor: 0}}
+                            $push : {movimientos: {jugador: getTurno(), ficha: {x: that.pieza.x/100 + CurrentScroll.x, y: that.pieza.y/100 +CurrentScroll.y, sprite: that.pieza.sprite, rotation: that.pieza.rotation}, seguidor: 0, puntos: data}}
                           });
+                          	console.log(data);
+                          	
+                          	$(idCanvas).unbind("mousedown");
+                          	$(idCanvas).unbind("mouseup");
+                          	$(idCanvas).unbind("mousemove");
+                          	
                           //Session.set("turno", CurrentTurn+1);
 						
 						//pasarTurno();
@@ -845,12 +889,16 @@ Set = function (PiezaMapa) {
 						//Tablero.add(that.pieza);
 						//Tablero.add(new Seguidor (that.pieza.x/100,that.pieza.y/100,that.setSeguidorType(),that.optionx,that.optiony));
 						Partidas.update(idParty, {
-                            $push : {movimientos: {jugador: getTurno(), ficha: {x: that.pieza.x/100 + CurrentScroll.x, y: that.pieza.y/100 +CurrentScroll.y, sprite: that.pieza.sprite, rotation: that.pieza.rotation}, seguidor: {fx: that.pieza.x/100 , fy: that.pieza.y/100,t: that.setSeguidorType(),sx:that.optionx,sy:that.optiony}}}
+                            $push : {movimientos: {jugador: getTurno(), ficha: {x: that.pieza.x/100 + CurrentScroll.x, y: that.pieza.y/100 +CurrentScroll.y, sprite: that.pieza.sprite, rotation: that.pieza.rotation}, seguidor: {fx: that.pieza.x/100 , fy: that.pieza.y/100,t: that.setSeguidorType(),sx:that.optionx,sy:that.optiony}, puntos: data}}
                           });
                          //Session.set("turno", CurrentTurn+1);
 						Game.setBoard(8,Blank);
 						Game.setBoard(7, Blank);
 						CurrentScroll.active = true;
+						
+						$(idCanvas).unbind("mousedown");
+                          	$(idCanvas).unbind("mouseup");
+                          	$(idCanvas).unbind("mousemove");
 						//pasarTurno();
 					
 					});
@@ -987,7 +1035,8 @@ ClarcassonneGameIU = new function ()  {
 		Meteor.call("InicioJuego", party_id, SetPlayers);
 		idCanvas = idCanvasElement;
 		idParty = party_id;
+		
+		
 	}
 	
 }
-
