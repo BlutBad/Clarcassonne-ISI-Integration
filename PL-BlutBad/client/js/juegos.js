@@ -34,8 +34,8 @@ Template.juegos.events({
     	}
     },
     'click .edit_game' : function() {
-	Session.set('gameToEdit', this._id);
-	// console.log(this._id);
+	   Session.set('gameToEdit', this._id);
+	   // console.log(this._id);
     }
 });
 
@@ -118,6 +118,7 @@ Deps.autorun(function(c) {
 Template.gamecontainer.render = function() {
     $('#gamecontainer').show();
 };
+
 
 // /////////////////////////EDIT GAME DESCRIPTION//////////////////////////////
 

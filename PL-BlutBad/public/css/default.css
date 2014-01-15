@@ -883,3 +883,8 @@ td, th {
 	margin-top: 1%;
 	float: left;
 }
+
+.mistor {
+	float: left;
+	display: block;
+}

@@ -8,7 +8,7 @@ Template.profil.showprofile = function() {
 
 Template.profil.registrado=function(){
 	if (Meteor.user()) {
-		console.log(Meteor.user()._id);
+		//console.log(Meteor.user()._id);
 		return true;
 
 	}else{
