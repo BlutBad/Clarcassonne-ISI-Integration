@@ -212,7 +212,8 @@ Template.misTorneos.tengoTorneos = function() {
     tor = Torneos.find({
     	game_id:game_id, 
     	participantes:{$in:[uid]},
-    	finalizado:false,
+    	finalizado: { $exists: false },
+    	//finalizado:false,
     }).fetch(); 
     if (tor.length != 0){
         return true;
