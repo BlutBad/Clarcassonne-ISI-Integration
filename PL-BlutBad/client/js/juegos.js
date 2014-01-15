@@ -81,7 +81,7 @@ Deps.autorun(function(c) {
 		// Se esconde el contenedor de juegos.
 	    
 		$('#gamecontainer').hide();
-		Session.set('showGameIdn', false);
+		Session.set('showGameIdn', false); 
     }
 });
 

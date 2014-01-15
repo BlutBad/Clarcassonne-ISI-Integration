@@ -1,7 +1,12 @@
 //Templates
 
 Template.buscador.show = function() {
-  return Session.get('current_stage') == 'Buscar amigos';
+  buscar = Session.get('current_stage') == 'Buscar amigos'; 
+  if (buscar){    
+    $('#gamecontainer').hide();
+    Session.set('showGameIdn', false); 
+  }
+  return buscar;
 };
 
 Template.buscador.register = function() {

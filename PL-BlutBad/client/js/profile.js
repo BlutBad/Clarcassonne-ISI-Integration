@@ -1,9 +1,12 @@
 Template.profil.showprofile = function() { 
 	//name= Meteor.user().profile.name;
 	//username= Meteor.user().username;
-	if (Meteor.user()){
+	miperf = Session.get('current_stage') == 'Mi perfil';
+	if (miperf){		
+		$('#gamecontainer').hide();
+		Session.set('showGameIdn', false); 
 	}
-	return Session.get('current_stage') == 'Mi perfil';
+	return miperf;
 };
 
 Template.profil.registrado=function(){
