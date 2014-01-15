@@ -75,15 +75,26 @@ Template.createDialog.juegos = function(){
 	return Juegos.find({});        
 }
 
-function date_compare (init, fin) { 
-	var inicio = Date.parse(init);  
-	var fin = Date.parse(fin); 
-	var now = new Date();
-	now_time = Date.parse(now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate());
+function compare (init, fin) { 
+	
+	 if (init == fin) {
+	 	return false;
+	 }else if (init < fin){
+	 	return true;
+	}else{  //init>fin
+		return false; 
+	};
+};
 
-	if (inicio > fin | inicio < now_time) { 
+function comparetoday (init) {
+	var inicio = Date.parse(init);  
+	var f = new Date();
+	var now=Date.parse(f);
+	console.log(inicio);
+	console.log(now);
+	if (inicio<=f){
 		return false;
-	} else {
+	}else{
 		return true;
 	}
 }
@@ -157,8 +168,9 @@ Template.createDialog.events({
 				if (title == '' | description == '' | date_start == '' |
 					date_finish == '' | pic == '') {
 					Session.set("createError", "Please, complete all the fields"); 
-				} else if (!date_compare(date_start, date_finish)) {
-					Session.set("createError", "La fecha de inicio no puede ser después que la de fin o antes que la de hoy"); 
+				} else if (!compare(date_start, date_finish) | !comparetoday(date_start) | !comparetoday(date_finish)){
+					Session.set("createError", "La fecha de inicio no puede ser la misma o anterior a la de fin y las fechas no pueden ser hoy o anteriores a hoy"); 
+
 				} else {
 					Torneos.insert({title:title, game_id: game_id, user_create: user_create, 
 						date_start: date_start, date_finish: date_finish, 
@@ -200,6 +212,8 @@ Template.editTor.error = function () {
 	return Session.get("editError");
 };
 
+
+
 Template.editTor.events({
 
 	'click .save_edit' : function(event, template) {
@@ -210,12 +224,16 @@ Template.editTor.events({
 		var date_finish = template.find("#date_finish").value;
 		var description = template.find("#description").value; 
 		var logo_src = template.find("#pic").value; 
+		console.log(comparetoday(date_start));
+
 		if (title == '' | description == '' | date_start == '' |
 			date_finish == '' | logo_src == '') {
 			Session.set("editError", "Please, complete all the fields"); 
-		} else if (!date_compare(date_start, date_finish)) {
-			Session.set("editError", "La fecha de inicio no puede ser después que la de fin o antes que la de hoy"); 
+		} else if (!compare(date_start, date_finish) | !comparetoday(date_start) | !comparetoday(date_finish)){
+			console.log("2");
+			Session.set("editError", "La fecha de inicio no puede ser la misma o anterior a la de fin y las fechas no pueden ser hoy o anteriores a hoy"); 
 		} else {
+			console.log("3");
 			Torneos.update(gid, {
 			$set : {
 				title : title,
