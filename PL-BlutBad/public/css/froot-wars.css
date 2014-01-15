@@ -5,6 +5,7 @@
     background: url(/images/splashscreen.png);
     border: 2px solid black;
     float: center;
+    clear: both;
 }
 
 .gameFrootlayer {
@@ -110,6 +111,7 @@ endingscreen {
     color:white;
 }
 
-#prueba {
-    z-index: 0;
+#mis-torneos {
+    float: center;
+
 }

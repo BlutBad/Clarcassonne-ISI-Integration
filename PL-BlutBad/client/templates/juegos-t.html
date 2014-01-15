@@ -25,7 +25,9 @@
 
 <template name="gamecontainer"> 
   <div id="gamecontainer">    
-  	{{>misTorneos}} 
+  	 <div id="mis-torneos">
+  	 	{{>misTorneos}}
+  	 </div>
 	{{>idnClarca}}
 	{{>idnAlien}}
 	{{>idnFroot}}
@@ -121,7 +123,7 @@
  
 
 <template name="misTorneos">
-    <div class="span5 well mistor" id="prueba">
+    <div class="span5 well mistor">
     	<h3>Mis torneos</h3>
 		{{#if tengoTorneos}}
             <div id="tab" class="btn-group" data-toggle="buttons-radio">
