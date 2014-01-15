@@ -199,6 +199,16 @@ Template.hall_clarcassone.events({
                 jugadores : usersJoined
             } 
         }); 
+    },
+    'click .continue' : function() {   
+        party_id = this._id;
+        ClarcassonneGameIU.initialize('#CanvasclarcaGame', party_id);
+
+        // Para que se muestre el canvas del juego,
+        Session.set('showGameIdn', "clarki");
+
+        // Para esconder el hall, solo se ve el canvas
+        Session.set('current_stage', false); 
     }
 });
 
