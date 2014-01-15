@@ -835,7 +835,7 @@ td, th {
 .container_juegos, .container_ranking,
 .container_tor, #torneos_container {	
 	overflow: hidden; 
-} 
+}  
 
 #profile-container {
 	margin-right: 20%;
@@ -883,3 +883,8 @@ td, th {
 	margin-top: 1%;
 	float: left;
 }
+
+.mistor {
+	float: left;
+	display: block;
+} 

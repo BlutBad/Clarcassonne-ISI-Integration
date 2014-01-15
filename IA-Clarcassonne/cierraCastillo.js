@@ -2,7 +2,8 @@
 
 
 
-Tablero.cierraCastillo = function(ficha, flag){
+cierraCastillo = function(ficha, flag){
+
     var unlado = [
         'Ciudad1l2crect', 
         'Ciudadcurvder', 
@@ -506,36 +507,44 @@ Tablero.cierraCastillo = function(ficha, flag){
             }
         }
 
-        if (((flag == 1) && (final1[0] == true)) || (flag == 2))
-            if (flag == 2)
-                final1[1] = final1[3];
-            sumarPuntos(seguidor1, final1[1]);
-        if (((flag == 1) && (final2[0] == true)) || (flag == 2))
-            if (flag == 2)
-                final2[1] = final2[3];
-            sumarPuntos(seguidor2, final2[1]);
-        // Si hay caballero en el lado [arriba o derecha]
-        if (seguidor1.length > 0)
-            final1[1] = true;
-        else
-            final1[1] = false;
-        // Si hay caballero en el lado [abajo o izquierda]
-        if (seguidor2.length > 0)
-            final2[1] = true;
-        else
-            final2[1] = false;
-        final1[2] = pasado;
-        final2[2] = pasado;
+        if (final1 != undefined){
+            if (((flag == 1) && (final1[0] == true)) || (flag == 2)){
+                if (flag == 2)
+                    final1[1] = final1[3];
+                sumarPuntos(seguidor1, final1[1]);
+            }
+            // Si hay caballero en el lado [arriba o derecha]
+            if (seguidor1.length > 0)
+                final1[1] = true;
+            else
+                final1[1] = false;
+            final1[2] = pasado;
+        }
+        if (final2 != undefined){
+            if (((flag == 1) && (final2[0] == true)) || (flag == 2)){
+                if (flag == 2)
+                    final2[1] = final2[3];
+                sumarPuntos(seguidor2, final2[1]);
+            }
+            // Si hay caballero en el lado [abajo o izquierda]
+            if (seguidor2.length > 0)
+                final2[1] = true;
+            else
+                final2[1] = false;
+            final2[2] = pasado;
+        }
+
         // Final1 [arriba o derecha], Final2 [izquierda o abajo]
         return [final1, final2];
     }
     else if (unlado.indexOf(ficha.tipo) != -1){
         var final = f_unlado(ficha, 0, seguidor);
-        if (((flag == 1) && (final[0] == true)) || (flag == 2))
+        if (((flag == 1) && (final[0] == true)) || (flag == 2)){
             // porque si no es cerrado devuelve [false, caballero, lista, puntos]
             if (flag == 2)
                 final[1] = final[3];
             sumarPuntos(seguidor, final[1]);
+        }
         if (seguidor.length > 0)
             final[1] = true;
         else
@@ -545,10 +554,11 @@ Tablero.cierraCastillo = function(ficha, flag){
     }
     else if (maslados.indexOf(ficha.tipo) != -1){
         var final = f_maslados(ficha, 0, seguidor);
-        if (((flag == 1) && (final[0] == true)) || (flag == 2))
+        if (((flag == 1) && (final[0] == true)) || (flag == 2)){
             if (flag == 2)
                 final[1] = final[3];
             sumarPuntos(seguidor, final[1]);
+        }
         if (seguidor.length > 0)
             final[1] = true;
         else
@@ -557,4 +567,4 @@ Tablero.cierraCastillo = function(ficha, flag){
         return final;
     }
     else {return false}
-};
+  }

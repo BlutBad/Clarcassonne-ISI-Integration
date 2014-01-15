@@ -2,21 +2,17 @@
 //Default set de las variables de session
 Session.setDefault('current_stage', 'Dashboard');
 Session.setDefault('load_game', null);
-
 Session.setDefault('showGameIdn',null);
 Session.setDefault("current_game",null);
-
-Session.setDefault("gamerank", null);
+Session.setDefault('gamerank', null);
 
 
 
 Meteor.startup(function() {
-    $('#gamecontainer').hide();
-    
+    $('#gamecontainer').hide();    
 	$('#gameFrootcontainer').hide();
 	$('#gamecanvasAlien').hide();
 	$('#CanvasclarcaGame').hide();
-
 });
 
 
@@ -44,10 +40,10 @@ if (typeof Handlebars !== 'undefined') {
 
 	Handlebars.registerHelper('getUserEmail', function (userId) {
 		var user = _extractProfile(userId);
-		console.log(user);
+		//console.log(user);
 		if (user) {
 			if (user.email){
-				console.log(user.email);
+				//console.log(user.email);
 				return user.email;
 			}else if (user.services){
 				if (user.services.google.email){
@@ -81,15 +77,5 @@ if (typeof Handlebars !== 'undefined') {
 		};
 			return ' ';
 
-	});
-
-	/*
-	Handlebars.registerHelper('noTorneo',function(){
-	  gt = Session.get('gameTorneoSelectId'); 
-	  if (gt == undefined || gt == false) {
-	  	return true;
-	  }
-	  return false;
-	});
-	*/
+	}); 
 } 

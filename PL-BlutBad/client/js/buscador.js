@@ -1,7 +1,12 @@
 //Templates
 
 Template.buscador.show = function() {
-  return Session.get('current_stage') == 'Buscar amigos';
+  buscar = Session.get('current_stage') == 'Buscar usuarios'; 
+  if (buscar){    
+    $('#gamecontainer').hide();
+    Session.set('showGameIdn', false); 
+  }
+  return buscar;
 };
 
 Template.buscador.register = function() {
@@ -12,38 +17,9 @@ Template.buscador.register = function() {
   }
 };
 
-
-
-
-// lo nuevo
-
-
-Template.buscador.events({
-  'keydown input#tags': function(e){
-    if (e.which == 13) {
-      var name=$("#tags").val();
-      if (Meteor.users.findOne({username: name})){
-        console.log("esta");
-        console.log(Meteor.users.findOne({username: name})._id);
-        Session.set("profilfriend", Meteor.users.findOne({username: name})._id);
-       // return Session.set('current_stage', 'PerfilAmigo');
-      }else{
-        alert(name + " isn't a user! Please try again!");  
-      }
-      var name=$("#tags")
-      name.val('')
-    };
-  }
-
-});
-
-
-Template.friendprofil.events({
-
-    'click .cancel' : function() {
-        Session.set('profilfriend', null); 
-    }
-});
+Template.buscador.showprofilfriend = function() {
+    return Session.get('profilfriend', this._id); 
+};
 
 Template.friendprofil.usuario = function() {
     var id = Session.get('profilfriend');
@@ -52,13 +28,6 @@ Template.friendprofil.usuario = function() {
         _id : id
     });
 };
-
-
-Template.buscador.showprofilfriend = function() {
-    return Session.get('profilfriend', this._id); 
-};
-
-
 
 Template.stadGraphic.rendered =function(){
   var id= Session.get('profilfriend');
@@ -207,7 +176,7 @@ Template.stadGraphic.rendered =function(){
       type: 'pie'
     },
     title: {
-      text: 'Estadísticas de tiempo perdido en los juegos'
+      text: 'Estadística de las partidas jugadas.'
     },
     yAxis: {
       title: {
@@ -249,3 +218,85 @@ Template.stadGraphic.rendered =function(){
   })
 }
 };
+
+
+
+//Events
+
+Template.buscador.events({
+  'keydown input#tags': function(e){
+    if (e.which == 13) {
+      var name=$("#tags").val();
+      if (Meteor.users.findOne({username: name})){
+        Session.set("profilfriend", Meteor.users.findOne({username: name})._id);
+      }else{
+        alert("El usuario buscado no existe.");
+         $("#tags").val('')
+      }
+    };
+  }
+
+});
+
+Template.friendprofil.events({
+
+    'click .cancel' : function() {
+        Session.set('profilfriend', null);
+        $("#tags").val('')
+    },
+
+    'click #add-new-user': function() {
+      var userToAddFriends = $("#tags").val();
+      console.log(name);
+      if (userToAddFriends !== Meteor.user().username) {
+
+        console.log ("add to my list of friends");
+        var myFriendsId = Friends.findOne({username: Meteor.user().username})._id;
+        var newFriend = {name: userToAddFriends};
+
+        Friends.update(myFriendsId, {
+          $push: {
+            friends: newFriend
+          }
+        });
+
+        $("#amigoAddOk").dialog({
+          resizable: false,
+          height:180,
+          modal: true,
+          buttons: {
+            Aceptar: function() {
+                $( this ).dialog( "close" );
+            }
+          }
+        });
+
+        Session.set('profilfriend', null);
+
+      } else {
+
+        $("#noAddMe").dialog({
+          resizable: false,
+          height:180,
+          modal: true,
+          buttons: {
+            Aceptar: function() {
+                $( this ).dialog( "close" );
+            }
+          }
+        });
+
+        Session.set('profilfriend', null);
+      }
+
+      $("#tags").val('')
+    }
+});
+
+
+
+
+
+
+
+

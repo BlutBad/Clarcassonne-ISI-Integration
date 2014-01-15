@@ -89,8 +89,7 @@ function date_compare (init, fin) {
 }
 
 Template.torneos.events = {
-    'click img': function() {
-
+    'click .post-image': function() { 
         //console.log("Pasar a la pagina de ver torneo");
         // Poner lo a null, es decir celeccionar por defecto
         Session.set('current_stage', 'showTorneo');

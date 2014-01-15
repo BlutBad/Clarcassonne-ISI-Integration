@@ -1,10 +1,11 @@
 #gameFrootcontainer {
-    margin: 5% 22%;
-    float: center;
+    margin: 5% 22%; 
     width:640px;
     height:480px;
     background: url(/images/splashscreen.png);
-    border: 1px solid black;
+    border: 2px solid black;
+    float: center;
+    clear: both;
 }
 
 .gameFrootlayer {
@@ -108,4 +109,9 @@ endingscreen {
     font: 32px Comic Sans MS;
     text-shadow: 0 0 2px #000;
     color:white;
+}
+
+#mis-torneos {
+    float: center;
+
 }
