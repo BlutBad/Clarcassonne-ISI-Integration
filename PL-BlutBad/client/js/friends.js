@@ -1,7 +1,12 @@
 // Templates
 
 Template.friends.show = function() {
-	return Session.get('current_stage') == 'Amigos';
+	amigos = Session.get('current_stage') == 'Amigos';
+	if (amigos){    
+	   $('#gamecontainer').hide();
+	   Session.set('showGameIdn', false); 
+	}
+	return amigos;
 };
 
 Template.friends.register = function() {

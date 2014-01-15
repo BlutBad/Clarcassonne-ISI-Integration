@@ -14,7 +14,7 @@ Template.comunidad.registrado=function(){
 Template.comunidad.total=function(){
 	//el total de puntuacion lo metere en el perfil de usuaio para que sea mas facil despues saber cuantos puntos les quedan para poder cambiarlos por isicoins
 	rankings = Ranking.find({userId: Meteor.user()._id});
-	console.log("here");
+	//console.log("here");
 	scores = [];
 	total=0;
 	rankings.forEach(function(each,index) { 

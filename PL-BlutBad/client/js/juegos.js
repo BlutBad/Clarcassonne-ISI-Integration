@@ -34,8 +34,8 @@ Template.juegos.events({
     	}
     },
     'click .edit_game' : function() {
-	Session.set('gameToEdit', this._id);
-	// console.log(this._id);
+	   Session.set('gameToEdit', this._id);
+	   // console.log(this._id);
     }
 });
 
@@ -81,7 +81,7 @@ Deps.autorun(function(c) {
 		// Se esconde el contenedor de juegos.
 	    
 		$('#gamecontainer').hide();
-		Session.set('showGameIdn', false);
+		Session.set('showGameIdn', false); 
     }
 });
 
@@ -118,6 +118,7 @@ Deps.autorun(function(c) {
 Template.gamecontainer.render = function() {
     $('#gamecontainer').show();
 };
+
 
 // /////////////////////////EDIT GAME DESCRIPTION//////////////////////////////
 
