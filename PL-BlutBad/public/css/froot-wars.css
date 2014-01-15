@@ -4,6 +4,7 @@
     height:480px;
     background: url(/images/splashscreen.png);
     border: 2px solid black;
+    float: center;
 }
 
 .gameFrootlayer {
@@ -107,4 +108,8 @@ endingscreen {
     font: 32px Comic Sans MS;
     text-shadow: 0 0 2px #000;
     color:white;
+}
+
+#prueba {
+    z-index: 0;
 }

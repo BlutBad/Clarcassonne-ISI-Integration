@@ -176,7 +176,7 @@ Template.stadGraphic.rendered =function(){
       type: 'pie'
     },
     title: {
-      text: 'Estadísticas de tiempo perdido en los juegos'
+      text: 'Estadística de las partidas jugadas.'
     },
     yAxis: {
       title: {
