@@ -1,0 +1,41 @@
+#buscador-usuarios {
+	background-color: #CEE3F6;
+	border-radius: 10px;
+	border: black 1px solid; 
+	width: 98%;
+	height: 200px;
+	margin: 15px;
+	padding: 5px;
+}
+
+#buscador {
+	background-color: white;
+	border: #6E6E6E 1px solid;
+	margin: 20px;
+	padding: 20px;
+	border-radius: 3px;
+}
+
+.modal {
+	background-color: #CEE3F6;
+	width: 500px;
+	height: 600px;
+	top: 4%;
+}
+
+.container {
+	width: 90%;
+	height: 80%;
+	background-color: white;
+	border: #6E6E6E 1px solid;
+	border-radius: 3px;
+	padding: 10px;
+}
+
+#datos-usuario-buscado {
+	background-color: #E6E6E6;
+	height: 15%;
+	margin-bottom: 10px;
+	padding: 10px;
+	border-radius: 3px;
+}
