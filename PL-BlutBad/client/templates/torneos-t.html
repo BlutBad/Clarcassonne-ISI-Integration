@@ -84,8 +84,8 @@
                         {{/each}}
                     </select>
                 </p>
-                <p>Fecha comienzo: <input type="text" id="date_start"></p>
-                <p>Fecha fin: <input type="text" id="date_finish"></p>
+                <p>Fecha comienzo: <input type="text" id="date_start" ></p>
+                <p>Fecha fin: <input type="text" id="date_finish" ></p>
                 <p>Descripción: <textarea id="description" class="description span5"></textarea></p>
                 <p>URL de la imagen: <input type="text" id="pic"></p>
             </div>
@@ -108,11 +108,14 @@
           </div>   
                
           <div class="modal-body">
-            <p>Título: <input type="text" id="title" class="title span5" value = {{title}}></p>
-            <p>Fecha comienzo: <input type="text" id="date_start" value = {{date_start}}></p>
-            <p>Fecha fin: <input type="text" id="date_finish" value = {{date_finish}}></p>
-            <p>Descripción: <textarea id="description" class="description span5">{{description}}</textarea></p>
-            <p>URL de la imagen: <input type="text" id="pic" value = {{pic}}></p>
+            {{#if error}}
+                <div class="alert alert-error">{{error}}</div>
+            {{/if}}
+            <p>Título: <input type="text" id="title" class="title span5" value = {{title}} ></p>
+            <p>Fecha comienzo: <input type="text" id="date_start" value = {{date_start}} ></p>
+            <p>Fecha fin: <input type="text" id="date_finish" value = {{date_finish}} ></p>
+            <p>Descripción: <textarea id="description" class="description span5" >{{description}}</textarea></p>
+            <p>URL de la imagen: <input type="text" id="pic" value = {{pic}} ></p>
           </div>
           
           <div class="modal-footer">
