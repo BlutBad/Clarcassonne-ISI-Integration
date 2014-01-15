@@ -1,7 +1,7 @@
 //Templates
 
 Template.buscador.show = function() {
-  buscar = Session.get('current_stage') == 'Buscar amigos'; 
+  buscar = Session.get('current_stage') == 'Buscar usuarios'; 
   if (buscar){    
     $('#gamecontainer').hide();
     Session.set('showGameIdn', false); 
@@ -228,16 +228,11 @@ Template.buscador.events({
     if (e.which == 13) {
       var name=$("#tags").val();
       if (Meteor.users.findOne({username: name})){
-        console.log("esta");
-        console.log(Meteor.users.findOne({username: name})._id);
         Session.set("profilfriend", Meteor.users.findOne({username: name})._id);
-       // return Session.set('current_stage', 'PerfilAmigo');
       }else{
-        //$( "#noExisteAmigo" ).dialog();
-        // No funciona, antes habia un alarm()  
+        alert("El usuario buscado no existe.");
+         $("#tags").val('')
       }
-      var name=$("#tags")
-      name.val('')
     };
   }
 
@@ -246,7 +241,55 @@ Template.buscador.events({
 Template.friendprofil.events({
 
     'click .cancel' : function() {
-        Session.set('profilfriend', null); 
+        Session.set('profilfriend', null);
+        $("#tags").val('')
+    },
+
+    'click #add-new-user': function() {
+      var userToAddFriends = $("#tags").val();
+      console.log(name);
+      if (userToAddFriends !== Meteor.user().username) {
+
+        console.log ("add to my list of friends");
+        var myFriendsId = Friends.findOne({username: Meteor.user().username})._id;
+        var newFriend = {name: userToAddFriends};
+
+        Friends.update(myFriendsId, {
+          $push: {
+            friends: newFriend
+          }
+        });
+
+        $("#amigoAddOk").dialog({
+          resizable: false,
+          height:180,
+          modal: true,
+          buttons: {
+            Aceptar: function() {
+                $( this ).dialog( "close" );
+            }
+          }
+        });
+
+        Session.set('profilfriend', null);
+
+      } else {
+
+        $("#noAddMe").dialog({
+          resizable: false,
+          height:180,
+          modal: true,
+          buttons: {
+            Aceptar: function() {
+                $( this ).dialog( "close" );
+            }
+          }
+        });
+
+        Session.set('profilfriend', null);
+      }
+
+      $("#tags").val('')
     }
 });
 

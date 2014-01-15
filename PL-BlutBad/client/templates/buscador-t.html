@@ -30,49 +30,56 @@
 			  	</p>
 			</div>
 
-			<div id="noExisteAmigo" title="Buscar amigos" style="display:none">
-				<p>
-					No existe ese usuario.
-				</p>
-			</div>
-
 		{{/if}}
 	{{/if}}
 </template>
 
 
 <template name="friendprofil">
-		<div class="modal">
-			<div class="modal-header">
-				<button type="button" class="close cancel">&times;</button>
-				<h3>Perfil</h3>
-			</div>   
-		 	<div class="container" id="container-buscar">  
-		 		<div id="datos-usuario-buscado">
-					{{#with usuario}}
-						<label>
-							Nombre: {{getUsername _id}}
-						</label>
-					
-						<label>
-							Fecha de nacimiento: {{getUserDateBirth _id}}
-						</label>
-
-						<label>
-							Género: {{getUserGender _id}}
-						</label>
-					{{/with}}
-				</div>
+	<div class="modal">
+		<div class="modal-header">
+			<button type="button" class="close cancel">&times;</button>
+			<h3>Perfil</h3>
+		</div>   
+	 	<div class="container" id="container-buscar">  
+	 		<div id="datos-usuario-buscado">
+				{{#with usuario}}
+					<label>
+						Nombre: {{getUsername _id}}
+					</label>
 				
-				 
-				{{> stadGraphic}}
+					<label>
+						Fecha de nacimiento: {{getUserDateBirth _id}}
+					</label>
+
+					<label>
+						Género: {{getUserGender _id}}
+					</label>
+				{{/with}}
 			</div>
-			<div class="modal-footer">
-				<a href="#" class="btn cancel">Cancelar</a>
-				<a href="#" class="btn btn-primary save_edit">Añadir a amigos</a>
-			</div>
+			
+			 
+			{{> stadGraphic}}
 		</div>
-	</div>	
+		<div class="modal-footer">
+			<a href="#" class="btn cancel">Cancelar</a>
+			<a href="#" class="btn btn-primary save_edit" id="add-new-user">Añadir a amigos</a>
+		</div>
+	</div>
+
+	<div id="amigoAddOk" title="Buscar usuario" style="display:none">
+		<p>
+			Usuario añadido a tu lista de amigos correctamente.
+		</p>
+	</div>
+
+	<div id="noAddMe" title="Buscar usuario" style="display:none">
+		<p>
+			No te puedes añadir a ti mismo.
+		</p>
+	</div>
+
+
 </template>
 
 

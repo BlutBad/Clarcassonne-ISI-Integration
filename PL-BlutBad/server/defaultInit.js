@@ -57,7 +57,7 @@ Meteor.startup(function() {
 			    name : "Mi perfil",
 			    contents : []
 			}, {
-			    name : "Buscar amigos",
+			    name : "Buscar usuarios",
 			    contents : []
 			}, {
 			    name : "Amigos",
