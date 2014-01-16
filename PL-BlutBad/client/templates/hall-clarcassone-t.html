@@ -9,7 +9,7 @@ http://bootsnipp.com/snippets/featured/condensed-table-example -->
 		<h2>¡Creacion de partidas para el juego Clarcassone!</h2>
 		<div class="gallery">
     <div class="container">
-      <div class="span3">
+      <div class="span3 jugad_hall">
         <div class="well">
         	<h2 class="muted">Jugadores</h2>
       		<ul>
@@ -19,7 +19,7 @@ http://bootsnipp.com/snippets/featured/condensed-table-example -->
       		</ul>          
         	<p>Descripcion de como se juega aqui.</p>
         	<hr>	
-            <p><a id="nuevaPartida" class="btn btn-large" href="#"><i class="icon-ok"></i> Crear Nueva Partida</a></p>
+            <p><a id="nuevaPartida" class="btn btn-large" href="#"><i class="icon-ok"></i> Crear Partida</a></p>
         	<hr>
           {{#if error}}
             <div class="alert alert-error">{{error}}</div>
@@ -33,6 +33,8 @@ http://bootsnipp.com/snippets/featured/condensed-table-example -->
         </div>
       </div>
     
+    {{>misTorneos}}
+
     <div class="row">
       <div class="span5 well">
         <h3>Mis partidas actuales</h3>
@@ -64,7 +66,7 @@ http://bootsnipp.com/snippets/featured/condensed-table-example -->
           </table>
           {{#if currentUser}}
             <div class="btn-toolbar">
-              <button class="continue">Continuar</button> 
+              <button class="btn continue">Continuar</button> 
             </div>
           {{/if}}
         {{/each}}

@@ -16,10 +16,10 @@
                 <h3>Torneos por juego</h3> 
                 <ul class="sub-navigation">
                 {{#each juegos}}
-                    <li class = "sortBy"><a href="#" class="{{name}}">{{name}}</a></li>
+                    <li class = "sortBy tor"><a href="#" class="{{name}}">{{name}}</a></li>
                 {{/each}}
                 </ul>         
-                <input type="button" id="mostrar_torneos" value="Mostrar todos"> 
+                <input type="button" id="mostrar_torneos" class = "btn" value="Mostrar todos"> 
             </div>   
             <div class="two-thirds"> 
                 <div class="blog">
@@ -33,20 +33,17 @@
                                 (creado por {{getUsername user_create}})
                             </div>
                             
-                            <img src={{pic}} class="post-image" alt="sample image" width="606" height="115" />
+                            <img src={{pic}} class="post-image in_tor" alt="sample image" width="606" height="115" />
                             
                             <div class="post-description">
                                 <p>{{description}}</p>
                                 
                                 {{#if currentUser}}
-                                    {{#if current_creator _id}}
-                                        <input type="button"  class="empezarTorneo" value="Empezar Torneo">
-                                        <input type="button"  class="finalizarTorneo" value="Finalizar Torneo">  
-                          
-                                        <input type="button" id="{{_id}}" class="editar" value="Editar torneo">
-                                        <input type="button" id="{{_id}}" class="borrar_tor" value="Borrar torneo">
-                                    {{/if}}                                    
-                                    <input type="button" id="{{_id}}" class = "{{clase_Apuntada _id getUserId}}" value="{{apunto _id getUserId}} {{participantes _id}}">
+                                    {{#if current_creator _id}}                          
+                                        <input type="button" id="{{_id}}" class="btn editar" value="Editar torneo">
+                                        <input type="button" id="{{_id}}" class="btn borrar_tor" value="Borrar torneo">
+                                    {{/if}}                                   
+                                    <input type="button" id="{{_id}}" class = "btn {{clase_Apuntada _id getUserId}}" value="{{apunto _id getUserId}} {{participantes _id}}">
                                 {{else}}
                                     <i>Sign in para ver opciones de torneos</i>  
                                 {{/if}} 

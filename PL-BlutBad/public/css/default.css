@@ -888,3 +888,15 @@ td, th {
 	float: left;
 	display: block;
 } 
+
+.jugad_hall {
+	margin-bottom: 30%;
+}
+
+.tor {
+	text-align: center;
+}
+
+.apuntarme, .in_tor {
+	cursor: pointer;
+} 

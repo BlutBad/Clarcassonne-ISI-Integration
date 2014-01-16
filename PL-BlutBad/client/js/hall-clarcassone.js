@@ -10,7 +10,8 @@ Template.hall_clarcassone.show = function() {
         user_id : Meteor.userId()
     });
     if (Session.get('current_stage') == 'klarkiHall') { 
-        $('#gamecontainer').show(); 
+        // Para que no se muestre la plantilla 
+        $('#gamecontainer').hide(); 
         // Encontrar el user actual en alguna partida volátil normal (no de torneo)
         userInparty = PartidasVolatiles.find({ 
             jugadores: { 
@@ -134,6 +135,7 @@ Template.hall_clarcassone.events({
 
             // Para esconder el hall, solo se ve el canvas
             Session.set('current_stage', false); 
+            $('#gamecontainer').show(); 
 
             setTimeout(removePartyV(this._id), 5000); 
         } 
@@ -206,10 +208,11 @@ Template.hall_clarcassone.events({
         ClarcassonneGameIU.initialize('#CanvasclarcaGame', party_id);
 
         // Para que se muestre el canvas del juego,
-        Session.set('showGameIdn', "clarki");
+        Session.set('showGameIdn', 'clarki');
 
         // Para esconder el hall, solo se ve el canvas
-        Session.set('current_stage', false); 
+        Session.set('current_stage', false);         
+        $('#gamecontainer').show(); 
     }
 });
 
@@ -277,15 +280,25 @@ Template.hall_clarcassone.UsersInHall = function() {
 }
 
 // El rango del usuario en la tabla de miembros de la partida
-Template.hall_clarcassone.userRango = function(user_id) {
-    /*
-     * gid = Session.get("current_game"); console.log("gid: "+gid); if (gid) {
-     * rankingU = Ranking.findOne({ gameId : gid, userId : user_id }) if
-     * (rankingU) { return Rangos.findOne({ id : rankingU.rango_id }).rango; }
-     * else { return Rangos.findOne({ game_id : gid }).rango; } } else { return
-     * "--" }
-     */
-    return "--"
+Template.hall_clarcassone.userRango = function(user_id) { 
+     gid = Session.get("current_game"); 
+     if (gid) {
+        console.log(user_id) 
+        rankingU = Ranking.findOne({ 
+            game_id : gid, 
+            user_id : user_id 
+        }); 
+        console.log(rankingU)
+        if (rankingU) { 
+            return Rangos.findOne({ 
+                _id : rankingU.rango_id 
+            }).rango; 
+        } else { 
+            return "Fantasma";
+        } 
+    } else { 
+        return "--";
+    }  
 }
 
 Template.hall_clarcassone.estadoUser = function(estado) {
@@ -376,4 +389,4 @@ Template.hall_clarcassone.rol = function(id_user, id_partida) {
         return "Creador";
     }
     return "Participante"; 
-}  
+}   

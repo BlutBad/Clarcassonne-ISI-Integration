@@ -44,8 +44,7 @@ Meteor.startup(function() {
 			};
 			
 			
-			// USUARIOS POR DEFECTOs
-			Accounts.createUser({username:"admin",email:"admin@kaka.aka", password:"123"})
+			// USUARIOS POR DEFECTOs 
 			Accounts.createUser({username:"user",email:"user@kaka.aka", password:"123"})
 			Accounts.createUser({username:"sara",email:"sara@kaka.aka", password:"123"})
 			Accounts.createUser({username:"itzi",email:"itzi@kaka.aka", password:"123"})
@@ -73,8 +72,7 @@ Meteor.startup(function() {
 	    } 
 
 	if (Juegos.find().count() === 0) {
-		var moder = Accounts.createUser({username:"moderador",email:"moder@kaka.aka", password:"123"});  
-		console.log("Creando moderador: " + moder)
+		var admin = Accounts.createUser({username:"admin",email:"admin@kaka.aka", password:"123"});   
 		var data = [
 			{
 			    name : 'AlienInvasion',
@@ -88,16 +86,16 @@ Meteor.startup(function() {
 			    hall : 'alienHall',
 			    rangos : [ {
 					rango : "Fantasma",
-					minPoints : -1,
+					minPoints : 0,
 			    }, {
 					rango : "Noob",
-					minPoints : -0.1,
+					minPoints : 500,
 			    }, {
 					rango : "Capitan",
-					minPoints : 999,
+					minPoints : 1000,
 			    }, {
 					rango : "Comandante",
-					minPoints : 3999,
+					minPoints : 4000,
 			    }, {
 					rango : "General",
 					minPoints : 7000,
@@ -157,10 +155,10 @@ Meteor.startup(function() {
 			    hall : 'klarkiHall',
 			    rangos : [ {
 					rango : "Fantasma",
-					minPoints : -1,
+					minPoints : 0,
 			    }, {
 					rango : "Noob",
-					minPoints : 0,
+					minPoints : 500,
 			    }, {
 					rango : "Capitan",
 					minPoints : 1000,
@@ -218,7 +216,7 @@ Meteor.startup(function() {
 			{
 			    name : 'Froot Wars',
 			    wrapf : 'null', //'gameFroot.init()',
-			    logo_src : '/images/games_logo/frootwars.jpg',
+			    logo_src : '/images/splashscreen.png',
 			    logo_alt : 'Juega es este juego',
 			    title_desc : 'Titulo para la descripcion del juego',
 			    description : 'Descripcion del juego!',
@@ -227,10 +225,10 @@ Meteor.startup(function() {
 			    hall : 'frootHall',
 			    rangos : [ {
 					rango : "Fantasma",
-					minPoints : -1,
+					minPoints : 0,
 			    }, {
 					rango : "Noob",
-					minPoints : 0,
+					minPoints : 500,
 			    }, {
 					rango : "Capitan",
 					minPoints : 1000,
@@ -275,7 +273,7 @@ Meteor.startup(function() {
                         title : "Torneo Froot War", 
                         date_start : "11/29/2013",
                         date_finish : "12/29/2013",
-                        pic : '/images/games_logo/frootwars.jpg',
+                        pic : '/images/splashscreen.png',
                         description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel',
                         description_long:'Id vel sensibus honestatis omittantur, vel cu nobis commune patrioque. In accusata definiebas qui, id tale malorum dolorem sed, solum clita phaedrum ne his. Eos mutat ullum forensibus ex, wisi perfecto urbanitas cu eam, no vis dicunt impetus. Assum novum in pri, vix an suavitate moderatius, id has reformidans referrentur. Elit inciderint omittantur duo ut, dicit democritum signiferumque eu est, ad suscipit delectus mandamus duo. An harum equidem maiestatis nec.',
                         participantes:[]
@@ -346,7 +344,7 @@ Meteor.startup(function() {
 				var torneoId = Torneos.insert({
 				    game_id : juego_id,
 				    title : info.title,
-				    user_create : moder,
+				    user_create : admin,
 				    date_start : info.date_start,
 				    date_finish : info.date_finish,
 				    pic : info.pic,
