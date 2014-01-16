@@ -266,7 +266,7 @@
 </template>
 
 <template name='privatemessagestemp'>
-	<div class="privatemessages">
+	<div style='overflow: auto; height:250px;' class="privatemessages">
 		{{# each listaprivatemessages}}
 			<i><font size=-4>({{date}})</font> {{orig}}</i>: {{text}} <br>
 		{{/ each}}	

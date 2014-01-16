@@ -262,7 +262,7 @@ Template.listaAmigosOfflineTemp.listaAmigosOffline = function(){
 }		
 
 Template.privatemessagestemp.listaprivatemessages=function(){
-	var privatemessages=Private_Messages.find({$or: [ {$and:[{orig: Session.get('origname')},{dest:Session.get('destname')}]} , {$and:[{orig:Session.get('destname')},{dest: Session.get('origname')}]}  ] },{sort: {date:-1}});
+	var privatemessages=Private_Messages.find({$or: [ {$and:[{orig: Session.get('origname')},{dest:Session.get('destname')}]} , {$and:[{orig:Session.get('destname')},{dest: Session.get('origname')}]}  ] },{sort: {date:-1}, limit:20 });
 	return privatemessages;	
 }
 
@@ -301,7 +301,7 @@ Template.listaAmigosOnlineTemp.events = {
 		if (indice==-1){
 			mychats.push(userdest_id);
 			$("#chatTabs ul").append("<li id='"+userdest_id+"'> <a tipo='titulochat' href='#"+userdest.username+"'>"+userdest.username+"</a><button type='button' class='closechattab'>x</button></li>");
-			$("#chatTabs").append("<div tipo='contenidochat' id='"+userdest.username+"'> <textarea rows='2' cols='50'  maxlength='103' style='font-size: 12pt;' class='privatemessagecont'></textarea></br></div>");
+			$("#chatTabs").append("<div tipo='contenidochat' id='"+userdest.username+"'> <input type='text' size='100'  maxlength='100' style='font-size: 12pt;' class='privatemessagecont'/></br></div>");
 			$("#"+userdest.username).append(PlantillaMensajesPrivados);
 			$("#chatTabs").tabs("refresh");
 		}
@@ -346,6 +346,27 @@ $(document).on("click", ".closechattab", function() {
 		}	
 });
 
+
+
+var obsceneswords = ["fuck","fucking","asshole","bitch","shit","hostias","coño","coños","cabron",
+					"cabrona","gilipollas","puta","putas","puto","putos","puton","polla","pollas","capulla",
+					"mamon","mamona","mamones","maricon","maricona","maricones","follar",
+					"follando","follen","jodan","jodete","cago"];
+function moderator(message){
+	var moderatedwordslist = new Array();
+	wordslist=message.split(" ");
+	wordslist.forEach(function(word){
+		if (obsceneswords.indexOf(word) != -1){
+			var moderatedword="****";
+		}else{
+			var moderatedword=word;
+		}
+		moderatedwordslist.push(moderatedword);
+	})
+	return moderatedwordslist.join(" ")
+}
+
+
 $(document).on("keydown",".privatemessagecont", function(event){
 	if ( event.which == 13 ) {
 		var privatemessage = $(this);
@@ -353,7 +374,7 @@ $(document).on("keydown",".privatemessagecont", function(event){
 			Private_Messages.insert({
 				orig: Session.get('origname'),
 				dest: Session.get('destname'),
-				text: privatemessage.val(),
+				text: moderator(privatemessage.val()),
 				date: new Date(),
 				recibido: 0
 			});
