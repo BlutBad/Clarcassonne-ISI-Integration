@@ -66,23 +66,25 @@
     
     
     ColocarSeguidor:function(id_partida, id_jugador, coordenada, seguidor){
-      Tablero= endTablero[id_partida];
-      var Jugador = _.find(Tablero.listaJugadores,function(obj){return (obj.id == id_jugador)})
+
       var ficha= Tablero.buscarxcoor(coordenada.x,coordenada.y);
-      var nuevoSeguidor = {t:seguidor.t, n:seguidor.n, j:Jugador.numero, f:ficha}
-      if (ficha.seguidores.push(nuevoSeguidor)) {
-        cierraCamino(ficha,1);
-        cierraClaustro(ficha,1);
-        cierraCastillo(ficha,1);
-	endTablero[id_partida]=Tablero;
-        return 1;
+        Tablero= endTablero[id_partida];
+        if (seguidor){
+        
+                var Jugador = _.find(Tablero.listaJugadores,function(obj){return (obj.id == id_jugador)})
+                
+                var nuevoSeguidor = {t:seguidor.t, n:seguidor.n, j:Jugador.numero, f:ficha}
+                ficha.seguidores.push(nuevoSeguidor);
+        }
+                
+          cierraCamino(ficha,1);
+          cierraClaustro(ficha,1);
+          cierraCastillo(ficha,1);
+          endTablero[id_partida]=Tablero;
+          return Tablero.listaJugadores;
       
-      }else {
-	    endTablero[id_partida]=Tablero;
-	    return 0
       }
-      
-    }
+    
     //Coloca el seguidor en la ficha indicada y suma los correspondientes puntos. Acaba el turno. 
     
     
