@@ -620,11 +620,15 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 	
 			if (init == false) {
 				$(idCanvas).mousedown(function(e){
+					console.log(e);
 	          	  	if (that.colocada == false ) {
 	         				
-						if (e.clientX > that.x && e.clientY > that.y && e.clientX < that.x + 100 && e.clientY < that.y + 100){
-							posicion_x = e.clientX - that.x;
-							posicion_y = e.clientY - that.y;
+						if ((e.pageX - e.currentTarget.offsetLeft) > that.x &&
+							 (e.pageY - e.currentTarget.offsetTop) > that.y &&
+							 (e.pageX - e.currentTarget.offsetLeft) < that.x + 100 &&
+							 (e.pageY - e.currentTarget.offsetTop) < that.y + 100){
+							posicion_x = (e.pageX - e.currentTarget.offsetLeft) - that.x;
+							posicion_y = (e.pageY - e.currentTarget.offsetTop) - that.y;
 	                  
 							mouseIsDown = true;
 						}
@@ -634,8 +638,8 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 				$(idCanvas).mouseup(function(e){
        		 	 // cuando mueves. soltar ficha en una casilla
                 	if (that.colocada == false ) {
-						that.x = Math.floor(e.clientX/100)* 100;
-						that.y = Math.floor(e.clientY/100)* 100;
+						that.x = Math.floor((e.pageX - e.currentTarget.offsetLeft)/100)* 100;
+						that.y = Math.floor((e.pageY- e.currentTarget.offsetTop)/100)* 100;
 					}
 					mouseIsDown = false;
 				})
@@ -645,8 +649,8 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
              
 					if(!mouseIsDown) return;
    					if (that.colocada == false ) {
-						that.x = e.clientX - posicion_x;
-						that.y = e.clientY - posicion_y;
+						that.x = (e.pageX - e.currentTarget.offsetLeft) - posicion_x;
+						that.y = (e.pageY - e.currentTarget.offsetTop) - posicion_y;
                 	}
 					return false;
 				})
