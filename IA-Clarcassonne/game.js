@@ -8,7 +8,7 @@
 	console.log(id_partida);      
 	if (endTablero[id_partida]==undefined){
 		endTablero[id_partida]=true;
-	       	Tablero= new Tablero(id_partida);
+	       	Tablero= new ObjTablero(id_partida);
 		Tablero.iniciar();
 
 		Jugadores_ID= Partidas.findOne({_id: id_partida}).jugadores;

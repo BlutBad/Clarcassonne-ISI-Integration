@@ -9,15 +9,15 @@ puntosFinal = function(){
 						}
 
 						if (_.find(ficha.seguidores,function(obj){return (obj.t=="Caballero")})){
-								Tablero.cierraCastillo(ficha,2);
+								cierraCastillo(ficha,2);
 						}
 
 						if (_.find(ficha.seguidores,function(obj){return (obj.t=="Ladron")})){
-								Tablero.cierraCamino(ficha,2);
+								cierraCamino(ficha,2);
 						}
 
 						if (_.find(ficha.seguidores,function(obj){return (obj.t=="Monje")})){
-								Tablero.cierraClaustro(ficha,2);
+								cierraClaustro(ficha,2);
 						}
 				}
 
