@@ -82,10 +82,15 @@
 	    return 0
       }
       
-    }
+    },
     //Coloca el seguidor en la ficha indicada y suma los correspondientes puntos. Acaba el turno. 
     
-    
+    matchFinish: function (match_id, game_id, points) {
+        	Partidas.update({_id: match_id},{$set: {finish:"true", time_end:Date.now()}});
+			Ranking.insert({user_id: this.userId, game_id: game_id, score: points});
+    }
+	//Puntuacion alien y frootwars
+	
 })
 
 

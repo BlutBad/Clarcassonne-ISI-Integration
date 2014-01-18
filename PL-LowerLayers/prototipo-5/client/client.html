@@ -39,7 +39,7 @@
 			<li><a href="#ranking">Ranking</a></li>
 		</ul>
 		<div id="juegos">{{> gamestemp}} {{> matchestemp}} {{> roomgametemp}}</div>
-		<div id="ranking">{{> gamesrankingtemp}} {{> userstemp}} {{> byuserrankingtemp}} </div>
+		<div id="ranking">{{> gamesrankingtemp}} {{> userstemp}} {{> byuserrankingtemp}} {{> bygamerankingtemp}}</div>
 	</div>
 </template>
 
@@ -78,29 +78,38 @@
 
 <template name="userstemp">
 	<div id="users" >
-		Por usuarios:
+		<p>Por usuarios:</p>
 		{{# each users}}
-			<a href="#" class="linkuserranking">{{username}}</a>
+			<a style ="cursor:pointer;text-decoration:underline;" class="linkuserranking">{{username}}</a>
 		{{/each}}
 	</div>
 </template>
 
-
 <template name="gamesrankingtemp" >
 	<div id="gamesranking">
-		Por juegos:
+		<p>Por juegos:</p>
 		{{# each games}}
 			<a style ="cursor:pointer;text-decoration:underline;" class="linkgameranking">{{name}}</a><br>
 		{{/ each}}
 	</div>
 </template>
 
-
 <template name="byuserrankingtemp">
 	<div id="byuserranking">
-		Juegos:
+		<a style ="cursor:pointer;text-decoration:underline;" class="linkback">atras</a>
+		<p>Juegos:</p>
 		{{# each ranking}}
 			{{game}} {{score}}
+		{{/ each}}
+	</div>
+</template>
+
+<template name="bygamerankingtemp">
+	<div id="bygameranking">
+		<a style ="cursor:pointer;text-decoration:underline;" class="linkback">atras</a>
+		<p>Usuarios:</p>
+		{{# each ranking}}
+			{{user}} {{score}}
 		{{/ each}}
 	</div>
 </template>

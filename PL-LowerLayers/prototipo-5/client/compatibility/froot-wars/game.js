@@ -1,5 +1,5 @@
 // Declare all the commonly used objects as variables for convenience
-var b2Vec2 = Box2D.Common.Math.b2Vec2;
+/*var b2Vec2 = Box2D.Common.Math.b2Vec2;
 var b2BodyDef = Box2D.Dynamics.b2BodyDef;
 var b2Body = Box2D.Dynamics.b2Body;
 var b2FixtureDef = Box2D.Dynamics.b2FixtureDef;
@@ -284,7 +284,7 @@ var game = {
 					$('#endingmessage').html('All Levels Complete. Well Done!!!');
 					$("#playnextlevel").hide();
 
-   				        Meteor.call("matchFinish", Session.get("current_game"), game.score);				        
+						Meteor.call("matchFinish", Session.get("match_id"), Session.get("game_id"), game.score);				        
 
 				}
 			} else if (game.mode=="level-failure"){			
@@ -834,4 +834,4 @@ var mouse = {
 		mouse.dragging = false;
 	}
 }
-
+*/

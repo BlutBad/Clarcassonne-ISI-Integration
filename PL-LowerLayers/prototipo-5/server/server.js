@@ -10,9 +10,6 @@ Meteor.startup(function () {
 	if(Games.find({name:"Clarcassonne"}).count() == 0){
 		Games.insert({name:"Clarcassonne", players_max : 5});
 	};
-	/// Inicializacion para depurar
-	if (Ranking.find().count() == 0)
-		Ranking.insert({user:"miguel", game:"Alien_Invasion", score:0});
 });
 
 Meteor.publish("users", function() { 	
@@ -40,9 +37,9 @@ Meteor.publish("partidas", function(current_game_id) {
 
 Meteor.publish("ranking", function(selected_game_id,selected_user_id){
 	if (selected_game_id==undefined)
-		return Ranking.find({"user": selected_user_id});
+		return Ranking.find({"user_id": selected_user_id});
 	else
-		return Ranking.find({"game": selected_game_id});
+		return Ranking.find({"game_id": selected_game_id});
 });
 
 Meteor.users.allow({
