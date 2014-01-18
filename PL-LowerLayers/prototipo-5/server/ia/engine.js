@@ -27,7 +27,7 @@ Tiposfichas = {
 
 
 
-Tablero = function(id_partida){
+ObjTablero = function(id_partida){
 
 	this.id=id_partida;
 	this.iniciar = function(){

@@ -113,6 +113,14 @@ html{
 	height: 420px;
 }
 
+#menuRightClick {
+    display: none;
+    position: absolute;
+    padding: 10px;
+    background-color: #ddd;
+    border: 1px solid #000;
+}
+
 
 .alaputaizq{
 	float:left;

@@ -1,4 +1,4 @@
-var sprites = {
+var spritesAlien = {
     ship: { sx: 0, sy: 0, w: 37, h: 42, frames: 1 },
     missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 },
     enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },
@@ -125,7 +125,6 @@ var playGameAlien2 = function() {
 // Llamada cuando han desaparecido todos los enemigos del nivel sin
 // que alcancen a la nave del jugador
 var winGameAlien = function() {
-	Meteor.call("matchFinish", Session.get("match_id"), Session.get("game_id"), GameAlien.points);
     GameAlien.setBoard(3,new TitleScreen("You win!", 
                                     "Press fire to play again",
                                     playGameAlien1));
@@ -135,7 +134,6 @@ var winGameAlien = function() {
 // Llamada cuando la nave del jugador ha sido alcanzada, para
 // finalizar el juego
 var loseGameAlien = function() {
-	Meteor.call("matchFinish", Session.get("match_id"), Session.get("game_id"), GameAlien.points);
     GameAlien.setBoard(3,new TitleScreen("You lose!", 
                                     "Press fire to play again",
                                     playGameAlien1));
@@ -501,5 +499,6 @@ Explosion.prototype.step = function(dt) {
 
 
 $(function() {
-    GameAlien.initialize("aliencanvas",sprites,startGameAlien);
+    GameAlien.initialize("aliencanvas",spritesAlien,startGameAlien);
 });
+
