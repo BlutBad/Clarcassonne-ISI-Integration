@@ -1,9 +1,5 @@
 //Funcion Cierra Castillo
-
-
-
 cierraCastillo = function(ficha, flag){
-
     var unlado = [
         'Ciudad1l2crect', 
         'Ciudadcurvder', 
@@ -33,7 +29,8 @@ cierraCastillo = function(ficha, flag){
         'Ciudad3lE',
         'Ciudad2lcE',
         'Ciudad2lE',
-        'CiudadPuertaE'
+        'CiudadPuertaE',
+        'CiudadE'
     ]
 
     var seguidor = [];
@@ -109,12 +106,14 @@ cierraCastillo = function(ficha, flag){
     // Funcion cuando es solo un lado
     var f_unlado = function(ficha, puntos, seguidorCa){
         var final = [];
-        // Si tiene un escudo suma 1 punto extra
-        if (escudo.indexOf(ficha.tipo) != -1){puntos++}
-        puntos++;
+        if(_.find(pasado ,function(obj){return (obj.x == ficha.x && obj.y == ficha.y)}) == undefined){
+            // Si tiene un escudo suma 1 punto extra
+            if (escudo.indexOf(ficha.tipo) != -1){puntos++}
+            puntos++;
+        }
         // Guardamos la coordenada actual
         pasado.push({x:ficha.x, y:ficha.y});
-        console.log(ficha.tipo, ficha.x, ficha.y);
+        console.log('Uno: ',ficha.tipo, ficha.x, ficha.y, " --> ", puntos);
         // Mirar si en la ficha hay un caballero
         caballero = _.find(ficha.seguidores,function(obj){return (obj.t=="Caballero")});
         // Si hay caballero y esa ficha no esta en la lista de seguidores
@@ -128,8 +127,8 @@ cierraCastillo = function(ficha, flag){
           ficha2 = Tablero.buscarxcoor(ficha.x,ficha.y-1);
             // Cuando no esta en la lista de pasado
             if(_.find(pasado ,function(obj){return (obj.x == ficha2.x && obj.y == ficha2.y)}) == undefined){
-            if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){
-                    console.log(ficha2.tipo, ficha2.x, ficha2.y);
+                if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){
+                    console.log("un lado 2 -> ",ficha2.tipo, ficha2.x, ficha2.y, " --> ", puntos);
                     // Mirar si en la ficha hay un caballero
                     caballero = _.find(ficha2.seguidores,function(obj){return (obj.t=="Caballero")});
                     // Si hay caballero y esa ficha no esta en la lista de seguidores
@@ -140,7 +139,7 @@ cierraCastillo = function(ficha, flag){
                     // Guardamos la siguiente ficha
                     pasado.push({x:ficha2.x, y:ficha2.y});
                     // volvemos a la ficha de atras
-                    return f_unlado(ficha, puntos, seguidorCa);
+                    return f_unlado(ficha2, puntos+1, seguidorCa);
                 }
                 else if(ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){return f_maslados(ficha2, puntos, seguidorCa)}
                 // Cuando la siguiente ficha esta vacio, devolvemos false
@@ -152,16 +151,17 @@ cierraCastillo = function(ficha, flag){
                     final[0] = false;
                     final[2] = pasado;
                     final[3] = puntos;
+                    final[4] = ficha;
                     return final;
                 }
             }
         }
       
-      if (ficha.abajo == "Tierra"){
-        ficha2 = Tablero.buscarxcoor(ficha.x,ficha.y+1);
+        if (ficha.abajo == "Tierra"){
+            ficha2 = Tablero.buscarxcoor(ficha.x,ficha.y+1);
             if(_.find(pasado ,function(obj){return (obj.x == ficha2.x && obj.y == ficha2.y)}) == undefined){
-            if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){
-                    console.log(ficha2.tipo, ficha2.x, ficha2.y);
+                if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){
+                    console.log("un lado 2 -> ", ficha2.tipo, ficha2.x, ficha2.y, " --> ", puntos);
                     // Mirar si en la ficha hay un caballero
                     caballero = _.find(ficha2.seguidores,function(obj){return (obj.t=="Caballero")});
                     // Si hay caballero y esa ficha no esta en la lista de seguidores
@@ -170,7 +170,7 @@ cierraCastillo = function(ficha, flag){
                         console.log("seguidorCa: ", seguidorCa);
                     }
                     pasado.push({x:ficha2.x, y:ficha2.y});
-                    return f_unlado(ficha, puntos, seguidorCa);
+                    return f_unlado(ficha2, puntos+1, seguidorCa);
                 }
                 else if(ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){return f_maslados(ficha2, puntos, seguidorCa)}
                 else if(!ficha2.lleno){
@@ -181,16 +181,17 @@ cierraCastillo = function(ficha, flag){
                     final[0] = false;
                     final[2] = pasado;
                     final[3] = puntos;
+                    final[4] = ficha;
                     return final;
                 }
             }
         }
       
-      if (ficha.izda == "Tierra"){
-        ficha2 = Tablero.buscarxcoor(ficha.x-1,ficha.y);
+        if (ficha.izda == "Tierra"){
+            ficha2 = Tablero.buscarxcoor(ficha.x-1,ficha.y);
             if(_.find(pasado ,function(obj){return (obj.x == ficha2.x && obj.y == ficha2.y)}) == undefined){
-            if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){
-                    console.log(ficha2.tipo, ficha2.x, ficha2.y);
+                if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){
+                    console.log("un lado 2 -> ", ficha2.tipo, ficha2.x, ficha2.y, " --> ", puntos);
                     // Mirar si en la ficha hay un caballero
                     caballero = _.find(ficha2.seguidores,function(obj){return (obj.t=="Caballero")});
                     // Si hay caballero y esa ficha no esta en la lista de seguidores
@@ -199,7 +200,7 @@ cierraCastillo = function(ficha, flag){
                         console.log("seguidorCa: ", seguidorCa);
                     }
                     pasado.push({x:ficha2.x, y:ficha2.y});
-                    return f_unlado(ficha, puntos, seguidorCa);
+                    return f_unlado(ficha2, puntos+1, seguidorCa);
                 }
                 else if(ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){return f_maslados(ficha2, puntos, seguidorCa)}
                 else if(!ficha2.lleno){
@@ -210,16 +211,17 @@ cierraCastillo = function(ficha, flag){
                     final[0] = false;
                     final[2] = pasado;
                     final[3] = puntos;
+                    final[4] = ficha;
                     return final;
                 }
             }
         }
       
-      if (ficha.derecha == "Tierra"){
-        ficha2 = Tablero.buscarxcoor(ficha.x+1,ficha.y);
+        if (ficha.derecha == "Tierra"){
+            ficha2 = Tablero.buscarxcoor(ficha.x+1,ficha.y);
             if(_.find(pasado ,function(obj){return (obj.x == ficha2.x && obj.y == ficha2.y)}) == undefined){
-            if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){
-                    console.log(ficha2.tipo, ficha2.x, ficha2.y);
+                if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){
+                    console.log("un lado 2 -> ", ficha2.tipo, ficha2.x, ficha2.y, " --> ", puntos);
                     // Mirar si en la ficha hay un caballero
                     caballero = _.find(ficha2.seguidores,function(obj){return (obj.t=="Caballero")});
                     // Si hay caballero y esa ficha no esta en la lista de seguidores
@@ -228,7 +230,7 @@ cierraCastillo = function(ficha, flag){
                         console.log("seguidorCa: ", seguidorCa);
                     }
                     pasado.push({x:ficha2.x, y:ficha2.y});
-                    return f_unlado(ficha, puntos, seguidorCa);
+                    return f_unlado(ficha2, puntos+1, seguidorCa);
                 }
                 else if(ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){return f_maslados(ficha2, puntos, seguidorCa)}
                 else if(!ficha2.lleno){
@@ -239,6 +241,7 @@ cierraCastillo = function(ficha, flag){
                     final[0] = false;
                     final[2] = pasado;
                     final[3] = puntos;
+                    final[4] = ficha;
                     return final;
                 }
             }
@@ -248,9 +251,7 @@ cierraCastillo = function(ficha, flag){
         antes = pasado.indexOf(_.find(pasado ,function(obj){return (obj.x == ficha.x && obj.y == ficha.y)})) - 1;
         // Cuando llegas al punto de inicio y la ciudad esta cerrada cuando devuelve -1.
         if (antes == -1)
-            return [true, puntos];
-        // reestamos un punto porque volvemos atras, al volver va sumar.
-        puntos--;
+            return [true, puntos, ficha];
         ficha3 = Tablero.buscarxcoor(pasado[antes].x, pasado[antes].y);
         if (unlado.indexOf(ficha3.tipo) != -1){return f_unlado(ficha3, puntos, seguidorCa)}
         else if (maslados.indexOf(ficha3.tipo) != -1){return f_maslados(ficha3, puntos, seguidorCa)}
@@ -259,12 +260,14 @@ cierraCastillo = function(ficha, flag){
     // Funcion para mas lados
     var f_maslados = function(ficha, puntos, seguidorCa){
         var final = [];
-        // Si tiene un escudo suma 1 punto extra
-        if (escudo.indexOf(ficha.tipo) != -1){puntos++}
-        puntos++;
+        if(_.find(pasado ,function(obj){return (obj.x == ficha.x && obj.y == ficha.y)}) == undefined){
+            // Si tiene un escudo suma 1 punto extra
+            if (escudo.indexOf(ficha.tipo) != -1){puntos++}
+            puntos++;
+        }
         // Guardamos la ficha actual a la lista pasada
         pasado.push({x:ficha.x, y:ficha.y});
-        console.log(ficha.tipo, ficha.x, ficha.y);
+        console.log('Mas: ',ficha.tipo, ficha.x, ficha.y, " --> ", puntos);
         // Mirar si en la ficha hay un caballero
         caballero = _.find(ficha.seguidores,function(obj){return (obj.t=="Caballero")});
         // Si hay caballero y esa ficha no esta en la lista de seguidores
@@ -280,7 +283,7 @@ cierraCastillo = function(ficha, flag){
             if(_.find(pasado ,function(obj){return (obj.x == ficha2.x && obj.y == ficha2.y)}) == undefined){
                 // cuando la siguiente ficha es un cierra castillo
                 if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){
-                    console.log(ficha2.tipo, ficha2.x, ficha2.y);
+                    console.log("mas lados 2 -> ", ficha2.tipo, ficha2.x, ficha2.y, " --> ", puntos);
                     // Mirar si en la ficha hay un caballero
                     caballero = _.find(ficha2.seguidores,function(obj){return (obj.t=="Caballero")});
                     // Si hay caballero y esa ficha no esta en la lista de seguidores
@@ -291,7 +294,7 @@ cierraCastillo = function(ficha, flag){
                     // guardamos la ficha2 en la lista de pasado
                     pasado.push({x:ficha2.x, y:ficha2.y});
                     // volvemos a la ficha de atras
-                    return f_unlado(ficha, puntos, seguidorCa)
+                    return f_unlado(ficha2, puntos+1, seguidorCa)
                 }
                 // Cuando la siguiente ficha tiene mas de un lado
                 else if (ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){return f_maslados(ficha2, puntos, seguidorCa)}
@@ -304,6 +307,7 @@ cierraCastillo = function(ficha, flag){
                     final[0] = false;
                     final[2] = pasado;
                     final[3] = puntos;
+                    final[4] = ficha;
                     return final;
                 }
             }
@@ -312,7 +316,7 @@ cierraCastillo = function(ficha, flag){
             ficha2 = Tablero.buscarxcoor(ficha.x, ficha.y+1);
             if(_.find(pasado ,function(obj){return (obj.x == ficha2.x && obj.y == ficha2.y)}) == undefined){
                 if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){
-                    console.log(ficha2.tipo, ficha2.x, ficha2.y);
+                    console.log("mas lados 2 -> ", ficha2.tipo, ficha2.x, ficha2.y, " --> ",puntos);
                     // Mirar si en la ficha hay un caballero
                     caballero = _.find(ficha2.seguidores,function(obj){return (obj.t=="Caballero")});
                     // Si hay caballero y esa ficha no esta en la lista de seguidores
@@ -321,7 +325,8 @@ cierraCastillo = function(ficha, flag){
                         console.log("seguidorCa: ", seguidorCa);
                     }
                     pasado.push({x:ficha2.x, y:ficha2.y});
-                    return f_unlado(ficha, puntos, seguidorCa)}
+                    return f_unlado(ficha2, puntos+1, seguidorCa)
+                }
                 else if (ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){return f_maslados(ficha2, puntos, seguidorCa)}
                 else if(!ficha2.lleno){
                     if (seguidorCa.length > 0)
@@ -331,6 +336,7 @@ cierraCastillo = function(ficha, flag){
                     final[0] = false;
                     final[2] = pasado;
                     final[3] = puntos;
+                    final[4] = ficha;
                     return final;
                 }
             }
@@ -339,7 +345,7 @@ cierraCastillo = function(ficha, flag){
             ficha2 = Tablero.buscarxcoor(ficha.x-1, ficha.y);
             if(_.find(pasado ,function(obj){return (obj.x == ficha2.x && obj.y == ficha2.y)}) == undefined){
                 if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){
-                    console.log(ficha2.tipo, ficha2.x, ficha2.y);
+                    console.log("mas lados 2 -> ", ficha2.tipo, ficha2.x, ficha2.y, " --> ",puntos);
                     // Mirar si en la ficha hay un caballero
                     caballero = _.find(ficha2.seguidores,function(obj){return (obj.t=="Caballero")});
                     // Si hay caballero y esa ficha no esta en la lista de seguidores
@@ -348,7 +354,8 @@ cierraCastillo = function(ficha, flag){
                         console.log("seguidorCa: ", seguidorCa);
                     }
                     pasado.push({x:ficha2.x, y:ficha2.y});
-                    return f_unlado(ficha, puntos, seguidorCa)}
+                    return f_unlado(ficha2, puntos+1, seguidorCa)
+                }
                 else if (ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){return f_maslados(ficha2, puntos, seguidorCa)}
                 else if(!ficha2.lleno){
                     if (seguidorCa.length > 0)
@@ -358,6 +365,7 @@ cierraCastillo = function(ficha, flag){
                     final[0] = false;
                     final[2] = pasado;
                     final[3] = puntos;
+                    final[4] = ficha;
                     return final;
                 }
             }
@@ -366,7 +374,7 @@ cierraCastillo = function(ficha, flag){
             ficha2 = Tablero.buscarxcoor(ficha.x+1, ficha.y);
             if(_.find(pasado ,function(obj){return (obj.x == ficha2.x && obj.y == ficha2.y)}) == undefined){
                 if (ficha2.lleno && unlado.indexOf(ficha2.tipo) != -1){
-                    console.log(ficha2.tipo, ficha2.x, ficha2.y);
+                    console.log("mas lados 2 -> ", ficha2.tipo, ficha2.x, ficha2.y, " --> ",puntos);
                     // Mirar si en la ficha hay un caballero
                     caballero = _.find(ficha2.seguidores,function(obj){return (obj.t=="Caballero")});
                     // Si hay caballero y esa ficha no esta en la lista de seguidores
@@ -375,7 +383,8 @@ cierraCastillo = function(ficha, flag){
                         console.log("seguidorCa: ", seguidorCa);
                     }
                     pasado.push({x:ficha2.x, y:ficha2.y});
-                    return f_unlado(ficha, puntos, seguidorCa)}
+                    return f_unlado(ficha2, puntos+1, seguidorCa)
+                }
                 else if (ficha2.lleno && maslados.indexOf(ficha2.tipo) != -1){return f_maslados(ficha2, puntos, seguidorCa)}
                 else if(!ficha2.lleno){
                     if (seguidorCa.length > 0)
@@ -385,6 +394,7 @@ cierraCastillo = function(ficha, flag){
                     final[0] = false;
                     final[2] = pasado;
                     final[3] = puntos;
+                    final[4] = ficha;
                     return final;
                 }
             }
@@ -393,8 +403,7 @@ cierraCastillo = function(ficha, flag){
         antes = pasado.indexOf(_.find(pasado ,function(obj){return (obj.x == ficha.x && obj.y == ficha.y)})) - 1;
         // Cuando llegas al punto de inicio y la ciudad esta cerrada cuando devuelve -1.
         if (antes == -1)
-            return true;
-        puntos--;
+            return [true, puntos, ficha];
         ficha3 = Tablero.buscarxcoor(pasado[antes].x, pasado[antes].y);
         if (unlado.indexOf(ficha3.tipo) != -1){return f_unlado(ficha3, puntos, seguidorCa)}
         else if (maslados.indexOf(ficha3.tipo) != -1){return f_maslados(ficha3, puntos, seguidorCa)}
@@ -554,6 +563,7 @@ cierraCastillo = function(ficha, flag){
     }
     else if (maslados.indexOf(ficha.tipo) != -1){
         var final = f_maslados(ficha, 0, seguidor);
+        console.log("final: ", final," ---> ",ficha);
         if (((flag == 1) && (final[0] == true)) || (flag == 2)){
             if (flag == 2)
                 final[1] = final[3];
@@ -567,4 +577,4 @@ cierraCastillo = function(ficha, flag){
         return final;
     }
     else {return false}
-  }
+}
