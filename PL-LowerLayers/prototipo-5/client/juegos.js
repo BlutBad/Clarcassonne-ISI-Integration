@@ -168,5 +168,12 @@ Template.roomplayerstemp.events = {
 	}
 };
 
-
+// Devuelve 'true' si eres administrador para representar el botón de empezar
+Template.roomplayerstemp.admin = function() {
+	var isAdmin = false;
+	if(Meteor.userId() && Session.get('match_id')){
+		isAdmin = Meteor.userId() == Partidas.findOne({_id : Session.get('match_id')}).admin_by;
+	};
+	return isAdmin;
+} 
 
