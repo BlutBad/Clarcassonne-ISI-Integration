@@ -69,33 +69,138 @@ Template.hall_torneo.creador = function() {
 }
 */
 
+
+var addSomeUsers = function(participantes, num) {
+    console.log("addSomeUsers");
+    var party = {};
+    party.jugadores = [];
+    // -1 porque si paso 3, se cogeran 4 y no 3, el 0 cuenta.
+    console.log("__Participantes.length:" + participantes.length + ", num: "+num);
+    for (var i = num-1; i >= 0; i--) {
+        var rnd = Math.floor(Math.random() * participantes.length);
+
+        console.log("\trnd: " + rnd+ ", id: "+participantes[rnd]);
+
+        party.jugadores.push({user_id:participantes[rnd], estado: "Torneo Inactivo"});
+        participantes=_.without(participantes, participantes[rnd]);
+    }
+    party.ganador = party.jugadores[2];
+    return {party: party, participantes:participantes};
+}
+
+var crearPartidasEtapa = function (etapa) {
+    console.log("Crear partidas | ETAPA: " +etapa+"\n");
+    var tid = Session.get('showTorneoId');
+    var tor = Torneos.findOne(tid);
+    
+
+    participantes = tor.participantes;
+    partys = [];
+
+    if (tor.participantes.length<3){
+        console.log("Imposible crear al menos una partida");
+    }else{
+        for (var k=0;participantes.length > 0 && k<30;k++) {
+            var mod= participantes.length % 4;
+
+            if(mod == 2 || mod == 3){
+                var ret =addSomeUsers(participantes,3);
+            }else if (mod ==1) {
+                var ret =addSomeUsers(participantes,5);
+            }else if (mod == 0){
+                var ret =addSomeUsers(participantes,4);
+            };
+
+            partys.push(ret.party);
+            participantes = ret.participantes;
+            
+            };
+
+        };
+    console.log("\t__Partidas Creadas__");
+    console.log(partys);
+
+    //Insertando partidas de la etapa
+    var obj = {};
+    console.log(tor.etapas);
+    if (!!tor.etapas){
+        obj.etapas = {}
+        obj.etapas = tor.etapas;
+        obj.etapas[etapa] = [];
+        //console.log("tor.etapas");
+    }else{
+        obj.etapas = {};
+        obj.etapas[etapa]=[];
+        //console.log("x normal");
+    }
+    //console.log(x)
+    //console.log(tor.etapas)
+
+    //x.etapas[etapa].push({id: 22222, jugadores:{id:1212, id:2222}});
+    //x.etapas[etapa].push({id: 11111, jugadores:{id:3333, id:4444}});
+    obj.etapas[etapa] = partys;
+    Torneos.update(tid, {$set:obj});
+    console.log("\t__Partidas Insertadas__");
+}
+
+
+
 Template.hall_torneo.events = {
     //Apuntarme o Salir del torneo
     'click .apuntarme': function() {
         u_id = Meteor.userId();
         if (u_id){
-            var u = Torneos.findOne({_id:this._id, participantes: {$in: [u_id]}});
-            if (!u.finalizado){
+            var u = Torneos.findOne({_id:this._id, participantes: {$in: [u_id]}, finalizado: { $exists: false }});
                 if (u) {
                     Torneos.update(this._id, {$pull: {participantes: u_id}});
                 }else{
                     Torneos.update(this._id, { $push : {participantes : u_id}});
                 }
-            }else{
-                console.log("El torneo se ha terminado ya");
-            }
         }
     },
     
     'click .startTorneo': function() {
         //console.log("Start Torneo");
-        startTorneo();
+        //startTorneo();
+        //startTorneoXXX("preXX");
+        crearPartidasEtapa("preseleccion")
     },
     
     'click .finalizarTorneo': function() {
         stopTorneo();
+    },
+
+    'click .jugarEtapa': function() {
+        console.log("jugarEtapa");
+        hacerEtapa()
     }
 };
+
+function startTorneoXXX(etapa, partys) {
+    var tid = Session.get('showTorneoId');
+    var tor = Torneos.findOne(tid);
+
+    var x={};
+    console.log(etapa);
+    console.log(tor.etapas);
+    if (!!tor.etapas){
+        x.etapas = {}
+        x.etapas = tor.etapas;
+        console.log("tor.etapas");
+        x.etapas[etapa] = [];
+    }else{
+        x.etapas = {};
+        x.etapas[etapa]=[];
+        console.log("x normal");
+    }
+    console.log(x)
+    console.log(tor.etapas)
+
+    //x.etapas[etapa].push({id: 22222, jugadores:{id:1212, id:2222}});
+    //x.etapas[etapa].push({id: 11111, jugadores:{id:3333, id:4444}});
+    x.etapas[etapa] = partys;
+    Torneos.update(tid, {$set:x});
+}
 
 
 function stopTorneo() {
@@ -128,58 +233,75 @@ function insertPartyVolatiles(torid, participantes) {
     PartidasVolatiles.insert({
         torneo_id: torid,
         jugadores :participantes,
-        creator_id:  Date.now(),
-        listos: false
+        listos: false,
     });
 };
 
-function startTorneo() {
+/*
+1. Las etapa son indep del klarki hall, eliminar las partidas de las etapas viejas
+
+
+
+*/
+
+var  hacerEtapa = function(){
     var tid = Session.get('showTorneoId');
-    var tor = Torneos.findOne(tid);
+
+    if (Torneos.findOne({_id:tid, pre_finish:{$exists:false}})){
+        console.log("Etapa de preseleccion!");
+
+        Torneos.update(tid, {$set:{pre_finish:true}});
+        startTorneoXXX("preseleccion");
+
+    } else if (Torneos.findOne({_id:tid, cuartos_finish:{$exists:false}})){
+        console.log("Etapa de Cuartos!");
+
+        Torneos.update(tid, {$set:{cuartos_finish:true}});
+        startTorneoXXX("cuartos");
+
+    } else if (Torneos.findOne({_id:tid, semifinal_finish:{$exists:false}})){
+        console.log("Etapa de Semi-Final!");
     
-    var numP = tor.participantes.length;
-    
-    if (numP < 3){
-        console.log("Imposible crear al menos una partida");
+        Torneos.update(tid, {$set:{semifinal_finish:true}});
+        startTorneoXXX("semifinal");
+
+    } else if (Torneos.findOne({_id:tid, final_finish:{$exists:false}})){
+        console.log("Etapa de la Final!");
+        startTorneoXXX("final");
+
+        Torneos.update(tid, {$set:{final_finish:true}});
+
     }else{
-        console.log("Creando partidas");
-        for (;numP>=3;) {
-            var mod= numP % 4;
-            if(mod == 2 || mod == 3){
-                console.log("Mod=2/3, formado grupo x3, numP: "+numP);   
-                
-                jugadores = [];
-                for (var k=(numP-3); numP>k; numP--){
-                    console.log("#:"+(numP-1) +'  '+tor.participantes[(numP-1)]);
-                    jugadores.push({user_id:tor.participantes[(numP-1)], estado: "Inactivo"});
-                }
-                insertPartyVolatiles(tid, jugadores);
-        
-            }else if(mod==1){
-                console.log("Mod=1 formado grupo x5, numP: "+numP); 
-                
-                jugadores = [];
-                for (var k=(numP-5); numP>k; numP--){
-                    console.log("#:"+(numP-1) +'  '+tor.participantes[(numP-1)]);
-                    jugadores.push({user_id:tor.participantes[(numP-1)], estado: "Inactivo"});
-                }
-                insertPartyVolatiles(tid, jugadores);
-    
-            }else if(mod == 0){
-                for (var j=0; numP!=0 && !(numP % 4) && j<100;j++) {
-                    console.log("Mod=0 formado grupo x4, numP: "+numP); 
-                    
-                    jugadores = [];
-                    for (var k=(numP-4); numP>k; numP--){
-                        console.log("#:"+(numP-1) +'  '+tor.participantes[(numP-1)]);
-                        jugadores.push({user_id:tor.participantes[(numP-1)], estado: "Inactivo"});
-                    }    
-                    insertPartyVolatiles(tid, jugadores);    
-                }
-            }
-        }
+        console.log("El torneo ha terminado!");
     }
 }
+
+
+Deps.autorun(function(c) {
+    var tid = Session.get('showTorneoId');
+    if (Torneos.findOne({_id:tid, pre_finish: true, cuartos_finish:{$exists:false}, semifinal_finish:{$exists:false},final_finish:{$exists:false}})){
+        console.log("Deps: Etapa de preseleccion ha terminado!");
+
+
+    } else if (Torneos.findOne({_id:tid, cuartos_finish: true, semifinal_finish:{$exists:false},final_finish:{$exists:false}})){
+        console.log("Deps: Etapa de Cuartos! ha terminado!");
+
+
+    } else if (Torneos.findOne({_id:tid, semifinal_finish: true,final_finish:{$exists:false}})){
+        console.log("Deps: Etapa de Semi-Final ha terminado!");
+    
+
+    } else if (Torneos.findOne({_id:tid, final_finish: true})){
+        console.log(" Deps:  Etapa de la Final ha terminado!");
+
+
+    }else{
+        console.log("Deps: Caso en el cual no se que hacer!");
+    }
+});
+
+
+
 
 
 //******************SOLO TORNEO*************************

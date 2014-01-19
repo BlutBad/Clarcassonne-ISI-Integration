@@ -137,7 +137,8 @@ Meteor.startup(function() {
 	                    pic : '/images/games_logo/alieninvasion.jpg',
 	                    description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel',
 	                    description_long:'Id vel sensibus honestatis omittantur, vel cu nobis commune patrioque. In accusata definiebas qui, id tale malorum dolorem sed, solum clita phaedrum ne his. Eos mutat ullum forensibus ex, wisi perfecto urbanitas cu eam, no vis dicunt impetus. Assum novum in pri, vix an suavitate moderatius, id has reformidans referrentur. Elit inciderint omittantur duo ut, dicit democritum signiferumque eu est, ad suscipit delectus mandamus duo. An harum equidem maiestatis nec.',
-	                	participantes:[]
+	                	participantes:[],
+	                	etapas : {preseleccion:[], octavos:[], cuartos:[], semifinal:[], final:[]},
 	                }
                 ]
 
@@ -208,7 +209,8 @@ Meteor.startup(function() {
                         pic : '/images/games_logo/clarkasone.jpg',
                         description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel',
                         description_long:'Id vel sensibus honestatis omittantur, vel cu nobis commune patrioque. In accusata definiebas qui, id tale malorum dolorem sed, solum clita phaedrum ne his. Eos mutat ullum forensibus ex, wisi perfecto urbanitas cu eam, no vis dicunt impetus. Assum novum in pri, vix an suavitate moderatius, id has reformidans referrentur. Elit inciderint omittantur duo ut, dicit democritum signiferumque eu est, ad suscipit delectus mandamus duo. An harum equidem maiestatis nec.',
-                        participantes:[]
+                        participantes:[],
+                        etapas : {preseleccion:[], octavos:[], cuartos:[], semifinal:[], final:[]},
 				}
 			    ],
 			},
@@ -276,7 +278,8 @@ Meteor.startup(function() {
                         pic : '/images/splashscreen.png',
                         description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel',
                         description_long:'Id vel sensibus honestatis omittantur, vel cu nobis commune patrioque. In accusata definiebas qui, id tale malorum dolorem sed, solum clita phaedrum ne his. Eos mutat ullum forensibus ex, wisi perfecto urbanitas cu eam, no vis dicunt impetus. Assum novum in pri, vix an suavitate moderatius, id has reformidans referrentur. Elit inciderint omittantur duo ut, dicit democritum signiferumque eu est, ad suscipit delectus mandamus duo. An harum equidem maiestatis nec.',
-                        participantes:[]
+                        participantes:[],
+                        etapas : {preseleccion:[], octavos:[], cuartos:[], semifinal:[], final:[]},
                      }
 			    ]
 			} 
@@ -350,7 +353,8 @@ Meteor.startup(function() {
 				    pic : info.pic,
 				    description : info.description,
 				    description_long: info.description_long,
-				    participantes: []
+				    participantes: [],
+				    //etapas: info.etapas,
 				});
 				ApuntameUsuariosFakes(torneoId);
 		    }
