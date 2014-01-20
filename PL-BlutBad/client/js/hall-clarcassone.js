@@ -283,12 +283,12 @@ Template.hall_clarcassone.UsersInHall = function() {
 Template.hall_clarcassone.userRango = function(user_id) { 
      gid = Session.get("current_game"); 
      if (gid) {
-        console.log(user_id) 
+        //console.log(user_id) 
         rankingU = Ranking.findOne({ 
             game_id : gid, 
             user_id : user_id 
         }); 
-        console.log(rankingU)
+        //console.log(rankingU)
         if (rankingU) { 
             return Rangos.findOne({ 
                 _id : rankingU.rango_id 

@@ -2,74 +2,106 @@
 
 Meteor.startup(function() {
  
-	    if (Menu.find().count() === 0) {
-			var data = [ {
-			    name : "Juegos",
-			    contents : []
-			}, {
-			    name : "Ranking",
-			    contents : []
-			}, {
-			    name : "Torneos",
-			    contents : []
-			},
-			/*
-			{
-			    name : "Tienda",
-			    contents : []
-			},*/ 
-			
-			];
+	var partidasV = [];
+    if (Menu.find().count() === 0) {
+		var data = [ {
+		    name : "Juegos",
+		    contents : []
+		}, {
+		    name : "Ranking",
+		    contents : []
+		}, {
+		    name : "Torneos",
+		    contents : []
+		},
+		/*
+		{
+		    name : "Tienda",
+		    contents : []
+		},*/ 
+		
+		];
 
-			var timestamp = (new Date()).getTime();
-			for ( var i = 0; i < data.length; i++) {
-			    var list_id = Menu.insert({
-				name : data[i].name
-			    });
-			}
-			
-			fakeUsers = "Cheyrd_Inaurtle Oechi_Honomon Saml_Rodizard Ineh_Lorochu Tand_Knockeromon Quaq_Vorizard Elms_Kimizard Kell_Clotachu Cond_Aughamon Umy_Clotizard Lorrt_Denamon Scheas_Rodertle Ekalu_Goofortle Yinao_Sulachu Skeln_Wadezard Geal_Thimbleortle Schein_Snarkyzard Vun_Twerpirtle Oskelo_Thimbleechu Edyne_Undartle Yagea_Perozard Ros_Ashertle Erise_Ageychu Eingo_Faceemon Dars_Ardartle Clur_Twitymon Seev_Tasurtle Siy_Goofirtle Rayt_Numbachu Laeg_Boneurtle Ahini_Fumbleumon Inalo_Bumbleichu Wheuv_Footezard Tait_Ormichu Llaunt_Onartle Imy_Clodamon Osf_Wimpezard Chagh_Meatomon Rhey_Skullumon Shaid_Etochu Ett_Osymon Urado_Faceurtle Oite_Torichu Chrent_Faceomon Uma_Bumbleamon Ess_Ghaozard Aunta_Dumbyrtle Tanf_Loafechu Apere_Chauzard Oete_Footachu Ghat_Puffemon Luiz_Knuckleimon Uworo_Dipazard Avori_Untuzard Quek_Skeluchu Atnt_Angazard Ianga_Ballemon Reyd_Sulirtle Phew_Headazard Undn_Puffozard Orilu_Iamon Isk_Faceychu Ustn_Undyzard Suls_Twerpemon Eldrd_Draemon Yrano_Kimachu Nysr_Adochu Emc_Goofurtle Auski_Doofemon Eorma_Raymon Uemu_Ballomon Cheet_Sneezeamon Schiech_Tonuzard Irph_Ineertle Died_Numbuchu Ads_Ineamon Ymore_Ormazard Itb_Turychu Oathi_Imazard Iryni_Wadozard Ward_Denertle Weyk_Therortle Wark_Rayemon Inala_Oldemon Heik_Risamon Yieg_Verirtle Ads_Fingerozard Oia_Cloduzard Lab_Leromon Zhiec_Ustumon Bin_Enumon Rab_Nyurtle Lyenn_Doofychu Urnch_Knockizard Unyu_Atemon Atd_Wipeozard Nyv_Headortle Zhok_Boneortle Sayf_Enimon Thier_Ackortle Leis_Skelichu Gaiv_Thimbleizard Eemi_Bumbleirtle Quel_Wimpechu Ehini_Ghauchu Urilo_Boneichu Eml_Sneezeochu Ykimu_Oldimon Olyea_Airomon Emst_Inaymon Driel_Skullochu Reinn_Headyrtle Llooc_Sayachu Queal_Ankleazard Dais_Nyozard Samw_Draichu Zhoph_Faceachu Rakk_Echomon Osere_Lunkuchu";
-			fakeUsersArray = fakeUsers.split(" ");
-			//console.log("Creando (" + fakeUsersArray.length + ") usuarios falsos...");
-			for ( var i = 0; i < fakeUsersArray.length; i++) {
-			    fakeUser = fakeUsersArray[i];
-			    var uId = Accounts.createUser({
-			    	fakeUser : true,
-			    	username:fakeUser,
-			    	email:(fakeUser+"@kaka.aka"), 
-			    	password:"123"})
-			    Meteor.users.update(uId,
-			    	{$set:{fakeUser:true}
-			    });
+		var timestamp = (new Date()).getTime();
+		for ( var i = 0; i < data.length; i++) {
+		    var list_id = Menu.insert({
+			name : data[i].name
+		    });
+		}
+		
+		fakeUsers = "Cheyrd_Inaurtle Oechi_Honomon Saml_Rodizard Ineh_Lorochu Tand_Knockeromon Quaq_Vorizard Elms_Kimizard Kell_Clotachu Cond_Aughamon Umy_Clotizard Lorrt_Denamon Scheas_Rodertle Ekalu_Goofortle Yinao_Sulachu Skeln_Wadezard Geal_Thimbleortle Schein_Snarkyzard Vun_Twerpirtle Oskelo_Thimbleechu Edyne_Undartle Yagea_Perozard Ros_Ashertle Erise_Ageychu Eingo_Faceemon Dars_Ardartle Clur_Twitymon Seev_Tasurtle Siy_Goofirtle Rayt_Numbachu Laeg_Boneurtle Ahini_Fumbleumon Inalo_Bumbleichu Wheuv_Footezard Tait_Ormichu Llaunt_Onartle Imy_Clodamon Osf_Wimpezard Chagh_Meatomon Rhey_Skullumon Shaid_Etochu Ett_Osymon Urado_Faceurtle Oite_Torichu Chrent_Faceomon Uma_Bumbleamon Ess_Ghaozard Aunta_Dumbyrtle Tanf_Loafechu Apere_Chauzard Oete_Footachu Ghat_Puffemon Luiz_Knuckleimon Uworo_Dipazard Avori_Untuzard Quek_Skeluchu Atnt_Angazard Ianga_Ballemon Reyd_Sulirtle Phew_Headazard Undn_Puffozard Orilu_Iamon Isk_Faceychu Ustn_Undyzard Suls_Twerpemon Eldrd_Draemon Yrano_Kimachu Nysr_Adochu Emc_Goofurtle Auski_Doofemon Eorma_Raymon Uemu_Ballomon Cheet_Sneezeamon Schiech_Tonuzard Irph_Ineertle Died_Numbuchu Ads_Ineamon Ymore_Ormazard Itb_Turychu Oathi_Imazard Iryni_Wadozard Ward_Denertle Weyk_Therortle Wark_Rayemon Inala_Oldemon Heik_Risamon Yieg_Verirtle Ads_Fingerozard Oia_Cloduzard Lab_Leromon Zhiec_Ustumon Bin_Enumon Rab_Nyurtle Lyenn_Doofychu Urnch_Knockizard Unyu_Atemon Atd_Wipeozard Nyv_Headortle Zhok_Boneortle Sayf_Enimon Thier_Ackortle Leis_Skelichu Gaiv_Thimbleizard Eemi_Bumbleirtle Quel_Wimpechu Ehini_Ghauchu Urilo_Boneichu Eml_Sneezeochu Ykimu_Oldimon Olyea_Airomon Emst_Inaymon Driel_Skullochu Reinn_Headyrtle Llooc_Sayachu Queal_Ankleazard Dais_Nyozard Samw_Draichu Zhoph_Faceachu Rakk_Echomon Osere_Lunkuchu";
+		fakeUsersArray = fakeUsers.split(" ");
+		fakeUsersId = [];
+		//console.log("Creando (" + fakeUsersArray.length + ") usuarios falsos...");
+		for ( var i = 0; i < fakeUsersArray.length; i++) {
+		    fakeUser = fakeUsersArray[i];
+		    fakeUsersId[i] = Accounts.createUser({
+		    	fakeUser : true,
+		    	username:fakeUser,
+		    	email:(fakeUser+"@kaka.aka"), 
+		    	password:"123"
+		    });
+		    Meteor.users.update(fakeUsersId[i],
+		    	{$set:{fakeUser:true}
+		    });
+		};
+
+		for (var i = 0; i <= 5; i++) {
+			partidasV[i] = {
+				creator_id : fakeUsersId[i],
+				jugadores : [
+					{
+						user_id : fakeUsersId[i],
+						estado : "Pendiente"
+					},
+					{
+						user_id : fakeUsersId[i+1],
+						estado : "Pendiente"
+					},
+					{
+						user_id : fakeUsersId[i+2],
+						estado : "Pendiente"
+					}
+				],
+				listos : false,
+				torneo_id : false,  
 			};
-			
-			
-			// USUARIOS POR DEFECTOs 
-			Accounts.createUser({username:"user",email:"user@kaka.aka", password:"123"})
-			Accounts.createUser({username:"sara",email:"sara@kaka.aka", password:"123"})
-			Accounts.createUser({username:"itzi",email:"itzi@kaka.aka", password:"123"})
-			Accounts.createUser({username:"dany",email:"dany@kaka.aka", password:"123"})		
-	    }
+		};
+		
+		// USUARIOS POR DEFECTOs 
+		user = Accounts.createUser({username:"user",email:"user@kaka.aka", password:"123"})
+		sara = Accounts.createUser({username:"sara",email:"sara@kaka.aka", password:"123"})
+		itzi = Accounts.createUser({username:"itzi",email:"itzi@kaka.aka", password:"123"})
+		dany = Accounts.createUser({username:"dany",email:"dany@kaka.aka", password:"123"})		
+    }
 
-	    if (Menu_user.find().count() === 0) {
-			var data = [ {
-			    name : "Mi perfil",
-			    contents : []
-			}, {
-			    name : "Buscar usuarios",
-			    contents : []
-			}, {
-			    name : "Amigos",
-			    contents : []
-			}, ];
+    if (Menu_user.find().count() === 0) {
+		var data = [ {
+		    name : "Mi perfil",
+		    contents : []
+		}, {
+		    name : "Buscar usuarios",
+		    contents : []
+		}, {
+		    name : "Amigos",
+		    contents : []
+		}, ];
 
-			var timestamp = (new Date()).getTime();
-			for ( var i = 0; i < data.length; i++) {
-			    var list_id = Menu_user.insert({
-					name : data[i].name
-			    });
-			}
-	    } 
+		var timestamp = (new Date()).getTime();
+		for ( var i = 0; i < data.length; i++) {
+		    var list_id = Menu_user.insert({
+				name : data[i].name
+		    });
+		}
+    };
+
+	if (PartidasVolatiles.find().count() === 0) {  
+		for (var i = 0; i < partidasV.length; i++) { 
+			PartidasVolatiles.insert(
+				partidasV[i]
+			);
+		};
+	};
 
 	if (Juegos.find().count() === 0) {
 		var admin = Accounts.createUser({username:"admin",email:"admin@kaka.aka", password:"123"});   
@@ -128,7 +160,8 @@ Meteor.startup(function() {
 						description : "Has jugado 5 veces a este juego",
 						timesPlayed : 5,
 						insig_image_src : '/insignias/9.jpg'
-				    }, ],
+				    }, 
+				],
 			    torneos : [
 				    {
 	                    title : "Torneo AlienInvasion", 
