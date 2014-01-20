@@ -69,11 +69,21 @@ Template.hall_torneo.creador = function() {
 }
 */
 
+var playerWiner = function (players) {
+    var maxPlayer = players[0];
+    for (var i = players.length - 1; i >= 0; i--) {
+        if (players[i].puntos > maxPlayer.puntos){
+            maxPlayer = players[i];
+        }
+    };
+    return maxPlayer;
+};
 
 var addSomeUsers = function(participantes, num) {
     console.log("addSomeUsers");
     var party = {};
     party.jugadores = [];
+    party.puntuacion = [];
     // -1 porque si paso 3, se cogeran 4 y no 3, el 0 cuenta.
     console.log("__Participantes.length:" + participantes.length + ", num: "+num);
     for (var i = num-1; i >= 0; i--) {
@@ -82,33 +92,82 @@ var addSomeUsers = function(participantes, num) {
         console.log("\trnd: " + rnd+ ", id: "+participantes[rnd]);
 
         party.jugadores.push({user_id:participantes[rnd], estado: "Torneo Inactivo"});
+        party.puntuacion.push({user_id: participantes[rnd], puntos: (Math.floor(Math.random()*200))});
+
         participantes=_.without(participantes, participantes[rnd]);
     }
-    party.ganador = party.jugadores[2];
+
+    party.ganador = playerWiner(party.puntuacion);
+
     return {party: party, participantes:participantes};
 }
 
+var getPlayersEtapa = function (partidas, toSlice) {
+console.log("getPlayersEtapa");
+    console.log(partidas);
+    var players = [];
+    for (var i = partidas.length - 1; i >= 0; i--) {
+        for (var j = partidas[i].puntuacion.length - 1; j >= 0; j--) {
+            players.push(partidas[i].puntuacion[j]);
+        };
+    };
+    
+    console.log("players sortBy 1 ");
+    console.log(players);
+
+    players = _.sortBy(players, function(num){ return num.puntos;});
+
+    
+
+    var players_id = [];
+    for (var i = players.length - 1 , sli = i-toSlice; i >= 0 && i>=sli; i--) {
+        players_id.push(players[i].user_id);
+    };
+
+    console.log("players sortBy 2 , slice " + toSlice);
+    console.log(players_id);
+    //players = players.slice(players.length-toSlice,players.length);
+    return players_id;
+    //return players;
+}
+
+
+//la etapa es previa etapa, si por ejemplo le paso participantes, es que se 
+//van a crear las partidas para la siguiente etapa, octavos o cuartos.
 var crearPartidasEtapa = function (etapa) {
     console.log("Crear partidas | ETAPA: " +etapa+"\n");
     var tid = Session.get('showTorneoId');
     var tor = Torneos.findOne(tid);
-    
 
-    participantes = tor.participantes;
+    var participantes = [];
+    if (etapa == "participantes") {
+            participantes = tor.participantes;
+    } else {
+            participantes = getPlayersEtapa(tor.etapas[etapa].partidas,
+                                            tor.etapas[etapa].maxPlayersNextEtapa);
+
+            //participantes = participantes.slice(participantes.length-tor.etapas[etapa].maxPlayersNextEtapa,participantes.length);
+
+            //console.log(participantes);
+            //participantes = tor.etapas[etapa].partidas;
+            console.log("Partidas para la ->" + etapa);
+            //participantes = tor.participantes;
+    };
+
+
     partys = [];
-
-    if (tor.participantes.length<3){
+    if (participantes.length<3){
         console.log("Imposible crear al menos una partida");
     }else{
         for (var k=0;participantes.length > 0 && k<30;k++) {
             var mod= participantes.length % 4;
 
             if(mod == 2 || mod == 3){
-                var ret =addSomeUsers(participantes,3);
+                var ret = addSomeUsers(participantes,3);
             }else if (mod ==1) {
-                var ret =addSomeUsers(participantes,5);
+                var ret = addSomeUsers(participantes,5);
             }else if (mod == 0){
-                var ret =addSomeUsers(participantes,4);
+                var ret = addSomeUsers(participantes,4);
             };
 
             partys.push(ret.party);
@@ -119,29 +178,72 @@ var crearPartidasEtapa = function (etapa) {
         };
     console.log("\t__Partidas Creadas__");
     console.log(partys);
-
-    //Insertando partidas de la etapa
-    var obj = {};
-    console.log(tor.etapas);
-    if (!!tor.etapas){
-        obj.etapas = {}
-        obj.etapas = tor.etapas;
-        obj.etapas[etapa] = [];
-        //console.log("tor.etapas");
-    }else{
-        obj.etapas = {};
-        obj.etapas[etapa]=[];
-        //console.log("x normal");
-    }
-    //console.log(x)
-    //console.log(tor.etapas)
-
-    //x.etapas[etapa].push({id: 22222, jugadores:{id:1212, id:2222}});
-    //x.etapas[etapa].push({id: 11111, jugadores:{id:3333, id:4444}});
-    obj.etapas[etapa] = partys;
-    Torneos.update(tid, {$set:obj});
-    console.log("\t__Partidas Insertadas__");
+    return partys;
 }
+
+var primeraEtapa = function(){
+    console.log("Creando la 1º Etapa del torneo");
+    var tid = Session.get('showTorneoId');
+    var tor = Torneos.findOne(tid);
+
+    console.log(tor.etapas);
+    //Si no hay octavos, entonces no se ha creado ninguna etapa todavia
+    if (!tor.etapas.octavos.start){
+
+        var partidas = crearPartidasEtapa("participantes");
+
+        var numP  = tor.participantes.length;
+        
+        var inRange = function(num, lo, hi){
+            console.log("inRange");
+            return num >= lo && num <= hi;
+        };
+        
+        if(inRange(numP, 3, 5)){
+            //crearPartidasEtapa("final");
+            console.log("final");
+            Torneos.update(tid, {$set:  {"etapas.octavos.start": true,
+                                        "etapas.octavos.finish": true,
+                                        "etapas.cuartos.start": true,
+                                        "etapas.cuartos.finish": true,
+                                        "etapas.semifinal.start": true,
+                                        "etapas.semifinal.finish": true,
+                                        "etapas.final.start": true,
+                                        "etapas.final.partidas": partidas}
+                                });
+
+
+        }else if(inRange(numP, 5, 17)){
+            //crearPartidasEtapa("semifinal");
+            console.log("semifinal");
+            Torneos.update(tid, {$set:  {"etapas.octavos.start": true,
+                                        "etapas.octavos.finish": true,
+                                        "etapas.cuartos.start": true,
+                                        "etapas.cuartos.finish": true,
+                                        "etapas.semifinal.start": true,
+                                        "etapas.semifinal.partidas": partidas}
+                                });
+
+        }else if(inRange(numP, 18, 65)){
+            console.log("cuartos");
+            //crearPartidasEtapa("cuartos");
+            Torneos.update(tid, {$set:  {"etapas.octavos.start": true,
+                                        "etapas.octavos.finish": true,
+                                        "etapas.cuartos.start": true,
+                                        "etapas.cuartos.partidas": partidas}
+                                });
+            
+
+        }else if(inRange(numP, 66, 257)){
+            console.log("octavos");
+            Torneos.update(tid, {$set:  {"etapas.octavos.start": true,
+                                        "etapas.octavos.partidas": partidas}
+                                });
+        }
+    }
+    console.log(partidas);
+}
+
 
 
 
@@ -158,49 +260,28 @@ Template.hall_torneo.events = {
                 }
         }
     },
-    
     'click .startTorneo': function() {
         //console.log("Start Torneo");
-        //startTorneo();
-        //startTorneoXXX("preXX");
-        crearPartidasEtapa("preseleccion")
+        primeraEtapa();
+        //crearPartidasEtapa("octavos");
     },
-    
     'click .finalizarTorneo': function() {
         stopTorneo();
     },
-
     'click .jugarEtapa': function() {
         console.log("jugarEtapa");
-        hacerEtapa()
+        //hacerEtapa()
+        nextEtapa();
+    },
+    'click .etapasTorneo': function(){
+        console.log(this);
+        if (Session.equals('etapasTorneoActive',this.etapa)){
+            Session.set('etapasTorneoActive', null);
+        }else{
+            Session.set('etapasTorneoActive', this.etapa);
+        }
     }
 };
-
-function startTorneoXXX(etapa, partys) {
-    var tid = Session.get('showTorneoId');
-    var tor = Torneos.findOne(tid);
-
-    var x={};
-    console.log(etapa);
-    console.log(tor.etapas);
-    if (!!tor.etapas){
-        x.etapas = {}
-        x.etapas = tor.etapas;
-        console.log("tor.etapas");
-        x.etapas[etapa] = [];
-    }else{
-        x.etapas = {};
-        x.etapas[etapa]=[];
-        console.log("x normal");
-    }
-    console.log(x)
-    console.log(tor.etapas)
-
-    //x.etapas[etapa].push({id: 22222, jugadores:{id:1212, id:2222}});
-    //x.etapas[etapa].push({id: 11111, jugadores:{id:3333, id:4444}});
-    x.etapas[etapa] = partys;
-    Torneos.update(tid, {$set:x});
-}
 
 
 function stopTorneo() {
@@ -244,36 +325,37 @@ function insertPartyVolatiles(torid, participantes) {
 
 */
 
-var  hacerEtapa = function(){
+var  nextEtapa = function(){
     var tid = Session.get('showTorneoId');
-
-    if (Torneos.findOne({_id:tid, pre_finish:{$exists:false}})){
-        console.log("Etapa de preseleccion!");
-
-        Torneos.update(tid, {$set:{pre_finish:true}});
-        startTorneoXXX("preseleccion");
-
-    } else if (Torneos.findOne({_id:tid, cuartos_finish:{$exists:false}})){
-        console.log("Etapa de Cuartos!");
-
-        Torneos.update(tid, {$set:{cuartos_finish:true}});
-        startTorneoXXX("cuartos");
-
-    } else if (Torneos.findOne({_id:tid, semifinal_finish:{$exists:false}})){
-        console.log("Etapa de Semi-Final!");
+    var tor = Torneos.findOne({_id:tid});
     
-        Torneos.update(tid, {$set:{semifinal_finish:true}});
-        startTorneoXXX("semifinal");
+    var partidas = [];
 
-    } else if (Torneos.findOne({_id:tid, final_finish:{$exists:false}})){
-        console.log("Etapa de la Final!");
-        startTorneoXXX("final");
+    if (!tor.etapas.octavos.finish){
+        var partidas = crearPartidasEtapa("octavos");
+        Torneos.update(tid, {$set:  {   "etapas.octavos.finish": true,
+                                        "etapas.cuartos.start": true,
+                                        "etapas.cuartos.partidas": partidas}
+                                    });
 
-        Torneos.update(tid, {$set:{final_finish:true}});
+    }else if (!tor.etapas.cuartos.finish){
+        var partidas = crearPartidasEtapa("cuartos");
+        Torneos.update(tid, {$set:      {"etapas.cuartos.finish": true,
+                                        "etapas.semifinal.start" : true,
+                                        "etapas.semifinal.partidas": partidas}
+                                    });
 
+    }else if(!tor.etapas.final.finish){
+        var partidas = crearPartidasEtapa("semifinal");
+        Torneos.update(tid, {$set:      {"etapas.semifinal.finish": true,
+                                        "etapas.final.start" : true,
+                                        "etapas.final.partidas": partidas}
+                                    });
     }else{
-        console.log("El torneo ha terminado!");
+        Torneos.update(tid, {$set:  {"etapas.final.finish": true} });
     }
+
+
 }
 
 
@@ -299,6 +381,54 @@ Deps.autorun(function(c) {
         console.log("Deps: Caso en el cual no se que hacer!");
     }
 });
+
+
+//Mostramos la lista de menus
+Template.hall_torneo.etapasTorneo = function() {
+  return Menu.find({menuType : "torneoEtapas"});
+};
+
+Template.hall_torneo.etapasTorneoActive = function() {
+  return Session.equals('etapasTorneoActive', this.etapa) ? 'active' : '';
+};
+
+
+
+Template.hall_torneo.showParticipantes = function() {
+  return Session.equals('etapasTorneoActive', "participantes");
+};
+
+
+Template.showEtapaTorneo.partidasEtapaTorneo = function() {
+    if (!Session.equals('etapasTorneoActive', "participantes")) {
+        var etapa = Session.get('etapasTorneoActive');
+        var tid = Session.get('showTorneoId');
+        var tor = Torneos.findOne(tid);
+
+        console.log(tor.etapas)
+
+        if(etapa == "octavos"){
+            return tor.etapas.octavos.partidas;
+        }else if(etapa == "cuartos"){
+            return tor.etapas.cuartos.partidas;
+        }else if (etapa == "semifinal"){
+            return tor.etapas.semifinal.partidas;
+        }else if (etapa == "final"){    
+            return tor.etapas.final.partidas;
+        }else{
+            return [];
+        }
+
+        //console.log("partidasEtapaTorneo: " + etapa)
+
+        
+    };
+};
+
+
+Template.hall_torneo.showEtapa = function() {
+  return !Session.equals('etapasTorneoActive', "participantes");
+};
 
 
 
@@ -340,4 +470,14 @@ Template.hall_torneo.finishTorneo = function() {
         return true;
     }
     return false;
+}
+
+
+
+
+
+Template.participantes.participantes = function(){
+    var tid = Session.get('showTorneoId');
+    var tor = Torneos.findOne({_id:tid});
+    return tor.participantes;
 }

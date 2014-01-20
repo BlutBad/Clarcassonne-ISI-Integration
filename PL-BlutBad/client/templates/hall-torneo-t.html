@@ -27,58 +27,22 @@
         <span class="badge badge-important finalizarTorneo">Finalizar el torneo!</span>
         <span class="badge badge-important jugarEtapa">Jugar la etapa</span>
 
-        <h2>Etapas del torneo </h2> 
+        <h2>Etapas del torneo </h2>
         <div id="tab" class="btn-group" data-toggle="buttons-radio">
-          <a href="#" class="btn btn-large btn-info active" data-toggle="tab">Preseleccion</a>
-          <a href="#" class="btn btn-large btn-info" data-toggle="tab">1/4 Final</a>
-          <a href="#" class="btn btn-large btn-info" data-toggle="tab">SemiFinal</a>
-          <a href="#" class="btn btn-large btn-info"  data-toggle="tab">Final</a> 
-        </div>         
+          {{#each etapasTorneo}} 
+            <a href="" class="btn btn-large btn-info etapasTorneo {{etapasTorneoActive}}" data-toggle="tab">{{name}}</a>
+          {{/each}}
+        </div>
+       
+        {{#if showParticipantes}} 
+          {{>participantes}}
+        {{/if}}
 
-        <div class="span5">
-          <table class="table table-striped table-condensed">
-            <thead>
-            <tr>
-              <th>#</th>
-              <th>Partida</th>
-              <th>Ganador</th>                                        
-            </tr>
-            </thead>  
- 
-            <tbody>
-              {{#each partidasTorneo}}
-                <tr>
-                  <td><span class="label label-success" id = "num">{{no}}</span></td>
-                  <td>
-                    <div class="span5">
-                      <table class="table table-striped table-condensed">
-                        <thead>
-                          <tr>
-                            <th>Username</th>
-                            <th>Rango</th>
-                            <th>Role</th>
-                            <th>Status</th>                                          
-                          </tr>
-                        </thead>   
-                        <tbody>
-                          {{#each jugadores}}
-                            <tr>
-                              <td>{{getUsername this.user_id}}</td>
-                              <td>{{userRango this.user_id}}</td>
-                              <td>{{rol this.user_id ../this._id}}</td>
-                              <td><span class="{{estadoUser this.estado}}">{{this.estado}}</span></td>                                       
-                            </tr>
-                          {{/each}}           
-                        </tbody>
-                      </table>
-                     </div>
-                  </td>                    
-                  <td><span class="label label-success" id = "winner">Donna R. Folse</span></td>                                             
-                </tr>
-              {{/each}}
-            </tbody>    
-          </table>
-        </div> 
+        {{#if showEtapa}}
+          {{>showEtapaTorneo}}
+        {{/if}}
+
+
       </div>   
     {{/if}}
 
@@ -116,13 +80,6 @@
           </div>  
       {{/if}}
     
-    
-    
-    
-    
-    
-    
-    
       <div class="container">   
         <div class="row">
           <div class="span5">
@@ -156,4 +113,88 @@
 
   </div>
 {{/if}}
+</template>
+
+
+<template name="participantes">
+    <div class="container">   
+        <div class="row">
+          <div class="span5">
+           <div class="well">
+            <table class="table">                         
+                <h3>Participantes del torneo!</h3>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nombre</th>
+                  <th>Rango</th>
+                  <th>Maxima Puntuacion</th>                                          
+                </tr>
+              </thead>   
+              <tbody>
+                 {{#each participantes}}
+                  <tr>
+                    <td>--</td>
+                    <td><span class="{{clacc}}">{{getUsername this}}</span>
+                    <td>--</td>
+                    <td>--</td>                                       
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>    
+    </div> 
+</template>
+
+
+
+<template name="showEtapaTorneo">
+  
+        <div class="span5">
+          <table class="table table-striped table-condensed">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>Partida</th>
+              <th>Ganador</th>                                        
+            </tr>
+            </thead>  
+ 
+            <tbody>
+              {{#each partidasEtapaTorneo}}
+                <tr>
+                  <td><span class="label label-success" id = "num">{{no}}</span></td>
+                  <td>
+                    <div class="span5">
+                      <table class="table table-striped table-condensed">
+                        <thead>
+                          <tr>
+                            <th>Username</th>
+                            <th>Rango</th>
+                            <th>Role</th>
+                            <th>Status</th>                                          
+                          </tr>
+                        </thead>   
+                        <tbody>
+                          {{#each jugadores}}
+                            <tr>
+                              <td>{{getUsername this.user_id}}</td>
+                              <td>{{userRango this.user_id}}</td>
+                              <td>{{rol this.user_id ../this._id}}</td>
+                              <td><span class="{{estadoUser this.estado}}">{{this.estado}}</span></td>                                       
+                            </tr>
+                          {{/each}}           
+                        </tbody>
+                      </table>
+                     </div>
+                  </td>                    
+                  <td><span class="label label-success" id = "winner">{{getUsername ganador.user_id}}</span></td>                                             
+                </tr>
+              {{/each}}
+            </tbody>    
+          </table>
+        </div> 
+
 </template>
