@@ -3,7 +3,7 @@ Plataphorma ISI
 
 ## Información General
 ###Deploys
-* [Deploy de la Plataforma BlutBad (Actualizado el 17 de enero de 2014)](http://blutbad.meteor.com/ "Deploy de la Plataforma BlutBad") 
+* [Deploy de la Plataforma BlutBad (Actualizado el 20 de enero de 2014)](http://blutbad.meteor.com/ "Deploy de la Plataforma BlutBad"). Estado de la integración: ya funciona sacar ficha y se propagan los cambios a los jugadores implicados.
 * [Deploy de la Plataforma Lowerlayers](http://lowerlayers.meteor.com/ "Plataforma de Juegos LowerLayers")
 
 ###Repositorios
