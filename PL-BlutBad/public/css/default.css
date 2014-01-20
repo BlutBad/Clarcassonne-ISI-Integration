@@ -897,6 +897,10 @@ td, th {
 	text-align: center;
 }
 
-.apuntarme, .in_tor {
+.apuntarme, .in_tor, .startTorneo, .finalizarTorneo, .gameim {
 	cursor: pointer;
 } 
+
+#mitor, #nuevaPartida {
+	text-decoration: none;
+}

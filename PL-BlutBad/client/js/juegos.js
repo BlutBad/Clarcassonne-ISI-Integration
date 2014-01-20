@@ -181,15 +181,25 @@ Template.misTorneos.torneos = function() {
     }
 };
 
+Template.misTorneos.titlebtn = function() {    
+    if (!Session.get('clickado_mistor')) {
+        return "Partidas del HALL";
+    } else {
+        return Torneos.findOne(this._id).title;
+    }
+};
+
 
 Template.misTorneos.events({
     'click .miTorneo' : function() {
         if (Session.equals('gameTorneoSelectId', this._id)) {
             Session.set('gameTorneoSelectId', false);
             Session.set('infoForGame', {game_id: this.game_id, torneo_id: null});
+            Session.set('clickado_mistor', true);
         } else {
             Session.set('gameTorneoSelectId', this._id);
             Session.set('infoForGame', {game_id: this.game_id, torneo_id: this._id});
+            Session.set('clickado_mistor', false);
         }
     }
 });  
