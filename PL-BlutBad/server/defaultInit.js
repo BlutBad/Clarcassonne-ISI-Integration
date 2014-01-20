@@ -29,8 +29,24 @@ Meteor.startup(function() {
 		    });
 		}
 		
-		fakeUsers = "Cheyrd_Inaurtle Oechi_Honomon Saml_Rodizard Ineh_Lorochu Tand_Knockeromon Quaq_Vorizard Elms_Kimizard Kell_Clotachu Cond_Aughamon Umy_Clotizard Lorrt_Denamon Scheas_Rodertle Ekalu_Goofortle Yinao_Sulachu Skeln_Wadezard Geal_Thimbleortle Schein_Snarkyzard Vun_Twerpirtle Oskelo_Thimbleechu Edyne_Undartle Yagea_Perozard Ros_Ashertle Erise_Ageychu Eingo_Faceemon Dars_Ardartle Clur_Twitymon Seev_Tasurtle Siy_Goofirtle Rayt_Numbachu Laeg_Boneurtle Ahini_Fumbleumon Inalo_Bumbleichu Wheuv_Footezard Tait_Ormichu Llaunt_Onartle Imy_Clodamon Osf_Wimpezard Chagh_Meatomon Rhey_Skullumon Shaid_Etochu Ett_Osymon Urado_Faceurtle Oite_Torichu Chrent_Faceomon Uma_Bumbleamon Ess_Ghaozard Aunta_Dumbyrtle Tanf_Loafechu Apere_Chauzard Oete_Footachu Ghat_Puffemon Luiz_Knuckleimon Uworo_Dipazard Avori_Untuzard Quek_Skeluchu Atnt_Angazard Ianga_Ballemon Reyd_Sulirtle Phew_Headazard Undn_Puffozard Orilu_Iamon Isk_Faceychu Ustn_Undyzard Suls_Twerpemon Eldrd_Draemon Yrano_Kimachu Nysr_Adochu Emc_Goofurtle Auski_Doofemon Eorma_Raymon Uemu_Ballomon Cheet_Sneezeamon Schiech_Tonuzard Irph_Ineertle Died_Numbuchu Ads_Ineamon Ymore_Ormazard Itb_Turychu Oathi_Imazard Iryni_Wadozard Ward_Denertle Weyk_Therortle Wark_Rayemon Inala_Oldemon Heik_Risamon Yieg_Verirtle Ads_Fingerozard Oia_Cloduzard Lab_Leromon Zhiec_Ustumon Bin_Enumon Rab_Nyurtle Lyenn_Doofychu Urnch_Knockizard Unyu_Atemon Atd_Wipeozard Nyv_Headortle Zhok_Boneortle Sayf_Enimon Thier_Ackortle Leis_Skelichu Gaiv_Thimbleizard Eemi_Bumbleirtle Quel_Wimpechu Ehini_Ghauchu Urilo_Boneichu Eml_Sneezeochu Ykimu_Oldimon Olyea_Airomon Emst_Inaymon Driel_Skullochu Reinn_Headyrtle Llooc_Sayachu Queal_Ankleazard Dais_Nyozard Samw_Draichu Zhoph_Faceachu Rakk_Echomon Osere_Lunkuchu";
-		fakeUsersArray = fakeUsers.split(" ");
+		fakeUsers = "Inea	Yiey	Eurnu	Anysy	Keel	Bros	Oriso" +
+					"Eldd	Iashu	Waiy	Tril	Mosc	Ensh	Quek" +
+					"Uere	Thrak	Deic	Ykalo	Uskq	Rhonn	Phauch" +
+					"Achl	Yerr	Ydyni	Dieth	Eorme	Thrieph	Thod" +
+					"Ormk	Ichao	Irs	Smor	Entht	Verph	Ceum" +
+					"Ler	Eseri	Stroegh	Tangh	Liem	Neab	Ourna" +
+					"Jik	Oinee	Hish	Oita	Ualey	Easho	Cheuss" +
+					"Los	Mork	Ihinu	Maeq	Kalv	Enl	Drauph" +
+					"Reyf	Hatm	Aormo	Uendo	Bair	Bok	Rilm" +
+					"Aundo	Morl	Echth	Aleq	Atone	Aora	Oero" +
+					"Geyn	Tais	Aeste	Whaeth	Uisi	Odene	Ess" +
+					"Chad	Dras	Isamu	Adp	Saurr	Ashy	Iradu" +
+					"Torq	Adele	Tonl	Yhini	Atsh	Cerc	Ans" +
+					"Rayk	Eburu	Meek	Uskt	Rakf	Nysd	Loell" +
+					"Pheif	Lit	Aemo	Fays	Obelo	Kimb	Oati" +
+					"Ishy	Llierd	Ightgh	Moil	Quoert	Risnt	Yeme" +
+					"Reis	Byv	Rher	Cleard	Omck	Yeich	Uinea";
+		fakeUsersArray = fakeUsers.split("\t");
 		fakeUsersId = [];
 		//console.log("Creando (" + fakeUsersArray.length + ") usuarios falsos...");
 		for ( var i = 0; i < fakeUsersArray.length; i++) {
