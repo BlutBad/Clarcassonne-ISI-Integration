@@ -125,6 +125,7 @@ var playGameAlien2 = function() {
 // Llamada cuando han desaparecido todos los enemigos del nivel sin
 // que alcancen a la nave del jugador
 var winGameAlien = function() {
+	Meteor.call("matchFinish", Session.get("match_id"), Session.get("game_id"), GameAlien.points);
     GameAlien.setBoard(3,new TitleScreen("You win!", 
                                     "Press fire to play again",
                                     playGameAlien1));
@@ -134,6 +135,7 @@ var winGameAlien = function() {
 // Llamada cuando la nave del jugador ha sido alcanzada, para
 // finalizar el juego
 var loseGameAlien = function() {
+	Meteor.call("matchFinish", Session.get("match_id"), Session.get("game_id"), GameAlien.points);
     GameAlien.setBoard(3,new TitleScreen("You lose!", 
                                     "Press fire to play again",
                                     playGameAlien1));

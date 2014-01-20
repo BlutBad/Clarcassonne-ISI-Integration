@@ -97,20 +97,44 @@
 <template name="byuserrankingtemp">
 	<div id="byuserranking">
 		<a style ="cursor:pointer;text-decoration:underline;" class="linkback">atras</a>
-		<p>Juegos:</p>
-		{{# each ranking}}
-			{{game}} {{score}}
-		{{/ each}}
+		<p id="usernameRanking"></p>
+		<table>
+			<thead>
+				<tr>
+					<th>Juego</th>
+					<th>Puntuacion</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{# each ranking}}
+					<tr>
+						<td>{{game}}</td> <td>{{score}}</td>
+					</tr>
+				{{/ each}}
+			</tbody>
+		</table>
 	</div>
 </template>
 
 <template name="bygamerankingtemp">
 	<div id="bygameranking">
 		<a style ="cursor:pointer;text-decoration:underline;" class="linkback">atras</a>
-		<p>Usuarios:</p>
-		{{# each ranking}}
-			{{user}} {{score}}
-		{{/ each}}
+		<p id="gameRanking"></p>
+		<table>
+			<thead>
+				<tr>
+					<th>Usuario</th>
+					<th>Puntuacion</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{# each ranking}}
+					<tr>
+						<td>{{user}}</td> <td>{{score}}</td>
+					</tr>
+				{{/ each}}
+			</tbody>
+		</table>
 	</div>
 </template>
 

@@ -7,7 +7,7 @@ Template.gamesrankingtemp.games=function(){
 Template.gamesrankingtemp.events = {
 	'click .linkgameranking':function(event){
 		$("#ranking").children().hide();
-		$("#ranking").prepend('<p id=gameRanking >'+$(this)[0].name+'</p>');
+		$("#gameRanking").html($(this)[0].name);
 		Session.set('game_id', $(this)[0]._id);
 		$("#bygameranking").fadeIn();
 	}
@@ -17,7 +17,7 @@ Template.gamesrankingtemp.events = {
 Template.userstemp.events = {
 	'click .linkuserranking':function(event){
 		$("#ranking").children().hide();
-		$("#ranking").prepend('<p id=usernameRanking >'+$(this)[0].username+'</p>');
+		$("#usernameRanking").html($(this)[0].username);
 		Session.set('user_id', $(this)[0]._id);
 		$("#byuserranking").fadeIn();
 	}
@@ -29,7 +29,7 @@ Template.byuserrankingtemp.events = {
 		$("#ranking").children().fadeIn();
 		$("#byuserranking").hide();
 		$("#bygameranking").hide();
-		$("#usernameRanking").remove();
+		$("#usernameRanking").html("");
 	}
 }
 
@@ -39,7 +39,7 @@ Template.bygamerankingtemp.events = {
 		$("#ranking").children().fadeIn();
 		$("#byuserranking").hide();
 		$("#bygameranking").hide();
-		$("#gameRanking").remove();
+		$("#gameRanking").html("");
 	}
 }
 
@@ -61,7 +61,7 @@ Template.bygamerankingtemp.ranking=function(){
 		var list = Ranking.find({game_id: Session.get("game_id")});
 		var list2=[];
 		list.forEach(function(elem) {
-			list2.push({"user":Meteor.users.findOne({_id:elem.user_id}).username,"game":elem.game_id, "score":elem.score});
+			list2.push({"game":elem.game_id,"user":Meteor.users.findOne({_id:elem.user_id}).username, "score":elem.score});
 		});
 		return list2;
 	}

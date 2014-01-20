@@ -1,5 +1,5 @@
 // Declare all the commonly used objects as variables for convenience
-/*var b2Vec2 = Box2D.Common.Math.b2Vec2;
+var b2Vec2 = Box2D.Common.Math.b2Vec2;
 var b2BodyDef = Box2D.Dynamics.b2BodyDef;
 var b2Body = Box2D.Dynamics.b2Body;
 var b2FixtureDef = Box2D.Dynamics.b2FixtureDef;
@@ -834,4 +834,3 @@ var mouse = {
 		mouse.dragging = false;
 	}
 }
-*/
