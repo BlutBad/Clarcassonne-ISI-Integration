@@ -15,7 +15,9 @@ Meteor.startup(function() {
 			    name : "Torneos",
 			    menuType : "principal",
 
-			},{
+			},
+			//menu de etapas del torneo
+			{
 			    name : "Participantes",
 			    etapa: "participantes",
 			    menuType : "torneoEtapas",
@@ -36,6 +38,17 @@ Meteor.startup(function() {
 			    etapa: "final",
 			    menuType : "torneoEtapas",
 			},
+			//menu del multi torneo
+			{
+				name: "Etapas del torneo!",
+				short: "etapas", 
+				menuType: "multiTorneo",
+			},
+			{
+				name: "Ranking del torneo!",
+				short: "ranking", 
+				menuType: "multiTorneo",
+			},
 			
 			];
 
@@ -45,6 +58,9 @@ Meteor.startup(function() {
 							menuType: data[i].menuType};
 				if (data[i].etapa){
 					obj.etapa = data[i].etapa;
+				}
+				if(data[i].short){
+					obj.short = data[i].short;
 				}
 			    var list_id = Menu.insert(obj);
 			}
@@ -231,7 +247,10 @@ Meteor.startup(function() {
                         description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel',
                         description_long:'Id vel sensibus honestatis omittantur, vel cu nobis commune patrioque. In accusata definiebas qui, id tale malorum dolorem sed, solum clita phaedrum ne his. Eos mutat ullum forensibus ex, wisi perfecto urbanitas cu eam, no vis dicunt impetus. Assum novum in pri, vix an suavitate moderatius, id has reformidans referrentur. Elit inciderint omittantur duo ut, dicit democritum signiferumque eu est, ad suscipit delectus mandamus duo. An harum equidem maiestatis nec.',
                         participantes:[],
-	                	etapas : {octavos:{start:false,finish:false, maxPlayersNextEtapa: 64}, cuartos:{start:false,finish:false, maxPlayersNextEtapa: 16}, semifinal:{start:false,finish:false, maxPlayersNextEtapa:4}, final:{start:false,finish:false, maxPlayersNextEtapa: 1000}},
+	                	etapas : {	octavos: 	{start:false,finish:false, maxPlayersNextEtapa: 64, partidas:[]},
+	                			 	cuartos: 	{start:false,finish:false, maxPlayersNextEtapa: 16, partidas:[]}, 
+	                			 	semifinal: 	{start:false,finish:false, maxPlayersNextEtapa: 4,	partidas:[]},
+	                			 	final: 		{start:false,finish:false, maxPlayersNextEtapa: 1000, partidas:[]}},
 				}
 			    ],
 			},

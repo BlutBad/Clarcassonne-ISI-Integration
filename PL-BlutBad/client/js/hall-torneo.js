@@ -25,21 +25,11 @@ var getClass = function(index){
     return clacc;
 }
 
-
-
-
-Template.hall_torneo.torneoId = function() {
-    return Session.get('showTorneoId');
-}
-
-
-
+//Informacion general sobre el torneo!
 Template.hall_torneo.torneo = function() {
     var tid = Session.get('showTorneoId');
     return Torneos.findOne(tid);
 }
-
-
 
 Template.hall_torneo.numParticip = function() {
     var tid = Session.get('showTorneoId');
@@ -68,6 +58,14 @@ Template.hall_torneo.creador = function() {
     return false;
 }
 */
+var insertPartyVolatiles = function (torid, party, etapa) {
+    PartidasVolatiles.insert({
+        torneo_id: torid,
+        jugadores : party.jugadores,
+        etapa: etapa,
+        listos: false,
+    });
+};
 
 var playerWiner = function (players) {
     var maxPlayer = players[0];
@@ -85,15 +83,17 @@ var addSomeUsers = function(participantes, num) {
     party.jugadores = [];
     party.puntuacion = [];
     // -1 porque si paso 3, se cogeran 4 y no 3, el 0 cuenta.
-    console.log("__Participantes.length:" + participantes.length + ", num: "+num);
+    ///console.log("__Participantes.length:" + participantes.length + ", num: "+num);
     for (var i = num-1; i >= 0; i--) {
         var rnd = Math.floor(Math.random() * participantes.length);
 
-        console.log("\trnd: " + rnd+ ", id: "+participantes[rnd]);
+        //console.log("\trnd: " + rnd+ ", id: "+participantes[rnd]);
 
-        party.jugadores.push({user_id:participantes[rnd], estado: "Torneo Inactivo"});
-        party.puntuacion.push({user_id: participantes[rnd], puntos: (Math.floor(Math.random()*200))});
-
+        party.jugadores.push({  user_id : participantes[rnd],
+                                estado  : "Torneo Inactivo"});
+        party.puntuacion.push({user_id  : participantes[rnd],
+                                puntos  : (Math.floor(Math.random()*200))});
+        party.party_id = i;
         participantes=_.without(participantes, participantes[rnd]);
     }
 
@@ -103,8 +103,8 @@ var addSomeUsers = function(participantes, num) {
 }
 
 var getPlayersEtapa = function (partidas, toSlice) {
-console.log("getPlayersEtapa");
-    console.log(partidas);
+    console.log("getPlayersEtapa");
+    //console.log(partidas);
     var players = [];
     for (var i = partidas.length - 1; i >= 0; i--) {
         for (var j = partidas[i].puntuacion.length - 1; j >= 0; j--) {
@@ -112,8 +112,8 @@ console.log("getPlayersEtapa");
         };
     };
     
-    console.log("players sortBy 1 ");
-    console.log(players);
+    //console.log("players sortBy 1 ");
+    //console.log(players);
 
     players = _.sortBy(players, function(num){ return num.puntos;});
 
@@ -124,8 +124,8 @@ console.log("getPlayersEtapa");
         players_id.push(players[i].user_id);
     };
 
-    console.log("players sortBy 2 , slice " + toSlice);
-    console.log(players_id);
+    //console.log("players sortBy 2 , slice " + toSlice);
+    //console.log(players_id);
     //players = players.slice(players.length-toSlice,players.length);
     return players_id;
     //return players;
@@ -145,13 +145,7 @@ var crearPartidasEtapa = function (etapa) {
     } else {
             participantes = getPlayersEtapa(tor.etapas[etapa].partidas,
                                             tor.etapas[etapa].maxPlayersNextEtapa);
-
-            //participantes = participantes.slice(participantes.length-tor.etapas[etapa].maxPlayersNextEtapa,participantes.length);
-
-            //console.log(participantes);
-            //participantes = tor.etapas[etapa].partidas;
-            console.log("Partidas para la ->" + etapa);
-            //participantes = tor.participantes;
+            //console.log("Partidas para la ->" + etapa);
     };
 
 
@@ -176,17 +170,17 @@ var crearPartidasEtapa = function (etapa) {
             };
 
         };
-    console.log("\t__Partidas Creadas__");
-    console.log(partys);
+    //console.log("\t__Partidas Creadas__");
+    //console.log(partys);
     return partys;
 }
 
 var primeraEtapa = function(){
-    console.log("Creando la 1º Etapa del torneo");
+    console.log("primeraEtapa");
     var tid = Session.get('showTorneoId');
     var tor = Torneos.findOne(tid);
 
-    console.log(tor.etapas);
+    //console.log(tor.etapas);
     //Si no hay octavos, entonces no se ha creado ninguna etapa todavia
     if (!tor.etapas.octavos.start){
 
@@ -240,8 +234,15 @@ var primeraEtapa = function(){
                                         "etapas.octavos.partidas": partidas}
                                 });
         }
+
+        console.log(partidas);
+
+        //Insertar las partidas de la etapa a las partidas volatiles para que se puedan jugar
+        for (var i = partidas.length - 1; i >= 0; i--) {
+            insertPartyVolatiles(tid, partidas[i], "octavos");
+        };
     }
-    console.log(partidas);
+    
 }
 
 
@@ -266,7 +267,7 @@ Template.hall_torneo.events = {
         //crearPartidasEtapa("octavos");
     },
     'click .finalizarTorneo': function() {
-        stopTorneo();
+        //stopTorneo();
     },
     'click .jugarEtapa': function() {
         console.log("jugarEtapa");
@@ -279,6 +280,14 @@ Template.hall_torneo.events = {
             Session.set('etapasTorneoActive', null);
         }else{
             Session.set('etapasTorneoActive', this.etapa);
+        }
+    },
+    'click .multiMenuTorneo' : function(){
+        console.log(this);
+        if (Session.equals('multiMenuTorneoActive',this.short)){
+            Session.set('multiMenuTorneoActive', null);
+        }else{
+            Session.set('multiMenuTorneoActive', this.short);
         }
     }
 };
@@ -310,13 +319,7 @@ Template.hall_torneo.partidasTorneo = function() {
 }
 
 
-function insertPartyVolatiles(torid, participantes) {
-    PartidasVolatiles.insert({
-        torneo_id: torid,
-        jugadores :participantes,
-        listos: false,
-    });
-};
+
 
 /*
 1. Las etapa son indep del klarki hall, eliminar las partidas de las etapas viejas
@@ -329,9 +332,18 @@ var  nextEtapa = function(){
     var tid = Session.get('showTorneoId');
     var tor = Torneos.findOne({_id:tid});
     
-    var partidas = [];
+    //Estas partidas no son actuales, ya que se va pasar a la siguiente etapa del torneo, 
+    //y son de la anterior.
+    var partysToRemove = PartidasVolatiles.find({torneo_id: tid});
+    partysToRemove.forEach(function(each) {
+        PartidasVolatiles.remove(each._id)
+    });
+    
 
+    var partidas = [];
+    var etapa;
     if (!tor.etapas.octavos.finish){
+        etapa = "cuartos";
         var partidas = crearPartidasEtapa("octavos");
         Torneos.update(tid, {$set:  {   "etapas.octavos.finish": true,
                                         "etapas.cuartos.start": true,
@@ -339,6 +351,7 @@ var  nextEtapa = function(){
                                     });
 
     }else if (!tor.etapas.cuartos.finish){
+        etapa = "semifinal";
         var partidas = crearPartidasEtapa("cuartos");
         Torneos.update(tid, {$set:      {"etapas.cuartos.finish": true,
                                         "etapas.semifinal.start" : true,
@@ -346,14 +359,21 @@ var  nextEtapa = function(){
                                     });
 
     }else if(!tor.etapas.final.finish){
+        etapa = "final";
         var partidas = crearPartidasEtapa("semifinal");
         Torneos.update(tid, {$set:      {"etapas.semifinal.finish": true,
                                         "etapas.final.start" : true,
                                         "etapas.final.partidas": partidas}
                                     });
     }else{
+        etapa = "final";
+        var partidas = crearPartidasEtapa(etapa);
         Torneos.update(tid, {$set:  {"etapas.final.finish": true} });
     }
+
+    for (var i = partidas.length - 1; i >= 0; i--) {
+            insertPartyVolatiles(tid, partidas[i], etapa);
+        };
 
 
 }
@@ -361,31 +381,37 @@ var  nextEtapa = function(){
 
 Deps.autorun(function(c) {
     var tid = Session.get('showTorneoId');
-    if (Torneos.findOne({_id:tid, pre_finish: true, cuartos_finish:{$exists:false}, semifinal_finish:{$exists:false},final_finish:{$exists:false}})){
-        console.log("Deps: Etapa de preseleccion ha terminado!");
-
-
-    } else if (Torneos.findOne({_id:tid, cuartos_finish: true, semifinal_finish:{$exists:false},final_finish:{$exists:false}})){
-        console.log("Deps: Etapa de Cuartos! ha terminado!");
-
-
-    } else if (Torneos.findOne({_id:tid, semifinal_finish: true,final_finish:{$exists:false}})){
-        console.log("Deps: Etapa de Semi-Final ha terminado!");
-    
-
-    } else if (Torneos.findOne({_id:tid, final_finish: true})){
-        console.log(" Deps:  Etapa de la Final ha terminado!");
-
-
-    }else{
-        console.log("Deps: Caso en el cual no se que hacer!");
-    }
 });
 
 
-//Mostramos la lista de menus
+// El menu del multiTorneo, ETAPAS | RANKING
+Template.hall_torneo.multiMenuTorneo = function() {
+  return Menu.find({menuType : "multiTorneo"});
+};
+
+Template.hall_torneo.multiMenuTorneoActive = function() {
+  return Session.equals('multiMenuTorneoActive', this.short) ? 'active' : '';
+};
+
+
+// Mostrar el menu de las ETAPAS del multi-torneo
+Template.hall_torneo.showEtapasTorneo = function() {
+  return Session.equals('multiMenuTorneoActive', 'etapas');
+};
+
+//Mostrar las etapas del torneo, curtos, semi, final..
 Template.hall_torneo.etapasTorneo = function() {
   return Menu.find({menuType : "torneoEtapas"});
+};
+
+
+//Sacar las tablas de la etapa o participantes
+Template.hall_torneo.showEtapa = function() {
+  return !Session.equals('etapasTorneoActive', "participantes");
+};
+
+Template.hall_torneo.showParticipantes = function() {
+  return Session.equals('etapasTorneoActive', "participantes");
 };
 
 Template.hall_torneo.etapasTorneoActive = function() {
@@ -394,11 +420,24 @@ Template.hall_torneo.etapasTorneoActive = function() {
 
 
 
-Template.hall_torneo.showParticipantes = function() {
-  return Session.equals('etapasTorneoActive', "participantes");
+
+Template.showInfoEtapaTorneo.info = function() {
+    var etapa = Session.get('etapasTorneoActive');
+    var tid = Session.get('showTorneoId');
+    var tor = Torneos.findOne(tid);
+
+    var info = {};
+    if (tor.etapas[etapa]){
+        info.partidas = tor.etapas[etapa].partidas.length;
+        info.participantes = 99;
+    }else{
+        return null;
+    }
+    
+    return info;
 };
 
-
+//Partidas de cada etapa del torneo!
 Template.showEtapaTorneo.partidasEtapaTorneo = function() {
     if (!Session.equals('etapasTorneoActive', "participantes")) {
         var etapa = Session.get('etapasTorneoActive');
@@ -425,10 +464,21 @@ Template.showEtapaTorneo.partidasEtapaTorneo = function() {
     };
 };
 
+//Mostar los participantes del torneo!
+Template.participantes.participantes = function(){
+    var tid = Session.get('showTorneoId');
+    var tor = Torneos.findOne({_id:tid});
+    return tor.participantes;
+}
 
-Template.hall_torneo.showEtapa = function() {
-  return !Session.equals('etapasTorneoActive', "participantes");
+
+
+
+// Mostrar el RANKING del torneo!
+Template.hall_torneo.showRankingTorneo = function() {
+  return Session.equals('multiMenuTorneoActive', 'ranking');
 };
+
 
 
 
@@ -476,8 +526,3 @@ Template.hall_torneo.finishTorneo = function() {
 
 
 
-Template.participantes.participantes = function(){
-    var tid = Session.get('showTorneoId');
-    var tor = Torneos.findOne({_id:tid});
-    return tor.participantes;
-}
