@@ -7,6 +7,11 @@ Session.setDefault("current_game",null);
 Session.setDefault('gamerank', null);
 
 
+//Variables de session para las torneos, multi-torneo en cuestion
+Session.setDefault("multiMenuTorneoActive",null);
+Session.setDefault('etapasTorneoActive', null);
+
+
 
 Meteor.startup(function() {
     $('#gamecontainer').hide();    

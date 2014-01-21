@@ -119,68 +119,6 @@ Meteor.methods({
 		} else {
 			return false;
 		}
-	},
-
-	simularPartidasEtapa: function(tid){
-		console.log("_ini_");
-		var playerWiner = function (players) {
-		    var maxPlayer = players[0];
-		    for (var i = players.length - 1; i >= 0; i--) {
-		        if (players[i].puntos > maxPlayer.puntos){
-		            maxPlayer = players[i];
-		        }
-		    };
-		    return maxPlayer;
-		};
-
-
-		var tor = Torneos.findOne(tid);
-		var partys = PartidasVolatiles.find({torneo_id:tid});
-
-		console.log("how partys PartidasVolatiles: " + partys.count());
-		partys.forEach(function(each){
-			var puntuacion = [];
-
-
-			for (var i = each.jugadores.length - 1; i >= 0; i--) {
-				puntuacion.push({user_id: each.jugadores[i].user_id,
-								puntos	: (Math.floor(Math.random()*200))});
-			};
-		
-			var ganador = playerWiner(puntuacion);
-
-			var partida_id = Partidas.insert({
-				                jugadores 	: each.jugadores,
-				                puntuacion	: puntuacion,
-				                ganador		: ganador,
-				                torneo_id	: tid,
-				                etapa 		: each.etapa,  
-				                terminada 	: true,
-                			});
-			console.log("partida_id: " +partida_id);	
-
-			var etapa = each.etapa;
-			
-			
-			var index22 = 0;
-			//console.log(each);
-			//console.log(tor.etapas[each.etapa]);
-
-			
-			tor.etapas[each.etapa].partidas.forEach(function(each2, index2){
-				if (each2.party_id === each.party_id){
-					index22 = index2;	
-					console.log("find ok");
-					tor.etapas[each.etapa].partidas[index22].puntuacion = puntuacion;
-		    		tor.etapas[each.etapa].partidas[index22].ganador = ganador;
-		    		var obj = tor.etapas;
-		    		//obj[each.etapa].huak = "XXX";
-					Torneos.update(tor._id, {$set: {etapas:obj}});
-				}
-			});
-
-			console.log("_fin_");
-		});
 	}
 });
  
