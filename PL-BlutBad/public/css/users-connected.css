@@ -1,17 +1,35 @@
 #users-connected {
-	width: 180px;
+	width: 200px;
 	position: fixed;
 	bottom: 5px;
 	left:3px;
+}
+
+#content-users {
+	background-color: #819FF7;
+	width: 98%;
+	border: #6E6E6E 1px solid;
+	border-radius:3px;
+}
+
+#title-users {
+	float: left;
+	padding: 8px 8px 6px 12px;
+	width: 65%;
+	margin: 0px;
+	margin-bottom: 2px;
+	font-family: Verdana;
+	font-style: oblique;
+	font-size: large;
 }
 
 #connected {
 	clear: both;
 	background-color: white;
 	overflow-y: scroll;
-	width: 95%;
+	width: 90%;
 	height: 450px;
-	margin: 1px;
+	margin: 5px;
 	padding: 4px;
 	border-radius:3px;
 	border: #6E6E6E 1px solid;

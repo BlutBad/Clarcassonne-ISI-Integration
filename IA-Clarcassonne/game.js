@@ -69,10 +69,14 @@
 
       var ficha= Tablero.buscarxcoor(coordenada.x,coordenada.y);
         Tablero= endTablero[id_partida];
+        //console.log("SEGUIDOR",seguidor,id_jugador);
+
         if (seguidor){
-        
-                var Jugador = _.find(Tablero.listaJugadores,function(obj){return (obj.id == id_jugador)})
-                
+        //console.log("j"+id_jugador);
+        //console.log("JUGADORES -->",Tablero.listaJugadores);
+
+                var Jugador = _.find(Tablero.listaJugadores,function(obj){return (obj.id.user_id == id_jugador)})
+        //console.log("Juga" + Jugador);        
                 var nuevoSeguidor = {t:seguidor.t, n:seguidor.n, j:Jugador.numero, f:ficha}
                 ficha.seguidores.push(nuevoSeguidor);
         }
