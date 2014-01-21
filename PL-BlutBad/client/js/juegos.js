@@ -179,16 +179,7 @@ Template.misTorneos.torneos = function() {
     if (uid){
         return Torneos.find({game_id:game_id, participantes:{$in:[uid]}}); 
     }
-};
-
-Template.misTorneos.titlebtn = function() {    
-    if (!Session.get('clickado_mistor')) {
-        return "Partidas del HALL";
-    } else {
-        return Torneos.findOne(this._id).title;
-    }
-};
-
+}; 
 
 Template.misTorneos.events({
     'click .miTorneo' : function() {

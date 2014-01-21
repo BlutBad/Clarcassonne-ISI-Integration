@@ -301,8 +301,9 @@ Template.hall_clarcassone.userRango = function(user_id) {
     }  
 }
 
-Template.hall_clarcassone.tipo_partys= function() {        
-    if (Session.get('clickado_mistor')) {
+Template.hall_clarcassone.tipo_partys= function() {     
+    clk_tor = Session.get('clickado_mistor');     
+    if (clk_tor == undefined || clk_tor) { 
         return "Partidas creadas en HALL";
     } else {
         return "Partidas creadas en Torneo";

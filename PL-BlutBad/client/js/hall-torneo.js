@@ -128,7 +128,7 @@ function insertPartyVolatiles(torid, participantes) {
     PartidasVolatiles.insert({
         torneo_id: torid,
         jugadores :participantes,
-        creator_id:  Date.now(),
+        //creator_id:  Date.now(),
         listos: false
     });
 };
