@@ -62,6 +62,7 @@ var insertPartyVolatiles = function (torid, party, etapa) {
     PartidasVolatiles.insert({
         torneo_id: torid,
         jugadores : party.jugadores,
+        party_id: party.party_id,
         etapa: etapa,
         listos: false,
     });
@@ -91,13 +92,13 @@ var addSomeUsers = function(participantes, num) {
 
         party.jugadores.push({  user_id : participantes[rnd],
                                 estado  : "Torneo Inactivo"});
-        party.puntuacion.push({user_id  : participantes[rnd],
-                                puntos  : (Math.floor(Math.random()*200))});
-        party.party_id = i;
+        //party.puntuacion.push({user_id  : participantes[rnd],
+        //                        puntos  : (Math.floor(Math.random()*200))});
+        party.party_id = Math.floor(Math.random()*2000000);
         participantes=_.without(participantes, participantes[rnd]);
     }
 
-    party.ganador = playerWiner(party.puntuacion);
+    //party.ganador = playerWiner(party.puntuacion);
 
     return {party: party, participantes:participantes};
 }
@@ -281,6 +282,10 @@ Template.hall_torneo.events = {
         }else{
             Session.set('etapasTorneoActive', this.etapa);
         }
+    },
+    'click .simularEtapa':function(){
+        var tid = Session.get('showTorneoId');
+        Meteor.call("simularPartidasEtapa", tid); 
     },
     'click .multiMenuTorneo' : function(){
         console.log(this);
