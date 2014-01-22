@@ -32,11 +32,22 @@
         </div>
   
         {{#if showEtapasTorneo}}
-            <span class="badge badge-success simularEtapa">Simular la etapa</span>  
 
-            <span class="badge badge-success startTorneo">Empezar el torneo</span>  
-            <span class="badge badge-important finalizarTorneo">Finalizar el torneo!</span>
-            <span class="badge badge-important jugarEtapa">Jugar la etapa</span>
+          <button type="button" class="btn btn-labeled btn-success startTorneo">
+              Empezar el Torneo!
+          </button>
+
+            <button type="button" class="btn btn-labeled btn-warning simularEtapa">
+                Simular la etapa!
+            </button>
+
+          <button type="button" class="btn btn-labeled btn-info jugarEtapa">
+                Siguiente Etapa(Generar Partidas)
+          </button>
+
+          <button type="button" class="btn btn-labeled btn-danger finalizarTorneo">
+               Finalizar el torneo! 
+          </button>
 
 
             <h2>Etapas del torneo </h2>
@@ -57,6 +68,7 @@
 
         {{#if showRankingTorneo}}
           <p>Este es el ranking del torneo loco!</p>
+          {{>multiRanking}}
         {{/if}}
 
 
@@ -234,4 +246,41 @@
           </table>
         </div> 
 
+</template>
+
+
+
+<!--RANKIN !!! DIN DIN DIN -->
+
+
+<template name="multiRanking">
+<div class="container">   
+  <div class="row">
+      <div class="span5">
+       <div class="well">
+        <table class="table">                         
+            <h3>Ranking del torneo!</h3>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nombre</th>
+              <th>Rango</th>
+              <th>Puntuacion Acumulada</th>                                          
+            </tr>
+          </thead>   
+          <tbody>
+            {{#each multiRanking}}
+              <tr>
+                <td>{{no}}</td>
+                <td><span class="{{clacc}}">{{getUsername user_id}}</span>
+                <td>--</td>
+                <td>{{score}}</td>                                       
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>    
+</div>  
 </template>

@@ -235,6 +235,18 @@ Template.hall_torneo.showRankingTorneo = function() {
 
 
 
+Template.multiRanking.multiRanking =function(){
+    var tid = Session.get('showTorneoId');
+    var tor = Torneos.findOne(tid);
+
+    var sortRa = _.sortBy(tor.ranking, function(obj){ return -obj.score; });
+
+    sortRa.forEach(function(each, index) {
+       //
+    });
+    return sortRa;
+}
+
 
 
 //******************SOLO TORNEO*************************
