@@ -7,6 +7,11 @@ Session.setDefault("current_game",null);
 Session.setDefault('gamerank', null);
 
 
+//Variables de session para las torneos, multi-torneo en cuestion
+Session.setDefault("multiMenuTorneoActive",null);
+Session.setDefault('etapasTorneoActive', null);
+
+
 
 Meteor.startup(function() {
     $('#gamecontainer').hide();    
@@ -37,6 +42,17 @@ if (typeof Handlebars !== 'undefined') {
 			return Meteor.user()._id;
 		}
 	});
+
+	//Admin panel/content
+	Handlebars.registerHelper('showIfAdmin', function () {
+		if (Meteor.user()){
+			if (Meteor.user().username == "admin"){
+				return true;
+			}
+		}
+		return false;
+	});
+
 
 	Handlebars.registerHelper('getUserEmail', function (userId) {
 		var user = _extractProfile(userId);

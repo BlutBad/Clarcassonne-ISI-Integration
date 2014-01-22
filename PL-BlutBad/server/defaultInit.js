@@ -1,33 +1,74 @@
 // if the database is empty on server start, create some sample data.
 
 Meteor.startup(function() {
- 
-	var partidasV = [];
-    if (Menu.find().count() === 0) {
-		var data = [ {
-		    name : "Juegos",
-		    contents : []
-		}, {
-		    name : "Ranking",
-		    contents : []
-		}, {
-		    name : "Torneos",
-		    contents : []
-		},
-		/*
-		{
-		    name : "Tienda",
-		    contents : []
-		},*/ 
-		
-		];
+	console.log(" [Inicializando la Plataforma] ");
+ 		var partidasV = [];
 
-		var timestamp = (new Date()).getTime();
-		for ( var i = 0; i < data.length; i++) {
-		    var list_id = Menu.insert({
-			name : data[i].name
-		    });
-		}
+	    if (Menu.find().count() === 0) {
+	    	console.log("\t [1] Creando Menus...");
+			var data = [ {
+				    name : "Juegos",
+				    menuType : "principal",
+
+				}, {
+				    name : "Ranking",
+				    menuType : "principal",
+
+				}, {
+				    name : "Torneos",
+				    menuType : "principal",
+
+				},
+				//menu de etapas del torneo
+				{
+				    name : "Participantes",
+				    etapa: "participantes",
+				    menuType : "torneoEtapas",
+				},{
+				    name : "Octavos 1/8",
+				    etapa: "octavos",
+				    menuType : "torneoEtapas",
+				},{
+				    name : "Cuartos 1/4",
+				    etapa: "cuartos",
+				    menuType : "torneoEtapas",
+				},{
+				    name : "Semi-final",
+				    etapa: "semifinal",
+				    menuType : "torneoEtapas",
+				},{
+				    name : "Final",
+				    etapa: "final",
+				    menuType : "torneoEtapas",
+				},
+				//menu del multi torneo
+				{
+					name: "Etapas del torneo!",
+					short: "etapas", 
+					menuType: "multiTorneo",
+				},
+				{
+					name: "Ranking del torneo!",
+					short: "ranking", 
+					menuType: "multiTorneo",
+				},
+			
+			];
+
+			var timestamp = (new Date()).getTime();
+			for ( var i = 0; i < data.length; i++) {
+				var obj = {	name 	: data[i].name,
+							menuType: data[i].menuType};
+				if (data[i].etapa){
+					obj.etapa = data[i].etapa;
+				}
+				if(data[i].short){
+					obj.short = data[i].short;
+				}
+			    var list_id = Menu.insert(obj);
+			}
+			
+
 		
 		fakeUsers = "Inea	Yiey	Eurnu	Anysy	Keel	Bros	Oriso " +
 					"Eldd	Iashu	Waiy	Tril	Mosc	Ensh	Quek " +
@@ -46,15 +87,18 @@ Meteor.startup(function() {
 					"Pheif	Lit	Aemo	Fays	Obelo	Kimb	Oati " +
 					"Ishy	Llierd	Ightgh	Moil	Quoert	Risnt	Yeme " +
 					"Reis	Byv	Rher	Cleard	Omck	Yeich	Uinea";
+					
 		fakeUsersArray = fakeUsers.split("\t");
 		fakeUsersId = [];
-		//console.log("Creando (" + fakeUsersArray.length + ") usuarios falsos...");
+
+		console.log("\t [2] Creando "+fakeUsersArray.length +" usuarios falsos");
+
 		for ( var i = 0; i < fakeUsersArray.length; i++) {
 		    fakeUser = fakeUsersArray[i];
 		    fakeUsersId[i] = Accounts.createUser({
 		    	fakeUser : true,
 		    	username:fakeUser,
-		    	email:(fakeUser+"@kaka.aka"), 
+		    	email:(fakeUser+"@pakistan.isi"), 
 		    	password:"123"
 		    });
 		    Meteor.users.update(fakeUsersId[i],
@@ -111,7 +155,9 @@ Meteor.startup(function() {
 		}
     };
 
+    
 	if (PartidasVolatiles.find().count() === 0) {  
+		console.log("\t [3] Creando "+partidasV.length +" partidas volatiles falsas");
 		for (var i = 0; i < partidasV.length; i++) { 
 			PartidasVolatiles.insert(
 				partidasV[i]
@@ -120,6 +166,7 @@ Meteor.startup(function() {
 	};
 
 	if (Juegos.find().count() === 0) {
+
 		var admin = Accounts.createUser({username:"admin",email:"admin@kaka.aka", password:"123"});   
 		var data = [
 			{
@@ -186,7 +233,8 @@ Meteor.startup(function() {
 	                    pic : '/images/games_logo/alieninvasion.jpg',
 	                    description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel',
 	                    description_long:'Id vel sensibus honestatis omittantur, vel cu nobis commune patrioque. In accusata definiebas qui, id tale malorum dolorem sed, solum clita phaedrum ne his. Eos mutat ullum forensibus ex, wisi perfecto urbanitas cu eam, no vis dicunt impetus. Assum novum in pri, vix an suavitate moderatius, id has reformidans referrentur. Elit inciderint omittantur duo ut, dicit democritum signiferumque eu est, ad suscipit delectus mandamus duo. An harum equidem maiestatis nec.',
-	                	participantes:[]
+	                	participantes:[],
+	                	etapas : {octavos:{}, cuartos:{}, semifinal:{}, final:{}},
 	                }
                 ]
 
@@ -257,7 +305,11 @@ Meteor.startup(function() {
                         pic : '/images/games_logo/clarkasone.jpg',
                         description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel',
                         description_long:'Id vel sensibus honestatis omittantur, vel cu nobis commune patrioque. In accusata definiebas qui, id tale malorum dolorem sed, solum clita phaedrum ne his. Eos mutat ullum forensibus ex, wisi perfecto urbanitas cu eam, no vis dicunt impetus. Assum novum in pri, vix an suavitate moderatius, id has reformidans referrentur. Elit inciderint omittantur duo ut, dicit democritum signiferumque eu est, ad suscipit delectus mandamus duo. An harum equidem maiestatis nec.',
-                        participantes:[]
+                        participantes:[],
+	                	etapas : {	octavos: 	{start:false,finish:false, maxPlayersNextEtapa: 64, partidas:[]},
+	                			 	cuartos: 	{start:false,finish:false, maxPlayersNextEtapa: 16, partidas:[]}, 
+	                			 	semifinal: 	{start:false,finish:false, maxPlayersNextEtapa: 4,	partidas:[]},
+	                			 	final: 		{start:false,finish:false, maxPlayersNextEtapa: 1000, partidas:[]}},
 				}
 			    ],
 			},
@@ -325,7 +377,8 @@ Meteor.startup(function() {
                         pic : '/images/splashscreen.png',
                         description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel',
                         description_long:'Id vel sensibus honestatis omittantur, vel cu nobis commune patrioque. In accusata definiebas qui, id tale malorum dolorem sed, solum clita phaedrum ne his. Eos mutat ullum forensibus ex, wisi perfecto urbanitas cu eam, no vis dicunt impetus. Assum novum in pri, vix an suavitate moderatius, id has reformidans referrentur. Elit inciderint omittantur duo ut, dicit democritum signiferumque eu est, ad suscipit delectus mandamus duo. An harum equidem maiestatis nec.',
-                        participantes:[]
+                        participantes:[],
+	                	etapas : {octavos:{}, cuartos:{}, semifinal:{}, final:{}},
                      }
 			    ]
 			} 
@@ -334,6 +387,10 @@ Meteor.startup(function() {
 		var timestamp = (new Date()).getTime();
 		
 		//////////////////////AÑADIR JUEGOS//////////////////////////
+		console.log("\t [4] Añadiendo "+data.length +" juegos a la Plataforma");
+		console.log("\t\t [4.1] Añadiendo rangos");
+		console.log("\t\t [4.2] Añadiendo insignias");
+		console.log("\t\t [4.3] Añadiendo torneos");
 		for ( var i = 0; i < data.length; i++) {
 		    var juego_id = Juegos.insert({
 				name : data[i].name,
@@ -349,6 +406,7 @@ Meteor.startup(function() {
 
 		    
 		    //////////////////////RANGOS PARA JUEGOS//////////////////////////
+		    //console.log("\t\t [4.1] Añadiendo "+data[i].torneos.length +" rangos");
 		    for ( var j = 0; j < data[i].rangos.length; j++) {
 				var info = data[i].rangos[j];
 				Rangos.insert({
@@ -360,6 +418,7 @@ Meteor.startup(function() {
 		    }
 
 		    //////////////////////INSIGNIAS PARA JUEGOS//////////////////////////
+		    //console.log("\t\t [4.2] Añadiendo "+data[i].torneos.length +" insignias");
 		    for ( var j = 0; j < data[i].insignias.length; j++) {
 				var info = data[i].insignias[j];
 				Insignias.insert({
@@ -380,7 +439,7 @@ Meteor.startup(function() {
 				});
 
 				fakeUsers.forEach(function(user) {
-				    if (Math.random() < 0.535) {
+				    if (Math.random() < 0.735) {
 						Torneos.update(torneoId, { $push : {participantes : user._id}});
 				    }
 				});
@@ -388,6 +447,7 @@ Meteor.startup(function() {
 	
 		    
 		    //Añadir torneos, enlazando cada torneo con su juego.
+		    //console.log("\t\t [4.3] Añadiendo "+data[i].torneos.length +" torneos");
 		    for ( var j = 0; j < data[i].torneos.length; j++) {
 				var info = data[i].torneos[j];
 				var torneoId = Torneos.insert({
@@ -399,7 +459,8 @@ Meteor.startup(function() {
 				    pic : info.pic,
 				    description : info.description,
 				    description_long: info.description_long,
-				    participantes: []
+				    participantes: [],
+				    etapas: info.etapas,
 				});
 				ApuntameUsuariosFakes(torneoId);
 		    }

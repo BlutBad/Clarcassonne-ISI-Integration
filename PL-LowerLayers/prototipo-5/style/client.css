@@ -177,3 +177,11 @@ html{
 
 .cs-prev,
 .cs-next { background-color: #000000; color: #FFFFFF; padding: 0px 10px; }
+
+
+#avatar-slider img{
+	display: none;
+}
+#avatar-slider img:nth-child(1){
+	display: block;
+}

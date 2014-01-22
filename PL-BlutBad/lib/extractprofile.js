@@ -66,11 +66,6 @@ _extractProfile = function (userObjId) {
 
 resolverUser = function(id) {
     result  = _extractProfile(id.user_id)
-
-
-   
     fecha = getRandomInt(1,30) + "/"+getRandomInt(1,12) +"/"+getRandomInt(1900,2010)
-
-    
     return {nombre: result.username, fecha: fecha}
 }

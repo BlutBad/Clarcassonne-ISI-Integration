@@ -22,61 +22,57 @@
 
       
     {{#if multiTorneo}} 
-      <div class="container"> 
-        <span class="badge badge-success startTorneo">Empezar el torneo</span>  
-        <span class="badge badge-important finalizarTorneo">Finalizar el torneo!</span>
-        <h2>Etapas del torneo </h2> 
-        <div id="tab" class="btn-group" data-toggle="buttons-radio">
-          <a href="#" class="btn btn-large btn-info active" data-toggle="tab">Preseleccion</a>
-          <a href="#" class="btn btn-large btn-info" data-toggle="tab">1/4 Final</a>
-          <a href="#" class="btn btn-large btn-info" data-toggle="tab">SemiFinal</a>
-          <a href="#" class="btn btn-large btn-info"  data-toggle="tab">Final</a> 
-        </div>         
+      <div class="container">
 
-        <div class="span5">
-          <table class="table table-striped table-condensed">
-            <thead>
-            <tr>
-              <th>#</th>
-              <th>Partida</th>
-              <th>Ganador</th>                                        
-            </tr>
-            </thead>  
- 
-            <tbody>
-              {{#each partidasTorneo}}
-                <tr>
-                  <td><span class="label label-success" id = "num">{{no}}</span></td>
-                  <td>
-                    <div class="span5">
-                      <table class="table table-striped table-condensed">
-                        <thead>
-                          <tr>
-                            <th>Username</th>
-                            <th>Rango</th>
-                            <th>Role</th>
-                            <th>Status</th>                                          
-                          </tr>
-                        </thead>   
-                        <tbody>
-                          {{#each jugadores}}
-                            <tr>
-                              <td>{{getUsername this.user_id}}</td>
-                              <td>{{userRango this.user_id}}</td>
-                              <td>{{rol this.user_id ../this._id}}</td>
-                              <td><span class="{{estadoUser this.estado}}">{{this.estado}}</span></td>                                       
-                            </tr>
-                          {{/each}}           
-                        </tbody>
-                      </table>
-                     </div>
-                  </td>                    
-                  <td><span class="label label-success" id = "winner">Donna R. Folse</span></td>                                             
-                </tr>
+      <h2>Menu del torneo </h2>
+        <div id="tab" class="btn-group" data="buttons-radio">
+          {{#each multiMenuTorneo}} 
+            <a href="" class="btn btn-large btn-info multiMenuTorneo {{multiMenuTorneoActive}}" data-toggle="tab">{{name}}</a>
+          {{/each}}
+        </div>
+  
+        {{#if showEtapasTorneo}}
+              {{#if showIfAdmin}}
+                  <button type="button" class="btn btn-labeled btn-success startTorneo">
+                      Empezar el Torneo!
+                  </button>
+
+                  <button type="button" class="btn btn-labeled btn-warning simularEtapa">
+                      Simular la etapa!
+                  </button>
+
+                  <button type="button" class="btn btn-labeled btn-info jugarEtapa">
+                        Siguiente Etapa(Generar Partidas)
+                  </button>
+
+                  <button type="button" class="btn btn-labeled btn-danger finalizarTorneo">
+                       Finalizar el torneo! 
+                  </button>
+                {{/if}}
+
+
+            <h2>Etapas del torneo </h2>
+            <div id="tab" class="btn-group" data="buttons-radio">
+              {{#each etapasTorneo}} 
+                <a href="" class="btn btn-large btn-info etapasTorneo {{etapasTorneoActive}}" data-toggle="tab">{{name}}</a>
               {{/each}}
-            </tbody>    
-          </table>
-        </div> 
+            </div>
+           
+            {{#if showParticipantes}} 
+              {{>participantes}}
+            {{/if}}
+
+            {{#if showEtapa}}
+              {{>showEtapaTorneo}}
+            {{/if}}
+        {{/if}}
+
+        {{#if showRankingTorneo}}
+          <p>Este es el ranking del torneo loco!</p>
+          {{>multiRanking}}
+        {{/if}}
+
+
       </div>   
     {{/if}}
 
@@ -114,13 +110,6 @@
           </div>  
       {{/if}}
     
-    
-    
-    
-    
-    
-    
-    
       <div class="container">   
         <div class="row">
           <div class="span5">
@@ -154,4 +143,145 @@
 
   </div>
 {{/if}}
+</template>
+
+
+<template name="participantes">
+    <div class="container">   
+        <div class="row">
+          <div class="span5">
+           <div class="well">
+            <table class="table">                         
+                <h3>Participantes del torneo!</h3>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nombre</th>
+                  <th>Rango</th>
+                  <th>Maxima Puntuacion</th>                                          
+                </tr>
+              </thead>   
+              <tbody>
+                 {{#each participantes}}
+                  <tr>
+                    <td>--</td>
+                    <td><span class="{{clacc}}">{{getUsername this}}</span>
+                    <td>--</td>
+                    <td>--</td>                                       
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>    
+    </div> 
+</template>
+
+
+<template name="showInfoEtapaTorneo">
+{{#if info}}
+  <table class="table table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Numero de participantes:</th>
+        <th>Numero de partidas:</th>                                         
+      </tr>
+    </thead>   
+    <tbody>
+      <tr>
+        <td>{{info.participantes}}</td>
+        <td>{{info.partidas}}</td>                                    
+      </tr>       
+    </tbody>
+  </table>
+  {{/if}}
+</template>
+
+<template name="showEtapaTorneo">
+        <div class="span5">
+        
+        {{>showInfoEtapaTorneo}}
+
+          <table class="table table-striped table-condensed">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>Partida</th>
+              <th>Ganador</th>                                        
+            </tr>
+            </thead>  
+ 
+            <tbody>
+              {{#each partidasEtapaTorneo}}
+                <tr>
+                  <td><span class="label label-success" id = "num">{{no}}</span></td>
+                  <td>
+                    <div class="span5">
+                      <table class="table table-striped table-condensed">
+                        <thead>
+                          <tr>
+                            <th>Username</th>
+                            <th>Rango</th>
+                            <th>Role</th>
+                            <th>Status</th>                                          
+                          </tr>
+                        </thead>   
+                        <tbody>
+                          {{#each jugadores}}
+                            <tr>
+                              <td>{{getUsername this.user_id}}</td>
+                              <td>{{userRango this.user_id}}</td>
+                              <td>{{this.puntos}}</td>
+                              <td><span class="{{estadoUser this.estado}}">{{this.estado}}</span></td>                                       
+                            </tr>
+                          {{/each}}           
+                        </tbody>
+                      </table>
+                     </div>
+                  </td>                    
+                  <td><span class="label label-success" id = "winner">{{getUsername ganador.user_id}}</span></td>                                             
+                </tr>
+              {{/each}}
+            </tbody>    
+          </table>
+        </div> 
+
+</template>
+
+
+
+<!--RANKIN !!! DIN DIN DIN -->
+
+
+<template name="multiRanking">
+<div class="container">   
+  <div class="row">
+      <div class="span5">
+       <div class="well">
+        <table class="table">                         
+            <h3>Ranking del torneo!</h3>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nombre</th>
+              <th>Rango</th>
+              <th>Puntuacion Acumulada</th>                                          
+            </tr>
+          </thead>   
+          <tbody>
+            {{#each multiRanking}}
+              <tr>
+                <td>{{no}}</td>
+                <td><span class="{{clacc}}">{{getUsername user_id}}</span>
+                <td>--</td>
+                <td>{{score}}</td>                                       
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>    
+</div>  
 </template>
