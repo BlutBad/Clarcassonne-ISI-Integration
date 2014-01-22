@@ -13,6 +13,10 @@ Template.listaAmigosOfflineTemp.listaAmigosOffline = function(){
 	if (Meteor.user()){
 		if (Meteor.user().amigos!=undefined){
 			amigos=Meteor.user().amigos;
+			Meteor.defer(function () {
+				menuAmigosFunc();
+  			});
+
 			return Meteor.users.find({$and: [{_id: {$in: amigos}},{"services.resume.loginTokens" :  []}]});
 		}	
 	}	
