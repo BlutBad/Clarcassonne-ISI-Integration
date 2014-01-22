@@ -1,21 +1,20 @@
+// Templates
+Template.chat.estasRegistrado = function() {
+	var estasRegistrado;
+	if (Meteor.user()) {
+		estasRegistrado = true;
+	} else {
+		estasRegistrado = false;
+	}
+	return estasRegistrado;
+}
 
 Template.chat.chatName = function () {
-	return "General";
+	return "ISI-Pakistan Chat Game";
 }
 
 Template.messages.messages = function () {
     return Global_msgs.find({}, { sort: { time: -1 }});
-}
-
-notRegisterChat = function () {
-	$(".not-register-chat").dialog({
-      		modal: true,
-      		buttons: {
-        		Ok: function() {
-          		$( this ).dialog( "close" );
-        	}
-      	}
-    });
 }
 
 Template.chat.events = {
@@ -23,11 +22,7 @@ Template.chat.events = {
 		$("#boxchat").hide();
 	},
 	'click input#showchat': function () {
-		if (Meteor.userId()) {
-			$("#boxchat").show();
-		} else {
-			notRegisterChat();
-		}
+		$("#boxchat").show();
 	}
 }
 

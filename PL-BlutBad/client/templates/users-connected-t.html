@@ -1,15 +1,19 @@
 
 <template name="usersConnected">
-	<div id="users-connected">
-		<div id="content-users" style="display:none">
-			<p id="title-users"> <strong>Mis amigos</strong></p>
-			<input type="button" id="hide-users-connected" class="btn btn-primary" value="X" >
-			<div id="connected" >
-				{{> connected}}
+	{{#if estasRegistrado}}
+		{{#if tienesAmigos}}
+			<div id="users-connected">
+				<div id="content-users" style="display:none">
+					<p id="title-users"> <strong>Mis amigos</strong></p>
+					<input type="button" id="hide-users-connected" class="btn btn-primary" value="X" >
+					<div id="connected" >
+						{{> connected}}
+					</div>
+				</div>
+				<input type="button" id="show-users-connected" class="btn btn-primary" value="Amigos">
 			</div>
-		</div>
-		<input type="button" id="show-users-connected" class="btn btn-primary" value="Amigos">
-	</div>
+		{{/if}}
+	{{/if}}
 </template>
 
 <template name="connected">
