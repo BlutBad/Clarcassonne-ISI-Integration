@@ -184,11 +184,19 @@
 		<table>
 			{{# each matches}}
 				<tr>
-					-<td><a class="linkmatch">{{name}}</a></td><td> {{created}}</td><td> {{num_players}} Jugadores</td>
+					-
+					<td><a class="linkmatch">{{name}}</a></td>
+					<td> {{created}}</td>
+					<td> {{num_players}} Jugadores</td>
+					<td>{{#if password}}Clave: <input type="password" class="linkmatch_pass {{_id}}">{{/if}}</td>
 				</tr>
 			{{/ each}}
 		</table>
-		<p> Nueva partida: <input type="text" id="match_creator"></p>
+		<p> <table style="border-style : solid;border-color:white;"> 
+			<tr><td> Nueva partida: <input type="text" id="match_name"> </td></tr> 
+			<tr><td> Contraseña: <input type="password" id="match_pass"> </td></tr> 
+			<tr><td> <button type="button" id="match_creator">Crear</button> </td></tr> 
+		</table> </p>
 		<p><a style ="cursor:pointer;text-decoration:underline;" id="match_back">Atrás</a></p>
 	</div>
 </template>
@@ -258,7 +266,7 @@
 	<div id="roomcontainer">
 		<div class="alaputaizqtop"> 
 			<a style ="cursor:pointer;text-decoration:underline;" id="exitgame"> Salir </a>
-			<h1>{{> gamenametemp}}  {{> matchnametemp}}</h1>
+			<h1>{{> gamenametemp}}</h1>  <h2>{{> matchnametemp}}</h2>
 			{{> roomplayerstemp}}
 		</div>
 		<div class="alaputadertop">{{> my-video }} {{> remote-videos }}</div>
