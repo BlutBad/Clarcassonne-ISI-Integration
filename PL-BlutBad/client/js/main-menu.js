@@ -5,7 +5,7 @@ Template.menu.rendered = function() {}
 
 //Mostramos la lista de menus
 Template.main_menu.main_menu = function() {
-  return Menu.find({});
+  return Menu.find({menuType : "principal"});
 };
 
 

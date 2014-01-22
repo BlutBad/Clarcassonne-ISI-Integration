@@ -1,26 +1,89 @@
 // if the database is empty on server start, create some sample data.
 
 Meteor.startup(function() {
- 
-	var partidasV = [];
-    if (Menu.find().count() === 0) {
-		var data = [ {
-		    name : "Juegos",
-		    contents : []
-		}, {
-		    name : "Ranking",
-		    contents : []
-		}, {
-		    name : "Torneos",
-		    contents : []
-		},
-		/*
-		{
-		    name : "Tienda",
-		    contents : []
-		},*/ 
-		
-		];
+
+ 		var partidasV = [];
+
+	    if (Menu.find().count() === 0) {
+			var data = [ {
+			    name : "Juegos",
+			    menuType : "principal",
+
+			}, {
+			    name : "Ranking",
+			    menuType : "principal",
+
+			}, {
+			    name : "Torneos",
+			    menuType : "principal",
+
+			},
+			//menu de etapas del torneo
+			{
+			    name : "Participantes",
+			    etapa: "participantes",
+			    menuType : "torneoEtapas",
+			},{
+			    name : "Octavos 1/8",
+			    etapa: "octavos",
+			    menuType : "torneoEtapas",
+			},{
+			    name : "Cuartos 1/4",
+			    etapa: "cuartos",
+			    menuType : "torneoEtapas",
+			},{
+			    name : "Semi-final",
+			    etapa: "semifinal",
+			    menuType : "torneoEtapas",
+			},{
+			    name : "Final",
+			    etapa: "final",
+			    menuType : "torneoEtapas",
+			},
+			//menu del multi torneo
+			{
+				name: "Etapas del torneo!",
+				short: "etapas", 
+				menuType: "multiTorneo",
+			},
+			{
+				name: "Ranking del torneo!",
+				short: "ranking", 
+				menuType: "multiTorneo",
+			},
+			
+			];
+
+			var timestamp = (new Date()).getTime();
+			for ( var i = 0; i < data.length; i++) {
+				var obj = {	name 	: data[i].name,
+							menuType: data[i].menuType};
+				if (data[i].etapa){
+					obj.etapa = data[i].etapa;
+				}
+				if(data[i].short){
+					obj.short = data[i].short;
+				}
+			    var list_id = Menu.insert(obj);
+			}
+			
+			/*
+			fakeUsers = "Cheyrd_Inaurtle Oechi_Honomon Saml_Rodizard Ineh_Lorochu Tand_Knockeromon Quaq_Vorizard Elms_Kimizard Kell_Clotachu Cond_Aughamon Umy_Clotizard Lorrt_Denamon Scheas_Rodertle Ekalu_Goofortle Yinao_Sulachu Skeln_Wadezard Geal_Thimbleortle Schein_Snarkyzard Vun_Twerpirtle Oskelo_Thimbleechu Edyne_Undartle Yagea_Perozard Ros_Ashertle Erise_Ageychu Eingo_Faceemon Dars_Ardartle Clur_Twitymon Seev_Tasurtle Siy_Goofirtle Rayt_Numbachu Laeg_Boneurtle Ahini_Fumbleumon Inalo_Bumbleichu Wheuv_Footezard Tait_Ormichu Llaunt_Onartle Imy_Clodamon Osf_Wimpezard Chagh_Meatomon Rhey_Skullumon Shaid_Etochu Ett_Osymon Urado_Faceurtle Oite_Torichu Chrent_Faceomon Uma_Bumbleamon Ess_Ghaozard Aunta_Dumbyrtle Tanf_Loafechu Apere_Chauzard Oete_Footachu Ghat_Puffemon Luiz_Knuckleimon Uworo_Dipazard Avori_Untuzard Quek_Skeluchu Atnt_Angazard Ianga_Ballemon Reyd_Sulirtle Phew_Headazard Undn_Puffozard Orilu_Iamon Isk_Faceychu Ustn_Undyzard Suls_Twerpemon Eldrd_Draemon Yrano_Kimachu Nysr_Adochu Emc_Goofurtle Auski_Doofemon Eorma_Raymon Uemu_Ballomon Cheet_Sneezeamon Schiech_Tonuzard Irph_Ineertle Died_Numbuchu Ads_Ineamon Ymore_Ormazard Itb_Turychu Oathi_Imazard Iryni_Wadozard Ward_Denertle Weyk_Therortle Wark_Rayemon Inala_Oldemon Heik_Risamon Yieg_Verirtle Ads_Fingerozard Oia_Cloduzard Lab_Leromon Zhiec_Ustumon Bin_Enumon Rab_Nyurtle Lyenn_Doofychu Urnch_Knockizard Unyu_Atemon Atd_Wipeozard Nyv_Headortle Zhok_Boneortle Sayf_Enimon Thier_Ackortle Leis_Skelichu Gaiv_Thimbleizard Eemi_Bumbleirtle Quel_Wimpechu Ehini_Ghauchu Urilo_Boneichu Eml_Sneezeochu Ykimu_Oldimon Olyea_Airomon Emst_Inaymon Driel_Skullochu Reinn_Headyrtle Llooc_Sayachu Queal_Ankleazard Dais_Nyozard Samw_Draichu Zhoph_Faceachu Rakk_Echomon Osere_Lunkuchu";
+			fakeUsersArray = fakeUsers.split(" ");
+			//console.log("Creando (" + fakeUsersArray.length + ") usuarios falsos...");
+			for ( var i = 0; i < fakeUsersArray.length; i++) {
+			    fakeUser = fakeUsersArray[i];
+			    var uId = Accounts.createUser({
+			    	fakeUser : true,
+			    	username:fakeUser,
+			    	email:(fakeUser+"@kaka.aka"), 
+			    	password:"123"})
+			    Meteor.users.update(uId,
+			    	{$set:{fakeUser:true}
+			    });
+
+			*/
+   
 
 		var timestamp = (new Date()).getTime();
 		for ( var i = 0; i < data.length; i++) {
@@ -46,6 +109,7 @@ Meteor.startup(function() {
 					"Pheif	Lit	Aemo	Fays	Obelo	Kimb	Oati " +
 					"Ishy	Llierd	Ightgh	Moil	Quoert	Risnt	Yeme " +
 					"Reis	Byv	Rher	Cleard	Omck	Yeich	Uinea";
+					
 		fakeUsersArray = fakeUsers.split("\t");
 		fakeUsersId = [];
 		//console.log("Creando (" + fakeUsersArray.length + ") usuarios falsos...");
@@ -54,7 +118,7 @@ Meteor.startup(function() {
 		    fakeUsersId[i] = Accounts.createUser({
 		    	fakeUser : true,
 		    	username:fakeUser,
-		    	email:(fakeUser+"@kaka.aka"), 
+		    	email:(fakeUser+"@pakistan.isi"), 
 		    	password:"123"
 		    });
 		    Meteor.users.update(fakeUsersId[i],
@@ -186,7 +250,8 @@ Meteor.startup(function() {
 	                    pic : '/images/games_logo/alieninvasion.jpg',
 	                    description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel',
 	                    description_long:'Id vel sensibus honestatis omittantur, vel cu nobis commune patrioque. In accusata definiebas qui, id tale malorum dolorem sed, solum clita phaedrum ne his. Eos mutat ullum forensibus ex, wisi perfecto urbanitas cu eam, no vis dicunt impetus. Assum novum in pri, vix an suavitate moderatius, id has reformidans referrentur. Elit inciderint omittantur duo ut, dicit democritum signiferumque eu est, ad suscipit delectus mandamus duo. An harum equidem maiestatis nec.',
-	                	participantes:[]
+	                	participantes:[],
+	                	etapas : {octavos:{}, cuartos:{}, semifinal:{}, final:{}},
 	                }
                 ]
 
@@ -257,7 +322,11 @@ Meteor.startup(function() {
                         pic : '/images/games_logo/clarkasone.jpg',
                         description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel',
                         description_long:'Id vel sensibus honestatis omittantur, vel cu nobis commune patrioque. In accusata definiebas qui, id tale malorum dolorem sed, solum clita phaedrum ne his. Eos mutat ullum forensibus ex, wisi perfecto urbanitas cu eam, no vis dicunt impetus. Assum novum in pri, vix an suavitate moderatius, id has reformidans referrentur. Elit inciderint omittantur duo ut, dicit democritum signiferumque eu est, ad suscipit delectus mandamus duo. An harum equidem maiestatis nec.',
-                        participantes:[]
+                        participantes:[],
+	                	etapas : {	octavos: 	{start:false,finish:false, maxPlayersNextEtapa: 64, partidas:[]},
+	                			 	cuartos: 	{start:false,finish:false, maxPlayersNextEtapa: 16, partidas:[]}, 
+	                			 	semifinal: 	{start:false,finish:false, maxPlayersNextEtapa: 4,	partidas:[]},
+	                			 	final: 		{start:false,finish:false, maxPlayersNextEtapa: 1000, partidas:[]}},
 				}
 			    ],
 			},
@@ -325,7 +394,8 @@ Meteor.startup(function() {
                         pic : '/images/splashscreen.png',
                         description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel',
                         description_long:'Id vel sensibus honestatis omittantur, vel cu nobis commune patrioque. In accusata definiebas qui, id tale malorum dolorem sed, solum clita phaedrum ne his. Eos mutat ullum forensibus ex, wisi perfecto urbanitas cu eam, no vis dicunt impetus. Assum novum in pri, vix an suavitate moderatius, id has reformidans referrentur. Elit inciderint omittantur duo ut, dicit democritum signiferumque eu est, ad suscipit delectus mandamus duo. An harum equidem maiestatis nec.',
-                        participantes:[]
+                        participantes:[],
+	                	etapas : {octavos:{}, cuartos:{}, semifinal:{}, final:{}},
                      }
 			    ]
 			} 
@@ -380,7 +450,7 @@ Meteor.startup(function() {
 				});
 
 				fakeUsers.forEach(function(user) {
-				    if (Math.random() < 0.535) {
+				    if (Math.random() < 0.735) {
 						Torneos.update(torneoId, { $push : {participantes : user._id}});
 				    }
 				});
@@ -399,7 +469,8 @@ Meteor.startup(function() {
 				    pic : info.pic,
 				    description : info.description,
 				    description_long: info.description_long,
-				    participantes: []
+				    participantes: [],
+				    etapas: info.etapas,
 				});
 				ApuntameUsuariosFakes(torneoId);
 		    }
