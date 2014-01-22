@@ -29,15 +29,11 @@ Template.privatemessagestemp.listaprivatemessages=function(){
 Deps.autorun(function () {
 	if (Meteor.user()){
 		var newprivatemessages = Private_Messages.find({$and: [{dest: Meteor.user().username},{recibido: 0}] });
-		console.log("recv")
 		newprivatemessages.forEach(function(newprivatemessage){
 			Private_Messages.update({_id: newprivatemessage._id}, {$set: {recibido: 1}});
-			console.log(newprivatemessage.orig)
 			var chatabiertodeorig = $("div[tipo='contenidochat'][id='"+newprivatemessage.orig+"']");
-			if (chatabiertodeorig.css("display")!="block"){
-				$.ambiance({message: "New private message received from "+newprivatemessage.orig, fade: true, timeout: 4});
-				console.log("notif")
-			}			
+			if (chatabiertodeorig.css("display")!="block")
+				$.ambiance({message: "New private message received from "+newprivatemessage.orig, fade: true, timeout: 4});			
 		});
 	}	
 });
@@ -103,7 +99,6 @@ $(document).on("click", ".closechattab", function() {
 		}else{
 			var nombrechatabierto = $("div[tipo='contenidochat'][style='display: block;']").attr("id");
 			if (nombrechatabierto != undefined){
-				console.log("conversacion restante abierta de "+nombrechatabierto);
 				Session.set("origname",Meteor.user().username);
 				Session.set("destname",nombrechatabierto);
 			}

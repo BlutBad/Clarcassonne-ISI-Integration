@@ -30,9 +30,11 @@
 		<ul>
 			<li><a href="#juegos">Juegos</a></li>
 			<li><a href="#ranking">Ranking</a></li>
+			<li><a href="#perfil">Perfil</a></li>
 		</ul>
 		<div id="juegos">{{> gamestemp}} {{> matchestemp}} {{> roomgametemp}}</div>
 		<div id="ranking">{{> gamesrankingtemp}} {{> userstemp}} {{> byuserrankingtemp}} {{> bygamerankingtemp}}</div>
+		<div id="perfil">{{> imagperfiltemp}}{{> datosperfiltemp}}{{> modperfiltemp}}</div>
 	</div>
 </template>
 
@@ -353,4 +355,48 @@
 
 <template name="remote-videos">
     <span id="remotesVideos"></span>
+</template>
+
+
+
+
+<template name='imagperfiltemp'>
+	<div style="display:block;" id="imgdataprofile">	
+		<img id='imgprofile' width='150px' height='150px' src={{avatar}} ><br>
+	</div>	
+</template>
+
+
+<template name='datosperfiltemp'>
+	<div style="display:block;" id="dataprofile">
+		<div><span id="nombreperfil" style='font: small-caps 185% serif; '>{{username}}</span></div><br>
+		<b>Fecha de nacimiento:</b> {{birthday}}<br>
+		<b>Correo electronico:</b> {{address}}<br>
+		<b>Amigos:</b> {{amigos}}<br>
+		<b>Mejores puntuaciones </b>
+		{{# each rank}}
+			[{{game}}:{{points}}]
+		{{/ each}}
+		<br><br>
+		<input id="modifprof" type="submit" value="Modificar"> 
+	</div>	
+</template>
+
+
+
+<template name='modperfiltemp'>
+	<div style="display:none;" id="moddataprofile">
+		<br><br>
+		<div id="contenedorimagenes" style="height:150px">
+			<button type="button" id="previousavatar" style="float: left; margin-top:65px"> < </button>
+			<div id="avatar-slider" style="float: left;">
+			</div>
+			<button type="button" id="nextavatar" style="float: left; margin-top:65px"> > </button>
+		</div>
+		<br><br>
+		Fecha de nacimiento: <input type="text" id="datepickerprof"> (Una vez guardado no se puede modificar)<br>
+		Direccion de email:   <input id="modemail" type="email"><br><br><br>
+		<input id="saveprof" type="submit" value="Guardar"> 
+		<input id="nosaveprof" type="submit" value="Cancelar"> 
+	</div>	
 </template>
