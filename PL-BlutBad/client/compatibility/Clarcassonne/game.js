@@ -69,8 +69,14 @@ img.src = 'Clarcassonne/images/background.png';
 var img2 = new Image();
 img2.src = 'Clarcassonne/images/abajo.png';
 
+//var img3 = new Image();
+//img3.src = 'images/musica.png';
+
 var img4 = new Image();
 img4.src = 'Clarcassonne/images/ControlHelp.png';
+
+
+
 
 
 
@@ -119,8 +125,8 @@ function SetSeguidorEn (Seguidor, Posiciones) {
 	for (pos in Posiciones) {
 
 		posible = Seguidortraducir (Posiciones[pos].n);
-
-		if (posible.x == Seguidor.x && posible.y == Seguidor.y) {
+		console.log(traducirTipoSeguidor(Seguidor.t), Posiciones[pos].t);
+		if (posible.x == Seguidor.x && posible.y == Seguidor.y && traducirTipoSeguidor(Seguidor.t) ==  Posiciones[pos].t) {
 			encaja = true;	
 		}
  	}
@@ -153,21 +159,16 @@ function SetFichaEn (NuevaPieza, Posiciones) {
 
 function SetPlayers (err, data) {
 
-	Jugador1 = {nombre: data[0].nombre.slice(0,6), color: "ficha_rojo", puntos: data[0].puntos, id:data[0].id, turno:1};
-	Jugador2 = {nombre: data[1].nombre.slice(0,6) , color: "ficha_azul", puntos:data[1].puntos, id: data[1].id, turno: 0};
-	Jugador3 = {nombre: data[2].nombre.slice(0,6)  , color: "ficha_amarillo", puntos:data[2].puntos, id: data[2].id, turno: 0};
+	Jugador1 = {nombre: data[0].nombre.slice(0,6), color: "ficha_rojo", puntos: data[0].puntos, id:data[0].id.user_id, turno:1};
+	Jugador2 = {nombre: data[1].nombre.slice(0,6) , color: "ficha_azul", puntos:data[1].puntos, id: data[1].id.user_id, turno: 0};
+	Jugador3 = {nombre: data[2].nombre.slice(0,6)  , color: "ficha_amarillo", puntos:data[2].puntos, id: data[2].id.user_id, turno: 0};
 	if (data.length >= 4) {
-		Jugador4 = {nombre: data[3].nombre.slice(0,6)    , color: "ficha_verde", puntos:data[3].puntos, id: data[3].id, turno: 0};
+		Jugador4 = {nombre: data[3].nombre.slice(0,6)    , color: "ficha_verde", puntos:data[3].puntos, id: data[3].id.user_id, turno: 0};
 	}
 	if (data.length == 5) {
-		Jugador5 = {nombre: data[4].nombre.slice(0,6)  , color: "ficha_gris", puntos:data[4].puntos, id: data[4].id, turno: 0};
+		Jugador5 = {nombre: data[4].nombre.slice(0,6)  , color: "ficha_gris", puntos:data[4].puntos, id: data[4].id.user_id, turno: 0};
 	}
 	nJugadores = data.length;
-	
-	
-	
-	
-	
 	
 	Meteor.subscribe("partidas", idParty);
 	
@@ -193,6 +194,7 @@ function SetPlayers (err, data) {
 	} 
 	
 	
+	
 	Deps.autorun(function(){
 		
 		
@@ -201,9 +203,9 @@ function SetPlayers (err, data) {
 		if (last != undefined) {
 			var ultimo = last.pop();
 			if (ultimo.ficha != 0) {
-				NP = new PiezaMapa(ultimo.ficha.x,ultimo.ficha.y, ultimo.ficha.sprite,ultimo.ficha.rotation);
-				NP.colocada = true;
-				Tablero.add(NP);
+			NP = new PiezaMapa(ultimo.ficha.x,ultimo.ficha.y, ultimo.ficha.sprite,ultimo.ficha.rotation);
+			NP.colocada = true;
+			Tablero.add(NP);
 			}
 			if (ultimo.seguidor != 0) {
 				Tablero.add(new Seguidor (ultimo.seguidor.fx,ultimo.seguidor.fy,ultimo.seguidor.t,ultimo.seguidor.sx,ultimo.seguidor.sy));
@@ -303,6 +305,7 @@ function pasarTurno () {
 }
 
 
+//loader.init(); 
 startGame = function() {   
 	
 	
@@ -342,8 +345,15 @@ Time = function () {
 		if (this.tiempo == 0) {
 			this.tiempo = 60;
 			//pasarTurno();
+			if (nJugadores == 3) {
+				var parray = [Jugador1, Jugador2, Jugador3];  
+			} else if (nJugadores == 4) {
+				var parray = [Jugador1, Jugador2, Jugador3, Jugador4];  
+			} else if (nJugadores == 5) { 
+				var parray = [Jugador1, Jugador2, Jugador3, Jugador4, Jugador5];  
+			}
 			Partidas.update(idParty, {
-                            $push : {movimientos: {jugador: getTurno(), ficha: 0, seguidor: 0}}
+                            $push : {movimientos: {jugador: getTurno(), ficha: 0, seguidor: 0, puntos: parray}}
            });
             //Session.set("turno", CurrentTurn+1);
 			
@@ -444,15 +454,17 @@ Ficha_abajo = function(cx,cy) {
     		//console.log(Meteor.userId());
     		if (CurrentMove == 0 && getTurno().id == Meteor.userId())  {
     			
-    			Meteor.call("Robar", function(err, data) { 
+    			Meteor.call("Robar", idParty, function(err, data) { 
     				NuevaPieza = new PiezaMapa(CurrentScroll.x + 7,CurrentScroll.y + 5, data[0],0);
 			
-			
+						//sonido_ladron.play();
+						//if (data[1].length != 0 || ) {
 						Game.setBoard(7, NuevaPieza);
 						CurrentMove = 1; 
 						Posiciones = data[1];
 						console.log(data);
 						Game.setBoard(6, new Highlight(data[1]));
+						 
 			});
 
 		} else if (CurrentMove == 1 && getTurno().id == Meteor.userId()) {
@@ -463,9 +475,14 @@ Ficha_abajo = function(cx,cy) {
 						CurrentMove = 2;
 						PosicionesSeg = data;
 						console.log(data);
+					
+					}else{
+					        alert("Rota la ficha para colocarla");
 					}
 					
 				});
+			} else {
+				alert("No puedes colocar la ficha ahí");
 			}
 		
 			
@@ -484,8 +501,12 @@ Highlight = function (positions) {
 			ctx.save();
             ctx.fillStyle = 'rgba(255,255,255,0.5)';
 			for (i in this.position) {
-            	ctx.fillRect((this.position[i].x - CurrentScroll.x) * 100,(this.position[i].y-CurrentScroll.y) * 100 ,100,100);
-            }
+		if (this.position[i].y-CurrentScroll.y < 5) {
+            	        ctx.fillRect((this.position[i].x - CurrentScroll.x) * 100,(this.position[i].y-CurrentScroll.y) * 100 ,100,100);
+            	 }
+            	
+               }
+            
             ctx.restore();
         }
 	};
@@ -599,11 +620,15 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 	
 			if (init == false) {
 				$(idCanvas).mousedown(function(e){
+					console.log(e);
 	          	  	if (that.colocada == false ) {
-	         
-						if (e.clientX > that.x && e.clientY > that.y && e.clientX < that.x + 100 && e.clientY < that.y + 100){
-							posicion_x = e.clientX - that.x;
-							posicion_y = e.clientY - that.y;
+	         				
+						if ((e.pageX - e.currentTarget.offsetLeft) > that.x &&
+							 (e.pageY - e.currentTarget.offsetTop) > that.y &&
+							 (e.pageX - e.currentTarget.offsetLeft) < that.x + 100 &&
+							 (e.pageY - e.currentTarget.offsetTop) < that.y + 100){
+							posicion_x = (e.pageX - e.currentTarget.offsetLeft) - that.x;
+							posicion_y = (e.pageY - e.currentTarget.offsetTop) - that.y;
 	                  
 							mouseIsDown = true;
 						}
@@ -613,8 +638,8 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 				$(idCanvas).mouseup(function(e){
        		 	 // cuando mueves. soltar ficha en una casilla
                 	if (that.colocada == false ) {
-						that.x = Math.floor(e.clientX/100)* 100;
-						that.y = Math.floor(e.clientY/100)* 100;
+						that.x = Math.floor((e.pageX - e.currentTarget.offsetLeft)/100)* 100;
+						that.y = Math.floor((e.pageY- e.currentTarget.offsetTop)/100)* 100;
 					}
 					mouseIsDown = false;
 				})
@@ -623,11 +648,9 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 				$(idCanvas).mousemove(function(e){
              
 					if(!mouseIsDown) return;
-					
-					
    					if (that.colocada == false ) {
-						that.x = e.clientX - posicion_x;
-						that.y = e.clientY - posicion_y;
+						that.x = (e.pageX - e.currentTarget.offsetLeft) - posicion_x;
+						that.y = (e.pageY - e.currentTarget.offsetTop) - posicion_y;
                 	}
 					return false;
 				})
@@ -637,7 +660,7 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 	}
 }  
 
-
+//Se encarga de pintar el fondo del juego
 HelpScreen = function() {
 	
     this.enabled = false;
@@ -880,7 +903,7 @@ Set = function (PiezaMapa) {
 			if(up3 && Game.keys['sacar_ficha']) {
 				up3 = false;
 				// Coloco la ficha en el mapa en la posicion optionx,optiony
-				if (SetSeguidorEn ( {x: this.optionx, y: this.optiony, t: console.log(this.option)}, PosicionesSeg)) {
+				if (SetSeguidorEn ( {x: this.optionx, y: this.optiony, t: this.option}, PosicionesSeg)) {
 				
 					Meteor.call("ColocarSeguidor", idParty, getTurno().id, {x: this.pieza.x/100 + CurrentScroll.x, y: this.pieza.y/100 + CurrentScroll.y}, {t:traducirTipoSeguidor (this.option) ,n: traducirSeguidor (this.optionx,this.optiony)}, function(err, data) {
 					
@@ -897,8 +920,8 @@ Set = function (PiezaMapa) {
 						CurrentScroll.active = true;
 						
 						$(idCanvas).unbind("mousedown");
-                          	$(idCanvas).unbind("mouseup");
-                          	$(idCanvas).unbind("mousemove");
+                          			$(idCanvas).unbind("mouseup");
+                          			$(idCanvas).unbind("mousemove");
 						//pasarTurno();
 					
 					});

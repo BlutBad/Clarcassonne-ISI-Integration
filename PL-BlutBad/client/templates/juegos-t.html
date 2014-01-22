@@ -6,7 +6,7 @@
 			{{#each juegos}}
 				<div class="gallery-item">
 					<h3>{{name}}</h3>
-					<img src="{{logo_src}}" class="gallery-image" alt="{{logo_alt}}" />
+					<img src="{{logo_src}}" class="gameim gallery-image" alt="{{logo_alt}}" />
 					<div class="gallery-description">
 						<h5>{{title_desc}}</h5>
 						<p>{{description}}</p>
@@ -128,7 +128,7 @@
 		{{#if tengoTorneos}}
             <div id="tab" class="btn-group" data-toggle="buttons-radio">
               {{#each torneos}}
-                <a href="#" class="btn {{activeClassTorneo}} miTorneo" data-toggle="tab">{{title}}</a>
+                <a href="#" class="btn {{activeClassTorneo}} miTorneo" id = "mitor" data-toggle="tab">{{title}}</a>
               {{/each}}
             </div>
         {{else}}

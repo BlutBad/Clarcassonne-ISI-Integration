@@ -17,6 +17,7 @@ startVideoChat=function (nameRoom){
 		// you can name it anything
 		webrtc.joinRoom(nameRoom);
 	});
+	Session.set("video_on",true);
 }
 
 endVideoChat = function (){

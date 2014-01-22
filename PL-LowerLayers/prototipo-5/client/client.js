@@ -17,6 +17,7 @@ Meteor.startup(function () {
 	$('#frootwarscontainer').hide();
 	$('#clarcassonnecontainer').hide();
 	$("#byuserranking").hide();
+	$("#bygameranking").hide();
 });
 
 
@@ -50,6 +51,8 @@ $(document).ready(function() {
 				$("#friends").addClass("escondido")
 				$('#accordion').hide();
 			}	
+			$(".menuAmigos").menu();
+			$(".ui-menu-icon").remove();
 			
 		});
 
@@ -111,10 +114,8 @@ Deps.autorun(function () {
 
 //Subscripción selectiva a ranking
 Deps.autorun(function () {
-	var selected_game_id = Session.get("game")
-	var selected_user_id = Session.get("user")
-	console.log("selectedgame: "+selected_game_id);
-	console.log("selecteduser: "+selected_user_id);
+	var selected_game_id = Session.get("game_id")
+	var selected_user_id = Session.get("user_id")
 	Meteor.subscribe("ranking", selected_game_id, selected_user_id);
 });
 
@@ -130,10 +131,7 @@ Template.userstemp.users = function(){
 Template.gamestemp.games=function(){
 	return Games.find();
 }
-//Encuentra partidas
-Template.matchestemp.matches = function(){
-	return Partidas.find();
-}
+
 //Carga mensajes del chat
 Template.messagestemp.messages=function(){
 	return Messages.find();

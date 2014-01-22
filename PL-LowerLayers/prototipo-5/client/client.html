@@ -14,13 +14,6 @@
    	</div>	
 </body>
 
-
-
-
-
-
-
-
 <template name="cointemp">
 	<div id="slider">
 		<div id="coin-slider">
@@ -39,7 +32,7 @@
 			<li><a href="#ranking">Ranking</a></li>
 		</ul>
 		<div id="juegos">{{> gamestemp}} {{> matchestemp}} {{> roomgametemp}}</div>
-		<div id="ranking">{{> gamesrankingtemp}} {{> userstemp}} {{> byuserrankingtemp}} </div>
+		<div id="ranking">{{> gamesrankingtemp}} {{> userstemp}} {{> byuserrankingtemp}} {{> bygamerankingtemp}}</div>
 	</div>
 </template>
 
@@ -78,30 +71,63 @@
 
 <template name="userstemp">
 	<div id="users" >
-		Por usuarios:
+		<p>Por usuarios:</p>
 		{{# each users}}
-			<a href="#" class="linkuserranking">{{username}}</a>
+			<a style ="cursor:pointer;text-decoration:underline;" class="linkuserranking">{{username}}</a>
 		{{/each}}
 	</div>
 </template>
 
-
 <template name="gamesrankingtemp" >
 	<div id="gamesranking">
-		Por juegos:
+		<p>Por juegos:</p>
 		{{# each games}}
 			<a style ="cursor:pointer;text-decoration:underline;" class="linkgameranking">{{name}}</a><br>
 		{{/ each}}
 	</div>
 </template>
 
-
 <template name="byuserrankingtemp">
 	<div id="byuserranking">
-		Juegos:
-		{{# each ranking}}
-			{{game}} {{score}}
-		{{/ each}}
+		<a style ="cursor:pointer;text-decoration:underline;" class="linkback">atras</a>
+		<p id="usernameRanking"></p>
+		<table>
+			<thead>
+				<tr>
+					<th>Juego</th>
+					<th>Puntuacion</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{# each ranking}}
+					<tr>
+						<td>{{game}}</td> <td>{{score}}</td>
+					</tr>
+				{{/ each}}
+			</tbody>
+		</table>
+	</div>
+</template>
+
+<template name="bygamerankingtemp">
+	<div id="bygameranking">
+		<a style ="cursor:pointer;text-decoration:underline;" class="linkback">atras</a>
+		<p id="gameRanking"></p>
+		<table>
+			<thead>
+				<tr>
+					<th>Usuario</th>
+					<th>Puntuacion</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{# each ranking}}
+					<tr>
+						<td>{{user}}</td> <td>{{score}}</td>
+					</tr>
+				{{/ each}}
+			</tbody>
+		</table>
 	</div>
 </template>
 
@@ -158,11 +184,19 @@
 		<table>
 			{{# each matches}}
 				<tr>
-					-<td><a class="linkmatch">{{name}}</a></td><td> {{created}}</td><td> {{num_players}} Jugadores</td>
+					-
+					<td><a class="linkmatch">{{name}}</a></td>
+					<td> {{created}}</td>
+					<td> {{num_players}} Jugadores</td>
+					<td>{{#if password}}Clave: <input type="password" class="linkmatch_pass {{_id}}">{{/if}}</td>
 				</tr>
 			{{/ each}}
 		</table>
-		<p> Nueva partida: <input type="text" id="match_creator"></p>
+		<p> <table style="border-style : solid;border-color:white;"> 
+			<tr><td> Nueva partida: <input type="text" id="match_name"> </td></tr> 
+			<tr><td> Contraseña: <input type="password" id="match_pass"> </td></tr> 
+			<tr><td> <button type="button" id="match_creator">Crear</button> </td></tr> 
+		</table> </p>
 		<p><a style ="cursor:pointer;text-decoration:underline;" id="match_back">Atrás</a></p>
 	</div>
 </template>
@@ -232,7 +266,7 @@
 	<div id="roomcontainer">
 		<div class="alaputaizqtop"> 
 			<a style ="cursor:pointer;text-decoration:underline;" id="exitgame"> Salir </a>
-			<h1>{{> gamenametemp}}  {{> matchnametemp}}</h1>
+			<h1>{{> gamenametemp}}</h1>  <h2>{{> matchnametemp}}</h2>
 			{{> roomplayerstemp}}
 		</div>
 		<div class="alaputadertop">{{> my-video }} {{> remote-videos }}</div>
@@ -262,18 +296,33 @@
 			<tr> <td>{{name}}</td> </tr>
 		{{/each}}
 	</table>
-	<div id="empezarboton">
-			<p ><a id="EmpezarCarca" style="cursor:pointer;text-decoration:underline;"> Empezar </a></p>
-	</div>
+	{{#if carca}}
+		{{#if admin}}
+			<div id="empezarboton">
+				<p ><button id="EmpezarCarca"> Empezar </button></p>
+			</div>
+		{{/if}}
+	{{/if}}
 </template>
 
 
 <template name="listaAmigosOnlineTemp">
 	<div id="listaAmigosOnline">
 		{{# each listaAmigosOnline}}
-		<a style ="cursor:pointer;text-decoration:underline;" class="linkchat">
+		<a style ="cursor:pointer;text-decoration:underline;float:left" class="linkchat">
 			{{username}}<br>
 		</a>
+		<ul class="menuAmigos" style="float:left;margin-left:3px;">
+			<li>
+				<a class ="menuAmigosStyle">&#9660;</a>
+				<ul>
+					<li><a class ="menuAmigosStyle"><span class="ui-icon-plus"></span>Invitar</a></li>
+					<li><a class ="menuAmigosStyle"><span class="ui-icon-person"></span>Perfil</a></li>
+					<li><a class ="menuAmigosStyle"><span class="ui-icon-cancel"></span>Bloquear</a></li>
+				</ul>
+			</li>
+		</ul>
+		<br style="clear:both;"/>
 		{{/ each}}
 	</div>	
 </template>
