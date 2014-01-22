@@ -43,6 +43,15 @@ if (typeof Handlebars !== 'undefined') {
 		}
 	});
 
+	//Admin panel/content
+	Handlebars.registerHelper('showIfAdmin', function () {
+		if (Meteor.user().username == "admin"){
+			return true;
+		}
+		return false;
+	});
+
+
 	Handlebars.registerHelper('getUserEmail', function (userId) {
 		var user = _extractProfile(userId);
 		//console.log(user);

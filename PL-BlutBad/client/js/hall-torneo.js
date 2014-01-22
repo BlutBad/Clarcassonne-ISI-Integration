@@ -162,6 +162,7 @@ Template.hall_torneo.showEtapa = function() {
 
 Template.hall_torneo.showParticipantes = function() {
   return Session.equals('etapasTorneoActive', "participantes");
+};
 
 
 Template.hall_torneo.etapasTorneoActive = function() {
@@ -243,7 +244,7 @@ Template.multiRanking.multiRanking =function(){
        //
     });
     return sortRa;
-}
+};
 
 
 

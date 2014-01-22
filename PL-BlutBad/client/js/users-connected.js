@@ -12,7 +12,7 @@ Template.connected.userConnected = function() {
 	// console.log(myUser);
 	// console.log(myUser.username);
 	// return Friends.findOne({username: myUser.username}).friends;
-	return Friends.findOne({username: Meteor.user().username}).friends;
+	return //Friends.findOne({username: Meteor.user().username}).friends;
 };
 
 

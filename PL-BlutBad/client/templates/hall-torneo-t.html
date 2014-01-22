@@ -32,22 +32,23 @@
         </div>
   
         {{#if showEtapasTorneo}}
+              {{#if showIfAdmin}}
+                  <button type="button" class="btn btn-labeled btn-success startTorneo">
+                      Empezar el Torneo!
+                  </button>
 
-          <button type="button" class="btn btn-labeled btn-success startTorneo">
-              Empezar el Torneo!
-          </button>
+                    <button type="button" class="btn btn-labeled btn-warning simularEtapa">
+                        Simular la etapa!
+                    </button>
 
-            <button type="button" class="btn btn-labeled btn-warning simularEtapa">
-                Simular la etapa!
-            </button>
+                  <button type="button" class="btn btn-labeled btn-info jugarEtapa">
+                        Siguiente Etapa(Generar Partidas)
+                  </button>
 
-          <button type="button" class="btn btn-labeled btn-info jugarEtapa">
-                Siguiente Etapa(Generar Partidas)
-          </button>
-
-          <button type="button" class="btn btn-labeled btn-danger finalizarTorneo">
-               Finalizar el torneo! 
-          </button>
+                  <button type="button" class="btn btn-labeled btn-danger finalizarTorneo">
+                       Finalizar el torneo! 
+                  </button>
+                {{/if}}
 
 
             <h2>Etapas del torneo </h2>
