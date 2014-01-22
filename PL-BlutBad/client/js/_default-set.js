@@ -45,8 +45,10 @@ if (typeof Handlebars !== 'undefined') {
 
 	//Admin panel/content
 	Handlebars.registerHelper('showIfAdmin', function () {
-		if (Meteor.user().username == "admin"){
-			return true;
+		if (Meteor.user()){
+			if (Meteor.user().username == "admin"){
+				return true;
+			}
 		}
 		return false;
 	});

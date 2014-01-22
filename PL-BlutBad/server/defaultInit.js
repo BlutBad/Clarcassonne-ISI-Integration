@@ -1,56 +1,57 @@
 // if the database is empty on server start, create some sample data.
 
 Meteor.startup(function() {
-
+	console.log(" [Inicializando la Plataforma] ");
  		var partidasV = [];
 
 	    if (Menu.find().count() === 0) {
+	    	console.log("\t [1] Creando Menus...");
 			var data = [ {
-			    name : "Juegos",
-			    menuType : "principal",
+				    name : "Juegos",
+				    menuType : "principal",
 
-			}, {
-			    name : "Ranking",
-			    menuType : "principal",
+				}, {
+				    name : "Ranking",
+				    menuType : "principal",
 
-			}, {
-			    name : "Torneos",
-			    menuType : "principal",
+				}, {
+				    name : "Torneos",
+				    menuType : "principal",
 
-			},
-			//menu de etapas del torneo
-			{
-			    name : "Participantes",
-			    etapa: "participantes",
-			    menuType : "torneoEtapas",
-			},{
-			    name : "Octavos 1/8",
-			    etapa: "octavos",
-			    menuType : "torneoEtapas",
-			},{
-			    name : "Cuartos 1/4",
-			    etapa: "cuartos",
-			    menuType : "torneoEtapas",
-			},{
-			    name : "Semi-final",
-			    etapa: "semifinal",
-			    menuType : "torneoEtapas",
-			},{
-			    name : "Final",
-			    etapa: "final",
-			    menuType : "torneoEtapas",
-			},
-			//menu del multi torneo
-			{
-				name: "Etapas del torneo!",
-				short: "etapas", 
-				menuType: "multiTorneo",
-			},
-			{
-				name: "Ranking del torneo!",
-				short: "ranking", 
-				menuType: "multiTorneo",
-			},
+				},
+				//menu de etapas del torneo
+				{
+				    name : "Participantes",
+				    etapa: "participantes",
+				    menuType : "torneoEtapas",
+				},{
+				    name : "Octavos 1/8",
+				    etapa: "octavos",
+				    menuType : "torneoEtapas",
+				},{
+				    name : "Cuartos 1/4",
+				    etapa: "cuartos",
+				    menuType : "torneoEtapas",
+				},{
+				    name : "Semi-final",
+				    etapa: "semifinal",
+				    menuType : "torneoEtapas",
+				},{
+				    name : "Final",
+				    etapa: "final",
+				    menuType : "torneoEtapas",
+				},
+				//menu del multi torneo
+				{
+					name: "Etapas del torneo!",
+					short: "etapas", 
+					menuType: "multiTorneo",
+				},
+				{
+					name: "Ranking del torneo!",
+					short: "ranking", 
+					menuType: "multiTorneo",
+				},
 			
 			];
 
@@ -67,30 +68,7 @@ Meteor.startup(function() {
 			    var list_id = Menu.insert(obj);
 			}
 			
-			/*
-			fakeUsers = "Cheyrd_Inaurtle Oechi_Honomon Saml_Rodizard Ineh_Lorochu Tand_Knockeromon Quaq_Vorizard Elms_Kimizard Kell_Clotachu Cond_Aughamon Umy_Clotizard Lorrt_Denamon Scheas_Rodertle Ekalu_Goofortle Yinao_Sulachu Skeln_Wadezard Geal_Thimbleortle Schein_Snarkyzard Vun_Twerpirtle Oskelo_Thimbleechu Edyne_Undartle Yagea_Perozard Ros_Ashertle Erise_Ageychu Eingo_Faceemon Dars_Ardartle Clur_Twitymon Seev_Tasurtle Siy_Goofirtle Rayt_Numbachu Laeg_Boneurtle Ahini_Fumbleumon Inalo_Bumbleichu Wheuv_Footezard Tait_Ormichu Llaunt_Onartle Imy_Clodamon Osf_Wimpezard Chagh_Meatomon Rhey_Skullumon Shaid_Etochu Ett_Osymon Urado_Faceurtle Oite_Torichu Chrent_Faceomon Uma_Bumbleamon Ess_Ghaozard Aunta_Dumbyrtle Tanf_Loafechu Apere_Chauzard Oete_Footachu Ghat_Puffemon Luiz_Knuckleimon Uworo_Dipazard Avori_Untuzard Quek_Skeluchu Atnt_Angazard Ianga_Ballemon Reyd_Sulirtle Phew_Headazard Undn_Puffozard Orilu_Iamon Isk_Faceychu Ustn_Undyzard Suls_Twerpemon Eldrd_Draemon Yrano_Kimachu Nysr_Adochu Emc_Goofurtle Auski_Doofemon Eorma_Raymon Uemu_Ballomon Cheet_Sneezeamon Schiech_Tonuzard Irph_Ineertle Died_Numbuchu Ads_Ineamon Ymore_Ormazard Itb_Turychu Oathi_Imazard Iryni_Wadozard Ward_Denertle Weyk_Therortle Wark_Rayemon Inala_Oldemon Heik_Risamon Yieg_Verirtle Ads_Fingerozard Oia_Cloduzard Lab_Leromon Zhiec_Ustumon Bin_Enumon Rab_Nyurtle Lyenn_Doofychu Urnch_Knockizard Unyu_Atemon Atd_Wipeozard Nyv_Headortle Zhok_Boneortle Sayf_Enimon Thier_Ackortle Leis_Skelichu Gaiv_Thimbleizard Eemi_Bumbleirtle Quel_Wimpechu Ehini_Ghauchu Urilo_Boneichu Eml_Sneezeochu Ykimu_Oldimon Olyea_Airomon Emst_Inaymon Driel_Skullochu Reinn_Headyrtle Llooc_Sayachu Queal_Ankleazard Dais_Nyozard Samw_Draichu Zhoph_Faceachu Rakk_Echomon Osere_Lunkuchu";
-			fakeUsersArray = fakeUsers.split(" ");
-			//console.log("Creando (" + fakeUsersArray.length + ") usuarios falsos...");
-			for ( var i = 0; i < fakeUsersArray.length; i++) {
-			    fakeUser = fakeUsersArray[i];
-			    var uId = Accounts.createUser({
-			    	fakeUser : true,
-			    	username:fakeUser,
-			    	email:(fakeUser+"@kaka.aka"), 
-			    	password:"123"})
-			    Meteor.users.update(uId,
-			    	{$set:{fakeUser:true}
-			    });
 
-			*/
-   
-
-		var timestamp = (new Date()).getTime();
-		for ( var i = 0; i < data.length; i++) {
-		    var list_id = Menu.insert({
-			name : data[i].name
-		    });
-		}
 		
 		fakeUsers = "Inea	Yiey	Eurnu	Anysy	Keel	Bros	Oriso " +
 					"Eldd	Iashu	Waiy	Tril	Mosc	Ensh	Quek " +
@@ -112,7 +90,9 @@ Meteor.startup(function() {
 					
 		fakeUsersArray = fakeUsers.split("\t");
 		fakeUsersId = [];
-		//console.log("Creando (" + fakeUsersArray.length + ") usuarios falsos...");
+
+		console.log("\t [2] Creando "+fakeUsersArray.length +" usuarios falsos");
+
 		for ( var i = 0; i < fakeUsersArray.length; i++) {
 		    fakeUser = fakeUsersArray[i];
 		    fakeUsersId[i] = Accounts.createUser({
@@ -175,7 +155,9 @@ Meteor.startup(function() {
 		}
     };
 
+    
 	if (PartidasVolatiles.find().count() === 0) {  
+		console.log("\t [3] Creando "+partidasV.length +" partidas volatiles falsas");
 		for (var i = 0; i < partidasV.length; i++) { 
 			PartidasVolatiles.insert(
 				partidasV[i]
@@ -184,6 +166,7 @@ Meteor.startup(function() {
 	};
 
 	if (Juegos.find().count() === 0) {
+
 		var admin = Accounts.createUser({username:"admin",email:"admin@kaka.aka", password:"123"});   
 		var data = [
 			{
@@ -404,6 +387,10 @@ Meteor.startup(function() {
 		var timestamp = (new Date()).getTime();
 		
 		//////////////////////AÑADIR JUEGOS//////////////////////////
+		console.log("\t [4] Añadiendo "+data.length +" juegos a la Plataforma");
+		console.log("\t\t [4.1] Añadiendo rangos");
+		console.log("\t\t [4.2] Añadiendo insignias");
+		console.log("\t\t [4.3] Añadiendo torneos");
 		for ( var i = 0; i < data.length; i++) {
 		    var juego_id = Juegos.insert({
 				name : data[i].name,
@@ -419,6 +406,7 @@ Meteor.startup(function() {
 
 		    
 		    //////////////////////RANGOS PARA JUEGOS//////////////////////////
+		    //console.log("\t\t [4.1] Añadiendo "+data[i].torneos.length +" rangos");
 		    for ( var j = 0; j < data[i].rangos.length; j++) {
 				var info = data[i].rangos[j];
 				Rangos.insert({
@@ -430,6 +418,7 @@ Meteor.startup(function() {
 		    }
 
 		    //////////////////////INSIGNIAS PARA JUEGOS//////////////////////////
+		    //console.log("\t\t [4.2] Añadiendo "+data[i].torneos.length +" insignias");
 		    for ( var j = 0; j < data[i].insignias.length; j++) {
 				var info = data[i].insignias[j];
 				Insignias.insert({
@@ -458,6 +447,7 @@ Meteor.startup(function() {
 	
 		    
 		    //Añadir torneos, enlazando cada torneo con su juego.
+		    //console.log("\t\t [4.3] Añadiendo "+data[i].torneos.length +" torneos");
 		    for ( var j = 0; j < data[i].torneos.length; j++) {
 				var info = data[i].torneos[j];
 				var torneoId = Torneos.insert({
