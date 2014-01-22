@@ -41,9 +41,7 @@ _extractProfile = function (userObjId) {
 }; //EO extractProfile
 
 
-
-
 resolverUser = function(id) {
-	var name = Meteor.users.findOne({_id:id}).username;
+	var name = Meteor.users.findOne({_id:id.user_id}).username;
     return {nombre: name, fecha: "12/11/1983"}
 }

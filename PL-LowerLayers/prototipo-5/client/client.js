@@ -51,6 +51,8 @@ $(document).ready(function() {
 				$("#friends").addClass("escondido")
 				$('#accordion').hide();
 			}	
+			$(".menuAmigos").menu();
+			$(".ui-menu-icon").remove();
 			
 		});
 

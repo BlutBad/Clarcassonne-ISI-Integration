@@ -10,11 +10,14 @@
 		endTablero[id_partida]=true;
 	       	Tablero= new ObjTablero(id_partida);
 		Tablero.iniciar();
-
+			console.log("LLLAMMAAADAAAA",Tablero.listaJugadores);
 		Jugadores_ID= Partidas.findOne({_id: id_partida}).jugadores;
 	
 		for(i=0;i<Jugadores_ID.length;i++){
+			console.log("objetoJug"+Jugadores_ID);
+			console.log("LLLAMMAAADAAAA",Tablero.listaJugadores);
 			var player =resolverUser(Jugadores_ID[i]);
+			
 			Tablero.listaJugadores.push(new ObjetoJugador(Jugadores_ID[i],player.nombre,player.fecha));
 		}
 		
@@ -69,10 +72,14 @@
 
       var ficha= Tablero.buscarxcoor(coordenada.x,coordenada.y);
         Tablero= endTablero[id_partida];
+        //console.log("SEGUIDOR",seguidor,id_jugador);
+
         if (seguidor){
-        
-                var Jugador = _.find(Tablero.listaJugadores,function(obj){return (obj.id == id_jugador)})
-                
+        //console.log("j"+id_jugador);
+        //console.log("JUGADORES -->",Tablero.listaJugadores);
+
+                var Jugador = _.find(Tablero.listaJugadores,function(obj){return (obj.id.user_id == id_jugador)})
+        //console.log("Juga" + Jugador);        
                 var nuevoSeguidor = {t:seguidor.t, n:seguidor.n, j:Jugador.numero, f:ficha}
                 ficha.seguidores.push(nuevoSeguidor);
         }
@@ -83,14 +90,11 @@
           endTablero[id_partida]=Tablero;
           return Tablero.listaJugadores;
       
-      },
-   	 //Coloca el seguidor en la ficha indicada y suma los correspondientes puntos. Acaba el turno. 
-    
-   		matchFinish: function (match_id, game_id, points) {
-        	Partidas.update({_id: match_id},{$set: {finish:"true", time_end:Date.now()}});
-			Ranking.insert({user_id: this.userId, game_id: game_id, score: points});
       }
-	//Puntuacion alien y frootwars  
+    
+    //Coloca el seguidor en la ficha indicada y suma los correspondientes puntos. Acaba el turno. 
+    
+    
 })
 
 

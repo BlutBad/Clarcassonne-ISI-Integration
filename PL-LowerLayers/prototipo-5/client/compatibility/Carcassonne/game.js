@@ -64,13 +64,16 @@ sprites = {
 
 
 var img = new Image();
-img.src = 'images/background.png';
+img.src = 'Clarcassonne/images/background.png';
 
 var img2 = new Image();
-img2.src = 'images/abajo.png';
+img2.src = 'Clarcassonne/images/abajo.png';
+
+//var img3 = new Image();
+//img3.src = 'images/musica.png';
 
 var img4 = new Image();
-img4.src = 'images/ControlHelp.png';
+img4.src = 'Clarcassonne/images/ControlHelp.png';
 
 
 
@@ -156,14 +159,14 @@ function SetFichaEn (NuevaPieza, Posiciones) {
 
 function SetPlayers (err, data) {
 
-	Jugador1 = {nombre: data[0].nombre.slice(0,6), color: "ficha_rojo", puntos: data[0].puntos, id:data[0].id, turno:1};
-	Jugador2 = {nombre: data[1].nombre.slice(0,6) , color: "ficha_azul", puntos:data[1].puntos, id: data[1].id, turno: 0};
-	Jugador3 = {nombre: data[2].nombre.slice(0,6)  , color: "ficha_amarillo", puntos:data[2].puntos, id: data[2].id, turno: 0};
+	Jugador1 = {nombre: data[0].nombre.slice(0,6), color: "ficha_rojo", puntos: data[0].puntos, id:data[0].id.user_id, turno:1};
+	Jugador2 = {nombre: data[1].nombre.slice(0,6) , color: "ficha_azul", puntos:data[1].puntos, id: data[1].id.user_id, turno: 0};
+	Jugador3 = {nombre: data[2].nombre.slice(0,6)  , color: "ficha_amarillo", puntos:data[2].puntos, id: data[2].id.user_id, turno: 0};
 	if (data.length >= 4) {
-		Jugador4 = {nombre: data[3].nombre.slice(0,6)    , color: "ficha_verde", puntos:data[3].puntos, id: data[3].id, turno: 0};
+		Jugador4 = {nombre: data[3].nombre.slice(0,6)    , color: "ficha_verde", puntos:data[3].puntos, id: data[3].id.user_id, turno: 0};
 	}
 	if (data.length == 5) {
-		Jugador5 = {nombre: data[4].nombre.slice(0,6)  , color: "ficha_gris", puntos:data[4].puntos, id: data[4].id, turno: 0};
+		Jugador5 = {nombre: data[4].nombre.slice(0,6)  , color: "ficha_gris", puntos:data[4].puntos, id: data[4].id.user_id, turno: 0};
 	}
 	nJugadores = data.length;
 	
@@ -214,7 +217,7 @@ function SetPlayers (err, data) {
 		
 	});
 
-	Juego.initialize(idCanvas.slice(1),sprites,startGame);
+	Game.initialize(idCanvas.slice(1),sprites,startGame);
 }
 
 
@@ -306,18 +309,18 @@ function pasarTurno () {
 startGame = function() {   
 	
 	
-	Juego.setBoard(0,new Background());
-	Juego.setBoard(1,new Jugadores());
-	Juego.setBoard(2,new Rejilla()); 
-	Juego.setBoard(3,new Scroll()); 
+	Game.setBoard(0,new Background());
+	Game.setBoard(1,new Jugadores());
+	Game.setBoard(2,new Rejilla()); 
+	Game.setBoard(3,new Scroll()); 
 	
-	Tablero = new TableroJuego();
-	Juego.setBoard(4,Tablero);
+	Tablero = new GameBoard();
+	Game.setBoard(4,Tablero);
 	
-	Juego.setBoard(5,new Ficha_abajo());
-	Juego.setBoard(9,new Helptext()); 
-	Juego.setBoard(10, new Time());	
-	Juego.setBoard(11, new HelpScreen());
+	Game.setBoard(5,new Ficha_abajo());
+	Game.setBoard(9,new Helptext()); 
+	Game.setBoard(10, new Time());	
+	Game.setBoard(11, new HelpScreen());
 
 	
 	
@@ -355,8 +358,8 @@ Time = function () {
             //Session.set("turno", CurrentTurn+1);
 			
 			turno = CurrentTurn;
-			Juego.setBoard(7, Blank);
-			Juego.setBoard(8, Blank);
+			Game.setBoard(7, Blank);
+			Game.setBoard(8, Blank);
 		}
 		
 		if (turno != CurrentTurn) {
@@ -409,8 +412,8 @@ Helptext = function () {
 	
 	var up = false;
 	this.step = function () {
-		if(!Juego.keys['help']) up = true;
-    	if(up && Juego.keys['help']) {
+		if(!Game.keys['help']) up = true;
+    	if(up && Game.keys['help']) {
     		up = false;
     		this.enabled = !this.enabled;
     	}
@@ -441,12 +444,12 @@ Ficha_abajo = function(cx,cy) {
 	var up = false;
 	var NuevaPieza;
 	this.step = function(dt) {
-    if(Juego.keys['silenciar']){
+    if(Game.keys['silenciar']){
     	sonido = !sonido;
    	}
-	if(!Juego.keys['sacar_ficha']) up = true;
+	if(!Game.keys['sacar_ficha']) up = true;
 	
-    	if(up && Juego.keys['sacar_ficha']) {
+    	if(up && Game.keys['sacar_ficha']) {
     		up = false;
     		//console.log(Meteor.userId());
     		if (CurrentMove == 0 && getTurno().id == Meteor.userId())  {
@@ -456,11 +459,11 @@ Ficha_abajo = function(cx,cy) {
 			
 						//sonido_ladron.play();
 						//if (data[1].length != 0 || ) {
-						Juego.setBoard(7, NuevaPieza);
+						Game.setBoard(7, NuevaPieza);
 						CurrentMove = 1; 
 						Posiciones = data[1];
 						console.log(data);
-						Juego.setBoard(6, new Highlight(data[1]));
+						Game.setBoard(6, new Highlight(data[1]));
 						 
 			});
 
@@ -468,7 +471,7 @@ Ficha_abajo = function(cx,cy) {
 			if (SetFichaEn(NuevaPieza, Posiciones)) {
 				Meteor.call("ColocarFicha", idParty, NuevaPieza.sprite, {x: NuevaPieza.x/100 + CurrentScroll.x, y: NuevaPieza.y/100 +CurrentScroll.y}, (NuevaPieza.rotation / -90), function(err, data) { 
 					if (data != 0) {
-    					Juego.setBoard(8,new Set(NuevaPieza));
+    					Game.setBoard(8,new Set(NuevaPieza));
 						CurrentMove = 2;
 						PosicionesSeg = data;
 						console.log(data);
@@ -521,29 +524,29 @@ Jugadores = function() {
       
       ctx.fillStyle="rgb(255,255," + Jugador1.turno * 255 +")";
       ctx.fillText(Jugador1.nombre,45,540);
-      SpriteSh.draw(ctx, Jugador1.color ,20,520,1,0,0.5);
+      SpriteSheet.draw(ctx, Jugador1.color ,20,520,1,0,0.5);
       ctx.fillText(Jugador1.puntos,50,570);
       
       ctx.fillStyle="rgb(255,255," + Jugador2.turno * 255 +")";
       ctx.fillText(Jugador2.nombre,175,540);
-      SpriteSh.draw(ctx,Jugador2.color,150,520,1,0,0.5);
+      SpriteSheet.draw(ctx,Jugador2.color,150,520,1,0,0.5);
       ctx.fillText(Jugador2.puntos,180,570);
       
       ctx.fillStyle="rgb(255,255," + Jugador3.turno * 255 +")";
       ctx.fillText(Jugador3.nombre,305,540);
-      SpriteSh.draw(ctx,Jugador3.color,280,520,1,0,0.5);
+      SpriteSheet.draw(ctx,Jugador3.color,280,520,1,0,0.5);
       ctx.fillText(Jugador3.puntos,310,570);
       
       if (nJugadores >= 4) {
       	 ctx.fillStyle="rgb(255,255," + Jugador4.turno * 255 +")";
      	 ctx.fillText(Jugador4.nombre,435,540);
-      	 SpriteSh.draw(ctx,Jugador4.color,410,520,1,0,0.5);
+      	 SpriteSheet.draw(ctx,Jugador4.color,410,520,1,0,0.5);
      	 ctx.fillText(Jugador4.puntos,440,570);
       }
       if (nJugadores == 5) {
       	 ctx.fillStyle="rgb(255,255," + Jugador5.turno * 255 +")";
       	 ctx.fillText(Jugador5.nombre,565,540);
-      	 SpriteSh.draw(ctx,Jugador5.color,540,520,1,0,0.5);
+      	 SpriteSheet.draw(ctx,Jugador5.color,540,520,1,0,0.5);
       	 ctx.fillText(Jugador5.puntos,570,570);
       }
 
@@ -591,10 +594,10 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 	this.draw = function (ctx) {
 		if (this.colocada == true) {
 			if (this.y < 500 && this.y >= 0 && this.x >= 0 && this.x < 800) {
-				SpriteSh.draw(ctx,this.sprite,this.x,this.y,1,this.rotation,1);
+				SpriteSheet.draw(ctx,this.sprite,this.x,this.y,1,this.rotation,1);
 			}
 		} else {
-			SpriteSh.draw(ctx,this.sprite,this.x,this.y,1,this.rotation,1);
+			SpriteSheet.draw(ctx,this.sprite,this.x,this.y,1,this.rotation,1);
 		}
 	}
 	
@@ -609,19 +612,23 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 		if (this.colocada == false ) {
 		
 		
-			if(!Juego.keys['rotar']) rotacion = true;
-			if(rotacion && Juego.keys['rotar']) {
+			if(!Game.keys['rotar']) rotacion = true;
+			if(rotacion && Game.keys['rotar']) {
 				rotacion = false;
 				this.rotation = this.rotation -90;
 			}
 	
 			if (init == false) {
 				$(idCanvas).mousedown(function(e){
+					console.log(e);
 	          	  	if (that.colocada == false ) {
 	         				
-						if (e.clientX > that.x && e.clientY > that.y && e.clientX < that.x + 100 && e.clientY < that.y + 100){
-							posicion_x = e.clientX - that.x;
-							posicion_y = e.clientY - that.y;
+						if ((e.pageX - e.currentTarget.offsetLeft) > that.x &&
+							 (e.pageY - e.currentTarget.offsetTop) > that.y &&
+							 (e.pageX - e.currentTarget.offsetLeft) < that.x + 100 &&
+							 (e.pageY - e.currentTarget.offsetTop) < that.y + 100){
+							posicion_x = (e.pageX - e.currentTarget.offsetLeft) - that.x;
+							posicion_y = (e.pageY - e.currentTarget.offsetTop) - that.y;
 	                  
 							mouseIsDown = true;
 						}
@@ -631,8 +638,8 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 				$(idCanvas).mouseup(function(e){
        		 	 // cuando mueves. soltar ficha en una casilla
                 	if (that.colocada == false ) {
-						that.x = Math.floor(e.clientX/100)* 100;
-						that.y = Math.floor(e.clientY/100)* 100;
+						that.x = Math.floor((e.pageX - e.currentTarget.offsetLeft)/100)* 100;
+						that.y = Math.floor((e.pageY- e.currentTarget.offsetTop)/100)* 100;
 					}
 					mouseIsDown = false;
 				})
@@ -642,8 +649,8 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
              
 					if(!mouseIsDown) return;
    					if (that.colocada == false ) {
-						that.x = e.clientX - posicion_x;
-						that.y = e.clientY - posicion_y;
+						that.x = (e.pageX - e.currentTarget.offsetLeft) - posicion_x;
+						that.y = (e.pageY - e.currentTarget.offsetTop) - posicion_y;
                 	}
 					return false;
 				})
@@ -673,8 +680,8 @@ HelpScreen = function() {
 		 var up = false;
 
 	this.step = function (dt) {
-    	if(!Juego.keys['ayuda']) up = true;
-    	if(up && Juego.keys['ayuda']) {
+    	if(!Game.keys['ayuda']) up = true;
+    	if(up && Game.keys['ayuda']) {
          	up = false;
          	this.enabled = !this.enabled;
     	}
@@ -691,7 +698,7 @@ Seguidor = function (cx,cy, sprite, posx, posy) {
 	this.type = 'Seguidor';
 	
 	this.draw = function (ctx) {
-		SpriteSh.draw(ctx,this.sprite,this.x + this.posx,this.y + this.posy,1,0,0.5);
+		SpriteSheet.draw(ctx,this.sprite,this.x + this.posx,this.y + this.posy,1,0,0.5);
 	}
 	
 	this.step = function () {
@@ -730,7 +737,7 @@ Set = function (PiezaMapa) {
 
 		ctx.fillRect(350,170,190,2);
 		if (this.menu < 0) {
-			Juego.setBoard(8,Blank);
+			Game.setBoard(8,Blank);
 			CurrentScroll.active = true;
 			CurrentMove = 1;
 		}
@@ -754,15 +761,15 @@ Set = function (PiezaMapa) {
 			
 			ctx.fillText("Colocar seguidor",350,160);
 			if (this.pieza.rotation == 0) {
-                		SpriteSh.draw(ctx,this.pieza.sprite,370,195,1,this.pieza.rotation,1.5);
+                		SpriteSheet.draw(ctx,this.pieza.sprite,370,195,1,this.pieza.rotation,1.5);
             		} else if (this.pieza.rotation == -90) {
-                		SpriteSh.draw(ctx,this.pieza.sprite,370,245,1,this.pieza.rotation,1.5);
+                		SpriteSheet.draw(ctx,this.pieza.sprite,370,245,1,this.pieza.rotation,1.5);
             		} else if (this.pieza.rotation == -180) {
-                		SpriteSh.draw(ctx,this.pieza.sprite,420,245,1,this.pieza.rotation,1.5);
+                		SpriteSheet.draw(ctx,this.pieza.sprite,420,245,1,this.pieza.rotation,1.5);
             		} else if (this.pieza.rotation == -270) {
-                		SpriteSh.draw(ctx,this.pieza.sprite,420,195,1,this.pieza.rotation,1.5);
+                		SpriteSheet.draw(ctx,this.pieza.sprite,420,195,1,this.pieza.rotation,1.5);
             		}
-			//SpriteSh.draw(ctx,this.pieza.sprite,420,195,1,this.pieza.rotation,1.5);
+			//SpriteSheet.draw(ctx,this.pieza.sprite,420,195,1,this.pieza.rotation,1.5);
 			ctx.font="bold 20px Arial";
 			for(var y=0; y<3; y=y+1){
 				for(var x=0; x<3; x=x+1){
@@ -796,8 +803,8 @@ Set = function (PiezaMapa) {
 		
 		if (CurrentScroll.active) CurrentScroll.active = false;
 		
-		if(!Juego.keys['back']) up6 = true;
-		if(up6 && Juego.keys['back']) {
+		if(!Game.keys['back']) up6 = true;
+		if(up6 && Game.keys['back']) {
 			up6 = false;
 			this.menu -= 1;
 			this.option = 0; 
@@ -806,24 +813,24 @@ Set = function (PiezaMapa) {
 		}
 		
 		if (this.menu == 0) {
-			if(!Juego.keys['up']) up1 = true;
-			if(up1 && Juego.keys['up']) {
+			if(!Game.keys['up']) up1 = true;
+			if(up1 && Game.keys['up']) {
 				up1 = false;
 				if (this.option > 0) {
 					this.option -= 1;
 				}
 			}
 			
-			if(!Juego.keys['down']) up2 = true;
-			if(up2 && Juego.keys['down']) {
+			if(!Game.keys['down']) up2 = true;
+			if(up2 && Game.keys['down']) {
 				up2 = false;
 				if (this.option < 4) {
 					this.option += 1;
 				}
 			}
 			
-			if(!Juego.keys['sacar_ficha']) up3 = true;
-			if(up3 && Juego.keys['sacar_ficha']) {
+			if(!Game.keys['sacar_ficha']) up3 = true;
+			if(up3 && Game.keys['sacar_ficha']) {
 				up3 = false;
 				if (this.option > 0) {
 					this.menu += 1;
@@ -832,8 +839,8 @@ Set = function (PiezaMapa) {
 					Meteor.call("ColocarSeguidor", idParty, getTurno ().id, {x: this.pieza.x/100 + CurrentScroll.x, y: this.pieza.y/100 +CurrentScroll.y}, 0, function(err, data) { 				// Coloco la ficha en el mapa
 						that.pieza.colocada = true;
 						//Tablero.add(that.pieza);
-						Juego.setBoard(8,Blank);
-						Juego.setBoard(7, Blank);
+						Game.setBoard(8,Blank);
+						Game.setBoard(7, Blank);
 						CurrentScroll.active = true;
 						Partidas.update(idParty, {
                             $push : {movimientos: {jugador: getTurno(), ficha: {x: that.pieza.x/100 + CurrentScroll.x, y: that.pieza.y/100 +CurrentScroll.y, sprite: that.pieza.sprite, rotation: that.pieza.rotation}, seguidor: 0, puntos: data}}
@@ -861,39 +868,39 @@ Set = function (PiezaMapa) {
 		
 		if (this.menu == 1) {
 		
-			if(!Juego.keys['up']) up1 = true;
-			if(up1 && Juego.keys['up']) {
+			if(!Game.keys['up']) up1 = true;
+			if(up1 && Game.keys['up']) {
 				up1 = false;
 				if (this.optiony > 0) {
 					this.optiony -= 1;
 				}
 			}
 			
-			if(!Juego.keys['down']) up2 = true;
-			if(up2 && Juego.keys['down']) {
+			if(!Game.keys['down']) up2 = true;
+			if(up2 && Game.keys['down']) {
 				up2 = false;
 				if (this.optiony < 2) {
 					this.optiony += 1;
 				}
 			}
-			if(!Juego.keys['left']) up4 = true;
-			if(up4 && Juego.keys['left']) {
+			if(!Game.keys['left']) up4 = true;
+			if(up4 && Game.keys['left']) {
 				up4 = false;
 				if (this.optionx > 0) {
 					this.optionx -= 1;
 				}
 			}
 			
-			if(!Juego.keys['right']) up5 = true;
-			if(up5 && Juego.keys['right']) {
+			if(!Game.keys['right']) up5 = true;
+			if(up5 && Game.keys['right']) {
 				up5 = false;
 				if (this.optionx < 2) {
 					this.optionx += 1;
 				}
 			}
 			
-			if(!Juego.keys['sacar_ficha']) up3 = true;
-			if(up3 && Juego.keys['sacar_ficha']) {
+			if(!Game.keys['sacar_ficha']) up3 = true;
+			if(up3 && Game.keys['sacar_ficha']) {
 				up3 = false;
 				// Coloco la ficha en el mapa en la posicion optionx,optiony
 				if (SetSeguidorEn ( {x: this.optionx, y: this.optiony, t: this.option}, PosicionesSeg)) {
@@ -908,8 +915,8 @@ Set = function (PiezaMapa) {
                             $push : {movimientos: {jugador: getTurno(), ficha: {x: that.pieza.x/100 + CurrentScroll.x, y: that.pieza.y/100 +CurrentScroll.y, sprite: that.pieza.sprite, rotation: that.pieza.rotation}, seguidor: {fx: that.pieza.x/100 , fy: that.pieza.y/100,t: that.setSeguidorType(),sx:that.optionx,sy:that.optiony}, puntos: data}}
                           });
                          //Session.set("turno", CurrentTurn+1);
-						Juego.setBoard(8,Blank);
-						Juego.setBoard(7, Blank);
+						Game.setBoard(8,Blank);
+						Game.setBoard(7, Blank);
 						CurrentScroll.active = true;
 						
 						$(idCanvas).unbind("mousedown");
@@ -931,7 +938,7 @@ Set = function (PiezaMapa) {
 							var color = ficha_color.indexOf("_") + 1; 
 							return ficha_color.slice(color);
 						})(); 
-		if(Juego.keys['silenciar']){
+		if(Game.keys['silenciar']){
     		sonar = !sonar;
    		}
         if (sonar){
@@ -992,8 +999,8 @@ Scroll = function() {
 	
 	this.step = function () {
 		if(!CurrentScroll.active) return;
-		if(!Juego.keys['left']) up1 = true;
-		if(up1 && Juego.keys['left']) {
+		if(!Game.keys['left']) up1 = true;
+		if(up1 && Game.keys['left']) {
 			up1 = false;
 			if (this.scrollx != 0) {
 				this.scrollx -= 1;
@@ -1002,8 +1009,8 @@ Scroll = function() {
 				
 			}
 		}
-		if(!Juego.keys['right']) up2 = true;
-		if(up2 && Juego.keys['right']) {
+		if(!Game.keys['right']) up2 = true;
+		if(up2 && Game.keys['right']) {
 			up2 = false;
 			if (this.scrollx != this.width) {
 				this.scrollx += 1;
@@ -1012,8 +1019,8 @@ Scroll = function() {
 				
 			}
 		}
-		if(!Juego.keys['up']) up3 = true;
-		if(up3 && Juego.keys['up']) {
+		if(!Game.keys['up']) up3 = true;
+		if(up3 && Game.keys['up']) {
 			up3 = false;
 			if (this.scrolly != 0) {
 				this.scrolly -= 1;
@@ -1022,8 +1029,8 @@ Scroll = function() {
 				
 			}
 		}
-		if(!Juego.keys['down']) up4 = true;
-		if(up4 && Juego.keys['down']) {
+		if(!Game.keys['down']) up4 = true;
+		if(up4 && Game.keys['down']) {
 			up4 = false;
 			if (this.scrolly != this.height) {
 				this.scrolly += 1;
@@ -1056,19 +1063,3 @@ ClarcassonneGameIU = new function ()  {
 	}
 	
 }
-
-
-$(function () {
-	console.log(Meteor.userId());
-	Meteor.call("InicioJuego", SetPlayers);
-	idCanvas = "#game";
-	idParty = "paco";
-	urlSprite = 'images/sprites.png';
-	Meteor.subscribe("partidas", idParty);
-	Partidas.remove({_id: idParty});
-	Partidas.insert({_id: idParty});
-	
-	
-	
-
-});

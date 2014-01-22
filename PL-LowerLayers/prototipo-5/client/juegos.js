@@ -75,7 +75,7 @@ Template.matchestemp.events = {
 						$('#aliencontainer').show();
 					else if (Games.findOne({_id :Session.get("game_id")}).name=="Froot_Wars")
 						$('#frootwarscontainer').show();
-					Partidas.update({_id : Session.get('match_id')},{$push: {jugadores: Meteor.userId()},$inc:{num_players :1}});
+					Partidas.update({_id : Session.get('match_id')},{$push: {jugadores: {user_id: Meteor.userId()}},$inc:{num_players :1}});
 					$("#match_creator").val('');
 				};
 			} else {
@@ -105,7 +105,7 @@ Template.matchestemp.events = {
 			else if (Games.findOne({_id : Session.get('game_id')}).name=="Froot_Wars")
 				$('#frootwarscontainer').show();
 			if(!already_into){
-				Partidas.update({_id : Session.get('match_id')}, {$push: {jugadores: Meteor.userId()},$inc: {num_players: 1}});
+				Partidas.update({_id : Session.get('match_id')}, {$push: {jugadores: {user_id: Meteor.userId()}},$inc: {num_players: 1}});
 			}
 		} else {
 			Session.set('match_id', undefined);

@@ -14,13 +14,6 @@
    	</div>	
 </body>
 
-
-
-
-
-
-
-
 <template name="cointemp">
 	<div id="slider">
 		<div id="coin-slider">
@@ -306,9 +299,20 @@
 <template name="listaAmigosOnlineTemp">
 	<div id="listaAmigosOnline">
 		{{# each listaAmigosOnline}}
-		<a style ="cursor:pointer;text-decoration:underline;" class="linkchat">
+		<a style ="cursor:pointer;text-decoration:underline;float:left" class="linkchat">
 			{{username}}<br>
 		</a>
+		<ul class="menuAmigos" style="float:left;margin-left:3px;">
+			<li>
+				<a class ="menuAmigosStyle">&#9660;</a>
+				<ul>
+					<li><a class ="menuAmigosStyle"><span class="ui-icon-plus"></span>Invitar</a></li>
+					<li><a class ="menuAmigosStyle"><span class="ui-icon-person"></span>Perfil</a></li>
+					<li><a class ="menuAmigosStyle"><span class="ui-icon-cancel"></span>Bloquear</a></li>
+				</ul>
+			</li>
+		</ul>
+		<br style="clear:both;"/>
 		{{/ each}}
 	</div>	
 </template>

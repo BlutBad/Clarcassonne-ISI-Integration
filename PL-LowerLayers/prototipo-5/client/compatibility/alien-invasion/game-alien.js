@@ -503,4 +503,3 @@ Explosion.prototype.step = function(dt) {
 $(function() {
     GameAlien.initialize("aliencanvas",spritesAlien,startGameAlien);
 });
-
