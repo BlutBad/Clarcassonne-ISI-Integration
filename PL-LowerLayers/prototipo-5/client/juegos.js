@@ -114,8 +114,27 @@ Template.roomplayerstemp.players=function(){
 Template.gamestemp.events = {
 	'click .linkgame':function(event){
 		Session.set('game_id', $(this)[0]._id);
-		$('#games').hide();
-		$('#matches').fadeIn();
+		if(Games.findOne({_id : Session.get("game_id")}).name=="Alien_Invasion" || Games.findOne({_id : Session.get("game_id")}).name=="Froot_Wars"){
+			$('#games').hide();
+			var current_match_id = Partidas.insert({
+				game_id: Session.get("game_id"),
+				created: new Date(),
+				initiated: true,
+				finish: false,
+				admin_by: Meteor.userId()
+			});
+			Session.set('match_id', current_match_id);
+			$('#matches').hide();
+			$('#roomcontainer').fadeIn();
+			if (Games.findOne({_id : Session.get("game_id")}).name=="Alien_Invasion")
+				$('#aliencontainer').show();
+			else if (Games.findOne({_id :Session.get("game_id")}).name=="Froot_Wars")
+				$('#frootwarscontainer').show();
+			Partidas.update({_id : Session.get('match_id')},{$push: {jugadores: {user_id: Meteor.userId()}},$inc:{num_players :1}});
+		} else {
+			$('#games').hide();
+			$('#matches').fadeIn();
+		};
 	}
 }
 
@@ -206,6 +225,7 @@ Template.roomgametemp.events = {
 	'click a#exitgame':function(event){
 		var quiter_id = Meteor.userId();
 		var quited_match_id = Session.get('match_id');
+		var quited_game_id = Session.get('game_id');
 		var players_array = Partidas.findOne({_id : quited_match_id}).jugadores;
 		players_array = _.reject(players_array, function(player){ return player.user_id == quiter_id; });
 		Partidas.update({_id : quited_match_id}, {$set:{jugadores : players_array},$inc: {num_players: -1}});
@@ -225,8 +245,18 @@ Template.roomgametemp.events = {
 		$('#frootwarscontainer').hide();
 		$('#matches').fadeIn();
 
+		if (Games.findOne({_id : Session.get("game_id")}).name=="Alien_Invasion" || Games.findOne({_id :Session.get("game_id")}).name=="Froot_Wars"){
+			Session.set('game_id', undefined);
+			$('#matches').hide();
+			$('#games').fadeIn();
+		};
+
 		///ocultar videochat
-		endVideoChat();
+		if(Session.get("video_on")){
+			endVideoChat();
+			Session.set("video_on",false);
+		};
+
 	}
 };
 
@@ -254,12 +284,21 @@ Template.roomplayerstemp.admin = function() {
 		isAdmin = Meteor.userId() == Partidas.findOne({_id : Session.get('match_id')}).admin_by;
 	};
 	return isAdmin;
+}
+
+// Devuelve 'true' si juegas al carca
+Template.roomplayerstemp.carca = function() {
+	var isCarca = false;
+	if(Games.findOne({_id : Session.get("game_id")})){
+		isCarca = Games.findOne({_id : Session.get("game_id")}).name=="Clarcassonne";
+	};
+	console.log(isCarca);
+	return isCarca;
 } 
 
 //Encuentra partidas
 Template.matchestemp.matches = function(){
 /*
-	
 	var partidas_doc = Partidas.find();
 	var lista = [];
 

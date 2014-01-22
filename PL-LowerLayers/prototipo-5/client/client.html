@@ -296,10 +296,12 @@
 			<tr> <td>{{name}}</td> </tr>
 		{{/each}}
 	</table>
-	{{#if admin}}
-	<div id="empezarboton">
-			<p ><button id="EmpezarCarca"> Empezar </button></p>
-	</div>
+	{{#if carca}}
+		{{#if admin}}
+			<div id="empezarboton">
+				<p ><button id="EmpezarCarca"> Empezar </button></p>
+			</div>
+		{{/if}}
 	{{/if}}
 </template>
 
