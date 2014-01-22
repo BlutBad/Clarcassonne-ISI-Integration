@@ -11,22 +11,39 @@ Template.friends.show = function() {
 
 Template.friends.register = function() {
 	if (Meteor.user()) {
-		var count = Friends.find({username: Meteor.user().username}).count();
-		if (count === 0) {
-			var userName = Meteor.user().username;
-			var userId = Meteor.userId();
-			var listFriends = [];
-			Friends.insert({
-				username: userName,
-				userid: userId,
-				friends: listFriends
-			});
-		}
 		return true;
 	} else {
 		return false;
 	}
 };
+
+function tienesLista() {
+	var tienesListaAmigos = false;
+	if (Friends.findOne({username: Meteor.user().username})) {
+		tienesListaAmigos = true;
+	}
+	return tienesListaAmigos;
+}
+
+Template.friends.tienesListaAmigos = function() {
+	var tienesAmigos = false;
+	// Verifico que si tengo una lista de amigos
+	if (tienesLista()) {
+		tienesAmigos = true;
+	} else {
+		// Sino tengo una lista de amigos, me creo una lista vacia.
+		var userName = Meteor.user().username;
+		var userId = Meteor.userId();
+		var listFriends = [];
+		Friends.insert({
+			username: userName,
+			userid: userId,
+			friends: listFriends
+		});
+		tienesAmigos = true;
+	}
+	return tienesAmigos;
+}
 
 Template.friends.numUsersRegister = function() {
 	return Meteor.users.find({}).count();

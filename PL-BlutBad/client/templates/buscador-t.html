@@ -1,28 +1,28 @@
 <template name="buscador">
 	{{#if show}}
 		{{#if register}}
-			
-			<div id="buscador-usuarios">
+			{{#if tienesListaAmigos}}
+				<div id="buscador-usuarios">
 
-				<h1>Buscador</h1>
+					<h1>Buscador</h1>
 
-				<div id="buscador">
+					<div id="buscador">
 
-					<p>Introduce el nombre de un usuario para buscarlo.</p>
-					<input type="text" id="tags">
+						<p>Introduce el nombre de un usuario para buscarlo.</p>
+						<input type="text" id="tags">
+
+					</div>
+
+					<div id="datos-usuario-encontrado">
+
+						{{#if showprofilfriend}}
+							{{> friendprofil}}
+						{{/if}}
+
+					</div>
 
 				</div>
-
-				<div id="datos-usuario-encontrado">
-
-					{{#if showprofilfriend}}
-						{{> friendprofil}}
-					{{/if}}
-
-				</div>
-
-			</div>
-
+			{{/if}}
 		{{else}}
 			<div id="notRegisterDialog">
 			  	<p>

@@ -9,11 +9,21 @@ Template.usersConnected.estasRegistrado = function(){
 	return estasRegistrado;
 };
 
+function tienesListaAmigos () {
+	var tienesListaAmigos = false;
+	if (Friends.findOne({username: Meteor.user().username})) {
+		tienesListaAmigos = true;
+	}
+	return tienesListaAmigos;
+}
+
 Template.usersConnected.tienesAmigos = function(){
-	var numAmigos = Friends.findOne({username: Meteor.user().username}).friends.length;
 	var tienesAmigos = false;
-	if (numAmigos !== 0){
-		tienesAmigos = true;
+	if (tienesListaAmigos()) {
+		var numAmigos = Friends.findOne({username: Meteor.user().username}).friends.length;
+		if (numAmigos !== 0){
+			tienesAmigos = true;
+		}
 	}
 	return tienesAmigos;
 };
