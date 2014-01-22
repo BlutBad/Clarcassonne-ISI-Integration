@@ -103,7 +103,7 @@ Template.roomplayerstemp.players=function(){
 	if(matches_document){
 		players_list = matches_document.jugadores;
 		players_list.forEach(function(entry){
-			players_names.push({"name" : Meteor.users.findOne({_id:entry}).username});
+			players_names.push({"name" : Meteor.users.findOne({_id:entry.user_id}).username});
 		});
 	};
 	return players_names;
@@ -160,11 +160,12 @@ Template.matchestemp.events = {
 		var no_limit = Partidas.findOne({_id : $(this)[0]._id}).num_players < lim;
 		var players_array = Partidas.findOne({_id : $(this)[0]._id}).jugadores;
 		var match_pass = Partidas.findOne({_id : $(this)[0]._id}).password;
-		console.log($(".linkmatch_pass." + $(this)[0]._id).val());
+
 		if(match_pass){
 			var in_pass = sha1Hash($(".linkmatch_pass." + $(this)[0]._id).val());
 		};
-		var already_into = players_array.indexOf(Meteor.userId()) != -1;
+		var already_into = Partidas.findOne({_id : $(this)[0]._id, jugadores : {user_id : Meteor.userId()}}) != undefined;
+
 		if(no_limit || already_into){
 			if(match_pass == in_pass || already_into){
 				Session.set('match_id', $(this)[0]._id);
@@ -206,7 +207,7 @@ Template.roomgametemp.events = {
 		var quiter_id = Meteor.userId();
 		var quited_match_id = Session.get('match_id');
 		var players_array = Partidas.findOne({_id : quited_match_id}).jugadores;
-		players_array = _.reject(players_array, function(player){ return player == quiter_id; });
+		players_array = _.reject(players_array, function(player){ return player.user_id == quiter_id; });
 		Partidas.update({_id : quited_match_id}, {$set:{jugadores : players_array},$inc: {num_players: -1}});
 
 		if(Partidas.findOne({_id : quited_match_id}).num_players == 0){

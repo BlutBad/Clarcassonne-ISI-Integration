@@ -131,10 +131,7 @@ Template.userstemp.users = function(){
 Template.gamestemp.games=function(){
 	return Games.find();
 }
-//Encuentra partidas
-Template.matchestemp.matches = function(){
-	return Partidas.find();
-}
+
 //Carga mensajes del chat
 Template.messagestemp.messages=function(){
 	return Messages.find();
