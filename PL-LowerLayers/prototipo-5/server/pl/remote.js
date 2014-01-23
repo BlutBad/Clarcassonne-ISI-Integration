@@ -21,4 +21,16 @@ Meteor.methods({
 		Meteor.users.update({_id: this.userId},{$set: {address:email}});
 		return "Actualizado correo electronico";
 	},
+	//Puntuacion alien y frootwars 
+	matchFinish: function (match_id, game_id, points) {
+    	Partidas.update({_id: match_id},{$set: {finish:"true", time_end:Date.now()}});
+        Ranking.insert({user_id: this.userId, game_id: game_id, score: points});
+        /*if (Ranking.find({game_id: game_id, user_id:this.userId}).count()==6){
+        		var list = Ranking.findOne({game_id: game_id, user_id:this.userId},{sort:{score:-1}});
+        		console.log(list);
+        		var list2 = Ranking.find({game_id: game_id, user_id:this.userId},{sort:{score:-1}});
+        		console.log(list2[0]);
+        }*/
+				
+    }
 });

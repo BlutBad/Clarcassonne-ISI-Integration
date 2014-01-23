@@ -16,8 +16,8 @@ Meteor.startup(function () {
 	$('#aliencontainer').hide();
 	$('#frootwarscontainer').hide();
 	$('#clarcassonnecontainer').hide();
-	$("#byuserranking").hide();
-	$("#bygameranking").hide();
+	$('#bygameranking').hide();
+	$('#byusergameranking').hide();
 });
 
 
@@ -114,8 +114,8 @@ Deps.autorun(function () {
 
 //Subscripción selectiva a ranking
 Deps.autorun(function () {
-	var selected_game_id = Session.get("game_id")
-	var selected_user_id = Session.get("user_id")
+	var selected_game_id = Session.get("game_id_ranking");
+	var selected_user_id = Session.get("user_id_ranking");
 	Meteor.subscribe("ranking", selected_game_id, selected_user_id);
 });
 
