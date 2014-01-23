@@ -96,3 +96,81 @@ function deleteFriend(idUser,idAborrar) {
 	listAmigos = _.reject(listAmigos, function(friend){ return friend == idAborrar; });
 	Meteor.users.update({_id: idUser}, {$set: {amigos: listAmigos}});
 }
+
+
+/////////////////////////////////INVITACIONES///////////////////////////////////////////////////////
+
+
+
+
+
+menuAmigosFunc = function (){
+	$(".menuAmigos").menu();
+	$(".ui-menu-icon").remove();
+
+	$(".menuAInv").click(function() {
+		menuAmInv(this);
+	});
+
+	$(".menuAPer").click(function() {
+		alert("caca");	
+	});
+
+	$(".menuABloq").click(function() {
+		alert("caca");	
+	});
+}
+
+
+
+function menuAmInv(esto) {
+	var partida = Partidas.findOne({_id : Session.get('match_id')});
+	if (partida == undefined){
+		$.ambiance({message: "You are not in a match!", type: "error", fade: false});
+	}else if( Games.findOne({_id : partida.game_id}).name != "Clarcassonne" ){
+		$.ambiance({message: "This is a single player game!", type: "error", fade: false});
+	}else if(partida.admin_by != Meteor.userId()){
+		$.ambiance({message: "You are not the admin", type: "error", fade: false});
+	}else{
+		var invitacion = Invitations.findOne({match_id : partida._id});
+		if (invitacion == undefined){
+			Invitations.insert({
+				match_id: partida._id,
+				requester: Meteor.user().username,
+				owner: $(esto).attr("hreflang"),
+				sent: false,
+				when: new Date()
+			});
+			
+			console.log(Invitations.find())
+			
+			$.ambiance({message: "Invitation sent to " + $(esto).attr("hreflang"),type: "success"});
+
+			//var invi_match_id = Invitations.findOne({match_id : partida._id})._id;
+			//console.log(invi_match_id);
+			//Session.set('invit_id', invi_match_id);
+			//Invitations.update({_id: invi_match_id}, {$set: {sent: 'true'}});
+		}else {
+			$.ambiance({message: $(esto).attr("hreflang")+ " has already invited" ,type: "success"});
+		}
+	}
+}
+
+//problema: que este jugando a otro juego.
+// incluso que este en la pestaña de ranking.
+//Quiero que se queden fijas
+
+Deps.autorun(function () {
+	if (Meteor.user()){
+		var invitaciones = Invitations.find();
+		console.log("AAAAAAAAAAAAAA")
+		//var invitacion = Invitations.findOne({requester : Meteor.user().username});
+		//var pene = invitacion.sent;
+		//alert("caca");
+		//$.ambiance({message: "Invitation sent to "+invitacion.match_id ,type: "success", timeout: 0});
+	}	
+});
+
+
+
+

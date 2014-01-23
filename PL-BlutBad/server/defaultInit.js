@@ -112,15 +112,15 @@ Meteor.startup(function() {
 				jugadores : [
 					{
 						user_id : fakeUsersId[i],
-						estado : "Pendiente"
+						estado : "Listo!"
 					},
 					{
 						user_id : fakeUsersId[i+1],
-						estado : "Pendiente"
+						estado : "Listo!"
 					},
 					{
 						user_id : fakeUsersId[i+2],
-						estado : "Pendiente"
+						estado : "Listo!"
 					}
 				],
 				listos : false,
@@ -132,7 +132,8 @@ Meteor.startup(function() {
 		user = Accounts.createUser({username:"user",email:"user@kaka.aka", password:"123"})
 		sara = Accounts.createUser({username:"sara",email:"sara@kaka.aka", password:"123"})
 		itzi = Accounts.createUser({username:"itzi",email:"itzi@kaka.aka", password:"123"})
-		dany = Accounts.createUser({username:"dany",email:"dany@kaka.aka", password:"123"})		
+		danny = Accounts.createUser({username:"danny",email:"danny@kaka.aka", password:"123"})	
+		serhii = Accounts.createUser({username:"serhii",email:"serhii@kaka.aka", password:"123"})	
     }
 
     if (Menu_user.find().count() === 0) {
@@ -145,7 +146,10 @@ Meteor.startup(function() {
 		}, {
 		    name : "Amigos",
 		    contents : []
-		}, ];
+		}, {
+			name : "Mis mensajes",
+			contents : []
+		} ];
 
 		var timestamp = (new Date()).getTime();
 		for ( var i = 0; i < data.length; i++) {
@@ -255,19 +259,19 @@ Meteor.startup(function() {
 					minPoints : 0,
 			    }, {
 					rango : "Noob",
-					minPoints : 500,
+					minPoints : 50,
 			    }, {
 					rango : "Capitan",
-					minPoints : 1000,
+					minPoints : 100,
 			    }, {
 					rango : "Comandante",
-					minPoints : 4000,
+					minPoints : 400,
 			    }, {
 					rango : "General",
-					minPoints : 7000,
+					minPoints : 700,
 			    }, {
 					rango : "MotherFucker",
-					minPoints : 9000,
+					minPoints : 900,
 			    } ],
 			    insignias : [
 				    {

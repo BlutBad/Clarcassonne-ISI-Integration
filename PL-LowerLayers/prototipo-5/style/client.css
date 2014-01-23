@@ -6,6 +6,47 @@ html{
 	
 }
 
+button{
+	color: white;
+	background-color: #058;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 12px;
+	padding-right: 12px;
+	border: solid;
+	border-width: 1.5px;
+	border-color: #0AF;
+	cursor: pointer;
+}
+
+button:hover{
+	background-color: #08C;
+}
+
+a{
+	padding: 5px;
+	text-decoration: underline;
+}
+
+a:hover{
+	color: #6CE;
+}
+
+input:focus{
+	background-color: #C7FFFF;
+}
+
+#creator_table{
+	background-color: #000;
+	border: solid;
+	border-width: thin;
+	border-color: #222;
+} 
+
+#creator_table td{
+	padding: 5px;
+}
+
 #titulo{	
 	text-align:center;
 	font-weight:bold;
@@ -131,12 +172,6 @@ html{
 #accordion .ui-accordion-content{
 	width: 103px;
 	height: 420px;
-}
-
-.ui-menu { 
-}
-
-.menuAmigos{
 }
 
 .menuAmigosStyle {

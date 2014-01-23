@@ -1,0 +1,13 @@
+<template name="inbox">
+	{{#if show}}
+		{{#if register}}
+			<h1>Aún no tienes mensajes :)</h1>
+		{{else}}
+			<div id="notRegisterDialog">
+			  	<p>
+			  		Debes estar registrado en la aplicación.
+			  	</p>
+			</div>
+		{{/if}}
+	{{/if}}
+</template>

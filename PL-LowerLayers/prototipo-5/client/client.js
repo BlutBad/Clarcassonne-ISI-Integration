@@ -51,9 +51,6 @@ $(document).ready(function() {
 				$("#friends").addClass("escondido")
 				$('#accordion').hide();
 			}	
-			$(".menuAmigos").menu();
-			$(".ui-menu-icon").remove();
-			
 		});
 
 		$("#buttVideoSt").click(function() {
@@ -105,6 +102,9 @@ Deps.autorun(function () {
 	if (Meteor.user())
 		Meteor.subscribe("private_messages", Meteor.user().username);
 });
+
+//Subscripcion selectiva a invitaciones
+Meteor.subscribe("invitations");
 
 //Subscripción selectiva a los mensajes de la sala
 Deps.autorun(function () {

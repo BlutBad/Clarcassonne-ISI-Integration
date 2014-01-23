@@ -106,38 +106,37 @@ Template.hall_clarcassone.events({
         } else {
             var party_jugadores = [];
 
+            todos_listos = false; 
+            // Comprobar que todos los participantes estén listos.
             for ( var i = 0, l = usersJoined.length; i < l; i++) {
-                party_jugadores.push({
-                    user_id : usersJoined[i].user_id
-                });
-            }
-
+                if (usersJoined[i].estado == estadosU.listo) {
+                    party_jugadores.push({
+                        user_id : usersJoined[i].user_id
+                    });
+                    todos_listos = true;
+                } else {
+                    todos_listos = false;
+                    break;
+                }
+            } 
             // id de la partida que ha sido creada.
-            party_id = Partidas.insert({
-                jugadores : party_jugadores,
-                terminada : false, 
-            });
-            PartidasVolatiles.update(this._id, {
-                $set: {jugadores : usersJoined,
-                       listos: true,
-                       partyid: party_id} 
-            }); 
+            if (todos_listos) {
+                party_id = Partidas.insert({
+                    jugadores : party_jugadores,
+                    terminada : false, 
+                });
+                PartidasVolatiles.update(this._id, {
+                    $set: {jugadores : usersJoined,
+                           listos: true,
+                           partyid: party_id} 
+                });   
+                cargaClarca(party_id);
+                setTimeout(removePartyV(this._id), 50000);
+            } else {
+                Session.set("createError",
+                            "Todos los participantes deben estar listos!");
 
-            //console.log('eval("ClarcassonneGameIU.initialize(idCanvasElement, party_id)");');
-            // eval("ClarcassonneGameIU.initialize(idCanvasElement, party_id)");
-
-            // Id del canvas donde se va a pintar el juego
-
-            ClarcassonneGameIU.initialize('#CanvasclarcaGame', party_id);
-
-            // Para que se muestre el canvas del juego,
-            Session.set('showGameIdn', "clarki");
-
-            // Para esconder el hall, solo se ve el canvas
-            Session.set('current_stage', false); 
-            $('#gamecontainer').show(); 
-
-            setTimeout(removePartyV(this._id), 5000); 
+            }
         } 
         // Hacer una entrada a la coleccion de Partidas,
         // y llamar a ui y ai con ese _id de la partida. 
@@ -205,14 +204,7 @@ Template.hall_clarcassone.events({
     },
     'click .continue' : function() {   
         party_id = this._id;
-        ClarcassonneGameIU.initialize('#CanvasclarcaGame', party_id);
-
-        // Para que se muestre el canvas del juego,
-        Session.set('showGameIdn', 'clarki');
-
-        // Para esconder el hall, solo se ve el canvas
-        Session.set('current_stage', false);         
-        $('#gamecontainer').show(); 
+        cargaClarca(party_id); 
     }
 });
 
@@ -220,26 +212,30 @@ removePartyV = function(id) {
     PartidasVolatiles.remove(id);
 }
 
-Deps.autorun(function(c) { 
-    user =  Meteor.userId();    
-    ready = false;
-    PartidasVolatiles.find({}).forEach(function(each){
-        each.jugadores.forEach(function(each2){
-            if (each2.user_id == user){
-                ready = each.listos;
-                partidav = each;
+cargaClarca = function(partyid) {
+    ClarcassonneGameIU.initialize('#CanvasclarcaGame', party_id); 
+
+    // Para que se muestre el canvas del juego,
+    Session.set('showGameIdn', "clarki");
+
+    // Para esconder el hall, solo se ve el canvas
+    Session.set('current_stage', false);      
+
+    $('#gamecontainer').show();       
+}
+
+Deps.autorun(function(c) {   
+    partidav = PartidasVolatiles.findOne({
+        jugadores: {
+            $elemMatch: {
+                user_id: Meteor.userId()
             }
-        })
-    });
-    if (ready) {
-        party_id = partidav.partyid; 
-        ClarcassonneGameIU.initialize('#CanvasclarcaGame', party_id); 
-
-        // Para que se muestre el canvas del juego,
-        Session.set('showGameIdn', "clarki");
-
-        // Para esconder el hall, solo se ve el canvas
-        Session.set('current_stage', false);         
+        },
+        listos: true
+    }); 
+    if (partidav != undefined) {
+        party_id = partidav.partyid;  
+        cargaClarca(party_id);
     }
 });
 
@@ -398,4 +394,15 @@ Template.hall_clarcassone.rol = function(id_user, id_partida) {
         return "Creador";
     }
     return "Participante"; 
-}   
+} 
+
+Template.hall_clarcassone.point = function(id_user, obj_party) { 
+    mov = obj_party.movimientos; 
+    last_mov = mov[mov.length-1];
+    punts = last_mov.puntos;
+    for (i = 0; i < punts.length; i++) {
+        if (punts[i].id == id_user) {
+            return punts[i].puntos;
+        }
+    }
+}     

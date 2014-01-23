@@ -17,6 +17,34 @@ Template.buscador.register = function() {
   }
 };
 
+function tienesLista() {
+  var tienesListaAmigos = false;
+  if (Friends.findOne({username: Meteor.user().username})) {
+    tienesListaAmigos = true;
+  }
+  return tienesListaAmigos;
+}
+
+Template.buscador.tienesListaAmigos = function() {
+  var tienesAmigos = false;
+  // Verifico que si tengo una lista de amigos
+  if (tienesLista()) {
+    tienesAmigos = true;
+  } else {
+    // Sino tengo una lista de amigos, me creo una lista vacia.
+    var userName = Meteor.user().username;
+    var userId = Meteor.userId();
+    var listFriends = [];
+    Friends.insert({
+      username: userName,
+      userid: userId,
+      friends: listFriends
+    });
+    tienesAmigos = true;
+  }
+  return tienesAmigos;
+}
+
 Template.buscador.showprofilfriend = function() {
     return Session.get('profilfriend', this._id); 
 };
