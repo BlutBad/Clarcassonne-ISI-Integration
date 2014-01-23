@@ -117,6 +117,10 @@ input:focus{
 	border: 2px solid #2EFE2E;
 }
 
+#tabs{
+	margin-top: 15px;
+
+}
 
 #chatTabs{
 	position: absolute;
@@ -202,7 +206,7 @@ input:focus{
 	width:70%;
 }
 
-.coin-slider { overflow: hidden; zoom: 1; position: relative;z-index:-1; }
+.coin-slider { overflow: hidden; zoom: 1; position: relative;z-index:-1; margin-top: 15px;}
 .coin-slider a{ text-decoration: none; outline: none; border: none; }
 
 .cs-buttons { font-size: 0px; padding: 10px; float: left; }

@@ -3,7 +3,7 @@
 </head>
 
 <body>
-	<div id="div-login-button">{{loginButtons}}</div>
+	<div id="div-login-button">{{> iconLoginTemp}}{{loginButtons}}</div>
 	<div id="titulo" Size="6">X-ADrian</div>
 	<div id="subtitulo">Welcome to X-ADrian platform</div><br>
 	<div id="container">
@@ -24,6 +24,9 @@
 	</div>	
 </template>
 
+<template name="iconLoginTemp">
+		<img width='50px' height='50px'  src={{avatar}} >
+</template>
 
 <template name="tabstemp">
 	<div id="tabs" >
@@ -152,7 +155,7 @@
 <template name="messagestemp" >
 	<div id="messages" style="overflow:auto;height:50%;">
 		{{# each messages}}
-			<i>{{name}}: {{message}}</i></br>
+			<i><img width='20px' height='20px'  src={{avatar}} >{{name}}: {{message}}</i></br>
 		{{/each}}
 	</div>
 </template>
@@ -319,20 +322,21 @@
 <template name="listaAmigosOnlineTemp">
 	<div id="listaAmigosOnline">
 		{{# each listaAmigosOnline}}
-		<a style ="cursor:pointer;text-decoration:underline;float:left" class="linkchat">
-			{{username}}<br>
-		</a>
-		<ul class="menuAmigos" style="float:left;margin-left:3px;">
-			<li>
-				<a class ="menuAmigosStyle">&#9660;</a>
-				<ul>
-					<li><a class ="menuAmigosStyle menuAInv" hreflang={{username}}><span class="ui-icon-plus"></span>Invitar</a></li>
-					<li><a class ="menuAmigosStyle menuAPer" ><span class="ui-icon-person"></span>Perfil</a></li>
-					<li><a class ="menuAmigosStyle menuABloq"><span class="ui-icon-cancel"></span>Bloquear</a></li>
-				</ul>
-			</li>
-		</ul>
-		<br style="clear:both;"/>
+			<img width='20px' height='20px'  src={{avatar}} style ="float:left">
+			<a style ="cursor:pointer;text-decoration:underline;float:left;margin-left:5px" class="linkchat">
+				{{username}}<br>
+			</a>
+			<ul class="menuAmigos" style="float:left;margin-left:3px;">
+				<li>
+					<a class ="menuAmigosStyle">&#9660;</a>
+					<ul>
+						<li><a class ="menuAmigosStyle menuAInv" hreflang={{username}}><span class="ui-icon-plus"></span>Invitar</a></li>
+						<li><a class ="menuAmigosStyle menuAPer" ><span class="ui-icon-person"></span>Perfil</a></li>
+						<li><a class ="menuAmigosStyle menuABloq" hreflang={{username}}><span class="ui-icon-cancel"></span>Bloquear</a></li>
+					</ul>
+				</li>
+			</ul>
+			<br style="clear:both;"/>
 		{{/ each}}
 	</div>	
 </template>

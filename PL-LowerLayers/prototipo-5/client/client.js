@@ -86,7 +86,25 @@ Deps.autorun(function () {
 ///////////// SUBSCRIPCIONES ////////////////
 
 //Subscripcion a lista de usuarios
-Meteor.subscribe("users");
+
+var usersLoaded = false;
+Meteor.subscribe("users", function () { 
+	usersLoaded = true;
+});
+
+Meteor.users.find().observe({
+	added: function(user) { 
+		if (usersLoaded) { 
+			Meteor.defer(function () {
+				if((user.avatar == undefined) && (user._id == Meteor.user()._id)){
+					console.log("AAAAAAAAAAAABBBBBBBB")
+					Meteor.call("definirAvatar","Avatares/0.jpg",function(error,result){console.log(error);console.log(result);})
+				}
+  			});
+			
+		}
+	}
+});
 
 //Subscripcion a lista de juegos
 Meteor.subscribe("games");
@@ -141,6 +159,11 @@ Template.loguserstemp.logusers = function(){
 	return Meteor.users.find({"services.resume.loginTokens" : {$not : []}});
 }
 
+Template.iconLoginTemp.avatar = function(){
+	if(Meteor.user()){
+		return Meteor.user().avatar;
+	}
+}
 
 
 

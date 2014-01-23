@@ -43,6 +43,7 @@ Template.input.events = {
 			if (message.val()!=''){
 				 Messages.insert({
 					name: name,
+					avatar: Meteor.user().avatar,
 					message: message.val(),
 					time: Date.now(),
 					match_id: Session.get('match_id')
