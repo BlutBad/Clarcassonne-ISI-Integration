@@ -132,7 +132,8 @@ Meteor.startup(function() {
 		user = Accounts.createUser({username:"user",email:"user@kaka.aka", password:"123"})
 		sara = Accounts.createUser({username:"sara",email:"sara@kaka.aka", password:"123"})
 		itzi = Accounts.createUser({username:"itzi",email:"itzi@kaka.aka", password:"123"})
-		dany = Accounts.createUser({username:"dany",email:"dany@kaka.aka", password:"123"})		
+		danny = Accounts.createUser({username:"danny",email:"danny@kaka.aka", password:"123"})	
+		serhii = Accounts.createUser({username:"serhii",email:"serhii@kaka.aka", password:"123"})	
     }
 
     if (Menu_user.find().count() === 0) {
@@ -145,7 +146,10 @@ Meteor.startup(function() {
 		}, {
 		    name : "Amigos",
 		    contents : []
-		}, ];
+		}, {
+			name : "Mis mensajes",
+			contents : []
+		} ];
 
 		var timestamp = (new Date()).getTime();
 		for ( var i = 0; i < data.length; i++) {
