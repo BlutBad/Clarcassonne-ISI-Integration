@@ -12,16 +12,16 @@ Meteor.methods({
 	matchFinish : function(opts) { 
 	    //console.log(opts);
 		if (this.userId != null) {
-
+			var user_id;
         	if(opts.user_id != null){
         	    user_id = opts.user_id;
         	}else{
         	    user_id = this.userId
         	}
     		
-            game_id = opts.game_id;
+            var game_id = opts.game_id;
             
-            curUser = Ranking.findOne({
+            var curUser = Ranking.findOne({
     				game_id : game_id,
     				user_id : user_id});
 			
@@ -40,7 +40,7 @@ Meteor.methods({
 				curUser.totalScore +=opts.score;
 
 				
-				rango = Rangos.findOne({game_id:game_id, minPoints:{$gte: curUser.totalScore}});
+				var rango = Rangos.findOne({game_id:game_id, minPoints:{$gte: curUser.totalScore}});
 
 				
 				
@@ -60,43 +60,44 @@ Meteor.methods({
 				
 				
 				Ranking.update(curUser._id, {$set : {
-					rango_id:rango._id,
-					totalScore:curUser.totalScore,
-					maxScore:curUser.maxScore,
-					timesPlayed: curUser.timesPlayed,
-					winTimes: curUser.winTimes,
-				    loseTimes: curUser.loseTimes,
-				}});
+												rango_id:rango._id,
+												totalScore:curUser.totalScore,
+												maxScore:curUser.maxScore,
+												timesPlayed: curUser.timesPlayed,
+												winTimes: curUser.winTimes,
+											    loseTimes: curUser.loseTimes,
+								}});
 				
 				
+
 				
 			}else{
-				rango = Rangos.findOne({game_id:game_id, minPoints:{$gte: opts.score}});
-				
+				console.log("kaka "  + game_id, "  ", opts.score);
+				var rango = Rangos.findOne({game_id:game_id, minPoints:{$gte: opts.score}});
+				console.log("kaka "  + rango);
 				
 				//insig = Insignias.findOne({game_id:gameId, timesPlayed:{$gte: 1}});	
 				
 				//InsigniasToUser.insert({user_id:userId,game_id:gameId,insignia_id: insig._id});
 			
 				if (opts.win){
-				    winTimes=1;
-				    loseTimes=0;
+				    var winTimes=1;
+				    var loseTimes=0;
 				}else{
-				    loseTimes = 1;
-				    winTimes = 0;
+				    var loseTimes = 1;
+				    var winTimes = 0;
 				}
 				
 				Ranking.insert({
-					game_id : game_id,
-					user_id : user_id,
-					maxScore : opts.score,
-					totalScore: opts.score, 
-					rango_id:rango._id,
-					timesPlayed: 1,
-					winTimes:winTimes,
-					loseTimes:loseTimes,
-					
-				});
+							game_id : game_id,
+							user_id : user_id,
+							maxScore : opts.score,
+							totalScore: opts.score, 
+							rango_id:rango._id,
+							timesPlayed: 1,
+							winTimes:winTimes,
+							loseTimes:loseTimes,
+						});
 			}
 			
 			
