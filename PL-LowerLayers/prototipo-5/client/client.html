@@ -187,19 +187,22 @@
 			{{# each matches}}
 				<tr>
 					-
-					<td><a class="linkmatch">{{name}}</a></td>
+					<td><a class="linkmatch {{_id}}">{{name}}</a></td>
 					<td> {{created}}</td>
 					<td> {{num_players}} Jugadores</td>
 					<td>{{#if password}}Clave: <input type="password" class="linkmatch_pass {{_id}}">{{/if}}</td>
 				</tr>
 			{{/ each}}
 		</table>
-		<p> <table style="border-style : solid;border-color:white;"> 
+		<p> <table id="creator_table"> 
 			<tr><td> Nueva partida: <input type="text" id="match_name"> </td></tr> 
 			<tr><td> Contraseña: <input type="password" id="match_pass"> </td></tr> 
 			<tr><td> <button type="button" id="match_creator">Crear</button> </td></tr> 
 		</table> </p>
-		<p><a style ="cursor:pointer;text-decoration:underline;" id="match_back">Atrás</a></p>
+		<p style="width: 100%;">
+			<button id="match_back">Atrás</button>
+			<button id="random_button" style="margin-left : auto; margin-right: auto">Partida aleatoria</button>
+		</p>
 	</div>
 </template>
 
