@@ -248,7 +248,7 @@ Template.participantes.participantes = function(){
 
 // Mostrar el RANKING del torneo!
 Template.hall_torneo.showRankingTorneo = function() {
-  return Session.equals('multiMenuTorneoActive', 'ranking');
+    return Session.equals('multiMenuTorneoActive', 'ranking');
 };
 
 

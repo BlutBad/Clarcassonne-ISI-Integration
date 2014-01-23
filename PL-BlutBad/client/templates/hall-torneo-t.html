@@ -71,7 +71,6 @@
         {{/if}}
 
         {{#if showRankingTorneo}}
-          <p>Este es el ranking del torneo loco!</p>
           {{>multiRanking}}
         {{/if}}
 
@@ -210,7 +209,15 @@
     {{>showEtapaTorneo}}
 
   {{else}}
-    <p>Esta etapa no tiene partidas planificas, lo sentimos.</p>
+    <div class="container">   
+      <div class="row">
+        <div class="span5">
+         <div class="well">
+            <p>Esta etapa no tiene partidas planificas, lo sentimos.</p>
+          </div>
+        </div>
+      </div>
+    </div>
   {{/if}}
 </template>
 
@@ -284,27 +291,31 @@
   <div class="row">
       <div class="span5">
        <div class="well">
-        <table class="table">                         
-            <h3>Ranking del torneo!</h3>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Nombre</th>
-              <th>Rango</th>
-              <th>Puntuacion Acumulada</th>                                          
-            </tr>
-          </thead>   
-          <tbody>
-            {{#each multiRanking}}
+       {{#if multiRanking}}
+          <table class="table">                         
+              <h3>Ranking del torneo!</h3>
+            <thead>
               <tr>
-                <td>{{no}}</td>
-                <td><span class="{{clacc}}">{{getUsername user_id}}</span>
-                <td>{{rango}}</td>
-                <td>{{score}}</td>                                       
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Rango</th>
+                <th>Puntuacion Acumulada</th>                                          
               </tr>
-            {{/each}}
-          </tbody>
-        </table>
+            </thead>   
+            <tbody>
+              {{#each multiRanking}}
+                <tr>
+                  <td>{{no}}</td>
+                  <td><span class="{{clacc}}">{{getUsername user_id}}</span>
+                  <td>{{rango}}</td>
+                  <td>{{score}}</td>                                       
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+          {{else}}
+            <p>Este es el ranking del torneo loco!</p>
+          {{/if}}
       </div>
     </div>
   </div>    

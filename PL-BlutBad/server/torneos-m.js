@@ -288,8 +288,6 @@ var matchMulti = function(party_id){
             opts.game_id = party.game_id;
             Meteor.call("matchFinish", opts); 
         });
-
-
 };
 
 
