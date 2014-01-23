@@ -97,3 +97,12 @@ Friends = new Meteor.Collection("friends");
 	]
 }
 */
+
+/*user_id, isicoins_total isi_coins*/
+Shop = new Meteor.Collection("shop");
+
+//name description time game_id
+Bono = new Meteor.Collection("bono") 
+
+//user_id bono_id n_usos game_id
+User_Bono=new Meteor.Collection("user_bono");

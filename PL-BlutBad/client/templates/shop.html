@@ -1,0 +1,24 @@
+<template name="tienda">
+	{{#if show}}
+		<h1>Tienda</h1>
+  		{{#if currentUser}}
+  			Cambia los puntos por isi-coins 
+			<h2>Total puntos: {{total}}</h2>
+			Cambiar por:
+			<h2> Total ISI-Coins: {{isicoins}}</h2>
+			{{#if icambiar}}
+				<input type="button" id="ichange" value="Cambiar 100 puntos por 1 isicoins"> 
+			{{/if}}
+			<h2>Cambiar isi-coins por bonos: </h2>
+			{{#if bcambiar}}
+			mostrar los bonos 
+			{{#each bono}}
+				{{name}}
+				<input type="button" id="bchange" value="Cambiar 10 isicoins por 1 vida">
+			{{/each}}}
+			
+			{{/if}}
+			
+		{{/if}}
+	{{/if}}
+</template> 
