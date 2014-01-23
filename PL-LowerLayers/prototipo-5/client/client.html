@@ -33,7 +33,7 @@
 			<li><a href="#perfil">Perfil</a></li>
 		</ul>
 		<div id="juegos">{{> gamestemp}} {{> matchestemp}} {{> roomgametemp}}</div>
-		<div id="ranking">{{> gamesrankingtemp}} {{> userstemp}} {{> byuserrankingtemp}} {{> bygamerankingtemp}}</div>
+		<div id="ranking">{{> gamesrankingtemp}} {{> bygamerankingtemp}} {{> byusergamerankingtemp}}</div>
 		<div id="perfil">{{> imagperfiltemp}}{{> datosperfiltemp}}{{> modperfiltemp}}</div>
 	</div>
 </template>
@@ -89,32 +89,13 @@
 	</div>
 </template>
 
-<template name="byuserrankingtemp">
-	<div id="byuserranking">
-		<a style ="cursor:pointer;text-decoration:underline;" class="linkback">atras</a>
-		<p id="usernameRanking"></p>
-		<table>
-			<thead>
-				<tr>
-					<th>Juego</th>
-					<th>Puntuacion</th>
-				</tr>
-			</thead>
-			<tbody>
-				{{# each ranking}}
-					<tr>
-						<td>{{game}}</td> <td>{{score}}</td>
-					</tr>
-				{{/ each}}
-			</tbody>
-		</table>
-	</div>
-</template>
-
 <template name="bygamerankingtemp">
 	<div id="bygameranking">
-		<a style ="cursor:pointer;text-decoration:underline;" class="linkback">atras</a>
-		<p id="gameRanking"></p>
+		{{# if user_not_selected}} 
+		<p><a style ='cursor:pointer;text-decoration:underline;' class='linkback'>atras</a></p>
+		<input type='text' id='formuserranking'/>
+		<button id='btnuserranking'>Buscar</button>
+		<p>{{gameranking}}</p>
 		<table>
 			<thead>
 				<tr>
@@ -125,11 +106,35 @@
 			<tbody>
 				{{# each ranking}}
 					<tr>
-						<td>{{user}}</td> <td>{{score}}</td>
+						<td><a style ='cursor:pointer;text-decoration:underline;' class='linkuser'>{{user}}</a></td> <td>{{score}}</td>
 					</tr>
 				{{/ each}}
 			</tbody>
 		</table>
+		{{/ if}}
+	</div>
+</template>
+
+<template name="byusergamerankingtemp">
+	<div id="byusergameranking">
+		{{# if user_selected}}
+		<a style ='cursor:pointer;text-decoration:underline;' class='linkback'>atras</a>
+		<p>{{gameranking.user}}-{{gameranking.name}}</p>
+		<table>
+			<thead>
+				<tr>
+					<th>Puntuacion</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{# each ranking2}}
+					<tr>
+						<td>{{score}}</td>
+					</tr>
+				{{/ each}}
+			</tbody>
+		</table>
+		{{/ if}}
 	</div>
 </template>
 
