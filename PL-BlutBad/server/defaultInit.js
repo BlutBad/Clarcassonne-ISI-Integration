@@ -439,7 +439,7 @@ Meteor.startup(function() {
 				});
 
 				fakeUsers.forEach(function(user) {
-				    if (Math.random() < 0.735) {
+				    if (Math.random() < 0.30) {
 						Torneos.update(torneoId, { $push : {participantes : user._id}});
 				    }
 				});

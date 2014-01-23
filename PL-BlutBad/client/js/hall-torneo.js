@@ -68,6 +68,11 @@ Template.hall_torneo.events = {
         var tid = Session.get('showTorneoId');
         Meteor.call("primeraEtapa", tid); 
     },
+    'click .resetearTorneo': function() {
+        var tid = Session.get('showTorneoId');
+        Meteor.call("resetearTorneo", tid); 
+        //stopTorneo();
+    },
     'click .finalizarTorneo': function() {
         //stopTorneo();
     },
@@ -79,7 +84,7 @@ Template.hall_torneo.events = {
     'click .etapasTorneo': function(){
         console.log(this);
         if (Session.equals('etapasTorneoActive',this.etapa)){
-            Session.set('etapasTorneoActive', null);
+            Session.set('etapasTorneoActive', "participantes");
         }else{
             Session.set('etapasTorneoActive', this.etapa);
         }
@@ -152,9 +157,6 @@ Template.hall_torneo.showEtapa = function() {
   return !Session.equals('etapasTorneoActive', "participantes");
 };
 
-Template.hall_torneo.showParticipantes = function() {
-  return Session.equals('etapasTorneoActive', "participantes");
-};
 
 
 Template.hall_torneo.etapasTorneoActive = function() {
@@ -170,13 +172,17 @@ Template.showInfoEtapaTorneo.info = function() {
     var tor = Torneos.findOne(tid);
 
     var info = {};
-    if (tor.etapas[etapa]){
-        info.partidas = tor.etapas[etapa].partidas.length;
-        info.participantes = 99;
+    info.partidas = tor.etapas[etapa].partidas.length;
+    info.participantes = 0;
+    if (info.partidas != 0){
+        tor.etapas[etapa].partidas.forEach(function (each) {
+            info.participantes += each.jugadores.length;
+        });
+        //info.participantes = 99;
+
     }else{
-        return null;
+        return false;
     }
-    
     return info;
 };
 
@@ -188,19 +194,28 @@ Template.showEtapaTorneo.partidasEtapaTorneo = function() {
 
         var tor = Torneos.findOne(tid);
 
-        console.log(tor.etapas)
-
+        //console.log(tor.etapas)
+        var partidas;
         if(etapa == "octavos"){
-            return tor.etapas.octavos.partidas;
+            partidas = tor.etapas.octavos.partidas;
         }else if(etapa == "cuartos"){
-            return tor.etapas.cuartos.partidas;
+            partidas =  tor.etapas.cuartos.partidas;
         }else if (etapa == "semifinal"){
-            return tor.etapas.semifinal.partidas;
+            partidas =  tor.etapas.semifinal.partidas;
         }else if (etapa == "final"){    
-            return tor.etapas.final.partidas;
+            partidas =  tor.etapas.final.partidas;
         }else{
             return [];
         }
+
+        partidas.forEach(function(each, index) {
+            each.no = index + 1;
+            each.jugadores.forEach(function (each2) {
+                each2.rango = getRangoUser(tor.game_id, each2.user_id);
+            });
+        });
+        console.log(partidas);
+        return partidas;
 
         //console.log("partidasEtapaTorneo: " + etapa)
 
@@ -208,11 +223,24 @@ Template.showEtapaTorneo.partidasEtapaTorneo = function() {
     };
 };
 
+
+
 //Mostar los participantes del torneo!
 Template.participantes.participantes = function(){
     var tid = Session.get('showTorneoId');
     var tor = Torneos.findOne({_id:tid});
-    return tor.participantes;
+    
+    var objs = [];
+    tor.participantes.forEach(function(each, index){
+        var obj = {};
+        obj.no = index + 1;
+        obj.rango = getRangoUser(tor.game_id, each);
+        obj.user_id = each;
+        console.log(obj);
+        objs.push(obj);
+    });
+
+    return objs; //tor.participantes;
 }
 
 
@@ -230,15 +258,15 @@ Template.multiRanking.multiRanking =function(){
     var tid = Session.get('showTorneoId');
     var tor = Torneos.findOne(tid);
 
-    var sortRa = _.sortBy(tor.ranking, function(obj){ return -obj.score; });
+    var sortRa = _.sortBy(tor.ranking, function(obj){ return -1* obj.score; });
 
     sortRa.forEach(function(each, index) {
-       //
+       each.no = index +1;
+       each.rango = getRangoUser(tor.game_id, each.user_id);
+       each.clacc = getClass(index);
     });
     return sortRa;
 };
-
-
 
 //******************SOLO TORNEO*************************
 
