@@ -43,10 +43,8 @@ http://bootsnipp.com/snippets/featured/condensed-table-example -->
             <thead>
               <tr>
                 <th>Username</th>
-                <th>Rango</th>
-                <!-- Obtener los puntos hasta el momento                
-                <th>Puntos</th>
-                -->
+                <th>Rango</th>             
+                <th>Puntos</th> 
                 <th>Status</th>                                          
               </tr>
             </thead>   
@@ -54,10 +52,8 @@ http://bootsnipp.com/snippets/featured/condensed-table-example -->
               {{#each jugadores}}
                 <tr>
                   <td>{{getUsername this.user_id}}</td>
-                  <td>{{userRango this.user_id}}</td>
-                  <!-- Obtener los puntos hasta el momento
-                  <td>{{rol this.user_id ../this._id}}</td>
-                   -->
+                  <td>{{userRango this.user_id}}</td> 
+                  <td>{{point this.user_id ../this}}</td> 
                   <td><span class="label label-important">Jugando</span>
                   </td>                                       
                 </tr>

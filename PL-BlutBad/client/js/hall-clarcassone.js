@@ -394,4 +394,15 @@ Template.hall_clarcassone.rol = function(id_user, id_partida) {
         return "Creador";
     }
     return "Participante"; 
-}   
+} 
+
+Template.hall_clarcassone.point = function(id_user, obj_party) { 
+    mov = obj_party.movimientos; 
+    last_mov = mov[mov.length-1];
+    punts = last_mov.puntos;
+    for (i = 0; i < punts.length; i++) {
+        if (punts[i].id == id_user) {
+            return punts[i].puntos;
+        }
+    }
+}     
