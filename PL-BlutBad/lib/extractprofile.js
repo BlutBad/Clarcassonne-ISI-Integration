@@ -69,3 +69,32 @@ resolverUser = function(id) {
     fecha = getRandomInt(1,30) + "/"+getRandomInt(1,12) +"/"+getRandomInt(1900,2010)
     return {nombre: result.username, fecha: fecha}
 }
+
+
+
+
+
+
+getRangoUser = function (game_id, user_id) {
+  if (game_id) {
+        //console.log(user_id) 
+        rankingU = Ranking.findOne({ 
+            game_id : game_id, 
+            user_id : user_id 
+        }); 
+        //console.log(rankingU)
+        if (rankingU) { 
+            return Rangos.findOne({ 
+                _id : rankingU.rango_id 
+            }).rango; 
+        } else {
+            var rango = Rangos.findOne({minPoints:{$lte: 0}}).rango; 
+            return rango;
+        } 
+    } else { 
+        return "--";
+    }  
+
+
+  // body...
+}

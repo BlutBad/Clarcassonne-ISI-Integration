@@ -255,24 +255,40 @@ Meteor.startup(function() {
 			    mode : 'multi',
 			    hall : 'klarkiHall',
 			    rangos : [ {
-					rango : "Fantasma",
+					rango : "Gentilhombre",
 					minPoints : 0,
 			    }, {
-					rango : "Noob",
+					rango : "Escudero",
 					minPoints : 50,
 			    }, {
-					rango : "Capitan",
+					rango : "Caballero",
 					minPoints : 100,
 			    }, {
-					rango : "Comandante",
+					rango : "Ricohombre",
+					minPoints : 200,
+			    }, {
+					rango : "Conde",
+					minPoints : 300,
+			    }, {
+					rango : "Marqués",
 					minPoints : 400,
-			    }, {
-					rango : "General",
+			    },{
+					rango : "Duque",
+					minPoints : 500,
+			    },{
+					rango : "Archiduque",
+					minPoints : 600,
+			    },{
+					rango : "Infante",
 					minPoints : 700,
-			    }, {
-					rango : "MotherFucker",
+			    },{
+					rango : "Vizconde",
+					minPoints : 800,
+			    },{
+					rango : "Barón",
 					minPoints : 900,
-			    } ],
+			    },
+			     ],
 			    insignias : [
 				    {
 						description : "Has jugado una vez a este juego",
@@ -443,7 +459,7 @@ Meteor.startup(function() {
 				});
 
 				fakeUsers.forEach(function(user) {
-				    if (Math.random() < 0.735) {
+				    if (Math.random() < 0.30) {
 						Torneos.update(torneoId, { $push : {participantes : user._id}});
 				    }
 				});
