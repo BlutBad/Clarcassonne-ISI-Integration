@@ -112,15 +112,15 @@ Meteor.startup(function() {
 				jugadores : [
 					{
 						user_id : fakeUsersId[i],
-						estado : "Pendiente"
+						estado : "Listo!"
 					},
 					{
 						user_id : fakeUsersId[i+1],
-						estado : "Pendiente"
+						estado : "Listo!"
 					},
 					{
 						user_id : fakeUsersId[i+2],
-						estado : "Pendiente"
+						estado : "Listo!"
 					}
 				],
 				listos : false,
@@ -255,19 +255,19 @@ Meteor.startup(function() {
 					minPoints : 0,
 			    }, {
 					rango : "Noob",
-					minPoints : 500,
+					minPoints : 50,
 			    }, {
 					rango : "Capitan",
-					minPoints : 1000,
+					minPoints : 100,
 			    }, {
 					rango : "Comandante",
-					minPoints : 4000,
+					minPoints : 400,
 			    }, {
 					rango : "General",
-					minPoints : 7000,
+					minPoints : 700,
 			    }, {
 					rango : "MotherFucker",
-					minPoints : 9000,
+					minPoints : 900,
 			    } ],
 			    insignias : [
 				    {

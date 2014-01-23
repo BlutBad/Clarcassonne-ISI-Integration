@@ -2,10 +2,8 @@
 <template name="menu">
 		<!-- BEGIN: Header -->
 		<div id="header">
-			<a href="" id="logo"> <img src="images/logo.png" alt="ISI Pakistan" /></a>
-	
-		{{> main_menu}}
-	
+			<a href="" id="logo"> <img src="images/logo.png" alt="ISI Pakistan" /></a>	
+			{{> main_menu}}	
 			<div id="header-graphic"></div>
 	
 		</div>
@@ -16,7 +14,8 @@
 <template name="main_menu">
 <ul class="main-menu">
 	{{#each main_menu}}
-	<li class="{{current}}"><a href="">{{name}}</a></li> {{/each}}
+		<li class="{{current}}"><a href="">{{name}}</a></li> 
+	{{/each}}
 </ul>
 </template>
 
