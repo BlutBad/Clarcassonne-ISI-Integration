@@ -160,7 +160,6 @@ Deps.autorun(function () {
 	var invitaciones = Invitations.find();
 	if (Meteor.user()){
 		
-		console.log("AAAAAAAAAAAAAA")
 		//var invitacion = Invitations.findOne({requester : Meteor.user().username});
 		//var pene = invitacion.sent;
 		//alert("caca");

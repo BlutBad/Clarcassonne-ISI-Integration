@@ -1,5 +1,7 @@
 <head>
 	<title>X-ADrian</title>
+	<link href="/css/jquery-ui-1.10.4.custom.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -60,11 +62,13 @@
 		<ul>
 			<li><a href="#juegos">Juegos</a></li>
 			<li><a href="#ranking">Ranking</a></li>
-			<li><a href="#perfil">Perfil</a></li>
+			<li><a href="#usuarios">Usuarios</a></li>
+			<li><a href="#perfil">Mi Perfil</a></li>
 		</ul>
 		<div id="juegos">{{> gamestemp}} {{> matchestemp}} {{> roomgametemp}}</div>
 		<div id="ranking">{{> gamesrankingtemp}} {{> bygamerankingtemp}} {{> byusergamerankingtemp}}</div>
-		<div id="perfil">{{> imagperfiltemp}}{{> datosperfiltemp}}{{> modperfiltemp}}</div>
+		<div id="perfil">{{> imgmiperfiltemp}}{{> miperfiltemp}}{{> imgmodmiperfiltemp}}{{> modmiperfiltemp}}</div>
+		<div id="usuarios">{{>usuariospltemp}}</div>
 	</div>
 </template>
 
@@ -399,22 +403,22 @@
 
 
 
-<template name='imagperfiltemp'>
-	<div style="display:block;" id="imgdataprofile">	
-		<img id='imgprofile' width='150px' height='150px' src={{avatar}} ><br>
+<template name='imgmiperfiltemp'>
+	<div  id="imgdataprofile">	
+		<img id='imgprofile' width='150px' height='150px' src={{avatar}}>
 	</div>	
 </template>
 
-
-<template name='datosperfiltemp'>
-	<div style="display:block;" id="dataprofile">
-		<div><span id="nombreperfil" style='font: small-caps 185% serif; '>{{username}}</span></div><br>
-		<b>Fecha de nacimiento:</b> {{birthday}}<br>
-		<b>Correo electronico:</b> {{address}}<br>
+<template name='miperfiltemp'>
+	<div  id="dataprofile">
+		<div><span id="nombreperfil" style='font: small-caps 185% serif; '>{{mi.username}}</span></div>
+		<br>
+		<b>Fecha de nacimiento:</b> {{mi.birthday}}<br>
+		<b>Correo electronico:</b> {{mi.address}}<br>
 		<b>Amigos:</b> {{amigos}}<br>
-		<b>Mejores puntuaciones </b>
+		<b>Mejores puntuaciones: </b>
 		{{# each rank}}
-			[{{game}}:{{points}}]
+			<div>{{game}} - {{points}}</div>
 		{{/ each}}
 		<br><br>
 		<input id="modifprof" type="submit" value="Modificar"> 
@@ -423,19 +427,73 @@
 
 
 
-<template name='modperfiltemp'>
-	<div style="display:none;" id="moddataprofile">
-		<br><br>
-		<div id="contenedorimagenes" style="height:150px">
-			<button type="button" id="previousavatar" style="float: left; margin-top:65px"> < </button>
-			<div id="avatar-slider" style="float: left;">
-			</div>
-			<button type="button" id="nextavatar" style="float: left; margin-top:65px"> > </button>
+
+
+
+
+
+
+<template name='imgmodmiperfiltemp'>
+	<br>
+	<div  id="contenedorimagenes" style="height:150px">
+		<button type="button" id="previousavatar" style="float: left; margin-top:65px"> < </button>
+		<div id="avatar-slider" style="float: left;">
+			<img id="imgprofilepreview" width='150px' height='150px' src={{avatar}}>
 		</div>
+		<button type="button" id="nextavatar" style="float: left; margin-top:65px"> > </button>
+	</div>
+</template>
+
+<template name='modmiperfiltemp'>
+	<div  id="moddataprofile">
 		<br><br>
-		Fecha de nacimiento: <input type="text" id="datepickerprof"> (Una vez guardado no se puede modificar)<br>
+		Fecha de nacimiento: <input type="text" readonly="readonly" id="datepickerprof"> (Una vez guardado no se puede modificar)<br>
 		Direccion de email:   <input id="modemail" type="email"><br><br><br>
 		<input id="saveprof" type="submit" value="Guardar"> 
 		<input id="nosaveprof" type="submit" value="Cancelar"> 
+	</div>	
+</template>
+
+
+
+
+
+
+
+
+
+
+
+<template name='usuariospltemp'>
+	<div class="ui-widget">
+		<label for="usersearcher">Usuario: </label>
+		<input id="usersearcher">
+		<button id="userSearch">
+			<span class="ui-icon ui-icon-search" style="display: inline-block"></span> Ver perfil
+		</button>	
+	</div>	
+</template>	
+
+<template name='userperfiltemp'>
+	<div id="userperfil">
+		<br>	
+		<div>
+			<img id='userimgprofile' width='150px' height='150px' src={{userfind.avatar}} >
+		</div>	
+		<div>
+			<span id="usernombreperfil" style='font: small-caps 185% serif; '>{{userfind.username}}</span>
+		</div>
+		<br>
+		<div>
+		{{#if esamigo}}
+			<b>Fecha de nacimiento:</b> {{userfind.birthday}}<br>
+			<b>Correo electronico:</b> {{userfind.address}}<br>
+			<b>Amigos:</b> {{amigos}}<br>
+		{{/if}}	
+		<b>Mejores puntuaciones: </b>
+		{{# each rank}}
+			<div>{{game}} - {{points}}</div>
+		{{/ each}}
+		</div>
 	</div>	
 </template>
