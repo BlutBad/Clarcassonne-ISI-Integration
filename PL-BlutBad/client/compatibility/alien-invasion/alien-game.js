@@ -169,9 +169,9 @@ var winGame = function() {
 // Llamada cuando la nave del jugador ha sido alcanzada, para
 // finalizar el juego
 var loseGame = function() {
-    id_bono=Bono.findOne({numeracion:3})._id;
-    console.log(Meteor.user()._id)
-    if (Meteor.user()!=null && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}) && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}).n_bono>=1 ){
+    
+        id_bono=Bono.findOne({numeracion:3})._id;
+        if (Meteor.user()!=null && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}) && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}).n_bono>=1 ){
         //actualizo el bono
         console.log("Yes!");
         bobj=User_Bono.findOne({user_id:Meteor.user()._id, bono_id:id_bono});
@@ -197,6 +197,7 @@ var loseGame = function() {
     gameAlien.setBoard(3,new AlienTitleScreen("You lose!", 
                                     "Press fire to play again",
                                     playGameAlien));
+    
 };
 
 
@@ -315,9 +316,20 @@ PlayerShip.prototype.type = OBJECT_PLAYER;
 
 // Llamada cuando una nave enemiga colisiona con la nave del usuario
 PlayerShip.prototype.hit = function(damage) {
-    if(this.board.remove(this)) {
-	loseGame();
-    }
+    id_bono=Bono.findOne({numeracion:1})._id;
+    if (Meteor.user()!=null && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}) && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}).n_bono>=1){
+        console.log("actualizo"+id_bono);
+        bobj=User_Bono.findOne({user_id:Meteor.user()._id, bono_id:id_bono});
+        User_Bono.update(bobj._id,{
+            $set: {
+                'n_bono':bobj.n_bono-1,
+            }
+        });
+    }else{
+        if(this.board.remove(this)) {
+            loseGame();
+        };
+    };
 };
 
 
@@ -338,10 +350,10 @@ PlayerMissile.prototype.step = function(dt)  {
     this.y += this.vy * dt;
     var collision = this.board.collide(this,OBJECT_ENEMY);
     if(collision) {
-	collision.hit(this.damage);
-	this.board.remove(this);
-    } else if(this.y < -this.h) { 
-	this.board.remove(this); 
+	   collision.hit(this.damage);
+	   this.board.remove(this);
+    }else if(this.y < -this.h) { 
+	   this.board.remove(this); 
     }
 };
 
@@ -421,9 +433,10 @@ Enemy.prototype.step = function(dt) {
     this.y += this.vy * dt;
 
     var collision = this.board.collide(this,OBJECT_PLAYER);
+    //creo que tendria que ponerlo aqui para que no muera
     if(collision) {
-	collision.hit(this.damage);
-	this.board.remove(this);
+        collision.hit(this.damage);
+        this.board.remove(this);
     }
 
     if(this.reload <= 0 && Math.random() < (this.firePercentage || 0.01) ) {
@@ -484,10 +497,10 @@ EnemyMissile.prototype.step = function(dt)  {
     this.y += this.vy * dt;
     var collision = this.board.collide(this,OBJECT_PLAYER)
     if(collision) {
-	collision.hit(this.damage);
-	this.board.remove(this);
+        collision.hit(this.damage);
+        this.board.remove(this);
     } else if(this.y > gameAlien.height) {
-	this.board.remove(this); 
+	   this.board.remove(this); 
     }
 };
 
