@@ -10,6 +10,7 @@
 	width: 98%;
 	border: #6E6E6E 1px solid;
 	border-radius:3px;
+	margin-bottom: 1px;
 }
 
 #title-users {
@@ -40,6 +41,7 @@
 	margin: 3px;
 }
 
-.user-connected {
+.userConnected {
 	border-bottom: solid 1px blue;
+	cursor:pointer; cursor: hand;
 }

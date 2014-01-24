@@ -18,13 +18,22 @@ Template.inbox.register = function() {
 
 //Templates outbox
 Template.outbox.showoutbox = function() {
-	//Hacer una variable de sesión
-	return true;
+	return Session.get('mostrarOutbox');
 }
 
 Template.outbox.toSend = function() {
-	//Hacer una variable de sesion
-	return "XXX";
+	return Session.get('userToOutbox');
 }
 
 //Events
+
+Template.outbox.events({
+	'click input#outbox-send': function() {
+		alert("Tu mensaje sera enviado proximamente.");
+		Session.set('mostrarOutbox', false);
+	},
+
+	'click input#outbox-cancel': function() {
+		Session.set('mostrarOutbox', false);
+	}
+});
