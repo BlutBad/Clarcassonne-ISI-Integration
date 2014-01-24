@@ -31,6 +31,90 @@ $(document).ready(function() {
 		 $(function() {
 			$( "#chatTabs" ).tabs({collapsible: true});
 		});
+
+		$( "#dialog_birthdate" ).dialog({
+      		autoOpen: false,
+     		show: {
+        		effect: "blind",
+        		duration: 300
+      		},
+     		hide: {
+      			effect: "explode",
+				duration: 200
+			}
+    	});
+
+		$( "#dialog_nomatches" ).dialog({
+      		autoOpen: false,
+     		show: {
+        		effect: "blind",
+        		duration: 300
+      		},
+     		hide: {
+      			effect: "explode",
+				duration: 200
+			}
+    	});
+
+		$( "#dialog_password" ).dialog({
+      		autoOpen: false,
+     		show: {
+        		effect: "blind",
+        		duration: 300
+      		},
+     		hide: {
+      			effect: "explode",
+				duration: 200
+			}
+    	});
+
+		$( "#dialog_fullmatch" ).dialog({
+      		autoOpen: false,
+     		show: {
+        		effect: "blind",
+        		duration: 300
+      		},
+     		hide: {
+      			effect: "explode",
+				duration: 200
+			}
+    	});
+
+		$( "#dialog_matchname" ).dialog({
+      		autoOpen: false,
+     		show: {
+        		effect: "blind",
+        		duration: 300
+      		},
+     		hide: {
+      			effect: "explode",
+				duration: 200
+			}
+    	});
+
+		$( "#dialog_threeplayers" ).dialog({
+      		autoOpen: false,
+     		show: {
+        		effect: "blind",
+        		duration: 300
+      		},
+     		hide: {
+      			effect: "explode",
+				duration: 200
+			}
+    	});
+
+		$( "#dialog_noadmin" ).dialog({
+      		autoOpen: false,
+     		show: {
+        		effect: "blind",
+        		duration: 300
+      		},
+     		hide: {
+      			effect: "explode",
+				duration: 200
+			}
+    	});
 		
 		$("#friends").css({"top": $(window).height()-57, "position":"fixed"});
 		$("#friends").css("left",$(window).width()-182);
