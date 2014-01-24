@@ -55,3 +55,46 @@
 	height: 86%;
 	margin: 10px;
 }
+
+
+#outbox {
+	background-color: #819FF7;
+	border: #6E6E6E 1px solid;
+	border-radius: 3px;
+	padding: 5px;
+	width: 350px;
+	height: 320px;
+	position: fixed;
+	bottom: 5px;
+	left: 210px;
+}
+
+#outbox-header{
+	background-color: white;
+	height: 10%;
+	border-radius: 3px;
+	margin: 5px;
+	padding: 10px 5px 0px 15px;
+
+}
+
+#outbox-msg{
+	width: 92%;
+	height: 66%;
+	margin: 10px 5px 5px 5px;
+	overflow-y: scroll;
+}
+
+#outbox-boton {
+	clear: both;
+}
+
+#outbox-send {
+	float: right;
+	margin-right: 10px;
+}
+
+#outbox-cancel {
+	float: left;
+	margin-left: 5px;
+}

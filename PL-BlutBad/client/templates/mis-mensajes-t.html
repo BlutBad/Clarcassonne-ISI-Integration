@@ -29,3 +29,24 @@
 		{{/if}}
 	{{/if}}
 </template>
+
+
+
+
+
+<template name="outbox">
+	{{#if showoutbox}}
+		<div id="outbox">
+			<div id="outbox-header">
+				<p>
+					Enviar a: <strong>{{toSend}}</strong>  
+				</p> 
+			</div>
+			<textarea rows="4" cols="50" id="outbox-msg"></textarea>
+			<div id="outbox-boton">
+				<input type="button" id="outbox-send" class="btn btn-primary" value="Enviar">
+				<input type="button" id="outbox-cancel" class="btn btn-primary" value="Cancelar">
+			</div>
+		</div>
+	{{/if}}
+</template>
