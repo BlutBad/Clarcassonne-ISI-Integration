@@ -18,6 +18,9 @@ Meteor.startup(function() {
 				    name : "Torneos",
 				    menuType : "principal",
 
+				},{
+					name: "Tienda",
+					menuType:"principal"
 				},
 				//menu de etapas del torneo
 				{
@@ -159,7 +162,29 @@ Meteor.startup(function() {
 		}
     };
 
-    
+    if (Bono.find().count() === 0) {
+    	var data = [ {
+		    name : "Vida para AlienInvasion",
+		    description: "Da una vida extra en el juego de AlienInvasion",
+		    numeracion: 1 //este campo servira para que lo pueda reconoce dentro del juego porque no se me ocurre otra forma de hacerlo de momento
+		}, {
+		    name : "Nivel extra en AlienInvasion",
+		    description: "Descubre un nivel secreto nuevo al finalizar la partida",
+		    numeracion: 2
+		}, {
+		    name : "Doble Puntuacion para AlienInvasion",
+		    description: "La puntuacion será el doble",
+		    numeracion: 3 
+		}, ];
+
+		for ( var i = 0; i < data.length; i++) {
+		    var list_id = Bono.insert({
+				name : data[i].name,
+				description: data[i].description,
+				numeracion: data[i].numeracion
+		    });
+		};
+    };
 	if (PartidasVolatiles.find().count() === 0) {  
 		console.log("\t [3] Creando "+partidasV.length +" partidas volatiles falsas");
 		for (var i = 0; i < partidasV.length; i++) { 
