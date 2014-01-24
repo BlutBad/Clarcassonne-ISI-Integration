@@ -14,7 +14,7 @@
 // Objeto singleton GameAlien: se guarda una unica instancia del
 // constructor anónimo en el objeto GameAlien
 var GameAlien = new function() {                                                                  
-  var boards = [];
+  	var boards = [];
 
     // Inicializa el juego
   	this.initialize = function(canvasElementId,sprite_data,callback) {
@@ -38,15 +38,15 @@ var GameAlien = new function() {
       // Añadimos como un nuevo tablero al juego el panel con los
       // botones para pantalla táctil, sólo si hemos detectado pantalla móvil
     if(this.mobile) {
-      this.setBoard(4,new TouchControls());
+      this.setBoard(4,new TouchControlsAlien());
     }
 
-    SpriteSheet.load(sprite_data,callback);
+    SpriteSheetAlien.load(sprite_data,callback);
   };
   
 
     // Gestión de la entrada (teclas para izda/derecha y disparo)
-    var KEY_CODES = { 37:'left', 39:'right', 32 :'fire', 66: 'fireleft', 78: 'fireright' };
+    var KEY_CODES_Alien = { 37:'left', 39:'right', 32 :'fire', 66: 'fireleft', 78: 'fireright' };
     this.keys = {};
 
 	this.setupInput = function() {
@@ -62,16 +62,16 @@ var GameAlien = new function() {
 
 	$(window).keydown(function(event){
 		if (focusCanvas)
-			if (KEY_CODES[event.which]) {
-				GameAlien.keys[KEY_CODES[event.which]] = true;
+			if (KEY_CODES_Alien[event.which]) {
+				GameAlien.keys[KEY_CODES_Alien[event.which]] = true;
 				return false;
 			}
 	});
 
 	$(window).keyup(function(event){	
 		if (focusCanvas)
-			if (KEY_CODES[event.which]) {
-				GameAlien.keys[KEY_CODES[event.which]] = false;
+			if (KEY_CODES_Alien[event.which]) {
+				GameAlien.keys[KEY_CODES_Alien[event.which]] = false;
 				return false;
 			}
 		});
@@ -148,9 +148,9 @@ var GameAlien = new function() {
 };
 
 
-// Objeto singleton SpriteSheet: se guarda una unica instancia del
-// constructor anónimo en el objeto SpriteSheet
-var SpriteSheet = new function() {
+// Objeto singleton SpriteSheetAlien: se guarda una unica instancia del
+// constructor anónimo en el objeto SpriteSheetAlien
+var SpriteSheetAlien = new function() {
 
     // Almacena nombre_de_sprite: rectángulo para que sea mas facil
     // gestionar los sprites del fichero images/sprite.png
@@ -194,7 +194,7 @@ var SpriteSheet = new function() {
     };
 }
 
-// La clase TitleScreen ofrece la interfaz step(), draw() para que
+// La clase TitleScreenAlien ofrece la interfaz step(), draw() para que
 // pueda ser mostrada desde el bucle principal del juego
 
 // Usa fillText, con el siguiente font enlazado en index.html <link
@@ -202,7 +202,7 @@ var SpriteSheet = new function() {
 // rel='stylesheet' type='text/css'> Otros fonts:
 // http://www.google.com/fonts
 
-var TitleScreen = function TitleScreen(title,subtitle,callback) {
+var TitleScreenAlien = function TitleScreenAlien(title,subtitle,callback) {
     var up = false;
 
     // En cada paso, comprobamos si la tecla ha pasado de no pulsada a
@@ -354,17 +354,17 @@ var GameAlienBoard = function() {
 
 
 // Constructor Sprite 
-var Sprite = function() { }
+var SpriteAlien = function() { }
 
-Sprite.prototype.setup = function(sprite,props) {
+SpriteAlien.prototype.setup = function(sprite,props) {
     this.sprite = sprite;
     this.merge(props);
     this.frame = this.frame || 0;
-    this.w =  SpriteSheet.map[sprite].w;
-    this.h =  SpriteSheet.map[sprite].h;
+    this.w =  SpriteSheetAlien.map[sprite].w;
+    this.h =  SpriteSheetAlien.map[sprite].h;
 }
 
-Sprite.prototype.merge = function(props) {
+SpriteAlien.prototype.merge = function(props) {
     if(props) {
 	for (var prop in props) {
 	    this[prop] = props[prop];
@@ -372,11 +372,11 @@ Sprite.prototype.merge = function(props) {
     }
 }
 
-Sprite.prototype.draw = function(ctx) {
-    SpriteSheet.draw(ctx,this.sprite,this.x,this.y,this.frame);
+SpriteAlien.prototype.draw = function(ctx) {
+    SpriteSheetAlien.draw(ctx,this.sprite,this.x,this.y,this.frame);
 }
 
-Sprite.prototype.hit = function(damage) {
+SpriteAlien.prototype.hit = function(damage) {
     this.board.remove(this);
 }
 
@@ -384,9 +384,9 @@ Sprite.prototype.hit = function(damage) {
 // Clase para implementar los niveles de un juego. 
 
 // Al constructor del nivel se le pasan los datos que definen el nivel
-//   (p.ej. level1 en GameAlien.js) y una función a la que llamar si el
+//   (p.ej. LevelAlien1 en GameAlien.js) y una función a la que llamar si el
 //   jugador gana (winGameAlien en GameAlien.js).
-var Level = function(levelData,callback) {
+var LevelAlien = function(levelData,callback) {
     // Recuerda el formato de cada batería de enemigos definida en levelData
     //  Comienzo, Fin,   Frecuencia,  Tipo,       Override
     //  [ 0,       4000,  500,         'step',     { x: 100 } ]
@@ -418,7 +418,7 @@ var Level = function(levelData,callback) {
 // En este método se lleva la cuenta del tiempo que ha transcurrido, y
 // se van añadiendo nuevos enemigos al tablero de juegos según lo
 // indicado en la definición del nivel almacenada en this.levelData
-Level.prototype.step = function(dt) {
+LevelAlien.prototype.step = function(dt) {
     var idx = 0, remove = [], curShip = null;
 
     // Actualizamos el tiempo que ha pasado 
@@ -479,18 +479,18 @@ Level.prototype.step = function(dt) {
 
 };
 
-// Level implementa draw() porque al añadirse como tablero a GameAlien el
+// LevelAlien implementa draw() porque al añadirse como tablero a GameAlien el
 // bucle GameAlien.loop() va a llamar a step() y a draw(). Pero no hay nada
 // que hacer en draw() para un nivel, ya que los sprites de los
 // enemigos los añade el nivel al tablero de juegos (GameAlienBoard). 
-Level.prototype.draw = function(ctx) { };
+LevelAlien.prototype.draw = function(ctx) { };
 
 
 
 
 // Clase para controlar el juego mediante botones en la pantalla
 // táctil de un móvil o una tableta
-var TouchControls = function() {
+var TouchControlsAlien = function() {
 
     
     // Consideraremos el ancho de la pantalla dividido en 5 franjas
