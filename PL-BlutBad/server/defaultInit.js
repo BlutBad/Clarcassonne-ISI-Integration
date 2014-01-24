@@ -162,22 +162,22 @@ Meteor.startup(function() {
     	var data = [ {
 		    name : "Vida para AlienInvasion",
 		    description: "Da una vida extra en el juego de AlienInvasion",
-		    duracion: 1
+		    numeracion: 1 //este campo servira para que lo pueda reconoce dentro del juego porque no se me ocurre otra forma de hacerlo de momento
 		}, {
 		    name : "Nivel extra en AlienInvasion",
 		    description: "Descubre un nivel secreto nuevo al finalizar la partida",
-		    duracion: 1
+		    numeracion: 2
 		}, {
 		    name : "Doble Puntuacion para AlienInvasion",
 		    description: "La puntuacion será el doble",
-		    duracion: 1
+		    numeracion: 3 
 		}, ];
 
 		for ( var i = 0; i < data.length; i++) {
 		    var list_id = Bono.insert({
 				name : data[i].name,
 				description: data[i].description,
-				duracion: data[i].duracion
+				numeracion: data[i].numeracion
 		    });
 		};
     };

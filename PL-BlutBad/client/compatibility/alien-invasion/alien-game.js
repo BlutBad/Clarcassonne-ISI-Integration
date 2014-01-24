@@ -84,6 +84,18 @@ var level1 = [
     [ 22000,  25000, 400, 'wiggle', { x: 100 }]
 ];
 
+var level2 = [
+    //  Comienzo, Fin,   Frecuencia,  Tipo,       Override
+    [ 0,        4000,  300,         'step'                 ],
+    [ 6000,     13000, 600,         'ltr'                  ],
+    [ 10000,    16000, 100,         'circle'               ],
+    [ 17800,    20000, 300,         'straight', { x: 50  } ],
+    [ 18200,    20000, 200,         'straight', { x: 90  } ],
+    [ 18200,    20000, 300,         'straight', { x: 10  } ],
+    [ 22000,    25000, 200,         'wiggle',   { x: 150 } ],
+    [ 22000,    25000, 200,         'wiggle',   { x: 100 } ]
+];
+
 
 var playGameAlien = function() {
     var board = new gameAlienBoard();
@@ -92,11 +104,35 @@ var playGameAlien = function() {
     // Se un nuevo nivel al tablero de juego, pasando la definici�n de
     // nivel level1 y la funci�n callback a la que llamar si se ha
     // ganado el juego
-    board.add(new AlienLevel(level1,winGame));
+    id_bono=Bono.findOne({numeracion:2})._id;
+    console.log(Meteor.user()._id)
+    if (Meteor.user()!=null && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}) && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}).n_bono>=1 ){
+        //actualizo el bono
+        bobj=User_Bono.findOne({user_id:Meteor.user()._id, bono_id:id_bono});
+        User_Bono.update(bobj._id,{
+            $set: {
+                'n_bono':bobj.n_bono-1,
+            }
+        });
+        //muestro el siguente nivel
+        board.add(new AlienLevel(level1, nivel2));        
+    }else{
+        board.add(new AlienLevel(level1,winGame));
+     };
     gameAlien.setBoard(3,board);
     gameAlien.setBoard(5,new gameAlienPoints(0));
 };
 
+var l2=function(){
+    var board=new gameAlienBoard();
+    board.add(new PlayerShip());
+    board.add(new AlienLevel(level2, winGame));
+    gameAlien.setBoard(3,board);
+};
+
+var nivel2 =function(){
+    gameAlien.setBoard(3,new AlienTitleScreen("Level 2", "press fire to next level", l2));
+};
 
 // Llamada cuando han desaparecido todos los enemigos del nivel sin
 // que alcancen a la nave del jugador
@@ -387,12 +423,33 @@ Enemy.prototype.step = function(dt) {
 };
 
 Enemy.prototype.hit = function(damage) {
+
     this.health -= damage;
     if(this.health <=0) {
 	if(this.board.remove(this)) {
-	    gameAlien.points += this.points || 100;
-	    this.board.add(new Explosion(this.x + this.w/2, 
-					 this.y + this.h/2));
+        console.log("it's here");
+        id_bono=Bono.findOne({numeracion:3})._id;
+        console.log(Meteor.user()._id)
+        if (Meteor.user()!=null && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}) && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}).n_bono>=1 ){
+            //actualizo el bono
+            console.log("Yes!");
+            bobj=User_Bono.findOne({user_id:Meteor.user()._id, bono_id:id_bono});
+            User_Bono.update(bobj._id,{
+            $set: {
+                'n_bono':bobj.n_bono-1,
+            }
+        });
+        //no puedo actualizar el bono aqui porque pasa en cada disparo lo tengo que actualizar cuando gano o pierdo la partida
+        gameAlien.points += this.points || 200;
+        this.board.add(new Explosion(this.x + this.w/2, 
+                     this.y + this.h/2));
+    }else{
+        console.log("No!");
+        gameAlien.points += this.points || 100;
+        this.board.add(new Explosion(this.x + this.w/2, 
+                     this.y + this.h/2));
+     };
+    
 	}
     }
 };
