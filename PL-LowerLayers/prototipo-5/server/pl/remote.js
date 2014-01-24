@@ -19,12 +19,10 @@ Meteor.methods({
 	matchFinish: function (match_id, game_id, points) {
     	Partidas.update({_id: match_id},{$set: {finish:"true", time_end:Date.now()}});
         Ranking.insert({user_id: this.userId, game_id: game_id, score: points});
-        /*if (Ranking.find({game_id: game_id, user_id:this.userId}).count()==6){
-        		var list = Ranking.findOne({game_id: game_id, user_id:this.userId},{sort:{score:-1}});
-        		console.log(list);
-        		var list2 = Ranking.find({game_id: game_id, user_id:this.userId},{sort:{score:-1}});
-        		console.log(list2[0]);
-        }*/
-				
+        //if (Ranking.find({game_id: game_id, user_id:this.userId}).count()==6){
+        		var list = Ranking.find({game_id: game_id, user_id:this.userId},{sort:{score:1}}).fetch();
+        		var lastuser = list[0];
+        		console.log(lastuser);
+        //}		
     }
 });

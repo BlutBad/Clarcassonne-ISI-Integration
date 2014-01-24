@@ -41,13 +41,15 @@ Meteor.publish("partidas", function(current_game_id) {
 });
 
 //Se publica la puntuacion selectiva en funcion al criterio a filtrar
-Meteor.publish("ranking", function(selected_game_id,selected_user_id){
-	if (selected_game_id!=undefined && selected_user_id!=undefined){
-		return Ranking.find({"user_id":selected_user_id,"game_id":selected_game_id});
-	}else if (selected_game_id!=undefined && selected_user_id==undefined){
-		return Ranking.find({"game_id":selected_game_id});
+Meteor.publish("ranking", function(selected_game_id,selected_user_id){								   
+	if (selected_game_id!=undefined && selected_user_id != undefined){
+		return Ranking.find({"user_id": selected_user_id,"game_id": selected_game_id},{sort:{score:-1}});
+	}else if (selected_game_id!=undefined && selected_user_id == undefined){
+		return Ranking.find({"game_id": selected_game_id},{sort:{score:-1}});
+	}else if (selected_game_id==undefined && selected_user_id != undefined){
+		return Ranking.find({"user_id": selected_user_id},{sort:{score:-1}});
 	}else{
-		return Ranking.find({"user_id":selected_user_id},{sort: {game_id: -1, score: -1}} );
+		return Ranking.find();
 	}
 });
 

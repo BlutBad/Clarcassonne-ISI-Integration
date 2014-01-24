@@ -144,12 +144,14 @@ input:focus{
 }
 
 #bygameranking table,
+#byuserranking table,
 #byusergameranking table {
 	border: 1px solid #666;
 	margin: 20px 0 20px 0 !important;
 }
 
 #bygameranking th, #bygameranking td,
+#byuserranking th, #byuserranking td,
 #byusergameranking th, #byusergameranking td {
 	padding: 2px 4px 2px 4px !important;
 	text-align: center;
@@ -158,6 +160,7 @@ input:focus{
 }
 
 #bygameranking th,
+#byuserranking th,
 #byusergameranking th {
 	background-color: #247941;
 }

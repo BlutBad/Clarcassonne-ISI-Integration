@@ -17,6 +17,7 @@ Meteor.startup(function () {
 	$('#frootwarscontainer').hide();
 	$('#clarcassonnecontainer').hide();
 	$('#bygameranking').hide();
+	$('#byuserranking').hide();
 	$('#byusergameranking').hide();
 });
 
@@ -224,10 +225,6 @@ Deps.autorun(function () {
 
 /////////////RELLENO DE PLANTILLAS//////////
 
-//Ordena los amigos alfabeticamente
-Template.userstemp.users = function(){
-	return Meteor.users.find({},{sort:{username:1}});
-}
 //Encuentra juegos
 Template.gamestemp.games=function(){
 	return Games.find();
