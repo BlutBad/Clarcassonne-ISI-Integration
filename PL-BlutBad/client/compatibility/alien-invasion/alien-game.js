@@ -137,7 +137,18 @@ var nivel2 =function(){
 // Llamada cuando han desaparecido todos los enemigos del nivel sin
 // que alcancen a la nave del jugador
 var winGame = function() {
-    
+    id_bono=Bono.findOne({numeracion:3})._id;
+    console.log(Meteor.user()._id)
+    if (Meteor.user()!=null && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}) && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}).n_bono>=1 ){
+        //actualizo el bono
+        console.log("Yes!");
+        bobj=User_Bono.findOne({user_id:Meteor.user()._id, bono_id:id_bono});
+        User_Bono.update(bobj._id,{
+        $set: {
+            'n_bono':bobj.n_bono-1,
+            }
+        });
+    };
 //**************************CALL TO API********************************//
     ifg = Session.get('infoForGame');
     opt = {game_id: ifg.game_id,
@@ -158,6 +169,18 @@ var winGame = function() {
 // Llamada cuando la nave del jugador ha sido alcanzada, para
 // finalizar el juego
 var loseGame = function() {
+    id_bono=Bono.findOne({numeracion:3})._id;
+    console.log(Meteor.user()._id)
+    if (Meteor.user()!=null && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}) && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}).n_bono>=1 ){
+        //actualizo el bono
+        console.log("Yes!");
+        bobj=User_Bono.findOne({user_id:Meteor.user()._id, bono_id:id_bono});
+        User_Bono.update(bobj._id,{
+            $set: {
+                'n_bono':bobj.n_bono-1,
+            }
+        });
+    };
     
 //**************************CALL TO API********************************//
     ifg = Session.get('infoForGame');
@@ -433,23 +456,16 @@ Enemy.prototype.hit = function(damage) {
         if (Meteor.user()!=null && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}) && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}).n_bono>=1 ){
             //actualizo el bono
             console.log("Yes!");
-            bobj=User_Bono.findOne({user_id:Meteor.user()._id, bono_id:id_bono});
-            User_Bono.update(bobj._id,{
-            $set: {
-                'n_bono':bobj.n_bono-1,
-            }
-        });
-        //no puedo actualizar el bono aqui porque pasa en cada disparo lo tengo que actualizar cuando gano o pierdo la partida
-        gameAlien.points += this.points || 200;
-        this.board.add(new Explosion(this.x + this.w/2, 
+            //no puedo actualizar el bono aqui porque pasa en cada disparo lo tengo que actualizar cuando gano o pierdo la partida
+            gameAlien.points += this.points || 200;
+            this.board.add(new Explosion(this.x + this.w/2, 
                      this.y + this.h/2));
-    }else{
-        console.log("No!");
-        gameAlien.points += this.points || 100;
-        this.board.add(new Explosion(this.x + this.w/2, 
+        }else{
+            console.log("No!");
+            gameAlien.points += this.points || 100;
+            this.board.add(new Explosion(this.x + this.w/2, 
                      this.y + this.h/2));
-     };
-    
+        }; 
 	}
     }
 };
