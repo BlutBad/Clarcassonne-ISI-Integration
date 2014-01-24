@@ -3,27 +3,26 @@ Template.tienda.show = function() {
 };
 
 Template.tienda.total=function(){
-	rankings = Ranking.find({user_id: Meteor.user()._id});
+	id=Meteor.user()._id;
+	rankings = Ranking.find({user_id: id});
 	//console.log("here");
 	totale=0;
 	rankings.forEach(function(each,index) { 
 		totale=totale+each.totalScore;
 	});  
 	console.log(totale);
-	if (Shop.findOne({user_id:Meteor.user()._id})){
-		obj=Shop.findOne({user_id:Meteor.user()._id});
+	if (Shop.findOne({user_id:id})){
+		obj=Shop.findOne({user_id:id});
 		total=totale-obj.isicoins_shop*100;
 	}else{
-		Shop.insert({user_id: Meteor.user()._id, isicoins_shop:0, isi_coins: 0, vidas:0});
+		Shop.insert({user_id: id, isicoins_shop:0, isi_coins: 0, vidas:0});
 		total=0;
 	};
-	return total; 
-	
+	return total; 	
 };
 
 Template.tienda.isicoins=function(){
 	id=Meteor.user()._id;
-
 	if (Shop.findOne({user_id:id})){
 		isicoins=Shop.findOne({user_id:id}).isi_coins;
 		console.log(isicoins);
@@ -34,14 +33,33 @@ Template.tienda.isicoins=function(){
 	};
 };
 
-Template.tienda.bono=function(){
+Template.tienda.bono=function(){	
 	//saber si el usuario ya tiene el bonus
 	return Bono.find({});
 };
 
 Template.tienda.icambiar=function(){
-	return true;
-}
+	//si el usuarion no tiene los suficientes puntos que no aparezca
+	id=Meteor.user()._id;
+	rankings = Ranking.find({user_id: id});
+	//console.log("here");
+	totale=0;
+	rankings.forEach(function(each,index) { 
+		totale=totale+each.totalScore;
+	});  
+	if (Shop.findOne({user_id:id})){
+		obj=Shop.findOne({user_id:id});
+		total=totale-obj.isicoins_shop*100;
+	}else{
+		total=0;
+	};
+	if (total>=100){
+		return true;
+	}else{
+		return false;
+	}
+};
+
 Template.tienda.events = {
 	'click input#ichange': function() {
 		console.log("cambiar");
@@ -59,11 +77,34 @@ Template.tienda.events = {
 			}
 		});
 	},
-	'click input#bchange': function() {
+	'click input.bchange': function() {
 		Session.set('current_stage', 'Tienda');
 		console.log(this._id);
 		Session.set('addbono', this._id);  
-		//guardar el id del bono y el id del usuario
+		id=Meteor.user()._id;
+		//guardar el id del bono id del usuario y n_bono
+		if (User_Bono.findOne({user_id:id, bono_id:this._id})){
+			console.log("esta aumento uno en n_bono");
+			obj=User_Bono.findOne({user_id:id, bono_id: this._id});
+			User_Bono.update(obj._id,{
+				$set : {
+					"n_bono": obj.n_bono+1,
+				}
+			});
+		}else{
+			console.log("no esta lo añado a la coleccion");
+			User_Bono.insert({user_id:id, bono_id:this._id, n_bono: 1});
+		};
+		console.log("dfdfd");
+		//quitar las isicoins correspondientes
+		obj=Shop.findOne({user_id: id});
+		id_shop=obj._id;
+		isi=obj.isi_coins-10;
+		Shop.update(id_shop, {
+			$set:{
+				"isi_coins": isi,
+			}
+		})
 		
 	}
 }; 
@@ -81,5 +122,11 @@ Template.tienda.vidas=function(){
 };
 
 Template.tienda.bcambiar=function(){
-	return true;
+	//si el usuario no tiene suficientes isicoins no se mostrara
+	id=Meteor.user()._id;
+	if (Shop.findOne({user_id:id}).isi_coins>=10){
+		return true;
+	}else{
+		return false;
+	}
 }

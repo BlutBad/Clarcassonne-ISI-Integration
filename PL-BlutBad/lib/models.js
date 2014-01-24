@@ -104,5 +104,5 @@ Shop = new Meteor.Collection("shop");
 //name description time game_id
 Bono = new Meteor.Collection("bono") 
 
-//user_id bono_id n_usos game_id
+//user_id bono_id n_bono
 User_Bono=new Meteor.Collection("user_bono");
