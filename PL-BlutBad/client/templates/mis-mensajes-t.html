@@ -1,7 +1,25 @@
 <template name="inbox">
 	{{#if show}}
 		{{#if register}}
-			<h1>Aún no tienes mensajes :)</h1>
+			
+			<div id="mis-mensajes">
+				<h1>Mis mensajes</h1>
+				<div id="content-inbox">
+					<div id="inbox">
+						<h3 class="title-msg">Bandeja de entrada:</h3>
+						<div id="list-msg">
+							<p>Lista de todos tus mensajes</p>
+						</div>
+					</div>
+					<div id="my-msg">
+						<h3 class="title-msg">Mensaje recivido de X</h3>
+						<div id="content-msg">
+							<p>Contenido mensaje</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
 		{{else}}
 			<div id="notRegisterDialog">
 			  	<p>

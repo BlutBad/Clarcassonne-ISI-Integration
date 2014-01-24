@@ -1,0 +1,57 @@
+#mis-mensajes {
+	background-color: #CEE3F6;
+	border-radius: 10px;
+	border: black 1px solid; 
+	width: 95%;
+	height: 520px;
+	margin: 15px;
+	padding: 5px;
+}
+
+#content-inbox {
+	background-color: white;
+	margin: 10px 3px 5px 3px;
+	height: 415px;
+	width: 99%;
+	padding: 25px 2px 5px 2px;
+	border-radius: 3px;
+	border: #6E6E6E 1px solid;
+}
+
+#inbox {
+	float: left;
+	background-color: #D8D8D8;
+	border-radius: 3px;
+	border: #6E6E6E 1px solid;
+	margin: 5px 10px 5px 20px;
+	padding: 10px;
+	width: 40%;
+	height: 90%;
+}
+
+#list-msg {
+	background-color: white;
+	overflow-y: scroll;
+	width: 97%;
+	height: 86%;
+	margin: 10px
+}
+
+#my-msg {
+	float: left;
+	background-color: #D8D8D8;
+	border-radius: 3px;
+	border: #6E6E6E 1px solid;
+	margin: 5px 10px 5px 20px;
+	padding: 10px;
+	width: 47%;
+	height: 90%;
+}
+
+#content-msg {
+	background-color: white;
+	overflow-y: scroll;
+	width: 97%;
+	height: 86%;
+	margin: 10px;
+}
