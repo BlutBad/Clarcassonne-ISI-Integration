@@ -29,8 +29,22 @@ Template.outbox.toSend = function() {
 
 Template.outbox.events({
 	'click input#outbox-send': function() {
-		alert("Tu mensaje sera enviado proximamente.");
-		Session.set('mostrarOutbox', false);
+		var text = $("#outbox-msg").val();
+		if (text === "") {
+			$( "#notMsg" ).dialog({
+				resizable: false,
+				height:170,
+				modal: true,
+				buttons: {
+					Aceptar: function() {
+					  	$( this ).dialog( "close" );
+					}
+				}
+			});
+		} else {
+			alert("Tu mensaje:" + text);
+			Session.set('mostrarOutbox', false);
+		}
 	},
 
 	'click input#outbox-cancel': function() {
