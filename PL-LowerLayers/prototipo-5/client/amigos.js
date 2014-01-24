@@ -20,20 +20,19 @@ function searchUsers(user) {
 
 	$("#formSearch").prop('value', '');
 	
-	var encontrado = false;
-	var id;
-	Meteor.users.find({}).forEach(function(player) {
-		if( user == player.username){
-			id = player._id;
-			encontrado = true;
-		}
-	});
-	if(encontrado){
-		if(Meteor.userId()!=id){
-			if (!isAmigo(id)){
-				addingFriend(user,id);
+	var player = Meteor.users.findOne({username: user});
+	
+	
+	if(player != undefined){
+		if(Meteor.userId()!=player._id){
+			if(isInside(Meteor.userId(), player.bloqueados) ){
+				$.ambiance({message: "You are blocked by " + user, type: "error", fade: false});
+			}else if(isInside(player._id, Meteor.user().bloqueados) ){
+				unbloking(user,player._id);
+			}else if (!isInside(player._id, Meteor.user().amigos)){
+				addingFriend(user,player._id);
 			}else{
-				rmingFriend(user,id);
+				rmingFriend(user,player._id);
 			}
 		}else{
 			$.ambiance({message: "You are " + user, type: "error", fade: false});
@@ -45,13 +44,13 @@ function searchUsers(user) {
 
 
 //comprueba si la persona que te quiere agregar es amigo
-function isAmigo (id) {
-	amigos = Meteor.user().amigos;		
-	if (amigos == undefined){
+function isInside (id, arry) {
+	if (arry == undefined){
 		return false;
 	}
+	
 	var encontrado = false;
-	amigos.forEach(function(amigo) {
+	arry.forEach(function(amigo) {
 		if(amigo == id){
 			encontrado = true;
 		}
@@ -66,8 +65,8 @@ function isAmigo (id) {
 //agrega a los dos usuarios a amigos respectivamente
 function addingFriend(user,id) {
 	var button = $(window.document.createElement('button'))
-		.attr('id', 'AddButtFriend').addClass("btn btn-primary").html("Agregar");
-	$.ambiance({message: button, type: "success", title: user, timeout: 3});
+		.attr('id', 'AddButtFriend').addClass("btn btn-primary").html("Aceptar");
+	$.ambiance({message: button, type: "success", title: "Add: "+user+" ?", timeout:3});
 	$("#AddButtFriend").click(function() {	
 		Meteor.users.update({_id: Meteor.userId()}, {$push: {amigos: id}});
 		Meteor.users.update({_id: id}, {$push: {amigos: Meteor.userId()}});
@@ -80,7 +79,7 @@ function addingFriend(user,id) {
 function rmingFriend(user,id) {
 	var button = $(window.document.createElement('button'))
 		.attr('id', 'RmButtFriend').addClass("btn btn-primary").html("Borrar");
-	$.ambiance({message: button, type: "error", title: user+ " is already your friend!", timeout: 3});
+	$.ambiance({message: button, type: "error", title: user+ " is already your friend!", timeout:3});
 	$("#RmButtFriend").click(function() {
 		deleteFriend(id,Meteor.userId());
 		deleteFriend(Meteor.userId(),id);	
@@ -98,12 +97,7 @@ function deleteFriend(idUser,idAborrar) {
 }
 
 
-/////////////////////////////////INVITACIONES///////////////////////////////////////////////////////
-
-
-
-
-
+///////////////////////////////Manager de menu amigos//////////////////////////////////
 menuAmigosFunc = function (){
 	$(".menuAmigos").menu();
 	$(".ui-menu-icon").remove();
@@ -117,10 +111,11 @@ menuAmigosFunc = function (){
 	});
 
 	$(".menuABloq").click(function() {
-		alert("caca");	
+		menuAmBloq(this);	
 	});
 }
 
+/////////////////////////////////INVITACIONES///////////////////////////////////////////////////////
 
 
 function menuAmInv(esto) {
@@ -161,9 +156,10 @@ function menuAmInv(esto) {
 //Quiero que se queden fijas
 
 Deps.autorun(function () {
+
+	var invitaciones = Invitations.find();
 	if (Meteor.user()){
-		var invitaciones = Invitations.find();
-		console.log("AAAAAAAAAAAAAA")
+		
 		//var invitacion = Invitations.findOne({requester : Meteor.user().username});
 		//var pene = invitacion.sent;
 		//alert("caca");
@@ -171,6 +167,32 @@ Deps.autorun(function () {
 	}	
 });
 
+/////////////////////////////////Bloqueo///////////////////////////////////////////////////////
 
+function menuAmBloq(esto) {
+	
+	var idblk = Meteor.users.findOne({username: $(esto).attr("hreflang")})._id;
+	deleteFriend(idblk,Meteor.userId());
+	deleteFriend(Meteor.userId(),idblk);
+	Meteor.users.update({_id: Meteor.userId()}, {$push: {bloqueados: idblk}});
+	$.ambiance({message: $(esto).attr("hreflang")+ " blocked and removed of friends" ,type: "success"});
+}
 
+function unbloking(user,id) {
+	var button = $(window.document.createElement('button'))
+		.attr('id', 'AddButtUnblk').addClass("btn btn-primary").html("Aceptar");
+	$.ambiance({message: button, type: "success", title: "Unblocking and adding to friends "+user+" ?", timeout:3});
+	$("#AddButtUnblk").click(function() {	
+		UnblockFriend(Meteor.userId(),id);
+		Meteor.users.update({_id: Meteor.userId()}, {$push: {amigos: id}});
+		Meteor.users.update({_id: id}, {$push: {amigos: Meteor.userId()}});
+		$.ambiance({message: "You and "+user+" are now friends!", title: "Success!",type: "success"});
+	});
+}
+
+function UnblockFriend(idUser,idAborrar) {
+	var listBlk = Meteor.user().bloqueados;
+	listBlk = _.reject(listBlk, function(friend){ return friend == idAborrar; });
+	Meteor.users.update({_id: idUser}, {$set: {bloqueados: listBlk}});
+}
 

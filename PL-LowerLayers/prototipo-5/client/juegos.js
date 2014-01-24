@@ -84,37 +84,40 @@ joinmatch = function(match_id) {
 		var no_limit = Partidas.findOne({_id : match_id}).num_players < lim;
 		var players_array = Partidas.findOne({_id : match_id}).jugadores;
 		var match_pass = Partidas.findOne({_id : match_id}).password;
+		var have_profile = Meteor.users.findOne({_id : Meteor.userId()}).birthday;
+		if(have_profile){
+			if(match_pass){
+				var in_pass = sha1Hash($(".linkmatch_pass." + match_id).val());
+			};
+			var already_into = Partidas.findOne({_id : match_id, jugadores : {user_id : Meteor.userId()}}) != undefined;
 
-		if(match_pass){
-			var in_pass = sha1Hash($(".linkmatch_pass." + match_id).val());
-		};
-		var already_into = Partidas.findOne({_id : match_id, jugadores : {user_id : Meteor.userId()}}) != undefined;
+			if(no_limit || already_into){
+				if(match_pass == in_pass || already_into){
+					Session.set('match_id', match_id);
+					$('#matches').hide();
+					$('#roomcontainer').fadeIn();
+					$('#empezarboton').hide();
+					if(Partidas.findOne({_id : Session.get('match_id')}).admin_by == Meteor.userId()){
+						$('#empezarboton').show();
+					};
 
-		if(no_limit || already_into){
-			if(match_pass == in_pass || already_into){
-				Session.set('match_id', match_id);
-				$('#matches').hide();
-				$('#roomcontainer').fadeIn();
-				$('#empezarboton').hide();
-				if(Partidas.findOne({_id : Session.get('match_id')}).admin_by == Meteor.userId()){
-					$('#empezarboton').show();
-				};
-
-				if (Games.findOne({_id : Session.get('game_id')}).name=="Alien_Invasion")
-					$('#aliencontainer').show();
-				else if (Games.findOne({_id : Session.get('game_id')}).name=="Froot_Wars")
-					$('#frootwarscontainer').show();
-				if(!already_into){
-					Partidas.update({_id : Session.get('match_id')}, {$push: {jugadores: {user_id: Meteor.userId()}},$inc: {num_players: 1}});
+					if (Games.findOne({_id : Session.get('game_id')}).name=="Alien_Invasion")
+						$('#aliencontainer').show();
+					else if (Games.findOne({_id : Session.get('game_id')}).name=="Froot_Wars")
+						$('#frootwarscontainer').show();
+					if(!already_into){
+						Partidas.update({_id : Session.get('match_id')}, {$push: {jugadores: {user_id: Meteor.userId()}},$inc: {num_players: 1}});
+					};
+				} else {
+					$( "#dialog_password" ).dialog("open");
 				};
 			} else {
-				alert("Partida protegida con contraseña. Debe introducir una contraseña correcta.");
+				Session.set('match_id', undefined);
+				$( "#dialog_fullmatch" ).dialog("open");
 			}
 		} else {
-			Session.set('match_id', undefined);
-			alert("Partida llena. Pruebe en otra partida.");
+			$( "#dialog_birthdate" ).dialog("open");
 		};
-
 	}
 
 //Carga el nombre del juego
@@ -179,6 +182,8 @@ Template.gamestemp.events = {
 Template.matchestemp.events = {
 	// Creamos una partida nueva en la base de datos y nos unimos automáticamente
 	'click #match_creator':function(event){
+		var have_profile = Meteor.users.findOne({_id : Meteor.userId()}).birthday;
+		if(have_profile ){
 			if(!Partidas.findOne({name : $("#match_name").val()})){
 				if ($("#match_name").val()!=''){
 					Partidas.insert({
@@ -208,8 +213,11 @@ Template.matchestemp.events = {
 					$("#match_pass").val('');
 				};
 			} else {
-				alert("Ya existe una partida con ese nombre. Pruebe con otro.");
+				$( "#dialog_matchname" ).dialog("open");
 			};
+		} else {
+			$( "#dialog_birthdate" ).dialog("open");
+		};
 	},
 	// Entramos en una partida
 	'click a.linkmatch':function(event){
@@ -234,10 +242,9 @@ Template.matchestemp.events = {
 		});
 		if(publics.length != 0){
 			var chosen = publics[Math.floor(Math.random()*publics.length)];
-			console.log(chosen._id);
 			joinmatch(chosen._id);
 		} else {
-			alert("Lo sentimos, no hay partidas disponibles. Inténtalo más tarde.");
+			$("#dialog_nomatches").dialog("open");
 		};
 	}
 }
@@ -250,8 +257,18 @@ Template.roomgametemp.events = {
 		var quited_match_id = Session.get('match_id');
 		var quited_game_id = Session.get('game_id');
 		var players_array = Partidas.findOne({_id : quited_match_id}).jugadores;
-		players_array = _.reject(players_array, function(player){ return player.user_id == quiter_id; });
-		Partidas.update({_id : quited_match_id}, {$set:{jugadores : players_array},$inc: {num_players: -1}});
+		var found = false;
+
+		players_array.forEach(function(entry){
+			if(entry.user_id == quiter_id){
+				found = true;
+			};
+		});
+
+		if(found){
+			players_array = _.reject(players_array, function(player){ return player.user_id == quiter_id; });
+			Partidas.update({_id : quited_match_id}, {$set:{jugadores : players_array},$inc: {num_players: -1}});
+		};
 
 		if(Partidas.findOne({_id : quited_match_id}).num_players == 0){
 			Partidas.remove({_id : quited_match_id});
@@ -292,10 +309,10 @@ Template.roomplayerstemp.events = {
 						$('#empezarboton').hide();	
 						Partidas.update({_id: Session.get('match_id')}, {$set: {initiated: 'true'}});
 					} else {
-						alert("Se necesitan al menos tres jugadores.");
+						$("#dialog_threeplayers").dialog("open");
 					}
 				} else {
-					alert("No eres el administrador de esta partida. Espera hasta que el administrador comience.");
+					$("#dialog_noadmin").dialog("open");
 				};
 	}
 };

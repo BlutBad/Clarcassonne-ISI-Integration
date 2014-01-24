@@ -12,13 +12,19 @@
 				</div>
 				<input type="button" id="show-users-connected" class="btn btn-primary" value="Amigos">
 			</div>
+			<div id="dialog-outbox" title="Amigos" style="display:none">
+				<p>
+					<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+					¿Enviar mensaje?.
+				</p>
+			</div>
 		{{/if}}
 	{{/if}}
 </template>
 
 <template name="connected">
 	{{#each userConnected}}
-		<p class="user-connected">
+		<p class="userConnected">
 			<strong>{{name}}</strong>
 		</p>
 	{{/each}}

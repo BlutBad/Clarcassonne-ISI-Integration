@@ -275,10 +275,10 @@ Template.friendprofil.events({
 
     'click #add-new-user': function() {
       var userToAddFriends = $("#tags").val();
-      console.log(name);
+      //console.log(name);
       if (userToAddFriends !== Meteor.user().username) {
 
-        console.log ("add to my list of friends");
+        //console.log ("add to my list of friends");
         var myFriendsId = Friends.findOne({username: Meteor.user().username})._id;
         var newFriend = {name: userToAddFriends};
 

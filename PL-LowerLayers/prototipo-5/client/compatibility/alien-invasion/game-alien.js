@@ -52,7 +52,7 @@ var startGameAlien = function() {
     GameAlien.setBoard(0,new Starfield(20,0.4,100,true));
     GameAlien.setBoard(1,new Starfield(50,0.6,100));
     GameAlien.setBoard(2,new Starfield(100,1.0,50));
-    GameAlien.setBoard(3,new TitleScreen("Alien Invasion", 
+    GameAlien.setBoard(3,new TitleScreenAlien("Alien Invasion", 
                                     "Press fire to start playing",
                                     playGameAlien1));
 	GameAlien.setBoard(5,new GameAlienPoints(0));
@@ -62,7 +62,7 @@ var collision1;
 var collision2;
 
 
-// Definición del nivel level1.  
+// Definición del nivel LevelAlien1.  
 
 // Está definido por una colección de
 // baterías de naves enemigas, una por fila. Para cada fila, los
@@ -74,7 +74,7 @@ var collision2;
 // override que substituyen a los de la plantilla en enemies para ese
 // enemigo.
 
-var level1 = [
+var LevelAlien1 = [
   //  Comienzo, Fin,   Frecuencia,  Tipo,       Override
     [ 0,        4000,  500,         'step'                 ],
     [ 6000,     13000, 800,         'ltr'                  ],
@@ -86,7 +86,7 @@ var level1 = [
     [ 22000,    25000, 400,         'wiggle',   { x: 100 } ]
 ];
 
-var level2 = [
+var LevelAlien2 = [
   //  Comienzo, Fin,   Frecuencia,  Tipo,       Override
 	[ 0,         4000, 400,         'circle2'     ],	
 	[ 3000,      7000, 400,         'circle2'     ],
@@ -107,9 +107,9 @@ var playGameAlien1 = function() {
     board.add(new PlayerShip());
 
     // Se añade un nuevo nivel al tablero de juego, pasando la definición de
-    // nivel level1 y la función callback a la que llamar si se ha
+    // nivel LevelAlien1 y la función callback a la que llamar si se ha
     // ganado el juego
-    board.add(new Level(level1, nextLevel));
+    board.add(new LevelAlien(LevelAlien1, nextLevel));
     GameAlien.setBoard(3,board);
 	GameAlien.points =0;
 };
@@ -118,7 +118,7 @@ var playGameAlien2 = function() {
     var board = new GameAlienBoard();
     board.add(new PlayerShip());
 
-    board.add(new Level(level2, winGameAlien));
+    board.add(new LevelAlien(LevelAlien2, winGameAlien));
     GameAlien.setBoard(3,board);
 };
 
@@ -126,7 +126,7 @@ var playGameAlien2 = function() {
 // que alcancen a la nave del jugador
 var winGameAlien = function() {
 	Meteor.call("matchFinish", Session.get("match_id"), Session.get("game_id"), GameAlien.points);
-    GameAlien.setBoard(3,new TitleScreen("You win!", 
+    GameAlien.setBoard(3,new TitleScreenAlien("You win!", 
                                     "Press fire to play again",
                                     playGameAlien1));
 };
@@ -136,14 +136,14 @@ var winGameAlien = function() {
 // finalizar el juego
 var loseGameAlien = function() {
 	Meteor.call("matchFinish", Session.get("match_id"), Session.get("game_id"), GameAlien.points);
-    GameAlien.setBoard(3,new TitleScreen("You lose!", 
+    GameAlien.setBoard(3,new TitleScreenAlien("You lose!", 
                                     "Press fire to play again",
                                     playGameAlien1));
 };
 
 var nextLevel = function() {
-    GameAlien.setBoard(3,new TitleScreen("Level 1 Completed!",
-                                    "Press fire to play level 2",
+    GameAlien.setBoard(3,new TitleScreenAlien("LevelAlien 1 Completed!",
+                                    "Press fire to play LevelAlien 2",
                                     playGameAlien2));
 };
 
@@ -270,7 +270,7 @@ var PlayerShip = function() {
 
 
 // Heredamos del prototipo new Sprite()
-PlayerShip.prototype = new Sprite();
+PlayerShip.prototype = new SpriteAlien();
 PlayerShip.prototype.type = OBJECT_PLAYER;
 
 
@@ -293,7 +293,7 @@ var PlayerMissile = function(x,y) {
     this.y = y - this.h; 
 };
 
-PlayerMissile.prototype = new Sprite();
+PlayerMissile.prototype = new SpriteAlien();
 PlayerMissile.prototype.type = OBJECT_PLAYER_PROJECTILE;
 
 PlayerMissile.prototype.step = function(dt)  {
@@ -318,7 +318,7 @@ var FireBall = function(x,y,direction) {
 	}
 };
 
-FireBall.prototype = new Sprite();
+FireBall.prototype = new SpriteAlien();
 FireBall.prototype.type = OBJECT_POWERUP;
 
 FireBall.prototype.step = function(dt)  {
@@ -377,7 +377,7 @@ var Enemy = function(blueprint,override) {
     this.merge(override);
 };
 
-Enemy.prototype = new Sprite();
+Enemy.prototype = new SpriteAlien();
 Enemy.prototype.type = OBJECT_ENEMY;
 
 // Inicializa los parámetros de las ecuacione de velocidad, y t, que
@@ -459,7 +459,7 @@ var EnemyMissile = function(x,y) {
     this.y = y;
 };
 
-EnemyMissile.prototype = new Sprite();
+EnemyMissile.prototype = new SpriteAlien();
 EnemyMissile.prototype.type = OBJECT_ENEMY_PROJECTILE;
 
 EnemyMissile.prototype.step = function(dt)  {
@@ -489,7 +489,7 @@ var Explosion = function(centerX,centerY) {
     this.subFrame = 0;
 };
 
-Explosion.prototype = new Sprite();
+Explosion.prototype = new SpriteAlien();
 
 Explosion.prototype.step = function(dt) {
     this.frame = Math.floor(this.subFrame++ / 2);

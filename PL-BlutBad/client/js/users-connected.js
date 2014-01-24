@@ -44,3 +44,26 @@ Template.usersConnected.events({
 		$("#content-users").hide();
 	}
 });
+
+Template.connected.events({
+	// Cuando se selecciona a un amigo de mis lista de amigos
+	'click p.userConnected': function() {
+		var userToSend = this.name;
+		$( "#dialog-outbox" ).dialog({
+				resizable: false,
+				height:170,
+				modal: true,
+				buttons: {
+					"Aceptar": function() {
+						$( this ).dialog( "close" );
+						Session.set('mostrarOutbox', true);
+						Session.set('userToOutbox', userToSend);
+					},
+					Cancelar: function() {
+					  	$( this ).dialog( "close" );
+					}
+				}
+			});
+
+	}
+});

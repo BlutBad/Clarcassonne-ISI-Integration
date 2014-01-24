@@ -1,9 +1,14 @@
 html{
     margin: auto;
     font-family: verdana, sans-serif;
-    background-color: #2E2E2E;
     color: white;
 	
+}
+
+
+body{
+	background-image: url("/backgrounds/21.jpg");
+	background-color: #2E2E2E; 
 }
 
 button{
@@ -117,6 +122,10 @@ input:focus{
 	border: 2px solid #2EFE2E;
 }
 
+#tabs{
+	margin-top: 15px;
+
+}
 
 #chatTabs{
 	position: absolute;
@@ -135,12 +144,14 @@ input:focus{
 }
 
 #bygameranking table,
+#byuserranking table,
 #byusergameranking table {
 	border: 1px solid #666;
 	margin: 20px 0 20px 0 !important;
 }
 
 #bygameranking th, #bygameranking td,
+#byuserranking th, #byuserranking td,
 #byusergameranking th, #byusergameranking td {
 	padding: 2px 4px 2px 4px !important;
 	text-align: center;
@@ -149,6 +160,7 @@ input:focus{
 }
 
 #bygameranking th,
+#byuserranking th,
 #byusergameranking th {
 	background-color: #247941;
 }
@@ -202,7 +214,7 @@ input:focus{
 	width:70%;
 }
 
-.coin-slider { overflow: hidden; zoom: 1; position: relative;z-index:-1; }
+.coin-slider { overflow: hidden; zoom: 1; position: relative;z-index:-1; margin-top: 15px;}
 .coin-slider a{ text-decoration: none; outline: none; border: none; }
 
 .cs-buttons { font-size: 0px; padding: 10px; float: left; }
@@ -220,4 +232,11 @@ input:focus{
 }
 #avatar-slider img:nth-child(1){
 	display: block;
+}
+
+.ui-autocomplete {
+	max-height: 100px;
+	overflow-y: auto;
+	/* prevent horizontal scrollbar */
+	overflow-x: hidden;
 }

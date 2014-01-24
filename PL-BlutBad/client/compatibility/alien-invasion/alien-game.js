@@ -84,6 +84,18 @@ var level1 = [
     [ 22000,  25000, 400, 'wiggle', { x: 100 }]
 ];
 
+var level2 = [
+    //  Comienzo, Fin,   Frecuencia,  Tipo,       Override
+    [ 0,        4000,  300,         'step'                 ],
+    [ 6000,     13000, 600,         'ltr'                  ],
+    [ 10000,    16000, 100,         'circle'               ],
+    [ 17800,    20000, 300,         'straight', { x: 50  } ],
+    [ 18200,    20000, 200,         'straight', { x: 90  } ],
+    [ 18200,    20000, 300,         'straight', { x: 10  } ],
+    [ 22000,    25000, 200,         'wiggle',   { x: 150 } ],
+    [ 22000,    25000, 200,         'wiggle',   { x: 100 } ]
+];
+
 
 var playGameAlien = function() {
     var board = new gameAlienBoard();
@@ -92,16 +104,51 @@ var playGameAlien = function() {
     // Se un nuevo nivel al tablero de juego, pasando la definici�n de
     // nivel level1 y la funci�n callback a la que llamar si se ha
     // ganado el juego
-    board.add(new AlienLevel(level1,winGame));
+    id_bono=Bono.findOne({numeracion:2})._id;
+    console.log(Meteor.user()._id)
+    if (Meteor.user()!=null && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}) && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}).n_bono>=1 ){
+        //actualizo el bono
+        bobj=User_Bono.findOne({user_id:Meteor.user()._id, bono_id:id_bono});
+        User_Bono.update(bobj._id,{
+            $set: {
+                'n_bono':bobj.n_bono-1,
+            }
+        });
+        //muestro el siguente nivel
+        board.add(new AlienLevel(level1, nivel2));        
+    }else{
+        board.add(new AlienLevel(level1,winGame));
+     };
     gameAlien.setBoard(3,board);
     gameAlien.setBoard(5,new gameAlienPoints(0));
 };
 
+var l2=function(){
+    var board=new gameAlienBoard();
+    board.add(new PlayerShip());
+    board.add(new AlienLevel(level2, winGame));
+    gameAlien.setBoard(3,board);
+};
+
+var nivel2 =function(){
+    gameAlien.setBoard(3,new AlienTitleScreen("Level 2", "press fire to next level", l2));
+};
 
 // Llamada cuando han desaparecido todos los enemigos del nivel sin
 // que alcancen a la nave del jugador
 var winGame = function() {
-    
+    id_bono=Bono.findOne({numeracion:3})._id;
+    console.log(Meteor.user()._id)
+    if (Meteor.user()!=null && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}) && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}).n_bono>=1 ){
+        //actualizo el bono
+        console.log("Yes!");
+        bobj=User_Bono.findOne({user_id:Meteor.user()._id, bono_id:id_bono});
+        User_Bono.update(bobj._id,{
+        $set: {
+            'n_bono':bobj.n_bono-1,
+            }
+        });
+    };
 //**************************CALL TO API********************************//
     ifg = Session.get('infoForGame');
     opt = {game_id: ifg.game_id,
@@ -123,6 +170,18 @@ var winGame = function() {
 // finalizar el juego
 var loseGame = function() {
     
+        id_bono=Bono.findOne({numeracion:3})._id;
+        if (Meteor.user()!=null && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}) && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}).n_bono>=1 ){
+        //actualizo el bono
+        console.log("Yes!");
+        bobj=User_Bono.findOne({user_id:Meteor.user()._id, bono_id:id_bono});
+        User_Bono.update(bobj._id,{
+            $set: {
+                'n_bono':bobj.n_bono-1,
+            }
+        });
+    };
+    
 //**************************CALL TO API********************************//
     ifg = Session.get('infoForGame');
     opt = {game_id: ifg.game_id,
@@ -138,6 +197,7 @@ var loseGame = function() {
     gameAlien.setBoard(3,new AlienTitleScreen("You lose!", 
                                     "Press fire to play again",
                                     playGameAlien));
+    
 };
 
 
@@ -256,9 +316,20 @@ PlayerShip.prototype.type = OBJECT_PLAYER;
 
 // Llamada cuando una nave enemiga colisiona con la nave del usuario
 PlayerShip.prototype.hit = function(damage) {
-    if(this.board.remove(this)) {
-	loseGame();
-    }
+    id_bono=Bono.findOne({numeracion:1})._id;
+    if (Meteor.user()!=null && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}) && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}).n_bono>=1){
+        console.log("actualizo"+id_bono);
+        bobj=User_Bono.findOne({user_id:Meteor.user()._id, bono_id:id_bono});
+        User_Bono.update(bobj._id,{
+            $set: {
+                'n_bono':bobj.n_bono-1,
+            }
+        });
+    }else{
+        if(this.board.remove(this)) {
+            loseGame();
+        };
+    };
 };
 
 
@@ -279,10 +350,10 @@ PlayerMissile.prototype.step = function(dt)  {
     this.y += this.vy * dt;
     var collision = this.board.collide(this,OBJECT_ENEMY);
     if(collision) {
-	collision.hit(this.damage);
-	this.board.remove(this);
-    } else if(this.y < -this.h) { 
-	this.board.remove(this); 
+	   collision.hit(this.damage);
+	   this.board.remove(this);
+    }else if(this.y < -this.h) { 
+	   this.board.remove(this); 
     }
 };
 
@@ -362,9 +433,10 @@ Enemy.prototype.step = function(dt) {
     this.y += this.vy * dt;
 
     var collision = this.board.collide(this,OBJECT_PLAYER);
+    //creo que tendria que ponerlo aqui para que no muera
     if(collision) {
-	collision.hit(this.damage);
-	this.board.remove(this);
+        collision.hit(this.damage);
+        this.board.remove(this);
     }
 
     if(this.reload <= 0 && Math.random() < (this.firePercentage || 0.01) ) {
@@ -387,12 +459,26 @@ Enemy.prototype.step = function(dt) {
 };
 
 Enemy.prototype.hit = function(damage) {
+
     this.health -= damage;
     if(this.health <=0) {
 	if(this.board.remove(this)) {
-	    gameAlien.points += this.points || 100;
-	    this.board.add(new Explosion(this.x + this.w/2, 
-					 this.y + this.h/2));
+        console.log("it's here");
+        id_bono=Bono.findOne({numeracion:3})._id;
+        console.log(Meteor.user()._id)
+        if (Meteor.user()!=null && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}) && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}).n_bono>=1 ){
+            //actualizo el bono
+            console.log("Yes!");
+            //no puedo actualizar el bono aqui porque pasa en cada disparo lo tengo que actualizar cuando gano o pierdo la partida
+            gameAlien.points += this.points || 200;
+            this.board.add(new Explosion(this.x + this.w/2, 
+                     this.y + this.h/2));
+        }else{
+            console.log("No!");
+            gameAlien.points += this.points || 100;
+            this.board.add(new Explosion(this.x + this.w/2, 
+                     this.y + this.h/2));
+        }; 
 	}
     }
 };
@@ -411,10 +497,10 @@ EnemyMissile.prototype.step = function(dt)  {
     this.y += this.vy * dt;
     var collision = this.board.collide(this,OBJECT_PLAYER)
     if(collision) {
-	collision.hit(this.damage);
-	this.board.remove(this);
+        collision.hit(this.damage);
+        this.board.remove(this);
     } else if(this.y > gameAlien.height) {
-	this.board.remove(this); 
+	   this.board.remove(this); 
     }
 };
 

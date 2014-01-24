@@ -1,0 +1,100 @@
+#mis-mensajes {
+	background-color: #CEE3F6;
+	border-radius: 10px;
+	border: black 1px solid; 
+	width: 95%;
+	height: 520px;
+	margin: 15px;
+	padding: 5px;
+}
+
+#content-inbox {
+	background-color: white;
+	margin: 10px 3px 5px 3px;
+	height: 415px;
+	width: 99%;
+	padding: 25px 2px 5px 2px;
+	border-radius: 3px;
+	border: #6E6E6E 1px solid;
+}
+
+#inbox {
+	float: left;
+	background-color: #D8D8D8;
+	border-radius: 3px;
+	border: #6E6E6E 1px solid;
+	margin: 5px 10px 5px 20px;
+	padding: 10px;
+	width: 40%;
+	height: 90%;
+}
+
+#list-msg {
+	background-color: white;
+	overflow-y: scroll;
+	width: 97%;
+	height: 86%;
+	margin: 10px
+}
+
+#my-msg {
+	float: left;
+	background-color: #D8D8D8;
+	border-radius: 3px;
+	border: #6E6E6E 1px solid;
+	margin: 5px 10px 5px 20px;
+	padding: 10px;
+	width: 47%;
+	height: 90%;
+}
+
+#content-msg {
+	background-color: white;
+	overflow-y: scroll;
+	width: 97%;
+	height: 86%;
+	margin: 10px;
+}
+
+
+#outbox {
+	background-color: #819FF7;
+	border: #6E6E6E 1px solid;
+	border-radius: 3px;
+	padding: 5px;
+	width: 350px;
+	height: 320px;
+	position: fixed;
+	bottom: 5px;
+	left: 210px;
+}
+
+#outbox-header{
+	background-color: white;
+	height: 10%;
+	border-radius: 3px;
+	margin: 5px;
+	padding: 10px 5px 0px 15px;
+
+}
+
+#outbox-msg{
+	width: 92%;
+	height: 66%;
+	margin: 10px 5px 5px 5px;
+	overflow-y: scroll;
+}
+
+#outbox-boton {
+	clear: both;
+}
+
+#outbox-send {
+	float: right;
+	margin-right: 10px;
+}
+
+#outbox-cancel {
+	float: left;
+	margin-left: 5px;
+}

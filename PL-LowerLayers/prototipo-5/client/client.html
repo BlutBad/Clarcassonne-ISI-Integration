@@ -1,9 +1,11 @@
 <head>
 	<title>X-ADrian</title>
+	<link href="/css/jquery-ui-1.10.4.custom.css" rel="stylesheet">
+
 </head>
 
 <body>
-	<div id="div-login-button">{{loginButtons}}</div>
+	<div id="div-login-button">{{> iconLoginTemp}}<br>{{loginButtons}}</div>
 	<div id="titulo" Size="6">X-ADrian</div>
 	<div id="subtitulo">Welcome to X-ADrian platform</div><br>
 	<div id="container">
@@ -11,7 +13,34 @@
 		{{> tabstemp}}
 		{{> friendsTemp}}
 		{{> chatsTabsTemp}}
-   	</div>	
+   	</div>
+	<div id="dialog_birthdate" title="Rellena tu perfil.">
+  		<p>Por favor, antes de unirte a una partida rellena tu perfil.</p>
+	</div>
+	<div id="dialog_nomatches" title="No hay partidas disponibles.">
+  		<p>Lo sentimos, no hay partidas disponibles. Inténtalo más tarde.</p>
+	</div>
+
+	<div id="dialog_password" title="Partida protegida con contraseña.">
+  		<p>Partida protegida con contraseña. Debe introducir una contraseña correcta.</p>
+	</div>
+
+	<div id="dialog_fullmatch" title="Partida llena.">
+  		<p>Partida llena. Pruebe en otra partida."</p>
+	</div>
+
+	<div id="dialog_matchname" title="Ya existe.">
+  		<p>Ya existe una partida con ese nombre. Pruebe con otro.</p>
+	</div>
+
+	<div id="dialog_threeplayers" title="No hay suficientes jugadores.">
+  		<p>Se necesitan al menos tres jugadores.</p>
+	</div>
+
+	<div id="dialog_noadmin" title="No eres el administrador.">
+  		<p>No eres el administrador de esta partida. Espera hasta que el administrador comience.</p>
+	</div>
+
 </body>
 
 <template name="cointemp">
@@ -24,17 +53,22 @@
 	</div>	
 </template>
 
+<template name="iconLoginTemp">
+		<img width='50px' height='50px'  src={{avatar}} >
+</template>
 
 <template name="tabstemp">
 	<div id="tabs" >
 		<ul>
 			<li><a href="#juegos">Juegos</a></li>
 			<li><a href="#ranking">Ranking</a></li>
-			<li><a href="#perfil">Perfil</a></li>
+			<li><a href="#usuarios">Usuarios</a></li>
+			<li><a href="#perfil">Mi Perfil</a></li>
 		</ul>
 		<div id="juegos">{{> gamestemp}} {{> matchestemp}} {{> roomgametemp}}</div>
-		<div id="ranking">{{> gamesrankingtemp}} {{> bygamerankingtemp}} {{> byusergamerankingtemp}}</div>
-		<div id="perfil">{{> imagperfiltemp}}{{> datosperfiltemp}}{{> modperfiltemp}}</div>
+		<div id="ranking">{{> gamesrankingtemp}} {{> playerstemp}} {{> bygamerankingtemp}} {{> byuserrankingtemp}} {{> byusergamerankingtemp}}</div>
+		<div id="perfil">{{> imgmiperfiltemp}}{{> miperfiltemp}}{{> imgmodmiperfiltemp}}{{> modmiperfiltemp}}</div>
+		<div id="usuarios">{{>usuariospltemp}}</div>
 	</div>
 </template>
 
@@ -71,15 +105,6 @@
 </template>
 
 
-<template name="userstemp">
-	<div id="users" >
-		<p>Por usuarios:</p>
-		{{# each users}}
-			<a style ="cursor:pointer;text-decoration:underline;" class="linkuserranking">{{username}}</a>
-		{{/each}}
-	</div>
-</template>
-
 <template name="gamesrankingtemp" >
 	<div id="gamesranking">
 		<p>Por juegos:</p>
@@ -89,28 +114,69 @@
 	</div>
 </template>
 
+<template name="playerstemp">
+	<div id="players" >
+		{{# if first}}
+			<p><input type='text' id='formplayer'/>
+			<button id='btnplayer'>Buscar</button></p>
+			<p>Por usuarios:</p>
+			{{# each players}}
+				<a style ="cursor:pointer;text-decoration:underline;" class="linkplayer">{{username}}</a>
+			{{/each}}
+		{{/ if}}
+	</div>
+</template>
+
 <template name="bygamerankingtemp">
 	<div id="bygameranking">
 		{{# if user_not_selected}} 
-		<p><a style ='cursor:pointer;text-decoration:underline;' class='linkback'>atras</a></p>
-		<input type='text' id='formuserranking'/>
-		<button id='btnuserranking'>Buscar</button>
-		<p>{{gameranking}}</p>
-		<table>
-			<thead>
-				<tr>
-					<th>Usuario</th>
-					<th>Puntuacion</th>
-				</tr>
-			</thead>
-			<tbody>
-				{{# each ranking}}
+			<p><a style ='cursor:pointer;text-decoration:underline;' class='linkback'>atras</a></p>
+			<input type='text' id='formplayergame'/>
+			<button id='btnplayergame'>Buscar</button>
+			<p>Usuarios:</p>
+			{{# each playersgame}}
+				<a style ="cursor:pointer;text-decoration:underline;" class="linkplayergame">{{username}}</a>
+			{{/each}}
+			<p>{{gameranking}}</p>
+			<table>
+				<thead>
 					<tr>
-						<td><a style ='cursor:pointer;text-decoration:underline;' class='linkuser'>{{user}}</a></td> <td>{{score}}</td>
+						<th>Usuario</th>
+						<th>Puntuacion</th>
 					</tr>
-				{{/ each}}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					{{# each ranking}}
+						<tr>
+							<td><a style ='cursor:pointer;text-decoration:underline;' class='linkuser'>{{user}}</a></td> <td>{{score}}</td>
+						</tr>
+					{{/ each}}
+				</tbody>
+			</table>
+		{{/ if}}
+	</div>
+</template>
+
+<template name="byuserrankingtemp">
+	<div id="byuserranking">
+		{{# if game_not_selected}}
+			<p><a style ='cursor:pointer;text-decoration:underline;' class='linkback'>atras</a></p>
+			<p>{{playerranking}}</p>
+			<table>
+				<thead>
+					<tr>
+						<th>Juego</th>
+						<th>Puntuacion</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{# each ranking}}
+						<tr>
+							<td><a style ='cursor:pointer;text-decoration:underline;' class='linkgame'>{{game}}</a></td> <td>{{score}}</td>
+						</tr>
+					{{/ each}}
+				</tbody>
+			</table>
 		{{/ if}}
 	</div>
 </template>
@@ -119,7 +185,7 @@
 	<div id="byusergameranking">
 		{{# if user_selected}}
 		<a style ='cursor:pointer;text-decoration:underline;' class='linkback'>atras</a>
-		<p>{{gameranking.user}}-{{gameranking.name}}</p>
+		<p>{{gameranking.user}} - {{gameranking.name}}</p>
 		<table>
 			<thead>
 				<tr>
@@ -127,7 +193,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				{{# each ranking2}}
+				{{# each ranking}}
 					<tr>
 						<td>{{score}}</td>
 					</tr>
@@ -137,7 +203,6 @@
 		{{/ if}}
 	</div>
 </template>
-
 
 <template name="input">
 	<div id="messagecont">
@@ -152,7 +217,7 @@
 <template name="messagestemp" >
 	<div id="messages" style="overflow:auto;height:50%;">
 		{{# each messages}}
-			<i>{{name}}: {{message}}</i></br>
+			<i><img width='20px' height='20px'  src={{avatar}} >{{name}}: {{message}}</i></br>
 		{{/each}}
 	</div>
 </template>
@@ -319,20 +384,21 @@
 <template name="listaAmigosOnlineTemp">
 	<div id="listaAmigosOnline">
 		{{# each listaAmigosOnline}}
-		<a style ="cursor:pointer;text-decoration:underline;float:left" class="linkchat">
-			{{username}}<br>
-		</a>
-		<ul class="menuAmigos" style="float:left;margin-left:3px;">
-			<li>
-				<a class ="menuAmigosStyle">&#9660;</a>
-				<ul>
-					<li><a class ="menuAmigosStyle menuAInv" hreflang={{username}}><span class="ui-icon-plus"></span>Invitar</a></li>
-					<li><a class ="menuAmigosStyle menuAPer" ><span class="ui-icon-person"></span>Perfil</a></li>
-					<li><a class ="menuAmigosStyle menuABloq"><span class="ui-icon-cancel"></span>Bloquear</a></li>
-				</ul>
-			</li>
-		</ul>
-		<br style="clear:both;"/>
+			<img width='20px' height='20px'  src={{avatar}} style ="float:left">
+			<a style ="cursor:pointer;text-decoration:underline;float:left;margin-left:5px" class="linkchat">
+				{{username}}<br>
+			</a>
+			<ul class="menuAmigos" style="float:left;margin-left:3px;">
+				<li>
+					<a class ="menuAmigosStyle">&#9660;</a>
+					<ul>
+						<li><a class ="menuAmigosStyle menuAInv" hreflang={{username}}><span class="ui-icon-plus"></span>Invitar</a></li>
+						<li><a class ="menuAmigosStyle menuAPer" ><span class="ui-icon-person"></span>Perfil</a></li>
+						<li><a class ="menuAmigosStyle menuABloq" hreflang={{username}}><span class="ui-icon-cancel"></span>Bloquear</a></li>
+					</ul>
+				</li>
+			</ul>
+			<br style="clear:both;"/>
 		{{/ each}}
 	</div>	
 </template>
@@ -368,22 +434,22 @@
 
 
 
-<template name='imagperfiltemp'>
-	<div style="display:block;" id="imgdataprofile">	
-		<img id='imgprofile' width='150px' height='150px' src={{avatar}} ><br>
+<template name='imgmiperfiltemp'>
+	<div  id="imgdataprofile">	
+		<img id='imgprofile' width='150px' height='150px' src={{avatar}}>
 	</div>	
 </template>
 
-
-<template name='datosperfiltemp'>
-	<div style="display:block;" id="dataprofile">
-		<div><span id="nombreperfil" style='font: small-caps 185% serif; '>{{username}}</span></div><br>
-		<b>Fecha de nacimiento:</b> {{birthday}}<br>
-		<b>Correo electronico:</b> {{address}}<br>
+<template name='miperfiltemp'>
+	<div  id="dataprofile">
+		<div><span id="nombreperfil" style='font: small-caps 185% serif; '>{{mi.username}}</span></div>
+		<br>
+		<b>Fecha de nacimiento:</b> {{mi.birthday}}<br>
+		<b>Correo electronico:</b> {{mi.address}}<br>
 		<b>Amigos:</b> {{amigos}}<br>
-		<b>Mejores puntuaciones </b>
+		<b>Mejores puntuaciones: </b>
 		{{# each rank}}
-			[{{game}}:{{points}}]
+			<div>{{game}} - {{points}}</div>
 		{{/ each}}
 		<br><br>
 		<input id="modifprof" type="submit" value="Modificar"> 
@@ -392,19 +458,73 @@
 
 
 
-<template name='modperfiltemp'>
-	<div style="display:none;" id="moddataprofile">
-		<br><br>
-		<div id="contenedorimagenes" style="height:150px">
-			<button type="button" id="previousavatar" style="float: left; margin-top:65px"> < </button>
-			<div id="avatar-slider" style="float: left;">
-			</div>
-			<button type="button" id="nextavatar" style="float: left; margin-top:65px"> > </button>
+
+
+
+
+
+
+<template name='imgmodmiperfiltemp'>
+	<br>
+	<div  id="contenedorimagenes" style="height:150px">
+		<button type="button" id="previousavatar" style="float: left; margin-top:65px"> < </button>
+		<div id="avatar-slider" style="float: left;">
+			<img id="imgprofilepreview" width='150px' height='150px' src={{avatar}}>
 		</div>
+		<button type="button" id="nextavatar" style="float: left; margin-top:65px"> > </button>
+	</div>
+</template>
+
+<template name='modmiperfiltemp'>
+	<div  id="moddataprofile">
 		<br><br>
-		Fecha de nacimiento: <input type="text" id="datepickerprof"> (Una vez guardado no se puede modificar)<br>
+		Fecha de nacimiento: <input type="text" readonly="readonly" id="datepickerprof"> (Una vez guardado no se puede modificar)<br>
 		Direccion de email:   <input id="modemail" type="email"><br><br><br>
 		<input id="saveprof" type="submit" value="Guardar"> 
 		<input id="nosaveprof" type="submit" value="Cancelar"> 
+	</div>	
+</template>
+
+
+
+
+
+
+
+
+
+
+
+<template name='usuariospltemp'>
+	<div class="ui-widget">
+		<label for="usersearcher">Usuario: </label>
+		<input id="usersearcher">
+		<button id="userSearch">
+			<span class="ui-icon ui-icon-search" style="display: inline-block"></span> Ver perfil
+		</button>	
+	</div>	
+</template>	
+
+<template name='userperfiltemp'>
+	<div id="userperfil">
+		<br>	
+		<div>
+			<img id='userimgprofile' width='150px' height='150px' src={{userfind.avatar}} >
+		</div>	
+		<div>
+			<span id="usernombreperfil" style='font: small-caps 185% serif; '>{{userfind.username}}</span>
+		</div>
+		<br>
+		<div>
+		{{#if esamigo}}
+			<b>Fecha de nacimiento:</b> {{userfind.birthday}}<br>
+			<b>Correo electronico:</b> {{userfind.address}}<br>
+			<b>Amigos:</b> {{amigos}}<br>
+		{{/if}}	
+		<b>Mejores puntuaciones: </b>
+		{{# each rank}}
+			<div>{{game}} - {{points}}</div>
+		{{/ each}}
+		</div>
 	</div>	
 </template>

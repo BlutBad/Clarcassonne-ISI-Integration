@@ -17,6 +17,7 @@ Meteor.startup(function () {
 	$('#frootwarscontainer').hide();
 	$('#clarcassonnecontainer').hide();
 	$('#bygameranking').hide();
+	$('#byuserranking').hide();
 	$('#byusergameranking').hide();
 });
 
@@ -31,6 +32,90 @@ $(document).ready(function() {
 		 $(function() {
 			$( "#chatTabs" ).tabs({collapsible: true});
 		});
+
+		$( "#dialog_birthdate" ).dialog({
+      		autoOpen: false,
+     		show: {
+        		effect: "blind",
+        		duration: 300
+      		},
+     		hide: {
+      			effect: "explode",
+				duration: 200
+			}
+    	});
+
+		$( "#dialog_nomatches" ).dialog({
+      		autoOpen: false,
+     		show: {
+        		effect: "blind",
+        		duration: 300
+      		},
+     		hide: {
+      			effect: "explode",
+				duration: 200
+			}
+    	});
+
+		$( "#dialog_password" ).dialog({
+      		autoOpen: false,
+     		show: {
+        		effect: "blind",
+        		duration: 300
+      		},
+     		hide: {
+      			effect: "explode",
+				duration: 200
+			}
+    	});
+
+		$( "#dialog_fullmatch" ).dialog({
+      		autoOpen: false,
+     		show: {
+        		effect: "blind",
+        		duration: 300
+      		},
+     		hide: {
+      			effect: "explode",
+				duration: 200
+			}
+    	});
+
+		$( "#dialog_matchname" ).dialog({
+      		autoOpen: false,
+     		show: {
+        		effect: "blind",
+        		duration: 300
+      		},
+     		hide: {
+      			effect: "explode",
+				duration: 200
+			}
+    	});
+
+		$( "#dialog_threeplayers" ).dialog({
+      		autoOpen: false,
+     		show: {
+        		effect: "blind",
+        		duration: 300
+      		},
+     		hide: {
+      			effect: "explode",
+				duration: 200
+			}
+    	});
+
+		$( "#dialog_noadmin" ).dialog({
+      		autoOpen: false,
+     		show: {
+        		effect: "blind",
+        		duration: 300
+      		},
+     		hide: {
+      			effect: "explode",
+				duration: 200
+			}
+    	});
 		
 		$("#friends").css({"top": $(window).height()-57, "position":"fixed"});
 		$("#friends").css("left",$(window).width()-182);
@@ -86,7 +171,24 @@ Deps.autorun(function () {
 ///////////// SUBSCRIPCIONES ////////////////
 
 //Subscripcion a lista de usuarios
-Meteor.subscribe("users");
+
+var usersLoaded = false;
+Meteor.subscribe("users", function () { 
+	usersLoaded = true;
+});
+
+Meteor.users.find().observe({
+	added: function(user) { 
+		if (usersLoaded) { 
+			Meteor.defer(function () {
+				if((user.avatar == undefined) && (user._id == Meteor.user()._id)){
+					Meteor.call("definirAvatar","Avatares/0.jpg",function(error,result){console.log(error);console.log(result);})
+				}
+  			});
+			
+		}
+	}
+});
 
 //Subscripcion a lista de juegos
 Meteor.subscribe("games");
@@ -123,10 +225,6 @@ Deps.autorun(function () {
 
 /////////////RELLENO DE PLANTILLAS//////////
 
-//Ordena los amigos alfabeticamente
-Template.userstemp.users = function(){
-	return Meteor.users.find({},{sort:{username:1}});
-}
 //Encuentra juegos
 Template.gamestemp.games=function(){
 	return Games.find();
@@ -141,6 +239,11 @@ Template.loguserstemp.logusers = function(){
 	return Meteor.users.find({"services.resume.loginTokens" : {$not : []}});
 }
 
+Template.iconLoginTemp.avatar = function(){
+	if(Meteor.user()){
+		return Meteor.user().avatar;
+	}
+}
 
 
 

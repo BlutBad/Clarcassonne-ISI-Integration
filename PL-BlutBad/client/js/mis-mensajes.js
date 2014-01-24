@@ -1,4 +1,4 @@
-//Templates
+//Templates inbox
 Template.inbox.show = function() {
 	showInbox = Session.get('current_stage') == 'Mis mensajes';
 	if (showInbox){    
@@ -16,4 +16,24 @@ Template.inbox.register = function() {
 	}
 };
 
+//Templates outbox
+Template.outbox.showoutbox = function() {
+	return Session.get('mostrarOutbox');
+}
+
+Template.outbox.toSend = function() {
+	return Session.get('userToOutbox');
+}
+
 //Events
+
+Template.outbox.events({
+	'click input#outbox-send': function() {
+		alert("Tu mensaje sera enviado proximamente.");
+		Session.set('mostrarOutbox', false);
+	},
+
+	'click input#outbox-cancel': function() {
+		Session.set('mostrarOutbox', false);
+	}
+});

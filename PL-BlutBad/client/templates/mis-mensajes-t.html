@@ -1,7 +1,25 @@
 <template name="inbox">
 	{{#if show}}
 		{{#if register}}
-			<h1>Aún no tienes mensajes :)</h1>
+			
+			<div id="mis-mensajes">
+				<h1>Mis mensajes</h1>
+				<div id="content-inbox">
+					<div id="inbox">
+						<h3 class="title-msg">Bandeja de entrada:</h3>
+						<div id="list-msg">
+							<p>Lista de todos tus mensajes</p>
+						</div>
+					</div>
+					<div id="my-msg">
+						<h3 class="title-msg">Mensaje recivido de X</h3>
+						<div id="content-msg">
+							<p>Contenido mensaje</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
 		{{else}}
 			<div id="notRegisterDialog">
 			  	<p>
@@ -9,5 +27,26 @@
 			  	</p>
 			</div>
 		{{/if}}
+	{{/if}}
+</template>
+
+
+
+
+
+<template name="outbox">
+	{{#if showoutbox}}
+		<div id="outbox">
+			<div id="outbox-header">
+				<p>
+					Enviar a <strong>{{toSend}}</strong>  
+				</p> 
+			</div>
+			<textarea rows="4" cols="50" id="outbox-msg"></textarea>
+			<div id="outbox-boton">
+				<input type="button" id="outbox-send" class="btn btn-primary" value="Enviar">
+				<input type="button" id="outbox-cancel" class="btn btn-primary" value="Cancelar">
+			</div>
+		</div>
 	{{/if}}
 </template>
