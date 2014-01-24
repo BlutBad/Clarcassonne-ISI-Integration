@@ -242,10 +242,9 @@ Template.matchestemp.events = {
 		});
 		if(publics.length != 0){
 			var chosen = publics[Math.floor(Math.random()*publics.length)];
-			console.log(chosen._id);
 			joinmatch(chosen._id);
 		} else {
-			$("dialog_nomatches").dialog("open");
+			$("#dialog_nomatches").dialog("open");
 		};
 	}
 }
@@ -310,11 +309,10 @@ Template.roomplayerstemp.events = {
 						$('#empezarboton').hide();	
 						Partidas.update({_id: Session.get('match_id')}, {$set: {initiated: 'true'}});
 					} else {
-						console.log("Threeplayers");
-						$("dialog_threeplayers").dialog("open");
+						$("#dialog_threeplayers").dialog("open");
 					}
 				} else {
-					$("dialog_noadmin").dialog("open");
+					$("#dialog_noadmin").dialog("open");
 				};
 	}
 };

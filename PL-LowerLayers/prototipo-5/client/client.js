@@ -181,7 +181,6 @@ Meteor.users.find().observe({
 		if (usersLoaded) { 
 			Meteor.defer(function () {
 				if((user.avatar == undefined) && (user._id == Meteor.user()._id)){
-					console.log("AAAAAAAAAAAABBBBBBBB")
 					Meteor.call("definirAvatar","Avatares/0.jpg",function(error,result){console.log(error);console.log(result);})
 				}
   			});
