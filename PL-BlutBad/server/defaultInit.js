@@ -19,7 +19,7 @@ Meteor.startup(function() {
 				    menuType : "principal",
 
 				},{
-					name: "Tienda",
+					name: "Premium",
 					menuType:"principal"
 				},
 				//menu de etapas del torneo

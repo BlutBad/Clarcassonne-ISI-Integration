@@ -1,5 +1,5 @@
 Template.tienda.show = function() {
-  return Session.get('current_stage') == 'Tienda';
+  return Session.get('current_stage') == 'Premium';
 };
 
 Template.tienda.total=function(){
