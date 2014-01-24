@@ -1,6 +1,6 @@
 <template name="ranking">
 	{{#if show}}
-    <h1>Ranking</h1> 
+    <h1>Ranking</h1>
 		<div class="container_ranking">
 			<div class="game_filter">
 				<h3>Ranking del juego</h3>
@@ -13,16 +13,19 @@
 			</div> 
 			
 			<div id = "ranking_container">
+
+
 				{{#if showIfAdmin}}
 					<div class="btn-toolbar">
 					    <button class="btn btn-primary fakeRanking">Fake Ranking</button>
-					    <button class="btn">Boton Funcional 3</button>
+					   
 					    <button class="btn">Boton Funcional 2</button>
 					</div>
 				{{/if}}
 
 
     {{#if show3BestRanking}}
+    			{{>sigmaGraphic}}
          {{#each juegos}}
              {{#if anyGamer _id}}
                 <div class="well">
@@ -97,3 +100,18 @@
 	{{/if}}
 {{/if}}
 </template> 
+
+
+<template name="sigmaGraphic">
+	{{#if show}}
+		<div class="sigma-parent" id="sigma-example-parent sigmaGraphicClass">
+			<div class="sigma-expand sigmaGraphicClass" id="sigmaGraphic"></div>
+		</div>
+		<!--
+			<button class="btn" id="rescale-graph">Rescale Graph</button>
+			<button class="btn btn-primary drawGraphic">Crear grafo</button>
+			<button class="btn btn-primary sigmaGraphicClass" id="stop-layout">Start Layout</button>
+		-->
+	{{/if}}
+</template>
+

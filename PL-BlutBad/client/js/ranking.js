@@ -54,14 +54,16 @@ Template.ranking.events = {
 	'click #mostrar_ranking': function() {
 		Session.set("gamerank", null);
 	},
-	'click .fakeRanking': function() {		
+	'click .fakeRanking': function() {	
+
+
 		games = Juegos.find({});		
 		games.forEach(function (game) {
 			//console.log(game.name);
 			fakeUsers = Meteor.users.find({});
 			//console.log(games.count() + " "+ fakeUsers.count() );
 			fakeUsers.forEach(function (user) {
-				if (Math.random() < 0.035) {
+				if (Math.random() < 0.15) {
 					//console.log(user.username);
 					maxScore = Math.floor((Math.random()*100)+1);
 					opts = {user_id: user._id, game_id: game._id, score:maxScore, torneo_id:null}

@@ -33,6 +33,14 @@
   
         {{#if showEtapasTorneo}}
               {{#if showIfAdmin}}
+
+              <ul>
+                <li><strong>Empezar el Torneo:</strong> Se genera la 1º etapa, que sea posible, con los participantes del torneo. </li>
+                <li><strong>Simular la etapa:</strong>Se simula la etapa en curso, con puntuacion aleatoria, las partidas se procesas al igual si la RPC se produjera del juego.</li>
+                <li><strong>Siguiente Etapa(Generar Partidas):</strong> A partide de los mejores jugadores de la etapa anterior se generan las partidas aleatorias para la etapa siguiente.</li>
+                <li><strong>Resetear el torneo: </strong>Se restablece el torneo a su estado inicial, las tablas de las partidas.</li>
+                <li><strong>Finalizar el torneo!</strong> Se finaliza el torneo</li>
+              </ul>
                   <button type="button" class="btn btn-labeled btn-success startTorneo">
                       Empezar el Torneo!
                   </button>
