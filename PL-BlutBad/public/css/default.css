@@ -928,6 +928,20 @@ td, th {
 	padding-right: 5px;
 }
 
+
+.animated {
+    -webkit-transition: height 0.2s;
+    -moz-transition: height 0.2s;
+    transition: height 0.2s;
+}
+
+.stars
+{
+    margin: 20px 0;
+    font-size: 24px;
+    color: #d17581;
+}
+
 #remotesVideos video {
   height: 120px;
   padding-bottom: 8px;
@@ -943,3 +957,7 @@ td, th {
 	padding-left: 5px;
 	padding-right: 5px;
 }
+
+
+
+

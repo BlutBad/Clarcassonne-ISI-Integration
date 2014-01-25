@@ -54,7 +54,11 @@ Meteor.startup(function() {
 					name: "Ranking del torneo!",
 					short: "ranking", 
 					menuType: "multiTorneo",
-				},
+				},{
+					name: "Comentarios",
+					short: "comments", 
+					menuType: "multiTorneo",
+				}
 			
 			];
 

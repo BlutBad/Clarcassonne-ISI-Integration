@@ -30,8 +30,10 @@ Template.webRTC.events({
 		if(isRunning){
 			//webrtc = null;
 			isRunning = false;
-			document.getElementById('startWebRTC').style.visibility = 'hidden';
-			//document.getElementById('startWebRTC').childNodes[0].nodeValue = 'No hay vuelta atras WebRTC';
+			webrtc.stopLocalVideo();
+			$("#localVideo").attr("src","");
+			//document.getElementById('startWebRTC').style.visibility = 'hidden';
+			document.getElementById('startWebRTC').childNodes[0].nodeValue = 'Start WebRTC';
 		}else{
 			isRunning = true;
 			var room_id = Session.get('current_party_id_webRTC'); 
@@ -41,8 +43,8 @@ Template.webRTC.events({
 				goWebRTC("General");
 			}
 			
-			document.getElementById('startWebRTC').style.visibility = 'hidden';
-			//document.getElementById('startWebRTC').childNodes[0].nodeValue = 'Esto no se para WebRTC';
+			//document.getElementById('startWebRTC').style.visibility = 'hidden';
+			document.getElementById('startWebRTC').childNodes[0].nodeValue = 'Stop WebRTC';
 		}
     }
 });

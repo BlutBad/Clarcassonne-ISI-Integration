@@ -146,6 +146,9 @@ Template.hall_torneo.showEtapasTorneo = function() {
   return Session.equals('multiMenuTorneoActive', 'etapas');
 };
 
+
+
+
 //Mostrar las etapas del torneo, curtos, semi, final..
 Template.hall_torneo.etapasTorneo = function() {
   return Menu.find({menuType : "torneoEtapas"});
