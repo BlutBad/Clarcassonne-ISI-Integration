@@ -1,7 +1,7 @@
 <head>
 	<title>X-ADrian</title>
 	<link href="/css/jquery-ui-1.10.4.custom.css" rel="stylesheet">
-
+	<link rel="shortcut icon" href="/favicon.ico">
 </head>
 
 <body>
@@ -16,6 +16,8 @@
    	</div>
 	<div id="dialog_birthdate" title="Rellena tu perfil.">
   		<p>Por favor, antes de unirte a una partida rellena tu perfil.</p>
+		<p>También puedes introducir tu fecha de nacimiento aquí: <input type="text" readonly="readonly" id="datepickerprof_dialog"></p>
+		<button id="birthbutton_dialog"> Guardar fecha </button>
 	</div>
 	<div id="dialog_nomatches" title="No hay partidas disponibles.">
   		<p>Lo sentimos, no hay partidas disponibles. Inténtalo más tarde.</p>
@@ -40,6 +42,23 @@
 	<div id="dialog_noadmin" title="No eres el administrador.">
   		<p>No eres el administrador de esta partida. Espera hasta que el administrador comience.</p>
 	</div>
+
+	<div id="dialog_nouser" title="Error en la búsqueda.">
+  		<p>El usuario no existe.</p>
+	</div>
+
+	<div id="dialog_nogameplayed" title="Error en la búsqueda.">
+  		<p>El usuario no ha jugado a ningun juego</p>
+	</div>
+
+	<div id="dialog_thisnoplayed" title="Error en la búsqueda.">
+  		<p>El usuario no ha jugado a este juego</p>
+	</div>
+
+	<div id="dialog_bademail" title="Correo no válido.">
+  		<p>Introduzca una cuenta de correo electronico valida</p>
+	</div>
+
 
 </body>
 
@@ -452,7 +471,7 @@
 			<div>{{game}} - {{points}}</div>
 		{{/ each}}
 		<br><br>
-		<input id="modifprof" type="submit" value="Modificar"> 
+		<button id="modifprof"> Modificar </button>
 	</div>	
 </template>
 
@@ -480,8 +499,8 @@
 		<br><br>
 		Fecha de nacimiento: <input type="text" readonly="readonly" id="datepickerprof"> (Una vez guardado no se puede modificar)<br>
 		Direccion de email:   <input id="modemail" type="email"><br><br><br>
-		<input id="saveprof" type="submit" value="Guardar"> 
-		<input id="nosaveprof" type="submit" value="Cancelar"> 
+		<button id="saveprof"> Guardar </button>
+		<button id="nosaveprof"> Cancelar </button>
 	</div>	
 </template>
 

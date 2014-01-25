@@ -46,7 +46,7 @@ $(document).on("click","#userSearch",function(){
 			$("#usuarios").append(perfiluser);	
 		}	
 	}else{
-		alert("No hay ningun usuario con ese nombre")
+		$("#dialog_nouser").dialog("open");
 	}	
 
 });

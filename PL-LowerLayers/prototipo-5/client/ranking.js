@@ -25,7 +25,7 @@ Template.playerstemp.events = {
 		var username = document.getElementById("formplayer").value;
 		var user = Meteor.users.findOne({username:username});
 		if (user == undefined) {
-			alert("El usuario no existe");
+			$("#dialog_nouser").dialog("open");
 		}else{
 			if (Ranking.findOne({user_id:user._id})!=undefined){
 				$("#gamesranking").hide();
@@ -33,7 +33,7 @@ Template.playerstemp.events = {
 				Session.set('user_id_ranking', user._id);
 				$("#byuserranking").fadeIn();
 			} else {
-				alert("El usuario no ha jugado a ningun juego");
+				$("#dialog_nogameplayed").dialog("open");
 			}
 		}
 	}
@@ -54,7 +54,7 @@ Template.bygamerankingtemp.events = {
 		var username = document.getElementById("formplayergame").value;
 		var user = Meteor.users.findOne({username:username});
 		if (user == undefined) {
-			alert("El usuario no existe");
+			$("#dialog_nouser").dialog("open");
 		}else{
 			if (Ranking.findOne({user_id:user._id})!=undefined){
 				$("#bygameranking").hide();
@@ -62,7 +62,7 @@ Template.bygamerankingtemp.events = {
 				$("#byusergameranking").fadeIn();
 				pathranking=1;
 			} else {
-				alert("El usuario no ha jugado a este juego");
+				$("#dialog_thisnoplayed").dialog("open");
 			}
 		}
 	},
