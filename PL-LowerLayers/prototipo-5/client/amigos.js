@@ -133,14 +133,13 @@ function menuAmInv(esto) {
 				match_id: partida._id,
 				orig: Meteor.user().username,
 				dest: $(esto).attr("hreflang"),
-				sent: false,
+				sent: 0,
 				when: new Date()
 			});
 			
 			$.ambiance({message: "Invitation sent to " + $(esto).attr("hreflang"),type: "success"});
-			var invi_match_id = Invitations.findOne({match_id : partida._id})._id;
-			Invitations.update({_id: invi_match_id}, {$set: {sent: 'true'}});
-			Session.set("isSentInv",true);
+			
+
 		}else {
 			$.ambiance({message: $(esto).attr("hreflang")+ " has already invited" ,type: "success"});
 		}
@@ -151,16 +150,16 @@ function menuAmInv(esto) {
 //Quiero que se queden fijas.timeout 0;
 
 Deps.autorun(function () {
-
-	if (Meteor.user()){
-		var invitaciones = Invitations.find({$and: [{dest: Meteor.user().username},{sent: true}] });
-		//Session.set("isSentInv",false);
-		//console.log("AAAAAAAAAAAAAA")
+	console.log("antes de user")
+	
+		console.log("antes de find")
+		var invitaciones = Invitations.find().fetch();
+		
+		console.log(invitaciones);
 		//var invitacion = Invitations.findOne({requester : Meteor.user().username});
 		//var pene = invitacion.sent;
 		//alert("caca");
-		//$.ambiance({message: "Invitation",type: "success", timeout: 0});
-	}	
+		//$.ambiance({message: "Invitation",type: "success", timeout: 0});	
 });
 
 /////////////////////////////////Bloqueo///////////////////////////////////////////////////////

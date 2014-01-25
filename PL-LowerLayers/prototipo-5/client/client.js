@@ -138,11 +138,8 @@ Deps.autorun(function () {
 });
 
 //Subscripcion selectiva a invitaciones
-Deps.autorun(function () {
-	var current_inv_sent = Session.get("isSentInv")
-	//alert(current_inv_sent)
-	Meteor.subscribe("invitations",current_inv_sent);
-});
+Meteor.subscribe("invitations");
+
 
 //Subscripción selectiva a los mensajes de la sala
 Deps.autorun(function () {
