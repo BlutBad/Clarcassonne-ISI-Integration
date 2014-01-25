@@ -16,7 +16,7 @@
    	</div>
 	<div id="dialog_birthdate" title="Rellena tu perfil.">
   		<p>Por favor, antes de unirte a una partida rellena tu perfil.</p>
-		<p>También puedes introducir tu fecha de nacimiento aquí: <input type="text" readonly="readonly" id="datepickerprof_dialog"></p>
+		<p>También puedes introducir tu fecha de nacimiento aquí(Recuerda que no se puede volver a modificar): <input type="text" readonly="readonly" id="datepickerprof_dialog"></p>
 		<button id="birthbutton_dialog"> Guardar fecha </button>
 	</div>
 	<div id="dialog_nomatches" title="No hay partidas disponibles.">
@@ -234,7 +234,7 @@
 
 
 <template name="messagestemp" >
-	<div id="messages" style="overflow:auto;height:50%;">
+	<div id="messages" style="overflow:auto;height:300px;">
 		{{# each messages}}
 			<i><img width='20px' height='20px'  src={{avatar}} >{{name}}: {{message}}</i></br>
 		{{/each}}
@@ -433,12 +433,13 @@
 
 
 <template name='privatemessagestemp'>
-	<div style='overflow: auto;  height:250px; width:75%; float:left' class="privatemessages">
-		{{# each listaprivatemessages}}
-			<i><font size=-4>({{date}})</font> {{orig}}</i>: {{text}} <br>
-		{{/ each}}	
+	<div style='overflow: auto;  height:200px; width:82%; float:right' class="privatemessages">
+
+			{{# each listaprivatemessages}}
+				<i><font size=-4>({{date}})</font> {{orig}}</i>: {{text}} <br>
+			{{/ each}}	
+
 	</div>
-	<span id="avatarPrivadisimo"></span>
 </template>
 
 

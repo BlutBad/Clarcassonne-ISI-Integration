@@ -67,6 +67,21 @@ $(document).ready(function() {
 				endVideoChat()
 			}	
 		});
+		$( "#formSearch" ).autocomplete({
+			source: availableNames
+		});
+
+		$(document).on("click","#formplayer",function(){
+			$( "#formplayer" ).autocomplete({
+				source: availableNames
+			});
+		});
+		$(document).on("click","#formplayergame",function(){
+			$( "#formplayergame" ).autocomplete({
+				source: availableNames
+			});
+		});
+
 
 });
 
@@ -167,6 +182,42 @@ Template.iconLoginTemp.avatar = function(){
 }
 
 
+
+
+
+var obsceneswords = ["fuck","fucking","asshole","bitch","pussy","cock","blowjob","handjob","shit","hostias",
+					"coño","coños","coñete","chocho","chochete","cabron","cabrona","gilipollas","puta","putas",
+					"puto","putos","puton","polla","poya","pollas","pollazo","capulla","mamon","mamona","mamones","maricon",
+					"maricona","maricones","follar","follando","follen","jodan","jodete","cago","cojon","cojones","bukkake",
+					"bucake","gayola","gallola","verga","pinga","gilipoyas","mamada","mamadas"];
+//Sustituye palabras obscenas por cuatro asteriscos
+moderator = function (message){
+	var moderatedwordslist = new Array();
+	wordslist=message.split(" ");
+	wordslist.forEach(function(word){
+		if (obsceneswords.indexOf(word) != -1){
+			var moderatedword="****";
+		}else{
+			var moderatedword=word;
+		}
+		moderatedwordslist.push(moderatedword);
+	})
+	return moderatedwordslist.join(" ")
+}
+
+
+
+availableNames = new Array();
+
+Deps.autorun(function(){
+	if(Meteor.users.find().count()){
+		listaUsuarios=Meteor.users.find();
+		listaUsuarios.forEach(function(elem){
+			if (availableNames.indexOf(elem.username)==-1)
+				availableNames.push(elem.username);
+		});
+	}
+});
 
 
 
