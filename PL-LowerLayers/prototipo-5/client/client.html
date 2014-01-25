@@ -433,11 +433,12 @@
 
 
 <template name='privatemessagestemp'>
-	<div style='overflow: auto; height:250px;' class="privatemessages">
+	<div style='overflow: auto;  height:250px; width:75%; float:left' class="privatemessages">
 		{{# each listaprivatemessages}}
 			<i><font size=-4>({{date}})</font> {{orig}}</i>: {{text}} <br>
 		{{/ each}}	
 	</div>
+	<span id="avatarPrivadisimo"></span>
 </template>
 
 

@@ -62,9 +62,29 @@ Template.listaAmigosOnlineTemp.events = {
 		if (indice==-1){
 			mychats.push(userdest_id);
 			$("#chatTabs ul").append("<li id='"+userdest_id+"'> <a tipo='titulochat' href='#"+userdest.username+"'>"+userdest.username+"</a><button type='button' class='closechattab'>x</button></li>");
-			$("#chatTabs").append("<div tipo='contenidochat' id='"+userdest.username+"'> <input type='text' size='100'  maxlength='100' style='font-size: 12pt;' class='privatemessagecont'/></br></div>");
+			$("#chatTabs").append("<div tipo='contenidochat' id='"+userdest.username+"'> <input type='text'   maxlength='100' style='font-size: 12pt; width:75%' class='privatemessagecont'/>  </br></div>");
 			$("#"+userdest.username).append(PlantillaMensajesPrivados);
+			$("#avatarPrivadisimo").append("<div style='width:25%;  text-align:center; float:left;'>"+
+												"<span style=''>"+userdest.username+"</span>"+
+											"</div>");	
+			$("#avatarPrivadisimo").append("<div style='width:25%;  text-align:center; float:left;'>"+
+												"<img width='75px' style='' height='75px' src='"+userdest.avatar+"'>"+
+											"</div>");
+
+
+			
+			$("#avatarPrivadisimo").append("<div style='width:25%;  text-align:center; margin-top:40px; float:left;'>"+
+												"<span style=' '>"+Meteor.user().username+"</span>"+
+											"</div>");	
+			$("#avatarPrivadisimo").append("<div style='width:25%;  float:left;  text-align:center'>"+
+												"<img width='75px' style='' height='75px' src='"+Meteor.user().avatar+"'>"+
+											"</div><br style='clear:both;'/>");
+
+
+
+											
 			$("#chatTabs").tabs("refresh");
+
 		}
 
 		$("#"+userdest_id+" a").trigger('click');
