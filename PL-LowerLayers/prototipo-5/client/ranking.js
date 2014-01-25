@@ -161,7 +161,7 @@ Template.bygamerankingtemp.gameranking=function(){
 //Carga puntuaciones para juego
 Template.bygamerankingtemp.ranking=function(){
 	if (Ranking.find().count()!=0){
-		var list = Ranking.find({},{sort:{score:-1}});
+		var list = Ranking.find({game_id:Session.get("game_id_ranking")},{sort:{score:-1}});
 		var list2=[];
 		list.forEach(function(elem) {
 			list2.push({"user":Meteor.users.findOne({_id:elem.user_id}).username,
@@ -201,7 +201,7 @@ Template.byuserrankingtemp.playerranking=function(){
 //Carga puntuaciones para usuario
 Template.byuserrankingtemp.ranking=function(){
 	if(Ranking.find().count()!=0){
-  		var listranking = Ranking.find();
+  		var listranking = Ranking.find({user_id:Session.get("user_id_ranking")});
   		var elemfound = false;
   		var listbestsids = [];
   		var listbestsnames = [];
@@ -249,7 +249,7 @@ Template.byusergamerankingtemp.user_selected=function(){
 //Carga puntuaciones para juego y un usuario
 Template.byusergamerankingtemp.ranking=function(){
 	if (Ranking.find().count()!=0){
-		var list = Ranking.find({},{sort:{score:-1}});
+		var list = Ranking.find({game_id:Session.get("game_id_ranking"),user_id:Session.get("user_id_ranking")},{sort:{score:-1}});
 		var list2=[];
 		list.forEach(function(elem) {
 			list2.push({"score":elem.score});
