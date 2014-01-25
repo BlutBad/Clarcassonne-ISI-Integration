@@ -9,8 +9,9 @@ Session.setDefault('gamerank', null);
 
 //Variables de session para las torneos, multi-torneo en cuestion
 Session.setDefault("multiMenuTorneoActive",null);
-Session.setDefault('etapasTorneoActive', "participantes");
 
+Session.setDefault('etapasTorneoActive', "participantes");
+Session.setDefault('soloMenuTorneoActive', "participantes");
 
 Session.setDefault('showTorneoComents', null);
 
