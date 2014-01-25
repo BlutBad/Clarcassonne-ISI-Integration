@@ -117,6 +117,7 @@ joinmatch = function(match_id) {
 			}
 		} else {
 			$( "#dialog_birthdate" ).dialog("open");
+			$("#error_birthdialog").remove();
 		};
 	}
 

@@ -62,9 +62,38 @@ Template.listaAmigosOnlineTemp.events = {
 		if (indice==-1){
 			mychats.push(userdest_id);
 			$("#chatTabs ul").append("<li id='"+userdest_id+"'> <a tipo='titulochat' href='#"+userdest.username+"'>"+userdest.username+"</a><button type='button' class='closechattab'>x</button></li>");
-			$("#chatTabs").append("<div tipo='contenidochat' id='"+userdest.username+"'> <input type='text' size='100'  maxlength='100' style='font-size: 12pt;' class='privatemessagecont'/></br></div>");
-			$("#"+userdest.username).append(PlantillaMensajesPrivados);
+			$("#chatTabs").append("<div tipo='contenidochat' id='"+userdest.username+"'></br></div>");
+			
+
+			$("#"+userdest.username).append("<input type='text' style='float:right; font-size: 12pt; width:100%;' maxlength='125' class='privatemessagecont'/> <br style='clear:both;'/>");
+
+
+			$("#"+userdest.username).append(PlantillaMensajesPrivados);	
+
+
+			$("#"+userdest.username).append("<div style='width:15%; height:10% ; text-align:center; float:left; '>"+
+												"<div style=' '>"+Meteor.user().username+"</div>"+
+												"<img width='75px' style='' height='75px' src='"+Meteor.user().avatar+"'>"+
+											"</div>");
+
+			
+
+
+
+			$("#"+userdest.username).append("<div style='width:15%; height:10% ; text-align:center; float:left;'>"+
+												"<div style=''>"+userdest.username+"</div>"+
+												"<img width='75px' style='' height='75px' src='"+userdest.avatar+"'>"+
+											"</div>");
+			
+
+
+			
+
+
+
+							
 			$("#chatTabs").tabs("refresh");
+
 		}
 
 		$("#"+userdest_id+" a").trigger('click');
@@ -112,24 +141,7 @@ $(document).on("click", ".closechattab", function() {
 
 
 
-var obsceneswords = ["fuck","fucking","asshole","bitch","shit","hostias","coño","coños","cabron",
-					"cabrona","gilipollas","puta","putas","puto","putos","puton","polla","pollas","capulla",
-					"mamon","mamona","mamones","maricon","maricona","maricones","follar",
-					"follando","follen","jodan","jodete","cago"];
-//Sustituye palabras obscenas por cuatro asteriscos
-function moderator(message){
-	var moderatedwordslist = new Array();
-	wordslist=message.split(" ");
-	wordslist.forEach(function(word){
-		if (obsceneswords.indexOf(word) != -1){
-			var moderatedword="****";
-		}else{
-			var moderatedword=word;
-		}
-		moderatedwordslist.push(moderatedword);
-	})
-	return moderatedwordslist.join(" ")
-}
+
 
 
 
@@ -141,7 +153,7 @@ $(document).on("keydown",".privatemessagecont", function(event){
 			Private_Messages.insert({
 				orig: Session.get('origname'),
 				dest: Session.get('destname'),
-				text: moderator(privatemessage.val()),
+				text: privatemessage.val(),
 				date: new Date(),
 				recibido: 0
 			});

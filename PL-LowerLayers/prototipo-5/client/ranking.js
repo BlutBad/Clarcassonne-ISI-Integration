@@ -25,7 +25,7 @@ Template.playerstemp.events = {
 		var username = document.getElementById("formplayer").value;
 		var user = Meteor.users.findOne({username:username});
 		if (user == undefined) {
-			alert("El usuario no existe");
+			$("#dialog_nouser").dialog("open");
 		}else{
 			if (Ranking.findOne({user_id:user._id})!=undefined){
 				$("#gamesranking").hide();
@@ -33,7 +33,7 @@ Template.playerstemp.events = {
 				Session.set('user_id_ranking', user._id);
 				$("#byuserranking").fadeIn();
 			} else {
-				alert("El usuario no ha jugado a ningun juego");
+				$("#dialog_nogameplayed").dialog("open");
 			}
 		}
 	}
@@ -54,7 +54,7 @@ Template.bygamerankingtemp.events = {
 		var username = document.getElementById("formplayergame").value;
 		var user = Meteor.users.findOne({username:username});
 		if (user == undefined) {
-			alert("El usuario no existe");
+			$("#dialog_nouser").dialog("open");
 		}else{
 			if (Ranking.findOne({user_id:user._id})!=undefined){
 				$("#bygameranking").hide();
@@ -62,7 +62,7 @@ Template.bygamerankingtemp.events = {
 				$("#byusergameranking").fadeIn();
 				pathranking=1;
 			} else {
-				alert("El usuario no ha jugado a este juego");
+				$("#dialog_thisnoplayed").dialog("open");
 			}
 		}
 	},
@@ -161,7 +161,7 @@ Template.bygamerankingtemp.gameranking=function(){
 //Carga puntuaciones para juego
 Template.bygamerankingtemp.ranking=function(){
 	if (Ranking.find().count()!=0){
-		var list = Ranking.find();
+		var list = Ranking.find({game_id:Session.get("game_id_ranking")},{sort:{score:-1}});
 		var list2=[];
 		list.forEach(function(elem) {
 			list2.push({"user":Meteor.users.findOne({_id:elem.user_id}).username,
@@ -201,7 +201,7 @@ Template.byuserrankingtemp.playerranking=function(){
 //Carga puntuaciones para usuario
 Template.byuserrankingtemp.ranking=function(){
 	if(Ranking.find().count()!=0){
-  		var listranking = Ranking.find();
+  		var listranking = Ranking.find({user_id:Session.get("user_id_ranking")});
   		var elemfound = false;
   		var listbestsids = [];
   		var listbestsnames = [];
@@ -249,7 +249,7 @@ Template.byusergamerankingtemp.user_selected=function(){
 //Carga puntuaciones para juego y un usuario
 Template.byusergamerankingtemp.ranking=function(){
 	if (Ranking.find().count()!=0){
-		var list = Ranking.find();
+		var list = Ranking.find({game_id:Session.get("game_id_ranking"),user_id:Session.get("user_id_ranking")},{sort:{score:-1}});
 		var list2=[];
 		list.forEach(function(elem) {
 			list2.push({"score":elem.score});

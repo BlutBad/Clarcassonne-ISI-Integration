@@ -1,4 +1,3 @@
-
 Meteor.methods({
 	definirAvatar: function (pathAvatar){
 		var user=Meteor.users.findOne({_id:this.userId});
@@ -19,10 +18,10 @@ Meteor.methods({
 	matchFinish: function (match_id, game_id, points) {
     	Partidas.update({_id: match_id},{$set: {finish:"true", time_end:Date.now()}});
         Ranking.insert({user_id: this.userId, game_id: game_id, score: points});
-        //if (Ranking.find({game_id: game_id, user_id:this.userId}).count()==6){
+        if (Ranking.find({game_id: game_id, user_id:this.userId}).count()==11){
         		var list = Ranking.find({game_id: game_id, user_id:this.userId},{sort:{score:1}}).fetch();
-        		var lastuser = list[0];
-        		console.log(lastuser);
-        //}		
+        		var worstscoreid = list[0]._id;
+        		Ranking.remove({_id:worstscoreid});
+        }		
     }
 });

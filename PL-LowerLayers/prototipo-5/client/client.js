@@ -33,89 +33,6 @@ $(document).ready(function() {
 			$( "#chatTabs" ).tabs({collapsible: true});
 		});
 
-		$( "#dialog_birthdate" ).dialog({
-      		autoOpen: false,
-     		show: {
-        		effect: "blind",
-        		duration: 300
-      		},
-     		hide: {
-      			effect: "explode",
-				duration: 200
-			}
-    	});
-
-		$( "#dialog_nomatches" ).dialog({
-      		autoOpen: false,
-     		show: {
-        		effect: "blind",
-        		duration: 300
-      		},
-     		hide: {
-      			effect: "explode",
-				duration: 200
-			}
-    	});
-
-		$( "#dialog_password" ).dialog({
-      		autoOpen: false,
-     		show: {
-        		effect: "blind",
-        		duration: 300
-      		},
-     		hide: {
-      			effect: "explode",
-				duration: 200
-			}
-    	});
-
-		$( "#dialog_fullmatch" ).dialog({
-      		autoOpen: false,
-     		show: {
-        		effect: "blind",
-        		duration: 300
-      		},
-     		hide: {
-      			effect: "explode",
-				duration: 200
-			}
-    	});
-
-		$( "#dialog_matchname" ).dialog({
-      		autoOpen: false,
-     		show: {
-        		effect: "blind",
-        		duration: 300
-      		},
-     		hide: {
-      			effect: "explode",
-				duration: 200
-			}
-    	});
-
-		$( "#dialog_threeplayers" ).dialog({
-      		autoOpen: false,
-     		show: {
-        		effect: "blind",
-        		duration: 300
-      		},
-     		hide: {
-      			effect: "explode",
-				duration: 200
-			}
-    	});
-
-		$( "#dialog_noadmin" ).dialog({
-      		autoOpen: false,
-     		show: {
-        		effect: "blind",
-        		duration: 300
-      		},
-     		hide: {
-      			effect: "explode",
-				duration: 200
-			}
-    	});
 		
 		$("#friends").css({"top": $(window).height()-57, "position":"fixed"});
 		$("#friends").css("left",$(window).width()-182);
@@ -150,6 +67,21 @@ $(document).ready(function() {
 				endVideoChat()
 			}	
 		});
+		$( "#formSearch" ).autocomplete({
+			source: availableNames
+		});
+
+		$(document).on("click","#formplayer",function(){
+			$( "#formplayer" ).autocomplete({
+				source: availableNames
+			});
+		});
+		$(document).on("click","#formplayergame",function(){
+			$( "#formplayergame" ).autocomplete({
+				source: availableNames
+			});
+		});
+
 
 });
 
@@ -206,7 +138,11 @@ Deps.autorun(function () {
 });
 
 //Subscripcion selectiva a invitaciones
-Meteor.subscribe("invitations");
+Deps.autorun(function () {
+	var current_inv_sent = Session.get("isSentInv")
+	//alert(current_inv_sent)
+	Meteor.subscribe("invitations",current_inv_sent);
+});
 
 //Subscripción selectiva a los mensajes de la sala
 Deps.autorun(function () {
@@ -246,6 +182,42 @@ Template.iconLoginTemp.avatar = function(){
 }
 
 
+
+
+
+var obsceneswords = ["fuck","fucking","asshole","bitch","pussy","cock","blowjob","handjob","shit","hostias",
+					"coño","coños","coñete","chocho","chochete","cabron","cabrona","gilipollas","puta","putas",
+					"puto","putos","puton","polla","poya","pollas","pollazo","capulla","mamon","mamona","mamones","maricon",
+					"maricona","maricones","follar","follando","follen","jodan","jodete","cago","cojon","cojones","bukkake",
+					"bucake","gayola","gallola","verga","pinga","gilipoyas","mamada","mamadas"];
+//Sustituye palabras obscenas por cuatro asteriscos
+moderator = function (message){
+	var moderatedwordslist = new Array();
+	wordslist=message.split(" ");
+	wordslist.forEach(function(word){
+		if (obsceneswords.indexOf(word) != -1){
+			var moderatedword="****";
+		}else{
+			var moderatedword=word;
+		}
+		moderatedwordslist.push(moderatedword);
+	})
+	return moderatedwordslist.join(" ")
+}
+
+
+
+availableNames = new Array();
+
+Deps.autorun(function(){
+	if(Meteor.users.find().count()){
+		listaUsuarios=Meteor.users.find();
+		listaUsuarios.forEach(function(elem){
+			if (availableNames.indexOf(elem.username)==-1)
+				availableNames.push(elem.username);
+		});
+	}
+});
 
 
 

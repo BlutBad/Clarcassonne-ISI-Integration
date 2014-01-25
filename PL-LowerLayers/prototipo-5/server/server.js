@@ -26,8 +26,8 @@ Meteor.publish("private_messages", function(orig_name) {
 });
 
 // Encuentra las partidas en las que a sido invitado
-Meteor.publish("invitations", function() { 	
-	return Invitations.find();
+Meteor.publish("invitations", function(isSent) { 	
+	return Invitations.find({sent: isSent});
 });
 
 
@@ -43,11 +43,11 @@ Meteor.publish("partidas", function(current_game_id) {
 //Se publica la puntuacion selectiva en funcion al criterio a filtrar
 Meteor.publish("ranking", function(selected_game_id,selected_user_id){								   
 	if (selected_game_id!=undefined && selected_user_id != undefined){
-		return Ranking.find({"user_id": selected_user_id,"game_id": selected_game_id},{sort:{score:-1}});
+		return Ranking.find({"user_id": selected_user_id,"game_id": selected_game_id});
 	}else if (selected_game_id!=undefined && selected_user_id == undefined){
-		return Ranking.find({"game_id": selected_game_id},{sort:{score:-1}});
+		return Ranking.find({"game_id": selected_game_id});
 	}else if (selected_game_id==undefined && selected_user_id != undefined){
-		return Ranking.find({"user_id": selected_user_id},{sort:{score:-1}});
+		return Ranking.find({"user_id": selected_user_id});
 	}else{
 		return Ranking.find();
 	}
