@@ -65,9 +65,9 @@
 <template name="cointemp">
 	<div id="slider">
 		<div id="coin-slider">
-		    <IMG  SRC="frootwar.png">
-		    <IMG  SRC="carcassonne.jpg">
-		    <IMG  SRC="alieninvasion.png">
+		    <IMG  SRC="fotoscoinsslider/frootwars.png">
+		    <IMG  SRC="fotoscoinsslider/carcassonne.jpg">
+		    <IMG  SRC="fotoscoinsslider/alieninvasion.png">
 		</div>
 	</div>	
 </template>
@@ -307,13 +307,13 @@
 	<div id="frootwarscontainer">
 		<canvas id="gamecanvas" width="640" height="480" class="gamelayer"></canvas>
   		<div id="scorescreen" class="gamelayer">
-    		<img id="togglemusic" src="images/icons/sound.png" onclick="game.toggleBackgroundMusic();">
-    		<img src="images/icons/prev.png" onclick="game.restartLevel();">
+    		<img id="togglemusic" src="Frootwars/images/icons/sound.png" onclick="game.toggleBackgroundMusic();">
+    		<img src="Frootwars/images/icons/prev.png" onclick="game.restartLevel();">
     		<span id="score">Score: 0</span>
   		</div>
   		<div id="gamestartscreen" class="gamelayer">
-    		<img src="images/icons/play.png" alt="Play Game" onclick = "game.showLevelScreen();"><br>
-    		<img src="images/icons/settings.png" alt="Settings">
+    		<img src="Frootwars/images/icons/play.png" alt="Play Game" onclick = "game.showLevelScreen();"><br>
+    		<img src="Frootwars/images/icons/settings.png" alt="Settings">
   		</div>
   		<div id="levelselectscreen" class="gamelayer"></div>
   		<div id="loadingscreen" class="gamelayer">
@@ -322,9 +322,9 @@
   		<div id="endingscreen" class="gamelayer">
    		<div>
    	   	<p id="endingmessage">The Level Is Over Message</p>
-   	   	<p id="playcurrentlevel" onclick="game.restartLevel();"><img src="images/icons/prev.png"> Replay Current Level</p>
-   	   	<p id="playnextlevel" onclick="game.startNextLevel();"><img src="images/icons/next.png"> Play Next Level </p> 
-      		<p id="returntolevelscreen"onclick="game.showLevelScreen();"><img src="images/icons/return.png"> Return to Level Screen</p>
+   	   	<p id="playcurrentlevel" onclick="game.restartLevel();"><img src="Frootwars/images/icons/prev.png"> Replay Current Level</p>
+   	   	<p id="playnextlevel" onclick="game.startNextLevel();"><img src="Frootwars/images/icons/next.png"> Play Next Level </p> 
+      		<p id="returntolevelscreen"onclick="game.showLevelScreen();"><img src="Frootwars/images/icons/return.png"> Return to Level Screen</p>
     		</div>
   		</div>
 	</div>
@@ -335,22 +335,22 @@
         <div id="clarcassonnecontainer" >
                 <canvas id='clarcassonnecanvas' width='800' height='600'></canvas>
 				<audio id="sonidojuego">
-				<source src="audio/won2.ogg" type="audio/ogg"/>
+				<source src="Clarcassonne/audio/won2.ogg" type="audio/ogg"/>
 				</audio>
 				<audio id="sonido_ladron">
-					<source src="audio/ladron.ogg" type="audio/ogg"/>
+					<source src="Clarcassonne/audio/ladron.ogg" type="audio/ogg"/>
 		   		</audio>
 		   		<audio id = "sonido_granjero">
-		   			<source src="audio/Gallo.ogg" type="audio/ogg"/>
+		   			<source src="Clarcassonne/audio/Gallo.ogg" type="audio/ogg"/>
 		   		</audio>
 		   		<audio id= "sonido_caballero">
-		   			<source src="audio/HORSES.ogg" type="audio/ogg"/>
+		   			<source src="Clarcassonne/audio/HORSES.ogg" type="audio/ogg"/>
 		   		</audio>
 		   		<audio id="sonido_monje">
-		   			<source src="audio/30_Wololo.ogg" type="audio/ogg"/>
+		   			<source src="Clarcassonne/audio/30_Wololo.ogg" type="audio/ogg"/>
 		   		</audio>
 		   		<audio id="sonido_ficha">
-		   			<source src="audio/GONG4.ogg" type = "audio/ogg"/>
+		   			<source src="Clarcassonne/audio/GONG4.ogg" type = "audio/ogg"/>
 		   		</audio>
         </div>
 </template>
