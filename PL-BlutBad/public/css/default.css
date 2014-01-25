@@ -927,3 +927,19 @@ td, th {
 	padding-left: 5px;
 	padding-right: 5px;
 }
+
+#remotesVideos video {
+  height: 120px;
+  padding-bottom: 8px;
+	padding-top: 8px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+#localVideo {
+	height: 120px;
+	padding-bottom: 8px;
+	padding-top: 8px;
+	padding-left: 5px;
+	padding-right: 5px;
+}

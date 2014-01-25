@@ -11,7 +11,7 @@ Session.setDefault('gamerank', null);
 Session.setDefault("multiMenuTorneoActive",null);
 Session.setDefault('etapasTorneoActive', "participantes");
 
-
+Session.setDefault('current_party_id_webRTC', null);
 
 Meteor.startup(function() {
     $('#gamecontainer').hide();    
