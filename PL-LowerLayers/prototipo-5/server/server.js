@@ -26,8 +26,8 @@ Meteor.publish("private_messages", function(orig_name) {
 });
 
 // Encuentra las partidas en las que a sido invitado
-Meteor.publish("invitations", function() { 	
-	return Invitations.find();
+Meteor.publish("invitations", function(isSent) { 	
+	return Invitations.find({sent: isSent});
 });
 
 

@@ -87,7 +87,7 @@
 			<h3>Buscar</h3>
 				<div>
 					<input type="text" id="formSearch">
-					<input type="button" id="buttonSearch" value="Buscar"/>
+					<button id="buttonSearch">Buscar</button>
 				</div>
 		</div>
 		<a id="friends" class="escondido" style="cursor:pointer;" >
@@ -285,7 +285,7 @@
 
 
 <template name="frootwarstemp">
-	<div id="frootwarscontainer" style="backgroud-color:green">
+	<div id="frootwarscontainer">
 		<canvas id="gamecanvas" width="640" height="480" class="gamelayer"></canvas>
   		<div id="scorescreen" class="gamelayer">
     		<img id="togglemusic" src="images/icons/sound.png" onclick="game.toggleBackgroundMusic();">
@@ -384,16 +384,16 @@
 <template name="listaAmigosOnlineTemp">
 	<div id="listaAmigosOnline">
 		{{# each listaAmigosOnline}}
-			<img width='20px' height='20px'  src={{avatar}} style ="float:left">
-			<a style ="cursor:pointer;text-decoration:underline;float:left;margin-left:5px" class="linkchat">
+			<img width='20px' height='20px'  src={{avatar}} style ="float:left;margin-left:0px">
+			<a style ="cursor:pointer;text-decoration:underline;float:left;" class="linkchat">
 				{{username}}<br>
 			</a>
-			<ul class="menuAmigos" style="float:left;margin-left:3px;">
+			<ul class="menuAmigos" style="float:left;">
 				<li>
 					<a class ="menuAmigosStyle">&#9660;</a>
 					<ul>
 						<li><a class ="menuAmigosStyle menuAInv" hreflang={{username}}><span class="ui-icon-plus"></span>Invitar</a></li>
-						<li><a class ="menuAmigosStyle menuAPer" ><span class="ui-icon-person"></span>Perfil</a></li>
+						<li><a class ="menuAmigosStyle menuAPer" hreflang={{username}}><span class="ui-icon-person"></span>Perfil</a></li>
 						<li><a class ="menuAmigosStyle menuABloq" hreflang={{username}}><span class="ui-icon-cancel"></span>Bloquear</a></li>
 					</ul>
 				</li>

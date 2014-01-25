@@ -6,7 +6,7 @@ Template.friendsTemp.events = {
 				searchUsers($("#formSearch").val());
 			}
 		}
-	},'click input#buttonSearch': function (event) { //añade o borra con con enter
+	},'click button#buttonSearch': function (event) { //añade o borra con con enter
 			if ($("#formSearch").val()!=''){
 				searchUsers($("#formSearch").val());
 			}
@@ -107,7 +107,7 @@ menuAmigosFunc = function (){
 	});
 
 	$(".menuAPer").click(function() {
-		alert("caca");	
+		menuAmPer(this);	
 	});
 
 	$(".menuABloq").click(function() {
@@ -131,39 +131,35 @@ function menuAmInv(esto) {
 		if (invitacion == undefined){
 			Invitations.insert({
 				match_id: partida._id,
-				requester: Meteor.user().username,
-				owner: $(esto).attr("hreflang"),
+				orig: Meteor.user().username,
+				dest: $(esto).attr("hreflang"),
 				sent: false,
 				when: new Date()
 			});
 			
-			console.log(Invitations.find())
-			
 			$.ambiance({message: "Invitation sent to " + $(esto).attr("hreflang"),type: "success"});
-
-			//var invi_match_id = Invitations.findOne({match_id : partida._id})._id;
-			//console.log(invi_match_id);
-			//Session.set('invit_id', invi_match_id);
-			//Invitations.update({_id: invi_match_id}, {$set: {sent: 'true'}});
+			var invi_match_id = Invitations.findOne({match_id : partida._id})._id;
+			Invitations.update({_id: invi_match_id}, {$set: {sent: 'true'}});
+			Session.set("isSentInv",true);
 		}else {
 			$.ambiance({message: $(esto).attr("hreflang")+ " has already invited" ,type: "success"});
 		}
 	}
 }
 
-//problema: que este jugando a otro juego.
-// incluso que este en la pestaña de ranking.
-//Quiero que se queden fijas
+//problema: que este jugando a otro juego. pues que se salga
+//Quiero que se queden fijas.timeout 0;
 
 Deps.autorun(function () {
 
-	var invitaciones = Invitations.find();
 	if (Meteor.user()){
-		
+		var invitaciones = Invitations.find({$and: [{dest: Meteor.user().username},{sent: true}] });
+		//Session.set("isSentInv",false);
+		//console.log("AAAAAAAAAAAAAA")
 		//var invitacion = Invitations.findOne({requester : Meteor.user().username});
 		//var pene = invitacion.sent;
 		//alert("caca");
-		//$.ambiance({message: "Invitation sent to "+invitacion.match_id ,type: "success", timeout: 0});
+		//$.ambiance({message: "Invitation",type: "success", timeout: 0});
 	}	
 });
 
@@ -195,4 +191,16 @@ function UnblockFriend(idUser,idAborrar) {
 	listBlk = _.reject(listBlk, function(friend){ return friend == idAborrar; });
 	Meteor.users.update({_id: idUser}, {$set: {bloqueados: listBlk}});
 }
+
+/////////////////////////////////Ver Perfil///////////////////////////////////////////////////////
+
+function menuAmPer(esto) {
+	
+	//alert($(esto).attr("hreflang"));
+	$("#ui-id-3").trigger('click');
+	$("#usersearcher").prop('value', $(esto).attr("hreflang"));
+	$("#userSearch").trigger('click');
+}
+
+
 
