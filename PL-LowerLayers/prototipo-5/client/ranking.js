@@ -161,7 +161,7 @@ Template.bygamerankingtemp.gameranking=function(){
 //Carga puntuaciones para juego
 Template.bygamerankingtemp.ranking=function(){
 	if (Ranking.find().count()!=0){
-		var list = Ranking.find();
+		var list = Ranking.find({},{sort:{score:-1}});
 		var list2=[];
 		list.forEach(function(elem) {
 			list2.push({"user":Meteor.users.findOne({_id:elem.user_id}).username,
@@ -249,7 +249,7 @@ Template.byusergamerankingtemp.user_selected=function(){
 //Carga puntuaciones para juego y un usuario
 Template.byusergamerankingtemp.ranking=function(){
 	if (Ranking.find().count()!=0){
-		var list = Ranking.find();
+		var list = Ranking.find({},{sort:{score:-1}});
 		var list2=[];
 		list.forEach(function(elem) {
 			list2.push({"score":elem.score});
