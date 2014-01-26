@@ -1,0 +1,71 @@
+
+
+
+
+
+<template name="torComments">
+{{#if show}}
+	<p>Comentarios del torneo!</p>
+
+	{{#each comments}}
+		<div class="post-summary" style="width: 70%">
+		<div class="post-details">
+			<div class="post-date">
+				<span class="day">{{date.day}}</span>
+				<span class="month">{{date.month}}, </span>
+				<span class="day">{{date.time}}</span>
+
+
+			</div>
+			Comentado por <a href="#">{{username}}</a>
+		</div>
+
+
+		<table style="width: 100%">
+			<tr>
+				<td>
+					<img src="images/favicon.png" style="width=80px; height=80px" />
+				</td>
+
+				<td>	
+						<div class="post-description">
+							<p>{{text}} </p>
+						</div>
+				</td>
+			</tr>
+		</table>
+
+
+		</div>
+	{{/each}}
+	
+	
+	{{#if currentUser}}
+		{{#if adding_comment}}
+		<div class="post-summary" style="width: 50%">
+		<h3 class="post-title">Tu opinion nos importa!</h3>
+		{{#with myInfo}}
+			<div class="post-details">
+				<div class="post-date">
+					<span class="month">{{date.month}}</span>
+					<span class="day">{{date.day}}</span>
+				</div>
+				Comenta  <a href="">{{username}}</a>
+			</div>
+		{{/with}}
+
+
+	        <textarea style="width: 95%;"cols="50" id="comment-input" placeholder="Tu comentario..." rows="5"></textarea>
+		</div>
+	      {{else}}
+				<button class="btn btn-primary addcoment">Añadir comentario!</button>
+	      {{/if}}
+	{{/if}}
+
+
+{{/if}}
+</template>
+
+
+
+

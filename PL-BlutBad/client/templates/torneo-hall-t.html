@@ -1,0 +1,292 @@
+<template name="hall_torneo">
+
+{{#if show}}
+  <div class="container_hall_tor"> 
+    {{#with torneo}}              
+      <div class="post-summary">
+        <h1>{{title}}</h1>
+        <img src="{{pic}}" alt="sample image" width="606" height="115" class="imgtor"/>
+        <div class="post-detailss"> 
+          Creado por <a href="">{{getUsername user_create}}</a> en <a href="#">Torneos</a> 
+          <span class="badge badge-success">Empieza: {{date_start}}</span>
+          <span class="badge badge-important">Termina: {{date_finish}}</span>
+          <span class="{{participoClass}} apuntarme">Participantes: {{numParticip}}</span>      
+        </div>
+        
+        <div class="post-description">
+          <p>{{description_long}}</p>
+        </div>       
+        
+      </div> 
+    {{/with}}
+
+      
+    {{#if multiTorneo}} 
+      <div class="container">
+
+      <h2>Menu del torneo </h2>
+        <div id="tab" class="btn-group" data="buttons-radio">
+          {{#each multiMenuTorneo}} 
+            <a href="" class="btn btn-large btn-info multiMenuTorneo {{multiMenuTorneoActive}}" data-toggle="tab">{{name}}</a>
+          {{/each}}
+        </div>
+
+            {{>torComments}}
+  
+        {{#if showEtapasTorneo}}
+              {{#if showIfAdmin}}
+
+              <ul>
+                <li><strong>Empezar el Torneo:</strong> Se genera la 1º etapa, que sea posible, con los participantes del torneo. </li>
+                <li><strong>Simular la etapa:</strong>Se simula la etapa en curso, con puntuacion aleatoria, las partidas se procesas al igual si la RPC se produjera del juego.</li>
+                <li><strong>Siguiente Etapa(Generar Partidas):</strong> A partide de los mejores jugadores de la etapa anterior se generan las partidas aleatorias para la etapa siguiente.</li>
+                <li><strong>Resetear el torneo: </strong>Se restablece el torneo a su estado inicial, las tablas de las partidas.</li>
+                <li><strong>Finalizar el torneo!</strong> Se finaliza el torneo</li>
+              </ul>
+                  <button type="button" class="btn btn-labeled btn-success startTorneo">
+                      Empezar el Torneo!
+                  </button>
+
+                  <button type="button" class="btn btn-labeled btn-warning simularEtapa">
+                      Simular la etapa!
+                  </button>
+
+                  <button type="button" class="btn btn-labeled btn-info jugarEtapa">
+                        Siguiente Etapa(Generar Partidas)
+                  </button>
+
+                  <button type="button" class="btn btn-labeled btn-danger resetearTorneo">
+                       Resetear el torneo! 
+                  </button>
+
+                  <button type="button" class="btn btn-labeled btn-danger finalizarTorneo">
+                       Finalizar el torneo! 
+                  </button>
+                {{/if}}
+
+
+            <h2>Etapas del torneo </h2>
+            <div id="tab" class="btn-group" data="buttons-radio">
+              {{#each etapasTorneo}} 
+                <a href="" class="btn btn-large btn-info etapasTorneo {{etapasTorneoActive}}" data-toggle="tab">{{name}}</a>
+              {{/each}}
+            </div>
+
+            {{#if showEtapa}}
+              {{>showInfoEtapaTorneo}}
+            {{else}}
+              {{>participantes}}
+            {{/if}}
+
+        {{/if}}
+            {{#if showRankingTorneo}}
+                {{>multiRanking}}
+            {{/if}}
+
+
+
+
+      </div>   
+    {{/if}}
+
+    {{#if soloTorneo}}
+
+      <h2>Menu del torneo </h2>
+
+      <div id="tab" class="btn-group" data="buttons-radio">
+        {{#each soloMenuTorneo}} 
+          <a href="" class="btn btn-large btn-info soloMenuTorneo {{soloMenuTorneoActive}}" data-toggle="tab">{{name}}</a>
+        {{/each}}
+      </div>
+      
+      {{>torComments}}
+        
+      {{#if showRankingTorneo}}
+        {{>multiRanking}}
+      {{/if}}
+      
+      {{#if showParticipantes}}
+        {{>participantes}}
+      {{/if}}
+
+    {{/if}}
+
+  </div>
+{{/if}}
+</template>
+
+
+
+<template name="participantes">
+    <div class="container">   
+        <div class="row">
+          <div class="span5">
+           <div class="well">
+            <table class="table">                         
+                <h3>Participantes del torneo!</h3>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nombre</th>
+                  <th>Rango</th>                                      
+                </tr>
+              </thead>   
+              <tbody>
+                 {{#each participantes}}
+                  <tr>
+                    <td>{{no}}</td>
+                    <td><span>{{getUsername user_id}}</span>
+                    <td>{{rango}}</td>                                      
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>    
+    </div> 
+</template>
+
+
+<template name="showInfoEtapaTorneo">
+  {{#if info}}
+<div class="container">   
+  <div class="row">
+      <div class="span5">
+       <div class="well">
+        <table class="table"> 
+              <thead>
+                <tr>
+                  <th>Numero de participantes:</th>
+                  <th>Numero de partidas:</th>                                         
+                </tr>
+              </thead>   
+              <tbody>
+                <tr>
+                  <td>{{info.participantes}}</td>
+                  <td>{{info.partidas}}</td>                                    
+                </tr>       
+              </tbody>
+            </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+    {{>showEtapaTorneo}}
+
+  {{else}}
+    <div class="container">   
+      <div class="row">
+        <div class="span5">
+         <div class="well">
+            <p>Esta etapa no tiene partidas planificas, lo sentimos.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  {{/if}}
+</template>
+
+<template name="showEtapaTorneo">
+<div class="container">   
+  <div class="row">
+      <div class="span5">
+
+        <table class="table">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>Partida</th>
+              <th>Ganador</th>                                        
+            </tr>
+            </thead>  
+ 
+            <tbody>
+              {{#each partidasEtapaTorneo}}
+                <tr>
+                  <td><span class="label label-success" id = "num">{{no}}</span></td>
+                  <td>
+                    <div class="span5">
+                      <table class="table table-striped table-condensed">
+                        <thead>
+                          <tr>
+                            <th>Jugador</th>
+                            <th>Rango</th>
+                            <th>Puntos</th>
+                            <th>Status</th>                                          
+                          </tr>
+                        </thead>   
+                        <tbody>
+                          {{#each jugadores}}
+                            <tr>
+                              <td>{{getUsername user_id}}</td>
+                              <td>{{rango}}</td>
+                              <td>{{#if puntos}}{{puntos}}{{else}}--{{/if}}</td>
+                              <td><span class="{{estadoUser estado}}">{{estado}}</span></td> 
+                            </tr>
+                          {{/each}}           
+                        </tbody>
+                      </table>
+                     </div>
+                  </td>    
+  
+                  <td>
+                      {{#if ganador.user_id}}
+                     <span class="label label-success" id = "winner">{{getUsername ganador.user_id}}</span>
+                     {{else}}
+                     <span class="label label-success" id = "winner">--</span>
+                     {{/if}}
+                  </td>    
+
+                </tr>
+              {{/each}}
+            </tbody>    
+          </table>
+          </div>
+      </div>
+  </div>
+</template>
+
+
+
+<!--RANKIN !!! DIN DIN DIN -->
+
+
+<template name="multiRanking">
+<div class="container">   
+  <div class="row">
+      <div class="span5">
+       <div class="well">
+       {{#if multiRanking}}
+          <table class="table">                         
+              <h3>Ranking del torneo!</h3>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Rango</th>
+                <th>Puntuacion</th>                                          
+              </tr>
+            </thead>   
+            <tbody>
+              {{#each multiRanking}}
+                <tr>
+                  <td>{{no}}</td>
+                  <td><span class="{{clacc}}">{{getUsername user_id}}</span>
+                  <td>{{rango}}</td>
+                  <td>{{score}}</td>                                       
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+          {{else}}
+            <p>Este es el ranking del torneo loco!</p>
+          {{/if}}
+      </div>
+    </div>
+  </div>    
+</div>  
+</template>
