@@ -121,6 +121,7 @@ var playGameAlien = function() {
      };
     gameAlien.setBoard(3,board);
     gameAlien.setBoard(5,new gameAlienPoints(0));
+    gameAlien.setBoard(6, new gameAlienVida(0));
 };
 
 var l2=function(){
@@ -131,7 +132,7 @@ var l2=function(){
 };
 
 var nivel2 =function(){
-    gameAlien.setBoard(3,new AlienTitleScreen("Level 2", "press fire to next level", l2));
+    gameAlien.setBoard(3,new AlienTitleScreen("Nivel extra", "press fire to next level", l2));
 };
 
 // Llamada cuando han desaparecido todos los enemigos del nivel sin
@@ -316,6 +317,7 @@ PlayerShip.prototype.type = OBJECT_PLAYER;
 
 // Llamada cuando una nave enemiga colisiona con la nave del usuario
 PlayerShip.prototype.hit = function(damage) {
+    //actualizar en el board como los puntos
     id_bono=Bono.findOne({numeracion:1})._id;
     if (Meteor.user()!=null && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}) && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}).n_bono>=1){
         console.log("actualizo"+id_bono);
@@ -325,6 +327,7 @@ PlayerShip.prototype.hit = function(damage) {
                 'n_bono':bobj.n_bono-1,
             }
         });
+        gameAlien.vida = gameAlien.vida-1;
     }else{
         if(this.board.remove(this)) {
             loseGame();
