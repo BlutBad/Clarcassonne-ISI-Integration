@@ -1,35 +1,34 @@
 <template name="tienda">
 	{{#if show}}
-		<h1>Premium</h1>
-  		{{#if currentUser}}
-  			<p>Aquí podrás cambiar tus puntos por ISI-COINS nuestra moneda oficial con la que podrás comprar un montón de ventajas para tus juegos favoritos</p>
-  			<p>Cada 100 puntos se cambiarán por 1 ISI-COIN, por cada 10 ISI-COINS podrás comprar una ventaja. Cada vez que tengas los puntos y/o ISI-COINS se mostrarán botones donde poder cambiarlos </p>
-  			<p>Aprovechate con nuestras ventajas</p>
-			<h2>Total puntos: {{total}}</h2>
-			<h2> Total ISI-Coins: {{isicoins}}</h2>
-			{{#if icambiar}}
-				<input type="button" id="ichange" value="Cambiar 100 puntos por 1 isicoins"> 
+		<div id="tiendacontainer">
+			<h1>Premium</h1>
+  			{{#if currentUser}}
+  				<div id="shop">
+  					<p>Aquí podrás cambiar tus puntos por ISI-COINS nuestra moneda oficial con la que podrás comprar un montón de ventajas para tus juegos favoritos</p>
+  					<p>Cada 100 puntos se cambiarán por 1 ISI-COIN, por cada 10 ISI-COINS podrás comprar una ventaja. Cada vez que tengas los puntos y/o ISI-COINS se mostrarán botones donde poder cambiarlos </p>
+  					<p>Aprovechate con nuestras ventajas</p>
+					<h2>Total puntos: {{total}}</h2>
+					<h2> Total ISI-Coins: {{isicoins}}</h2>
+					{{#if icambiar}}
+						<input type="button" id="ichange" value="Cambiar 100 puntos por 1 isicoins"> 
+					{{/if}}
+					<h2>Bonos disponibles: </h2>
+					{{#each bono}}
+						{{nome}}
+						{{n_bono}}
+						{{#if bcambiar}}
+							<input type="button" class="bchange" id="{{id}}" value="Comprar">
+						{{/if}}
+						<p></p>
+					{{/each}}}
+				</div>		
+			{{else}}	
+				<div id="notRegisterDialog">
+			  		<p>
+			  			Debes estar registrado en la aplicación.
+			  		</p>
+				</div>
 			{{/if}}
-			
-				<h2>Bonos disponibles: </h2>
-				{{#each bono}}
-					{{nome}}
-					{{n_bono}}
-								{{#if bcambiar}}
-
-					<input type="button" class="bchange" id="{{id}}" value="Comprar">
-								{{/if}}
-
-					<p></p>
-				{{/each}}}
-			
-		{{else}}	
-			<div id="notRegisterDialog">
-			  	<p>
-			  		Debes estar registrado en la aplicación.
-			  	</p>
-			</div>
-		{{/if}}
-
+		</div>	
 	{{/if}}
 </template> 

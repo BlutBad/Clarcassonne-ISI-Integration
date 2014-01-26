@@ -5,7 +5,6 @@ Template.tienda.show = function() {
 Template.tienda.total=function(){
 	id=Meteor.user()._id;
 	rankings = Ranking.find({user_id: id});
-	//console.log("here");
 	totale=0;
 	rankings.forEach(function(each,index) { 
 		totale=totale+each.totalScore;
@@ -52,7 +51,6 @@ Template.tienda.icambiar=function(){
 	//si el usuarion no tiene los suficientes puntos que no aparezca
 	id=Meteor.user()._id;
 	rankings = Ranking.find({user_id: id});
-	//console.log("here");
 	totale=0;
 	rankings.forEach(function(each,index) { 
 		totale=totale+each.totalScore;

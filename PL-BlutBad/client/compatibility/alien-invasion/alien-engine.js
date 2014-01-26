@@ -635,8 +635,6 @@ var gameAlienVida = function() {
     //mirar si tiene el bono de vida extra
     id_bono=Bono.findOne({numeracion:1})._id;
     if (Meteor.user()!=null && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}) && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}).n_bono>=1 ){
-        //actualizo el bono
-        console.log("Yes!");
         bobj=User_Bono.findOne({user_id:Meteor.user()._id, bono_id:id_bono});
         gameAlien.vida=bobj.n_bono;
     }else{
