@@ -11,14 +11,18 @@
 				<input type="button" id="ichange" value="Cambiar 100 puntos por 1 isicoins"> 
 			{{/if}}
 			
-			{{#if bcambiar}}
-				<h2>Cambiar isi-coins por bonos: </h2>
+				<h2>Bonos disponibles: </h2>
 				{{#each bono}}
-					<input type="button" class="bchange" value="{{name}} ">
+					{{nome}}
+					{{n_bono}}
+								{{#if bcambiar}}
+
+					<input type="button" class="bchange" id="{{id}}" value="Comprar">
+								{{/if}}
+
 					<p></p>
 				{{/each}}}
 			
-			{{/if}}
 		{{else}}	
 			<div id="notRegisterDialog">
 			  	<p>

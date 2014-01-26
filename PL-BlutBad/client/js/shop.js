@@ -10,7 +10,6 @@ Template.tienda.total=function(){
 	rankings.forEach(function(each,index) { 
 		totale=totale+each.totalScore;
 	});  
-	console.log(totale);
 	if (Shop.findOne({user_id:id})){
 		obj=Shop.findOne({user_id:id});
 		total=totale-obj.isicoins_shop*100;
@@ -25,17 +24,28 @@ Template.tienda.isicoins=function(){
 	id=Meteor.user()._id;
 	if (Shop.findOne({user_id:id})){
 		isicoins=Shop.findOne({user_id:id}).isi_coins;
-		console.log(isicoins);
 		return isicoins;
 	}else{
-		console.log("no esta el usuario");
 		return 0;
 	};
 };
 
 Template.tienda.bono=function(){	
-	//saber si el usuario ya tiene el bonus
-	return Bono.find({});
+	//saber si el usuario ya tiene el bonus y cuantos tiene
+	bno=Bono.find({});
+	bonus=[];
+	bno.forEach(function(each,index){
+		bn={};
+		bn.nome=each.name;
+		bn.id=each._id;
+		if(User_Bono.findOne({user_id:Meteor.user()._id, bono_id:each._id})){
+			bn.n_bono=User_Bono.findOne({user_id:Meteor.user()._id, bono_id:each._id}).n_bono;
+		}else{
+			bn.n_bono=0;
+		}
+		bonus.push(bn);
+	});
+	return bonus;
 };
 
 Template.tienda.icambiar=function(){
@@ -62,7 +72,6 @@ Template.tienda.icambiar=function(){
 
 Template.tienda.events = {
 	'click input#ichange': function() {
-		console.log("cambiar");
 		id=Meteor.user()._id;
 		obj=Shop.findOne({user_id: id});
 		isicoins=obj.isi_coins;
@@ -78,24 +87,18 @@ Template.tienda.events = {
 		});
 	},
 	'click input.bchange': function() {
-		Session.set('current_stage', 'Tienda');
-		console.log(this._id);
-		Session.set('addbono', this._id);  
 		id=Meteor.user()._id;
 		//guardar el id del bono id del usuario y n_bono
-		if (User_Bono.findOne({user_id:id, bono_id:this._id})){
-			console.log("esta aumento uno en n_bono");
-			obj=User_Bono.findOne({user_id:id, bono_id: this._id});
+		if (User_Bono.findOne({user_id:id, bono_id:this.id})){
+			obj=User_Bono.findOne({user_id:id, bono_id: this.id});
 			User_Bono.update(obj._id,{
 				$set : {
 					"n_bono": obj.n_bono+1,
 				}
 			});
 		}else{
-			console.log("no esta lo añado a la coleccion");
-			User_Bono.insert({user_id:id, bono_id:this._id, n_bono: 1});
+			User_Bono.insert({user_id:id, bono_id:this.id, n_bono: 1});
 		};
-		console.log("dfdfd");
 		//quitar las isicoins correspondientes
 		obj=Shop.findOne({user_id: id});
 		id_shop=obj._id;
@@ -116,7 +119,6 @@ Template.tienda.vidas=function(){
 		vidas=Shop.findOne({user_id:id}).vidas;
 		return vidas;
 	}else{
-		console.log("no esta el usuario");
 		return 0;
 	};
 };
