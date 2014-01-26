@@ -120,6 +120,8 @@ $(document).ready(function() {
 			}
     	});
 
+		// Error deps autoFlush: si quito esta funcion, quito todos los divs o cambio las refs
+		// del id desaparece, pero si quito el div correspondiente no
 		$( "#dialog_bademail" ).dialog({
       		autoOpen: false,
      		show: {

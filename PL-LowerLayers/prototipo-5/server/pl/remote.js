@@ -23,5 +23,12 @@ Meteor.methods({
         		var worstscoreid = list[0]._id;
         		Ranking.remove({_id:worstscoreid});
         }		
+    },
+    partyFinish: function (party_id){
+    	var listpoints = Partidas.findOne({_id: party_id}).puntuacion;
+    	//console.log(listpoints);
+    	/*listpoinst.forEach(function(elem){
+    		Ranking.insert(user_id:elem.user_id, score:elem.puntos);
+    	});*/
     }
 });
