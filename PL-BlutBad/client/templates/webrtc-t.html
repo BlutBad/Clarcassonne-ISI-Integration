@@ -1,0 +1,26 @@
+
+
+<template name="webRTC">
+	WEB - RTC
+	<div class="row container">
+		<div class="span1"> 
+			{{> my-video }}
+		</div>
+		<div class="span1"> 
+			{{> remote-videos }}
+		</div>
+	</div>
+	<button class="btn btn-primary" id="startWebRTC">Start WebRTC</button>
+</template>
+
+
+
+<template name="my-video">
+	My-Video
+    <video id="localVideo"></video>
+</template>
+
+<template name="remote-videos">
+	Remote-Video
+    <div id="remotesVideos"></div>
+</template>

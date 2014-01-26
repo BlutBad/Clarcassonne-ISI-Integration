@@ -54,8 +54,24 @@ Meteor.startup(function() {
 					name: "Ranking del torneo!",
 					short: "ranking", 
 					menuType: "multiTorneo",
+				},{
+					name: "Comentarios",
+					short: "comments", 
+					menuType: "multiTorneo",
 				},
-			
+				{
+					name: "Ranking del torneo!",
+					short: "ranking", 
+					menuType: "soloTorneo",
+				},{
+					name: "Comentarios",
+					short: "comments", 
+					menuType: "soloTorneo",
+				},{
+					name: "Participantes",
+					short: "participantes", 
+					menuType: "soloTorneo",
+				}
 			];
 
 			var timestamp = (new Date()).getTime();
@@ -73,25 +89,9 @@ Meteor.startup(function() {
 			
 
 		
-		fakeUsers = "Inea	Yiey	Eurnu	Anysy	Keel	Bros	Oriso " +
-					"Eldd	Iashu	Waiy	Tril	Mosc	Ensh	Quek " +
-					"Uere	Thrak	Deic	Ykalo	Uskq	Rhonn	Phauch " +
-					"Achl	Yerr	Ydyni	Dieth	Eorme	Thrieph	Thod " +
-					"Ormk	Ichao	Irs	Smor	Entht	Verph	Ceum " +
-					"Ler	Eseri	Stroegh	Tangh	Liem	Neab	Ourna " +
-					"Jik	Oinee	Hish	Oita	Ualey	Easho	Cheuss " +
-					"Los	Mork	Ihinu	Maeq	Kalv	Enl	Drauph " +
-					"Reyf	Hatm	Aormo	Uendo	Bair	Bok	Rilm " +
-					"Aundo	Morl	Echth	Aleq	Atone	Aora	Oero " +
-					"Geyn	Tais	Aeste	Whaeth	Uisi	Odene	Ess " +
-					"Chad	Dras	Isamu	Adp	Saurr	Ashy	Iradu " +
-					"Torq	Adele	Tonl	Yhini	Atsh	Cerc	Ans " +
-					"Rayk	Eburu	Meek	Uskt	Rakf	Nysd	Loell " +
-					"Pheif	Lit	Aemo	Fays	Obelo	Kimb	Oati " +
-					"Ishy	Llierd	Ightgh	Moil	Quoert	Risnt	Yeme " +
-					"Reis	Byv	Rher	Cleard	Omck	Yeich	Uinea";
+		fakeUsers = "Inea Yiey Eurnu Anysy Keel Bros Oriso Eldd Iashu Waiy Tril Mosc Ensh Quek Uere Thrak Deic Ykalo Uskq Rhonn Phauch Achl Yerr Ydyni Dieth Eorme Thrieph Thod Ormk Ichao Irs Smor Entht Verph Ceum Ler Eseri Stroegh Tangh Liem Neab Ourna Jik Oinee Hish Oita Ualey Easho Cheuss Los Mork Ihinu Maeq Kalv Enl Drauph Reyf Hatm Aormo Uendo Bair Bok Rilm Aundo Morl Echth Aleq Atone Aora Oero Geyn Tais Aeste Whaeth Uisi Odene Ess Chad Dras Isamu Adp Saurr Ashy Iradu Torq Adele Tonl Yhini Atsh Cerc Ans Rayk Eburu Meek Uskt Rakf Nysd Loell Pheif Lit Aemo Fays Obelo Kimb Oati Ishy Llierd Ightgh Moil Quoert Risnt Yeme Reis Byv Rher Cleard Omck Yeich Uinea";
 					
-		fakeUsersArray = fakeUsers.split("\t");
+		fakeUsersArray = fakeUsers.split(" ");
 		fakeUsersId = [];
 
 		console.log("\t [2] Creando "+fakeUsersArray.length +" usuarios falsos");

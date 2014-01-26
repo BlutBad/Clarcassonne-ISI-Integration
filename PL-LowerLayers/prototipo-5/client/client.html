@@ -1,13 +1,13 @@
 <head>
-	<title>X-ADrian</title>
+	<title>LowerLayers</title>
 	<link href="/css/jquery-ui-1.10.4.custom.css" rel="stylesheet">
-
+	<link rel="shortcut icon" href="/favicon.png">
 </head>
 
 <body>
 	<div id="div-login-button">{{> iconLoginTemp}}<br>{{loginButtons}}</div>
-	<div id="titulo" Size="6">X-ADrian</div>
-	<div id="subtitulo">Welcome to X-ADrian platform</div><br>
+	<div id="titulo" Size="6">LowerLayers' Games</div>
+	<div id="subtitulo">Welcome to LL platform</div><br>
 	<div id="container">
    		{{> cointemp}}
 		{{> tabstemp}}
@@ -16,6 +16,8 @@
    	</div>
 	<div id="dialog_birthdate" title="Rellena tu perfil.">
   		<p>Por favor, antes de unirte a una partida rellena tu perfil.</p>
+		<p>También puedes introducir tu fecha de nacimiento aquí(Recuerda que no se puede volver a modificar): <input type="text" readonly="readonly" id="datepickerprof_dialog"></p>
+		<button id="birthbutton_dialog"> Guardar fecha </button>
 	</div>
 	<div id="dialog_nomatches" title="No hay partidas disponibles.">
   		<p>Lo sentimos, no hay partidas disponibles. Inténtalo más tarde.</p>
@@ -41,14 +43,31 @@
   		<p>No eres el administrador de esta partida. Espera hasta que el administrador comience.</p>
 	</div>
 
+	<div id="dialog_nouser" title="Error en la búsqueda.">
+  		<p>El usuario no existe.</p>
+	</div>
+
+	<div id="dialog_nogameplayed" title="Error en la búsqueda.">
+  		<p>El usuario no ha jugado a ningun juego</p>
+	</div>
+
+	<div id="dialog_thisnoplayed" title="Error en la búsqueda.">
+  		<p>El usuario no ha jugado a este juego</p>
+	</div>
+
+	<div id="dialog_bademail" title="Correo no válido.">
+  		<p>Introduzca una cuenta de correo electronico valida</p>
+	</div>
+
+
 </body>
 
 <template name="cointemp">
 	<div id="slider">
 		<div id="coin-slider">
-		    <IMG  SRC="frootwar.png">
-		    <IMG  SRC="carcassonne.jpg">
-		    <IMG  SRC="alieninvasion.png">
+		    <IMG  SRC="fotoscoinsslider/frootwars.png">
+		    <IMG  SRC="fotoscoinsslider/carcassonne.jpg">
+		    <IMG  SRC="fotoscoinsslider/alieninvasion.png">
 		</div>
 	</div>	
 </template>
@@ -87,7 +106,7 @@
 			<h3>Buscar</h3>
 				<div>
 					<input type="text" id="formSearch">
-					<input type="button" id="buttonSearch" value="Buscar"/>
+					<button id="buttonSearch">Buscar</button>
 				</div>
 		</div>
 		<a id="friends" class="escondido" style="cursor:pointer;" >
@@ -215,7 +234,7 @@
 
 
 <template name="messagestemp" >
-	<div id="messages" style="overflow:auto;height:50%;">
+	<div id="messages" style="overflow:auto;height:300px;">
 		{{# each messages}}
 			<i><img width='20px' height='20px'  src={{avatar}} >{{name}}: {{message}}</i></br>
 		{{/each}}
@@ -285,16 +304,16 @@
 
 
 <template name="frootwarstemp">
-	<div id="frootwarscontainer" style="backgroud-color:green">
+	<div id="frootwarscontainer">
 		<canvas id="gamecanvas" width="640" height="480" class="gamelayer"></canvas>
   		<div id="scorescreen" class="gamelayer">
-    		<img id="togglemusic" src="images/icons/sound.png" onclick="game.toggleBackgroundMusic();">
-    		<img src="images/icons/prev.png" onclick="game.restartLevel();">
+    		<img id="togglemusic" src="Frootwars/images/icons/sound.png" onclick="game.toggleBackgroundMusic();">
+    		<img src="Frootwars/images/icons/prev.png" onclick="game.restartLevel();">
     		<span id="score">Score: 0</span>
   		</div>
   		<div id="gamestartscreen" class="gamelayer">
-    		<img src="images/icons/play.png" alt="Play Game" onclick = "game.showLevelScreen();"><br>
-    		<img src="images/icons/settings.png" alt="Settings">
+    		<img src="Frootwars/images/icons/play.png" alt="Play Game" onclick = "game.showLevelScreen();"><br>
+    		<img src="Frootwars/images/icons/settings.png" alt="Settings">
   		</div>
   		<div id="levelselectscreen" class="gamelayer"></div>
   		<div id="loadingscreen" class="gamelayer">
@@ -303,9 +322,9 @@
   		<div id="endingscreen" class="gamelayer">
    		<div>
    	   	<p id="endingmessage">The Level Is Over Message</p>
-   	   	<p id="playcurrentlevel" onclick="game.restartLevel();"><img src="images/icons/prev.png"> Replay Current Level</p>
-   	   	<p id="playnextlevel" onclick="game.startNextLevel();"><img src="images/icons/next.png"> Play Next Level </p> 
-      		<p id="returntolevelscreen"onclick="game.showLevelScreen();"><img src="images/icons/return.png"> Return to Level Screen</p>
+   	   	<p id="playcurrentlevel" onclick="game.restartLevel();"><img src="Frootwars/images/icons/prev.png"> Replay Current Level</p>
+   	   	<p id="playnextlevel" onclick="game.startNextLevel();"><img src="Frootwars/images/icons/next.png"> Play Next Level </p> 
+      		<p id="returntolevelscreen"onclick="game.showLevelScreen();"><img src="Frootwars/images/icons/return.png"> Return to Level Screen</p>
     		</div>
   		</div>
 	</div>
@@ -316,22 +335,22 @@
         <div id="clarcassonnecontainer" >
                 <canvas id='clarcassonnecanvas' width='800' height='600'></canvas>
 				<audio id="sonidojuego">
-				<source src="audio/won2.ogg" type="audio/ogg"/>
+				<source src="Clarcassonne/audio/won2.ogg" type="audio/ogg"/>
 				</audio>
 				<audio id="sonido_ladron">
-					<source src="audio/ladron.ogg" type="audio/ogg"/>
+					<source src="Clarcassonne/audio/ladron.ogg" type="audio/ogg"/>
 		   		</audio>
 		   		<audio id = "sonido_granjero">
-		   			<source src="audio/Gallo.ogg" type="audio/ogg"/>
+		   			<source src="Clarcassonne/audio/Gallo.ogg" type="audio/ogg"/>
 		   		</audio>
 		   		<audio id= "sonido_caballero">
-		   			<source src="audio/HORSES.ogg" type="audio/ogg"/>
+		   			<source src="Clarcassonne/audio/HORSES.ogg" type="audio/ogg"/>
 		   		</audio>
 		   		<audio id="sonido_monje">
-		   			<source src="audio/30_Wololo.ogg" type="audio/ogg"/>
+		   			<source src="Clarcassonne/audio/30_Wololo.ogg" type="audio/ogg"/>
 		   		</audio>
 		   		<audio id="sonido_ficha">
-		   			<source src="audio/GONG4.ogg" type = "audio/ogg"/>
+		   			<source src="Clarcassonne/audio/GONG4.ogg" type = "audio/ogg"/>
 		   		</audio>
         </div>
 </template>
@@ -384,16 +403,16 @@
 <template name="listaAmigosOnlineTemp">
 	<div id="listaAmigosOnline">
 		{{# each listaAmigosOnline}}
-			<img width='20px' height='20px'  src={{avatar}} style ="float:left">
-			<a style ="cursor:pointer;text-decoration:underline;float:left;margin-left:5px" class="linkchat">
+			<img width='20px' height='20px'  src={{avatar}} style ="float:left;margin-left:0px">
+			<a style ="cursor:pointer;text-decoration:underline;float:left;" class="linkchat">
 				{{username}}<br>
 			</a>
-			<ul class="menuAmigos" style="float:left;margin-left:3px;">
+			<ul class="menuAmigos" style="float:left;">
 				<li>
 					<a class ="menuAmigosStyle">&#9660;</a>
 					<ul>
 						<li><a class ="menuAmigosStyle menuAInv" hreflang={{username}}><span class="ui-icon-plus"></span>Invitar</a></li>
-						<li><a class ="menuAmigosStyle menuAPer" ><span class="ui-icon-person"></span>Perfil</a></li>
+						<li><a class ="menuAmigosStyle menuAPer" hreflang={{username}}><span class="ui-icon-person"></span>Perfil</a></li>
 						<li><a class ="menuAmigosStyle menuABloq" hreflang={{username}}><span class="ui-icon-cancel"></span>Bloquear</a></li>
 					</ul>
 				</li>
@@ -414,10 +433,12 @@
 
 
 <template name='privatemessagestemp'>
-	<div style='overflow: auto; height:250px;' class="privatemessages">
-		{{# each listaprivatemessages}}
-			<i><font size=-4>({{date}})</font> {{orig}}</i>: {{text}} <br>
-		{{/ each}}	
+	<div style='overflow: auto;  height:200px; width:82%; float:right' class="privatemessages">
+
+			{{# each listaprivatemessages}}
+				<i><font size=-4>({{date}})</font> {{orig}}</i>: {{text}} <br>
+			{{/ each}}	
+
 	</div>
 </template>
 
@@ -452,7 +473,7 @@
 			<div>{{game}} - {{points}}</div>
 		{{/ each}}
 		<br><br>
-		<input id="modifprof" type="submit" value="Modificar"> 
+		<button id="modifprof"> Modificar </button>
 	</div>	
 </template>
 
@@ -480,8 +501,8 @@
 		<br><br>
 		Fecha de nacimiento: <input type="text" readonly="readonly" id="datepickerprof"> (Una vez guardado no se puede modificar)<br>
 		Direccion de email:   <input id="modemail" type="email"><br><br><br>
-		<input id="saveprof" type="submit" value="Guardar"> 
-		<input id="nosaveprof" type="submit" value="Cancelar"> 
+		<button id="saveprof"> Guardar </button>
+		<button id="nosaveprof"> Cancelar </button>
 	</div>	
 </template>
 

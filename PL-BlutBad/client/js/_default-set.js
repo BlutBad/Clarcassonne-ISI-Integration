@@ -9,9 +9,14 @@ Session.setDefault('gamerank', null);
 
 //Variables de session para las torneos, multi-torneo en cuestion
 Session.setDefault("multiMenuTorneoActive",null);
+
 Session.setDefault('etapasTorneoActive', "participantes");
+Session.setDefault('soloMenuTorneoActive', "participantes");
+
+Session.setDefault('showTorneoComents', null);
 
 
+Session.setDefault('current_party_id_webRTC', null);
 
 Meteor.startup(function() {
     $('#gamecontainer').hide();    

@@ -51,13 +51,13 @@ var game = {
 	
 		//"Kindergarten" by Gurdonark
 		//http://ccmixter.org/files/gurdonark/26491 is licensed under a Creative Commons license
-		game.backgroundMusic = loader.loadSound('audio/gurdonark-kindergarten');
+		game.backgroundMusic = loader.loadSound('Frootwars/audio/gurdonark-kindergarten');
 
-		game.slingshotReleasedSound = loader.loadSound("audio/released");
-		game.bounceSound = loader.loadSound('audio/bounce');
+		game.slingshotReleasedSound = loader.loadSound("Frootwars/audio/released");
+		game.bounceSound = loader.loadSound('Frootwars/audio/bounce');
 		game.breakSound = {
-			"glass":loader.loadSound('audio/glassbreak'),
-			"wood":loader.loadSound('audio/woodbreak')
+			"glass":loader.loadSound('Frootwars/audio/glassbreak'),
+			"wood":loader.loadSound('Frootwars/audio/woodbreak')
 		};
 
 
@@ -72,11 +72,11 @@ var game = {
 	startBackgroundMusic:function(){
 		var toggleImage = $("#togglemusic")[0];	
 		game.backgroundMusic.play();
-		toggleImage.src="images/icons/sound.png";	
+		toggleImage.src="Frootwars/images/icons/sound.png";	
 	},
 	stopBackgroundMusic:function(){
 		var toggleImage = $("#togglemusic")[0];	
-		toggleImage.src="images/icons/nosound.png";	
+		toggleImage.src="Frootwars/images/icons/nosound.png";	
 		game.backgroundMusic.pause();
 		game.backgroundMusic.currentTime = 0; // Go to the beginning of the song
 	},
@@ -84,10 +84,10 @@ var game = {
 		var toggleImage = $("#togglemusic")[0];
 		if(game.backgroundMusic.paused){
 			game.backgroundMusic.play();
-			toggleImage.src="images/icons/sound.png";
+			toggleImage.src="Frootwars/images/icons/sound.png";
 		} else {
 			game.backgroundMusic.pause();	
-			$("#togglemusic")[0].src="images/icons/nosound.png";
+			$("#togglemusic")[0].src="Frootwars/images/icons/nosound.png";
 		}
 	},
 	showLevelScreen:function(){
@@ -477,10 +477,10 @@ var levels = {
 
 
 		//load the background, foreground and slingshot images
-		game.currentLevel.backgroundImage = loader.loadImage("images/backgrounds/"+level.background+".png");
-		game.currentLevel.foregroundImage = loader.loadImage("images/backgrounds/"+level.foreground+".png");
-		game.slingshotImage = loader.loadImage("images/slingshot.png");
-		game.slingshotFrontImage = loader.loadImage("images/slingshot-front.png");
+		game.currentLevel.backgroundImage = loader.loadImage("Frootwars/images/backgrounds/"+level.background+".png");
+		game.currentLevel.foregroundImage = loader.loadImage("Frootwars/images/backgrounds/"+level.foreground+".png");
+		game.slingshotImage = loader.loadImage("Frootwars/images/slingshot.png");
+		game.slingshotFrontImage = loader.loadImage("Frootwars/images/slingshot-front.png");
 
 		// Load all the entities
 		for (var i = level.entities.length - 1; i >= 0; i--){	
@@ -576,7 +576,7 @@ var entities = {
 				entity.health = definition.fullHealth;
 				entity.fullHealth = definition.fullHealth;
 				entity.shape = "rectangle";	
-				entity.sprite = loader.loadImage("images/entities/"+entity.name+".png");						
+				entity.sprite = loader.loadImage("Frootwars/images/entities/"+entity.name+".png");						
 				entity.breakSound = game.breakSound[entity.name];
 				box2d.createRectangle(entity,definition);				
 				break;
@@ -590,7 +590,7 @@ var entities = {
 			case "villain": // can be circles or rectangles
 				entity.health = definition.fullHealth;
 				entity.fullHealth = definition.fullHealth;
-				entity.sprite = loader.loadImage("images/entities/"+entity.name+".png");
+				entity.sprite = loader.loadImage("Frootwars/images/entities/"+entity.name+".png");
 				entity.shape = definition.shape;  
 				entity.bounceSound = game.bounceSound;
 				if(definition.shape == "circle"){

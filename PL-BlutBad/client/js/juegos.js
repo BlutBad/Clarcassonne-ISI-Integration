@@ -82,6 +82,7 @@ Deps.autorun(function(c) {
 	    
 		$('#gamecontainer').hide();
 		Session.set('showGameIdn', false); 
+        Session.set('current_party_id_webRTC',null); 
     }
 });
 

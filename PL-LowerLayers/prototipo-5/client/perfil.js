@@ -155,7 +155,7 @@ $(document).ready(function() {
 
 	$(document).on("click","#saveprof", function(){
 		if( !valEmail($("#modemail").val()) ){
-			alert('Introduzca una cuenta de correo electronico valida')
+			$("#dialog_bademail").dialog("open");
 		}else{	
 			if (Meteor.user().avatar != Session.get("url")){
 				Meteor.call("definirAvatar",Session.get("url"),function(error,result){
@@ -194,10 +194,18 @@ $(document).ready(function() {
 		$("#moddataprofile").css("display","none");
 		$("#dataprofile").css("display","block");
 		$("#imgdataprofile").css("display","block");
-	});	
+	});
 
 
-
+	$(document).on("click","#birthbutton_dialog", function(){
+		if($("#datepickerprof_dialog").val() == ""){
+			$("#birthbutton_dialog").before('<p id="error_birthdialog" style="color: red;">Debes introducir una fecha.</p>');
+		} else {
+			var fechanacimiento = $("#datepickerprof_dialog").val();
+			Meteor.users.update({_id: Meteor.userId()},{$set: {birthday:fechanacimiento}});
+			$( "#dialog_birthdate" ).dialog("close");
+		};
+	});
 
 
 

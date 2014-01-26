@@ -219,7 +219,10 @@ cargaClarca = function(partyid) {
     Session.set('showGameIdn', "clarki");
 
     // Para esconder el hall, solo se ve el canvas
-    Session.set('current_stage', false);      
+    Session.set('current_stage', false); 
+
+    // Para id de la partty para el room de webRTC
+    Session.set('current_party_id_webRTC', partyid);      
 
     $('#gamecontainer').show();       
 }

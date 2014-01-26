@@ -105,7 +105,6 @@ var playGameAlien = function() {
     // nivel level1 y la funci�n callback a la que llamar si se ha
     // ganado el juego
     id_bono=Bono.findOne({numeracion:2})._id;
-    console.log(Meteor.user()._id)
     if (Meteor.user()!=null && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}) && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}).n_bono>=1 ){
         //actualizo el bono
         bobj=User_Bono.findOne({user_id:Meteor.user()._id, bono_id:id_bono});
@@ -121,6 +120,7 @@ var playGameAlien = function() {
      };
     gameAlien.setBoard(3,board);
     gameAlien.setBoard(5,new gameAlienPoints(0));
+    gameAlien.setBoard(6, new gameAlienVida(0));
 };
 
 var l2=function(){
@@ -131,17 +131,15 @@ var l2=function(){
 };
 
 var nivel2 =function(){
-    gameAlien.setBoard(3,new AlienTitleScreen("Level 2", "press fire to next level", l2));
+    gameAlien.setBoard(3,new AlienTitleScreen("Nivel extra", "press fire to next level", l2));
 };
 
 // Llamada cuando han desaparecido todos los enemigos del nivel sin
 // que alcancen a la nave del jugador
 var winGame = function() {
     id_bono=Bono.findOne({numeracion:3})._id;
-    console.log(Meteor.user()._id)
     if (Meteor.user()!=null && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}) && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}).n_bono>=1 ){
         //actualizo el bono
-        console.log("Yes!");
         bobj=User_Bono.findOne({user_id:Meteor.user()._id, bono_id:id_bono});
         User_Bono.update(bobj._id,{
         $set: {
@@ -173,7 +171,6 @@ var loseGame = function() {
         id_bono=Bono.findOne({numeracion:3})._id;
         if (Meteor.user()!=null && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}) && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}).n_bono>=1 ){
         //actualizo el bono
-        console.log("Yes!");
         bobj=User_Bono.findOne({user_id:Meteor.user()._id, bono_id:id_bono});
         User_Bono.update(bobj._id,{
             $set: {
@@ -316,15 +313,16 @@ PlayerShip.prototype.type = OBJECT_PLAYER;
 
 // Llamada cuando una nave enemiga colisiona con la nave del usuario
 PlayerShip.prototype.hit = function(damage) {
+    //actualizar en el board como los puntos
     id_bono=Bono.findOne({numeracion:1})._id;
     if (Meteor.user()!=null && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}) && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}).n_bono>=1){
-        console.log("actualizo"+id_bono);
         bobj=User_Bono.findOne({user_id:Meteor.user()._id, bono_id:id_bono});
         User_Bono.update(bobj._id,{
             $set: {
                 'n_bono':bobj.n_bono-1,
             }
         });
+        gameAlien.vida = gameAlien.vida-1;
     }else{
         if(this.board.remove(this)) {
             loseGame();
@@ -463,18 +461,14 @@ Enemy.prototype.hit = function(damage) {
     this.health -= damage;
     if(this.health <=0) {
 	if(this.board.remove(this)) {
-        console.log("it's here");
         id_bono=Bono.findOne({numeracion:3})._id;
-        console.log(Meteor.user()._id)
         if (Meteor.user()!=null && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}) && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}).n_bono>=1 ){
             //actualizo el bono
-            console.log("Yes!");
             //no puedo actualizar el bono aqui porque pasa en cada disparo lo tengo que actualizar cuando gano o pierdo la partida
             gameAlien.points += this.points || 200;
             this.board.add(new Explosion(this.x + this.w/2, 
                      this.y + this.h/2));
         }else{
-            console.log("No!");
             gameAlien.points += this.points || 100;
             this.board.add(new Explosion(this.x + this.w/2, 
                      this.y + this.h/2));

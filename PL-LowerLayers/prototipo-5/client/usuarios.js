@@ -1,16 +1,4 @@
 
-var availableNames = new Array();
-
-Deps.autorun(function(){
-	if(Meteor.users.find().count()){
-		listaUsuarios=Meteor.users.find();
-		listaUsuarios.forEach(function(elem){
-			if (availableNames.indexOf(elem.username)==-1)
-				availableNames.push(elem.username);
-		});
-	}
-});
-
 
 
 $(function(){
@@ -46,7 +34,7 @@ $(document).on("click","#userSearch",function(){
 			$("#usuarios").append(perfiluser);	
 		}	
 	}else{
-		alert("No hay ningun usuario con ese nombre")
+		$("#dialog_nouser").dialog("open");
 	}	
 
 });

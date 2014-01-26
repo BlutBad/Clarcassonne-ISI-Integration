@@ -33,89 +33,6 @@ $(document).ready(function() {
 			$( "#chatTabs" ).tabs({collapsible: true});
 		});
 
-		$( "#dialog_birthdate" ).dialog({
-      		autoOpen: false,
-     		show: {
-        		effect: "blind",
-        		duration: 300
-      		},
-     		hide: {
-      			effect: "explode",
-				duration: 200
-			}
-    	});
-
-		$( "#dialog_nomatches" ).dialog({
-      		autoOpen: false,
-     		show: {
-        		effect: "blind",
-        		duration: 300
-      		},
-     		hide: {
-      			effect: "explode",
-				duration: 200
-			}
-    	});
-
-		$( "#dialog_password" ).dialog({
-      		autoOpen: false,
-     		show: {
-        		effect: "blind",
-        		duration: 300
-      		},
-     		hide: {
-      			effect: "explode",
-				duration: 200
-			}
-    	});
-
-		$( "#dialog_fullmatch" ).dialog({
-      		autoOpen: false,
-     		show: {
-        		effect: "blind",
-        		duration: 300
-      		},
-     		hide: {
-      			effect: "explode",
-				duration: 200
-			}
-    	});
-
-		$( "#dialog_matchname" ).dialog({
-      		autoOpen: false,
-     		show: {
-        		effect: "blind",
-        		duration: 300
-      		},
-     		hide: {
-      			effect: "explode",
-				duration: 200
-			}
-    	});
-
-		$( "#dialog_threeplayers" ).dialog({
-      		autoOpen: false,
-     		show: {
-        		effect: "blind",
-        		duration: 300
-      		},
-     		hide: {
-      			effect: "explode",
-				duration: 200
-			}
-    	});
-
-		$( "#dialog_noadmin" ).dialog({
-      		autoOpen: false,
-     		show: {
-        		effect: "blind",
-        		duration: 300
-      		},
-     		hide: {
-      			effect: "explode",
-				duration: 200
-			}
-    	});
 		
 		$("#friends").css({"top": $(window).height()-57, "position":"fixed"});
 		$("#friends").css("left",$(window).width()-182);
@@ -150,6 +67,21 @@ $(document).ready(function() {
 				endVideoChat()
 			}	
 		});
+		$( "#formSearch" ).autocomplete({
+			source: availableNames
+		});
+
+		$(document).on("click","#formplayer",function(){
+			$( "#formplayer" ).autocomplete({
+				source: availableNames
+			});
+		});
+		$(document).on("click","#formplayergame",function(){
+			$( "#formplayergame" ).autocomplete({
+				source: availableNames
+			});
+		});
+
 
 });
 
@@ -208,6 +140,7 @@ Deps.autorun(function () {
 //Subscripcion selectiva a invitaciones
 Meteor.subscribe("invitations");
 
+
 //Subscripción selectiva a los mensajes de la sala
 Deps.autorun(function () {
 	var current_match_id = Session.get("match_id")
@@ -249,7 +182,122 @@ Template.iconLoginTemp.avatar = function(){
 
 
 
+var obsceneswords = ["fuck","fucking","asshole","bitch","pussy","cock","blowjob","handjob","shit","hostias",
+					"coño","coños","coñete","chocho","chochete","cabron","cabrona","gilipollas","puta","putas",
+					"puto","putos","puton","polla","poya","pollas","pollazo","capulla","mamon","mamona","mamones","maricon",
+					"maricona","maricones","follar","follando","follen","jodan","jodete","cago","cojon","cojones","bukkake",
+					"bucake","gayola","gallola","verga","berga","pinga","gilipoyas","mamada","mamadas"];
+//Sustituye palabras obscenas por cuatro asteriscos
+moderator = function (message){
+	var moderatedwordslist = new Array();
+	wordslist=message.split(" ");
+	wordslist.forEach(function(word){
+		if (obsceneswords.indexOf(word) != -1){
+			var moderatedword="****";
+		}else{
+			var moderatedword=word;
+		}
+		moderatedwordslist.push(moderatedword);
+	})
+	return moderatedwordslist.join(" ")
+}
+
+
+
+availableNames = new Array();
+
+Deps.autorun(function(){
+	if(Meteor.users.find().count()){
+		listaUsuarios=Meteor.users.find();
+		listaUsuarios.forEach(function(elem){
+			if (availableNames.indexOf(elem.username)==-1)
+				availableNames.push(elem.username);
+		});
+	}
+});
+
+
+
 //Configuracion cuentas
 Accounts.ui.config({
+/*	requestPermissions : {
+		facebook : [ 'user_likes' ]
+	}, */
 	passwordSignupFields: "USERNAME_AND_OPTIONAL_EMAIL"
 });
+
+
+if (typeof Handlebars !== 'undefined') {
+	Handlebars.registerHelper('getUsername', function (userId) {
+		var user = _extractProfile(userId);
+		if (user) {
+			if (user.name){
+				return user.name;
+			};
+			if (user.username)
+				return user.username;
+			if (user.twitterUsername)
+				return user.twitterUsername;
+			}
+			return ' ';
+	});
+	
+
+	Handlebars.registerHelper('getUserId', function () {
+		if (Meteor.user()){
+			return Meteor.user()._id;
+		}
+	});
+
+	//Admin panel/content
+	Handlebars.registerHelper('showIfAdmin', function () {
+		if (Meteor.user()){
+			if (Meteor.user().username == "admin"){
+				return true;
+			}
+		}
+		return false;
+	});
+
+
+	Handlebars.registerHelper('getUserEmail', function (userId) {
+		var user = _extractProfile(userId);
+		//console.log(user);
+		if (user) {
+			if (user.email){
+				//console.log(user.email);
+				return user.email;
+			}else if (user.services){
+				if (user.services.google.email){
+					return user.services.google.email;
+				}else if (user.services.facebook.email){
+					return user.services.facebook.email;
+				};
+			};
+		};
+			return ' ';
+
+	});
+	Handlebars.registerHelper('getUserDateBirth', function (userId) {
+		var user = _extractProfile(userId);
+		if (user) {
+			if (user.datebirth){
+				return user.datebirth;
+			};
+
+		};
+			return ' ';
+
+	});
+	Handlebars.registerHelper('getUserGender', function (userId) {
+		var user = _extractProfile(userId);
+		if (user) {
+			if (user.genero){
+				return user.genero;
+			};
+
+		};
+			return ' ';
+
+	}); 
+} 

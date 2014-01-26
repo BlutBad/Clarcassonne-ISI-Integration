@@ -622,7 +622,6 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 				$(idCanvas).mousedown(function(e){
 					console.log(e);
 	          	  	if (that.colocada == false ) {
-	         				
 						if ((e.pageX - e.currentTarget.offsetLeft) > that.x &&
 							 (e.pageY - e.currentTarget.offsetTop) > that.y &&
 							 (e.pageX - e.currentTarget.offsetLeft) < that.x + 100 &&
@@ -639,7 +638,7 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
        		 	 // cuando mueves. soltar ficha en una casilla
                 	if (that.colocada == false ) {
 						that.x = Math.floor((e.pageX - e.currentTarget.offsetLeft)/100)* 100;
-						that.y = Math.floor((e.pageY- e.currentTarget.offsetTop)/100)* 100;
+						that.y = Math.floor((e.pageY- e.currentTarget.offsetTop)/100)* 100 -100;
 					}
 					mouseIsDown = false;
 				})

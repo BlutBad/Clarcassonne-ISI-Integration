@@ -37,8 +37,9 @@ Menu_user = new Meteor.Collection("menu_user");
 Juegos = new Meteor.Collection("juegos"); 
 
 
-Rangos = new Meteor.Collection("rangos"); 
+Rangos = new Meteor.Collection("rangos");
 
+ 
 /*
 description : "Has jugado una vez a este juego",
 timesPlayed : 1,
@@ -78,6 +79,21 @@ Juegos.allow({
 	user_participant 
 */
 Torneos= new Meteor.Collection("torneos");
+Torneos.allow({
+	insert: function (userId, doc) {
+	// the user must be logged in, and the document must be owned by the user
+	return true;
+	},
+	update: function (userId, doc, fields, modifier) {
+	// can only change your own documents
+	return true;
+	},
+	remove: function (userId, doc) {
+	// can only remove your own documents
+	return true;
+	},
+	fetch: ['owner']
+});
 
 
 //	gameId : userId : maxScore : totalScore: score rango_id:rango._id
