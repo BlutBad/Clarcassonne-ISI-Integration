@@ -623,6 +623,35 @@ var gameAlienPoints = function() {
     var i = pointsLength - txt.length, zeros = "";
     while(i-- > 0) { zeros += "0"; }
 
+    ctx.fillText(zeros + txt,gameAlien.canvas.width-40,20);
+    ctx.restore();
+
+  };
+
+  this.step = function(dt) { };
+};
+
+var gameAlienVida = function() {
+    //mirar si tiene el bono de vida extra
+    id_bono=Bono.findOne({numeracion:1})._id;
+    if (Meteor.user()!=null && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}) && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}).n_bono>=1 ){
+        bobj=User_Bono.findOne({user_id:Meteor.user()._id, bono_id:id_bono});
+        gameAlien.vida=bobj.n_bono;
+    }else{
+        gameAlien.vida = 0;
+    };
+
+  var vidaLength = 2;
+
+  this.draw = function(ctx) {
+    ctx.save();
+    ctx.font = "bold 18px arial";
+    ctx.fillStyle= "#FFFFFF";
+
+    var txt = "" + gameAlien.vida;
+    var i = vidaLength + txt.length, zeros = "";
+    while(i-- > 0) { zeros += "0"; }
+
     ctx.fillText(zeros + txt,10,20);
     ctx.restore();
 
