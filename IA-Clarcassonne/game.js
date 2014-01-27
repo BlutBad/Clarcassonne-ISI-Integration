@@ -13,7 +13,7 @@
 		Jugadores_ID= Partidas.findOne({_id: id_partida}).jugadores;
 	
 		for(i=0;i<Jugadores_ID.length;i++){
-			var player =resolverUser(Jugadores_ID[i].user_id);
+			var player =resolverUser(Jugadores_ID[i]);
 			Tablero.listaJugadores.push(new ObjetoJugador(Jugadores_ID[i].user_id,player.nombre,player.fecha));
 		}
 		
@@ -57,7 +57,7 @@
       if (fichaColocada == 0){return 0}
       console.log("fichaColocada", fichaColocada);
 	 		var seguidores = [];
-			var Jugador = _.find(Tablero.listaJugadores,function(obj){return (obj.id.user_id == id_jugador)});
+			var Jugador = _.find(Tablero.listaJugadores,function(obj){return (obj.id == id_jugador)});
 			if (Jugador.n_seguidores != 0){
 	      var seguidores=Tablero.colocarseguidor(fichaColocada);
   	    endTablero[id_partida]=Tablero;
