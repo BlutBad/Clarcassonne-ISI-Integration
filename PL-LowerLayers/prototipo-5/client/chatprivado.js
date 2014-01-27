@@ -23,8 +23,13 @@ Template.listaAmigosOfflineTemp.listaAmigosOffline = function(){
 }		
 //Pinta mensajes privados
 Template.privatemessagestemp.listaprivatemessages=function(){
-	var privatemessages=Private_Messages.find({$or: [ {$and:[{orig: Session.get('origname')},{dest:Session.get('destname')}]} , {$and:[{orig:Session.get('destname')},{dest: Session.get('origname')}]}  ] },{sort: {date:-1}, limit:20 });
-	return privatemessages;	
+	var privatemessages=Private_Messages.find({$or: [ {$and:[{orig_id: Session.get('orig_id')},{dest_id:Session.get('dest_id')}]} , {$and:[{orig_id:Session.get('dest_id')},{dest_id: Session.get('orig_id')}]}  ] },{sort: {date:-1}, limit:20 });
+	var listprivatemessages=[];
+	privatemessages.forEach(function(elem){
+		var userorig = Meteor.users.findOne({_id: elem.orig_id});
+		listprivatemessages.push({"date":elem.date,"orig_id":userorig.username,"texto":elem.texto });
+	});
+	return listprivatemessages;	
 }
 
 
@@ -32,16 +37,16 @@ Template.privatemessagestemp.listaprivatemessages=function(){
 //Detecta cuando llega un mensaje privado nuevo a la base de datos siendo el usuario registrado destino
 Deps.autorun(function () {
 	if (Meteor.user()){
-		var newprivatemessages = Private_Messages.find({$and: [{dest: Meteor.user().username},{recibido: 0}] });
+		var newprivatemessages = Private_Messages.find({$and: [{dest_id: Meteor.userId()},{recibido: 0}] });
 		newprivatemessages.forEach(function(newprivatemessage){
+			usernameprivatemessage=Meteor.users.findOne({_id: newprivatemessage.orig_id}).username;
 			Private_Messages.update({_id: newprivatemessage._id}, {$set: {recibido: 1}});
-			var chatabiertodeorig = $("div[tipo='contenidochat'][id='"+newprivatemessage.orig+"']");
+			var chatabiertodeorig = $("div[tipo='contenidochat'][id='"+newprivatemessage.orig_id+"_contenido']");
 			if (chatabiertodeorig.css("display")!="block")
-				$.ambiance({message: "New private message received from "+newprivatemessage.orig, fade: true, timeout: 4});			
+				$.ambiance({message: "New private message received from "+usernameprivatemessage, fade: true, timeout: 4});			
 		});
 	}	
 });
-
 
 
 var mychats = new Array();
@@ -61,17 +66,17 @@ Template.listaAmigosOnlineTemp.events = {
 		
 		if (indice==-1){
 			mychats.push(userdest_id);
-			$("#chatTabs ul").append("<li id='"+userdest_id+"'> <a tipo='titulochat' href='#"+userdest.username+"'>"+userdest.username+"</a><button type='button' class='closechattab'>x</button></li>");
-			$("#chatTabs").append("<div tipo='contenidochat' id='"+userdest.username+"'></br></div>");
+			$("#chatTabs ul").append("<li id='"+userdest_id+"'> <a tipo='titulochat' href='#"+userdest_id+"_contenido'>"+userdest.username+"</a><button type='button' class='closechattab'>x</button></li>");
+			$("#chatTabs").append("<div tipo='contenidochat' id='"+userdest_id+"_contenido'></br></div>");
 			
 
-			$("#"+userdest.username).append("<input type='text' style='float:right; font-size: 12pt; width:100%;' maxlength='125' class='privatemessagecont'/> <br style='clear:both;'/>");
+			$("#"+userdest_id+"_contenido").append("<input type='text' style='float:right; font-size: 12pt; width:100%;' maxlength='125' class='privatemessagecont'/> <br style='clear:both;'/>");
 
 
-			$("#"+userdest.username).append(PlantillaMensajesPrivados);	
+			$("#"+userdest_id+"_contenido").append(PlantillaMensajesPrivados);	
 
 
-			$("#"+userdest.username).append("<div style='width:15%; height:10% ; text-align:center; float:left; '>"+
+			$("#"+userdest_id+"_contenido").append("<div style='width:15%; height:10% ; text-align:center; float:left; '>"+
 												"<div style=' '>"+Meteor.user().username+"</div>"+
 												"<img width='75px' style='' height='75px' src='"+Meteor.user().avatar+"'>"+
 											"</div>");
@@ -80,16 +85,11 @@ Template.listaAmigosOnlineTemp.events = {
 
 
 
-			$("#"+userdest.username).append("<div style='width:15%; height:10% ; text-align:center; float:left;'>"+
+			$("#"+userdest_id+"_contenido").append("<div style='width:15%; height:10% ; text-align:center; float:left;'>"+
 												"<div style=''>"+userdest.username+"</div>"+
 												"<img width='75px' style='' height='75px' src='"+userdest.avatar+"'>"+
 											"</div>");
 			
-
-
-			
-
-
 
 							
 			$("#chatTabs").tabs("refresh");
@@ -108,9 +108,8 @@ Template.listaAmigosOnlineTemp.events = {
 //Escucha evento click en el titulo de una pestaña de chat privado
 $(document).on("click","a[tipo='titulochat']", function(){
 	var userdest_id = $(this).parent().attr("id");
-	var userdest=Meteor.users.findOne({_id: userdest_id});
-	Session.set("origname",Meteor.user().username);
-	Session.set("destname",userdest.username);
+	Session.set("orig_id",Meteor.userId());
+	Session.set("dest_id",userdest_id);
 });
 
 
@@ -125,15 +124,15 @@ $(document).on("click", ".closechattab", function() {
         mychats.splice(indice,1);
 
 		$("#"+userdest_id).remove();
-		$("#"+userdest.username).remove();
+		$("#"+userdest_id+"_contenido").remove();
 
 		if (mychats.length==0){
 			$("#chatTabs").hide();
 		}else{
-			var nombrechatabierto = $("div[tipo='contenidochat'][style='display: block;']").attr("id");
-			if (nombrechatabierto != undefined){
-				Session.set("origname",Meteor.user().username);
-				Session.set("destname",nombrechatabierto);
+			var chatabierto = $("div[tipo='contenidochat'][style='display: block;']").attr("id");
+			if (chatabierto != undefined){
+				Session.set("orig_id",Meteor.userId());
+				Session.set("dest_id",chatabierto.split("_")[0]);
 			}
 		}	
 });
@@ -151,10 +150,10 @@ $(document).on("keydown",".privatemessagecont", function(event){
 		var privatemessage = $(this);
 		if (privatemessage.val()!=''){
 			Private_Messages.insert({
-				orig: Session.get('origname'),
-				dest: Session.get('destname'),
-				text: privatemessage.val(),
-				date: new Date(),
+				orig_id: Session.get('orig_id'),
+				dest_id: Session.get('dest_id'),
+				texto: privatemessage.val(),
+				date: (new Date()).toUTCString().split(" GMT")[0],
 				recibido: 0
 			});
 			privatemessage.val(''); //dejamos la caja de texto vacia

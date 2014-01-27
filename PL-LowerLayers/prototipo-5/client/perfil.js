@@ -22,7 +22,7 @@ Template.miperfiltemp.amigos = function () {
 
 Template.miperfiltemp.rank = function(){
 	if(Ranking.find().count()!=0){
-		var listelems = Ranking.find();
+		var listelems = Ranking.find({"user_id": Session.get("IdPerfil")});
 		
 		var elemfound = false;
 		var listbestelems = [];

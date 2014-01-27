@@ -1,16 +1,6 @@
 //variable para retornar por el camino filtrado
 var pathranking = 1;
 
-//Partidas terminadas
-
-/*Deps.autorun(function() {
-	partidas=Partidas.find({terminada: true, saved:false});
-	partidas.forEach(function(elem){
-		Meteor.call("partyFinish", elem._id);
-		Partidas.update({_id: elem._id},{$set{saved:true}});
-	});
-});*/
-
 ///Eventos en plantillas////
 
 //Mostramos puntuaciones para un juego
@@ -181,7 +171,7 @@ Template.bygamerankingtemp.ranking=function(){
 		var list2=[];
 		list.forEach(function(elem) {
 			list2.push({"user":Meteor.users.findOne({_id:elem.user_id}).username,
-					    "user_id":elem.user_id, "game_id":elem.game_id, "score":elem.score});
+					    "user_id":elem.user_id, "score":elem.score});
 		});
 		return list2;
 	}
