@@ -787,7 +787,9 @@ td, th {
 	margin-top: 10%;
 	float: right;
 	text-align: center;
-	width: 30%;
+	width: 25%;
+	background-color: white;
+	padding: 10px;
 }   
 
 .selected_apunto {
