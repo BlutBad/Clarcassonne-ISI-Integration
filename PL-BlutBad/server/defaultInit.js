@@ -209,24 +209,34 @@ Meteor.startup(function() {
 			    mode : 'solo',
 			    hall : 'alienHall',
 			    rangos : [ {
-					rango : "Fantasma",
+					rango : "Xenomorfo",
 					minPoints : 0,
 			    }, {
-					rango : "Noob",
-					minPoints : 500,
-			    }, {
-					rango : "Capitan",
+					rango : "Huevo",
 					minPoints : 1000,
 			    }, {
-					rango : "Comandante",
-					minPoints : 4000,
+					rango : "Abrazacaras",
+					minPoints : 1500,
 			    }, {
-					rango : "General",
+					rango : "Quebrantapechos",
+					minPoints : 2000,
+			    }, {
+					rango : "Alien Oscuro",
+					minPoints : 3000,
+			    },{
+					rango : "Jock-Alien",
+					minPoints : 5000,
+			    },{
+					rango : "Croc-Alien",
 					minPoints : 7000,
-			    }, {
-					rango : "Heroe",
+			    },{
+					rango : "Pretoriano",
 					minPoints : 9000,
+			    }, {
+					rango : "Reina",
+					minPoints : 999000,
 			    } ],
+
 			    insignias : [
 				    {
 						description : "Has jugado una vez a este juego",
@@ -370,23 +380,32 @@ Meteor.startup(function() {
 			    mode : 'solo',
 			    hall : 'frootHall',
 			    rangos : [ {
-					rango : "Fantasma",
+					rango : "Espinacas",
 					minPoints : 0,
 			    }, {
-					rango : "Noob",
-					minPoints : 500,
-			    }, {
-					rango : "Capitan",
+					rango : "Brócoli",
 					minPoints : 1000,
 			    }, {
-					rango : "Comandante",
-					minPoints : 4000,
+					rango : "Capitan Alcachofa",
+					minPoints : 3000,
 			    }, {
-					rango : "General",
+					rango : "Comandante Calabaza",
+					minPoints : 5000,
+			    }, {
+					rango : "General Plátano",
 					minPoints : 7000,
 			    }, {
-					rango : "Heroe",
+					rango : "Reina Zanahoria",
 					minPoints : 9000,
+			    }, {
+					rango : "Granada",
+					minPoints : 12000,
+			    }, {
+					rango : "Princesa Frambuesas",
+					minPoints : 15000,
+			    }, {
+					rango : "Reina Fresa",
+					minPoints : 90000,
 			    } ],
 			    insignias : [
 				    {

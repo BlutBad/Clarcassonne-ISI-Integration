@@ -30,7 +30,7 @@ Template.dashboard.events({
 	}
 });
 
-/*
+
 Template.misInsignias.juegos = function() {
 	  return Juegos.find();
 };
@@ -51,10 +51,11 @@ Template.misInsignias.infoInsignia = function(insigniaId) {
 };
 
 	
-	
-	InsigniasToUser.insert({user_id:this.userId,
-		game_id:gameId,
-		insignia_id: insig._id});
-
+/*
+InsigniasToUser.insert({user_id:this.userId,
+	game_id:gameId,
+	insignia_id: insig._id});
 */
+
+
 
