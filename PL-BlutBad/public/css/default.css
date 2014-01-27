@@ -539,7 +539,7 @@ h2.layout {
 .gallery-item {
 	float: left;
 	width: 280px;
-	margin: 0 0 22px 22px;
+	margin: 0 0 22px 18px;
 }
 
 .gallery-item h5,.gallery-item p {
@@ -840,10 +840,9 @@ td, th {
 }
 
 .container_juegos {
-	background-color: #F8E0E6;
+	background-color: #F2F2F2;
 	border: #BDBDBD 1px solid;
 	border-radius: 3px;
-	padding: 10px;
 	width: 97%;
 	margin: 10px;
 	height: 290px;
