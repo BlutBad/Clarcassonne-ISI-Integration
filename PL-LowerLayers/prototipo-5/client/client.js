@@ -134,7 +134,7 @@ Deps.autorun(function () {
 //Subscripcion selectiva a los mensajes privados
 Deps.autorun(function () {
 	if (Meteor.user())
-		Meteor.subscribe("private_messages", Meteor.user().username);
+		Meteor.subscribe("private_messages", Meteor.userId());
 });
 
 //Subscripcion selectiva a invitaciones

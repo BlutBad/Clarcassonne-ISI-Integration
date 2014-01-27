@@ -21,8 +21,8 @@ Meteor.publish("messages", function(current_match_id) {
 });
 
 
-Meteor.publish("private_messages", function(orig_name) { 	
-	return Private_Messages.find({$or: [ {orig: orig_name} , {dest: orig_name} ] });
+Meteor.publish("private_messages", function(orig) { 	
+	return Private_Messages.find({$or: [ {orig_id: orig} , {dest_id: orig} ] });
 });
 
 // Encuentra las partidas en las que a sido invitado
