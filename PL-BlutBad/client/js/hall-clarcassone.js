@@ -124,12 +124,15 @@ Template.hall_clarcassone.events({
             // id de la partida que ha sido creada.
             if (todos_listos) {
                 gid = Session.get("current_game");  
-                console.log(gid)
+                //console.log(gid)
                 party_id = Partidas.insert({
                     jugadores : party_jugadores,
                     terminada : false, 
                     game_id: gid
                 });
+                
+                Session.set("partidaEnCursoMultiJuegos", party_id);
+
                 PartidasVolatiles.update(this._id, {
                     $set: {jugadores : usersJoined,
                            listos: true,
@@ -390,6 +393,26 @@ Template.hall_clarcassone.show_ready = function() {
     if (userInparty) {
         return true;
     }
+    return false;
+}
+
+Template.hall_clarcassone.torneo_user = function() { 
+    mistor = Session.get('clickado_mistor'); 
+    if (!mistor && mistor != undefined) {
+        userInparty = PartidasVolatiles.findOne({
+            _id : this._id,
+            jugadores: { 
+                $elemMatch: { 
+                    user_id: Meteor.userId() 
+                } 
+            }
+        });  
+        if (userInparty != undefined) {
+            return true;
+        }
+    } else {
+        return true;
+    } 
     return false;
 }
 
