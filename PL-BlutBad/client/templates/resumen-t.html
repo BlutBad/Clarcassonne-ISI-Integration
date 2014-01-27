@@ -1,0 +1,30 @@
+
+
+
+<template name="resumenPartida">
+{{#if show}}
+	<h2>Partida ha terminado, puede consultar la tabla te puntuacion!</h2>
+	<table class="table">
+      <thead>
+        <tr>
+      		<th>#</th>
+			<th>USER</th>
+			<th>RANGO</th> 
+			<th>MAX SCORE</th> 
+
+        </tr>
+      </thead>
+      <tbody>
+      {{#each resumenMultiPartida}} 
+        <tr>
+        	<td>{{No}}</td>
+        	<td><span class="{{clacc}}">{{user}}</span>
+        	<td>{{rango}}</td> 
+			<td>{{puntos}}</td> 
+		</tr>
+		{{/each}}
+      </tbody>
+    </table>
+
+{{/if}}
+</template>
