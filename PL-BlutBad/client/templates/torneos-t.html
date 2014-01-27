@@ -1,7 +1,8 @@
 <template name="torneos">
 	{{#if show}} 
-		<div id = "torneos_container">
-			<h1>Creación de torneos</h1>
+        <h1>Creación de torneos</h1>
+		<div id = "torneosContainer">
+			
             {{#if currentUser}}
 			     <input type="button" id="crear_torneo" value="Crear Torneos"> 
             {{/if}}
@@ -12,7 +13,7 @@
 			{{/if}}               
         </div>
         <div id = "torneos_container">     
-            <div class="one-third">
+            <div class="one-third torneoOneThird">
                 <h3>Torneos por juego</h3> 
                 <ul class="sub-navigation">
                 {{#each juegos}}
@@ -21,8 +22,8 @@
                 </ul>         
                 <input type="button" id="mostrar_torneos" class = "btn" value="Mostrar todos"> 
             </div>   
-            <div class="two-thirds"> 
-                <div class="blog">
+            <div class="two-thirds torneoIndTwo"> 
+                <div class="blog torneoInd">
                     {{#each torneo}}
                         <div class="post-summary">
                             <h3 class="post-title">{{title}}</h3>

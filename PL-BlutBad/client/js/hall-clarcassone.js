@@ -55,7 +55,7 @@ notRegister = function() {
 } 
 
 Template.hall_clarcassone.events({
-    'click #nuevaPartida' : function() { 
+    'click #nuevaPartida' : function() {  
         if (Meteor.user()) {
             userA = UsersInHall.findOne({
                 user_id : Meteor.userId()
@@ -119,11 +119,16 @@ Template.hall_clarcassone.events({
                     break;
                 }
             } 
+
+
             // id de la partida que ha sido creada.
             if (todos_listos) {
+                gid = Session.get("current_game");  
+                console.log(gid)
                 party_id = Partidas.insert({
                     jugadores : party_jugadores,
                     terminada : false, 
+                    game_id: gid
                 });
                 
                 Session.set("partidaEnCursoMultiJuegos", party_id);
@@ -404,11 +409,15 @@ Template.hall_clarcassone.rol = function(id_user, id_partida) {
 
 Template.hall_clarcassone.point = function(id_user, obj_party) { 
     mov = obj_party.movimientos; 
-    last_mov = mov[mov.length-1];
-    punts = last_mov.puntos;
-    for (i = 0; i < punts.length; i++) {
-        if (punts[i].id == id_user) {
-            return punts[i].puntos;
+    if (mov != undefined) {
+        last_mov = mov[mov.length-1];
+        punts = last_mov.puntos; 
+        for (i = 0; i < punts.length; i++) {
+            if (punts[i].id.user_id == id_user) {
+                return punts[i].puntos;
+            }
         }
+    } else {
+        return 0;
     }
 }     
