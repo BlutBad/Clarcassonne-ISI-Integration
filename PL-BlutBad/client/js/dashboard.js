@@ -5,6 +5,11 @@ Template.dashboard.show = function() {
 Template.dashboard.events({
 	'click .crea_party' : function() { 
 		Session.set('current_stage', 'klarkiHall');
+        idgame = Juegos.findOne({
+            idn: 'klarki'
+        })._id;
+        Session.set('current_game', idgame);
+        //console.log(idgame);
 		if (Meteor.userId()) { 
             userCreator = PartidasVolatiles.findOne({
                 creator_id : Meteor.userId()

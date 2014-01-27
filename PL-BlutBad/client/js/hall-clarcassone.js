@@ -124,6 +124,7 @@ Template.hall_clarcassone.events({
             // id de la partida que ha sido creada.
             if (todos_listos) {
                 gid = Session.get("current_game");  
+                console.log(gid)
                 party_id = Partidas.insert({
                     jugadores : party_jugadores,
                     terminada : false, 

@@ -62,7 +62,7 @@ Deps.autorun(function(c) {
 		    Session.set('showGameIdn', lg.idn);
 		    // current_game - es necesaria para el juego, con el id del juego luego
 		    // se apunta al jugador en el ranking.
-		    Session.set("current_game", lg._id);
+		    //Session.set("current_game", lg._id);
 		    // Se lanza el juego.
 		    CanvasGame = eval(lg.wrapf);
 		    
