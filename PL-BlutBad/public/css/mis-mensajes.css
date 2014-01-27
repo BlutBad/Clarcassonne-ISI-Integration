@@ -37,6 +37,27 @@
 	margin: 10px
 }
 
+.listInbox {
+	background-color: #E6E6E6;
+	cursor:pointer; cursor: hand;
+	border-radius: 3px;
+	border: #6E6E6E 1px solid;
+	width: 80%;
+	height: 10%;
+	margin: 10px 10px 5px 15px;
+	padding: 10px 5px 0px 15px;
+}
+
+#noTienesMsg {
+	background-color: #E6E6E6;
+	margin: 20px 5px 0px 5px;
+	border-radius: 3px;
+	border: #6E6E6E 1px solid;
+	width: 80%;
+	height: 10%;
+	padding: 10px 5px 0px 15px;
+}
+
 #my-msg {
 	float: left;
 	background-color: #D8D8D8;
@@ -50,12 +71,16 @@
 
 #content-msg {
 	background-color: white;
-	overflow-y: scroll;
 	width: 97%;
 	height: 86%;
 	margin: 10px;
+	overflow-x: scroll;
 }
 
+#miMensaje {
+	margin: 20px 5px 0px 5px;
+	padding: 15px 5px 0px 10px;
+}
 
 #outbox {
 	background-color: #819FF7;

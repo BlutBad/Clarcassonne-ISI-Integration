@@ -12,9 +12,9 @@
 						</div>
 					</div>
 					<div id="my-msg">
-						<h3 class="title-msg">Mensaje recivido de X</h3>
+						<h3 class="title-msg">Mensaje:</strong></h3>
 						<div id="content-msg">
-							<p>{{contentMsg}}</p>
+							<p id="miMensaje">{{contentMsg}}</p>
 						</div>
 					</div>
 				</div>
@@ -38,8 +38,8 @@
 			</div>
 		{{/each}}
 	{{else}}
-		<div id"noTienesMsg">
-			<p>No tienes mensajes</p>
+		<div id="noTienesMsg">
+			<p>No tienes mensajes.</p>
 		</div>
 	{{/if}}
 </template>
@@ -61,6 +61,11 @@
 		<div id="notMsg" title="Bandeja de Salida" style="display:none">
 			<p>
 				Debes escribir tu mensaje antes de enviar.
+			</p>
+		</div>
+		<div id="SendOk" title="Bandeja de Salida" style="display:none">
+			<p>
+				Mensaje enviado correctamente.
 			</p>
 		</div>
 	{{/if}}

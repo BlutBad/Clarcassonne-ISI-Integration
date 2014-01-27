@@ -72,6 +72,16 @@ Template.outbox.events({
 				mensaje: text,
 				time: Date.now()
 			})
+			$( "#SendOk" ).dialog({
+				resizable: false,
+				height:170,
+				modal: true,
+				buttons: {
+					Aceptar: function() {
+					  	$( this ).dialog( "close" );
+					}
+				}
+			});
 		}
 	},
 
