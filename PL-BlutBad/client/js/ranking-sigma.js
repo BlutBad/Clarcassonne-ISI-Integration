@@ -109,7 +109,9 @@ var drawSigma = function  () {
 		      'x': Math.random(),// pos.x,//Math.random()*2,
 		      'y': Math.random(),//pos.y,//Math.random()*2,
 		      'size': nodeSize,
-		      'color': "#006400",
+  		      'color': 'rgb('+Math.round(Math.random()*256)+','+
+          		Math.round(Math.random()*256)+','+
+          		Math.round(Math.random()*256)+')',
 		      //'cluster': cluster['id']
 		    });
 	});

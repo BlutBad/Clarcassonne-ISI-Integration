@@ -93,9 +93,9 @@ var GameAlien = new function() {
 		boards[i].draw(GameAlien.ctx);
 	    }
 	}
-
+	console.log("caca");
 	// Ejecutar dentro de 30 ms
-	setTimeout(GameAlien.loop,30);
+	timer = setTimeout(GameAlien.loop,30);
     };
     
     // Para cambiar el panel activo en el juego.
@@ -103,7 +103,9 @@ var GameAlien = new function() {
     // Cada capa tiene que tener en su interfaz step() y draw()
     this.setBoard = function(num,board) { boards[num] = board; };
 
-
+	this.desactivar = function (){
+		 clearTimeout(timer);
+	};
 
   this.setupMobile = function() {
     var container = document.getElementById("container"),

@@ -40,21 +40,25 @@ Meteor.methods({
 				curUser.totalScore +=opts.score;
 
 				
-				var rango = Rangos.findOne({game_id:game_id, minPoints:{$gte: curUser.totalScore}});
+				var rango = Rangos.findOne({game_id:game_id,
+											minPoints:{$gte: curUser.totalScore}});
 
 				
 				
-				/*
-				insig = Insignias.findOne({game_id:game_id, timesPlayed:{$gte: curUser.timesPlayed}});
 				
-				insigToUser = InsigniasToUser.findOne({user_id:curUser.userId, game_id:game_id});
-				
-				if(!!insigToUser){
-					InsigniasToUser.insert({user_id:curUser.userId,
-											game_id:gameId,
+				insig = Insignias.findOne({	game_id:game_id,
+											timesPlayed:{$gte: curUser.timesPlayed}});
+				console.log("insig"  + insig);
+
+				insigToUser = InsigniasToUser.findOne({user_id:user_id, game_id:game_id});
+				console.log("insigToUser"  + insigToUser);
+				if(!insigToUser){
+					console.log("go to insert");
+					InsigniasToUser.insert({user_id:user_id,
+											game_id:game_id,
 											insignia_id: insig._id});
 				}
-				*/
+				
 				
 				
 				

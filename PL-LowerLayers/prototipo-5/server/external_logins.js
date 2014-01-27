@@ -17,11 +17,11 @@ Accounts.loginServiceConfiguration.insert({
 	secret: "ca06dad77f48e0d0282d65ff283917b2"
 });
 
-/*Accounts.loginServiceConfiguration.insert({ 
+Accounts.loginServiceConfiguration.insert({ 
   service: "google", 
-  clientId: "931046716974.apps.googleusercontent.com",   
-  secret: "OKn53SVBm-oz9kNRaSm_Vx_9" 
-});*/
+  clientId: "550747968292-es44j51moek78asvtbbikirn7jjo8kpi.apps.googleusercontent.com",   
+  secret: "3HuwrGfKDlQ0-eMzP951Cliw" 
+});
 
 Accounts.loginServiceConfiguration.insert({
 		service: "twitter",

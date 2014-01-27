@@ -149,18 +149,18 @@ function menuAmInv(esto) {
 //problema: que este jugando a otro juego. pues que se salga
 //Quiero que se queden fijas.timeout 0;
 
-Deps.autorun(function () {
+/*Deps.autorun(function () {
 	console.log("antes de user")
 	
 		console.log("antes de find")
-		var invitaciones = Invitations.find().fetch();
+		//var invitaciones = Invitations.find().fetch();
 		
 		console.log(invitaciones);
 		//var invitacion = Invitations.findOne({requester : Meteor.user().username});
 		//var pene = invitacion.sent;
 		//alert("caca");
 		//$.ambiance({message: "Invitation",type: "success", timeout: 0});	
-});
+});*/
 
 /////////////////////////////////Bloqueo///////////////////////////////////////////////////////
 

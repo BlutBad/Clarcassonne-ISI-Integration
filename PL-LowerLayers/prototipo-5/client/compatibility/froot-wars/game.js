@@ -35,9 +35,6 @@ var b2DebugDraw = Box2D.Dynamics.b2DebugDraw;
 		};
 }());
 
-$(window).load(function() {
-	game.init();
-});
 
 var game = {
 	// Start initializing objects, preloading assets and display start screen
