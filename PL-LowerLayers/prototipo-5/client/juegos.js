@@ -181,10 +181,16 @@ Template.gamestemp.events = {
 			Session.set('match_id', current_match_id);
 			$('#matches').hide();
 			$('#roomcontainer').fadeIn();
-			if (Games.findOne({_id : Session.get("game_id")}).name=="Alien_Invasion")
+			if (Games.findOne({_id : Session.get("game_id")}).name=="Alien_Invasion"){
 				$('#aliencontainer').show();
-			else if (Games.findOne({_id :Session.get("game_id")}).name=="Froot_Wars")
+				$('#aliencontainer').append("<canvas id='aliencanvas' width='320' height='480'></canvas>");
+/*---------*/	GameAlien.initialize("aliencanvas",spritesAlien,startGameAlien);
+			}else if (Games.findOne({_id :Session.get("game_id")}).name=="Froot_Wars"){
 				$('#frootwarscontainer').show();
+				$('#frootwarscontainer').prepend("<canvas id='gamecanvas' width='640' height='480' class='gamelayer'></canvas>");
+				game.init();
+
+			}
 			Partidas.update({_id : Session.get('match_id')},{$push: {jugadores: {user_id: Meteor.userId()}},$inc:{num_players :1}});
 		} else {
 			$('#games').hide();
@@ -218,10 +224,11 @@ Template.matchestemp.events = {
 					Session.set('match_id', current_match_id);
 					$('#matches').hide();
 					$('#roomcontainer').fadeIn();
-					if (Games.findOne({_id : Session.get("game_id")}).name=="Alien_Invasion")
+					if (Games.findOne({_id : Session.get("game_id")}).name=="Alien_Invasion"){
 						$('#aliencontainer').show();
-					else if (Games.findOne({_id :Session.get("game_id")}).name=="Froot_Wars")
+					}else if (Games.findOne({_id :Session.get("game_id")}).name=="Froot_Wars"){
 						$('#frootwarscontainer').show();
+					}
 					Partidas.update({_id : Session.get('match_id')},{$push: {jugadores: {user_id: Meteor.userId()}},$inc:{num_players :1}});
 					$("#match_name").val('');
 					$("#match_pass").val('');
@@ -292,6 +299,20 @@ Template.roomgametemp.events = {
 			};
 		};
 
+		var weAreAlien = Games.findOne({_id : quited_game_id}).name;
+		var weAreFroot = Games.findOne({_id : quited_game_id}).name;
+
+		if (weAreAlien =="Alien_Invasion"){
+			$('#aliencanvas').remove();
+/*---*/		GameAlien.desactivar();
+		}else if (weAreFroot =="Froot_Wars"){
+			game.ended = true;					
+			game.showEndingScreen();
+			$('#gamecanvas').remove();
+		}
+
+		
+
 		Session.set('match_id', undefined);
 		$('#clarcassonnecontainer').hide();
 		$('#roomcontainer').hide();
@@ -299,7 +320,7 @@ Template.roomgametemp.events = {
 		$('#frootwarscontainer').hide();
 		$('#matches').fadeIn();
 
-		if (Games.findOne({_id : Session.get("game_id")}).name=="Alien_Invasion" || Games.findOne({_id :Session.get("game_id")}).name=="Froot_Wars"){
+		if (weAreAlien =="Alien_Invasion" || weAreFroot =="Froot_Wars"){
 			Session.set('game_id', undefined);
 			$('#matches').hide();
 			$('#games').fadeIn();

@@ -497,9 +497,3 @@ Explosion.prototype.step = function(dt) {
 	this.board.remove(this);
     }
 }
-
-
-
-$(function() {
-    GameAlien.initialize("aliencanvas",spritesAlien,startGameAlien);
-});
