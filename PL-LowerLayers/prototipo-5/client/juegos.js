@@ -4,8 +4,8 @@ Deps.autorun(function() {
 	var doc_partidas = Partidas.findOne({_id : Session.get('match_id')});
 	if(doc_partidas){
 		var empezada = doc_partidas.initiated;
-		if(empezada == 'true'){
-			
+		if(empezada == 'true' && !Session.get("match_initiated")){
+			Session.set("match_initiated",true);
 			$('#clarcassonnecontainer').show();
 			ClarcassonneGameIU.initialize('#clarcassonnecanvas', Session.get('match_id'));
 			
@@ -237,6 +237,7 @@ Template.matchestemp.events = {
 				$( "#dialog_matchname" ).dialog("open");
 			};
 		} else {
+			$("#error_birthdialog").remove();
 			$( "#dialog_birthdate" ).dialog("open");
 		};
 	},

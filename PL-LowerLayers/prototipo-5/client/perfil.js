@@ -199,6 +199,7 @@ $(document).ready(function() {
 
 	$(document).on("click","#birthbutton_dialog", function(){
 		if($("#datepickerprof_dialog").val() == ""){
+			$("#error_birthdialog").remove();
 			$("#birthbutton_dialog").before('<p id="error_birthdialog" style="color: red;">Debes introducir una fecha.</p>');
 		} else {
 			var fechanacimiento = $("#datepickerprof_dialog").val();
