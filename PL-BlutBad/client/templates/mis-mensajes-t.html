@@ -8,13 +8,13 @@
 					<div id="inbox">
 						<h3 class="title-msg">Bandeja de entrada:</h3>
 						<div id="list-msg">
-							<p>Lista de todos tus mensajes</p>
+							{{>listMsg}}
 						</div>
 					</div>
 					<div id="my-msg">
 						<h3 class="title-msg">Mensaje recivido de X</h3>
 						<div id="content-msg">
-							<p>Contenido mensaje</p>
+							<p>{{contentMsg}}</p>
 						</div>
 					</div>
 				</div>
@@ -30,9 +30,19 @@
 	{{/if}}
 </template>
 
-
-
-
+<template name="listMsg">
+	{{#if tienesMensajes}}
+		{{#each mensajes}}
+			<div class="listInbox">
+				<p class="listOfMsgInbox"> Mensaje de: <strong>{{origen}}</strong></p>
+			</div>
+		{{/each}}
+	{{else}}
+		<div id"noTienesMsg">
+			<p>No tienes mensajes</p>
+		</div>
+	{{/if}}
+</template>
 
 <template name="outbox">
 	{{#if showoutbox}}

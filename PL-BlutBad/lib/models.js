@@ -114,6 +114,18 @@ Friends = new Meteor.Collection("friends");
 }
 */
 
+Mensajes = new Meteor.Collection("mensajes");
+
+/* Modelo de la coleccion
+{
+	_id: ***,
+	origen: A,
+	destino: B,
+	mensaje: X,
+	time: 0000	
+}
+*/
+
 /*user_id, isicoins_total isi_coins*/
 Shop = new Meteor.Collection("shop");
 
