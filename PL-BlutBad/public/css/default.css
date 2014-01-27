@@ -538,7 +538,7 @@ h2.layout {
  /* stupid IE (version 7 only)  */
 .gallery-item {
 	float: left;
-	width: 293px;
+	width: 280px;
 	margin: 0 0 22px 22px;
 }
 
@@ -769,7 +769,7 @@ td, th {
 }
 
 #ranking_container {
-	margin: 1% 5%;
+	margin: 1% 1%;
 }
 
 .sub-navigation, .game_filter {
@@ -837,7 +837,18 @@ td, th {
 .container_juegos, .container_ranking,
 .container_tor, #torneos_container {	
 	overflow: hidden; 
-}  
+}
+
+.container_juegos {
+	background-color: #F8E0E6;
+	border: #BDBDBD 1px solid;
+	border-radius: 3px;
+	padding: 10px;
+	width: 97%;
+	margin: 10px;
+	height: 290px;
+	padding: 25px 5px 5px 5px;
+}
 
 #profile-container {
 	margin-right: 20%;
@@ -916,6 +927,7 @@ td, th {
 	background: #222;
 	height: 350px;
 	width: 600px;
+	margin-bottom: 20px;
 }
 .sigma-expand {
 	width: 100%;
