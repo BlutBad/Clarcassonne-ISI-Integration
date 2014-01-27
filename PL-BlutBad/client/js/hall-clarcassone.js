@@ -124,6 +124,7 @@ Template.hall_clarcassone.events({
             // id de la partida que ha sido creada.
             if (todos_listos) {
                 gid = Session.get("current_game");  
+                console.log(gid)
                 party_id = Partidas.insert({
                     jugadores : party_jugadores,
                     terminada : false, 
@@ -407,9 +408,9 @@ Template.hall_clarcassone.point = function(id_user, obj_party) {
     mov = obj_party.movimientos; 
     if (mov != undefined) {
         last_mov = mov[mov.length-1];
-        punts = last_mov.puntos;
+        punts = last_mov.puntos; 
         for (i = 0; i < punts.length; i++) {
-            if (punts[i].id == id_user) {
+            if (punts[i].id.user_id == id_user) {
                 return punts[i].puntos;
             }
         }

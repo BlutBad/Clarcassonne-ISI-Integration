@@ -5,7 +5,6 @@
  Meteor.methods({
 
     InicioJuego:function(id_partida){
-	console.log(id_partida);      
 	if (endTablero[id_partida]==undefined){
 		endTablero[id_partida]=true;
 	       	Tablero= new ObjTablero(id_partida);
@@ -90,15 +89,16 @@
 		var puntuacion=[];
 		puntosFinal();
 		for (i=0; i< Tablero.listaJugadores.length; i++){
-			puntuacion.push({user_id: Tablero.listaJugadores[i].id, puntos: Tablero.listaJugadores[i].puntos});
+			puntuacion.push({user_id: Tablero.listaJugadores[i].id.user_id, puntos: Tablero.listaJugadores[i].puntos});
 		}
-	  	Partidas.update(id_partida,{terminada: true, puntuacion: puntuacion});
+	  	Partidas.update(id_partida,{$set:{terminada: true, puntuacion: puntuacion}});
 		matchMulti(id_partida);
 	  }
 
+
           return Tablero.listaJugadores;
       
-      }
+      },
     
     //Coloca el seguidor en la ficha indicada y suma los correspondientes puntos. Acaba el turno. 
     
