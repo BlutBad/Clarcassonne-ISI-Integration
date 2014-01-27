@@ -27,7 +27,7 @@ var addSomeUsers = function(participantes, num) {
         //console.log("\trnd: " + rnd+ ", id: "+participantes[rnd]);
 
         party.jugadores.push({  user_id : participantes[rnd],
-                                estado  : "Torneo Inactivo"});
+                                estado  : "Inactivo"});
 
         party.party_id = Math.floor(Math.random()*2000000);
         participantes = _.without(participantes, participantes[rnd]);

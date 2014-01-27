@@ -13,8 +13,8 @@
 		Jugadores_ID= Partidas.findOne({_id: id_partida}).jugadores;
 	
 		for(i=0;i<Jugadores_ID.length;i++){
-			var player =resolverUser(Jugadores_ID[i]);
-			Tablero.listaJugadores.push(new ObjetoJugador(Jugadores_ID[i],player.nombre,player.fecha));
+			var player =resolverUser(Jugadores_ID[i].user_id);
+			Tablero.listaJugadores.push(new ObjetoJugador(Jugadores_ID[i].user_id,player.nombre,player.fecha));
 		}
 		
 		//ordenamos a los jugadores por edad
@@ -48,7 +48,7 @@
     
     
     
-    ColocarFicha:function(id_partida,tipoFicha, coordenada, n_giros){
+    ColocarFicha:function(id_partida,tipoFicha, coordenada, n_giros,id_jugador){
       Tablero= endTablero[id_partida];
       var nuevaficha = new ObjetoFicha(0,0,0,tipoFicha);
       for (var i=0; i<n_giros;i++){nuevaficha.girar()}
@@ -56,8 +56,12 @@
       var fichaColocada =Tablero.colocarficha(nuevaficha,coordenada.x,coordenada.y); 
       if (fichaColocada == 0){return 0}
       console.log("fichaColocada", fichaColocada);
-      var seguidores=Tablero.colocarseguidor(fichaColocada);
-      endTablero[id_partida]=Tablero;
+	 		var seguidores = [];
+			var Jugador = _.find(Tablero.listaJugadores,function(obj){return (obj.id.user_id == id_jugador)});
+			if (Jugador.n_seguidores != 0){
+	      var seguidores=Tablero.colocarseguidor(fichaColocada);
+  	    endTablero[id_partida]=Tablero;
+			}
       return seguidores; 
     },
     //Coloca la ficha en el tablero, devuelve la lista de los posibles seguidores o 0 si no se produce error
