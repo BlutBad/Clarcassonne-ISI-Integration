@@ -93,7 +93,6 @@ var GameAlien = new function() {
 		boards[i].draw(GameAlien.ctx);
 	    }
 	}
-	console.log("caca");
 	// Ejecutar dentro de 30 ms
 	timer = setTimeout(GameAlien.loop,30);
     };

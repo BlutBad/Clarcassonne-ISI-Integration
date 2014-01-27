@@ -58,3 +58,11 @@ Meteor.users.allow({
         return true;
     }
 });
+
+//Partidas terminadas
+matchMulti=function(id_party){
+	var match = Partidas.findOne({_id: party_id});
+    match.puntuacion[0].forEach(function(elem){
+		Ranking.insert({user_id:elem.user_id, game_id:match.game_id, score:elem.puntos});
+  	});
+}

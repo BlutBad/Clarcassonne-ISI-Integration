@@ -126,6 +126,11 @@ var playGameAlien2 = function() {
 // que alcancen a la nave del jugador
 var winGameAlien = function() {
 	Meteor.call("matchFinish", Session.get("match_id"), Session.get("game_id"), GameAlien.points);
+	
+	$(".tweetbtn").html("<iframe allowtransparency='true' frameborder='0' scrolling='no'"+
+                        "src='https://platform.twitter.com/widgets/tweet_button.html?text=He jugado a Alien Invasion en lowerlayers.meteor.com y he obtenido "+GameAlien.points+" puntos"+"'"+
+                         "style='width:130px; height:20px;'></iframe>");
+	
     GameAlien.setBoard(3,new TitleScreenAlien("You win!", 
                                     "Press fire to play again",
                                     playGameAlien1));
@@ -136,6 +141,11 @@ var winGameAlien = function() {
 // finalizar el juego
 var loseGameAlien = function() {
 	Meteor.call("matchFinish", Session.get("match_id"), Session.get("game_id"), GameAlien.points);
+	
+	$(".tweetbtn").html("<iframe allowtransparency='true' frameborder='0' scrolling='no'"+
+                        "src='https://platform.twitter.com/widgets/tweet_button.html?text=He jugado a Alien Invasion en lowerlayers.meteor.com y he obtenido "+GameAlien.points+" puntos"+"'"+
+                        "style='width:130px; height:20px;'></iframe>");
+	
     GameAlien.setBoard(3,new TitleScreenAlien("You lose!", 
                                     "Press fire to play again",
                                     playGameAlien1));
