@@ -2,11 +2,11 @@
 
 <template name="webRTC">
 	WEB - RTC
-	<div class="row container">
-		<div class="span1"> 
+	<div id="webRTC">
+		<div id="myVideo"> 
 			{{> my-video }}
 		</div>
-		<div class="span1"> 
+		<div id="remoteVideo"> 
 			{{> remote-videos }}
 		</div>
 	</div>
@@ -16,11 +16,11 @@
 
 
 <template name="my-video">
-	My-Video
+	<h3>My-Video</h3>
     <video id="localVideo"></video>
 </template>
 
 <template name="remote-videos">
-	Remote-Video
+	<h3>Remote-Video</h3>
     <div id="remotesVideos"></div>
 </template>

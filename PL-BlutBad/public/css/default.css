@@ -955,7 +955,7 @@ td, th {
     color: #d17581;
 }
 
-#remotesVideos video {
+/*#remotesVideos video {
   height: 120px;
   padding-bottom: 8px;
 	padding-top: 8px;
@@ -970,7 +970,44 @@ td, th {
 	padding-left: 5px;
 	padding-right: 5px;
 }
+*/
 
+#webRTC {
+	background-color: #F2F2F2;
+	border: #BDBDBD 1px solid;
+	width: 97%;
+	height: 250px;
+	margin: 10px;
+	padding: 10px;
+}
 
+#myVideo {
+	background-color: red;
+	float: left;
+	width: 20%;
+	height: 230px;
+	margin: 5px;
+	padding: 5px;
+}
 
+#localVideo {
+	background-color: blue;
+	height: 220px;
+	width: 80;
+	padding-bottom: 8px;
+	padding-top: 8px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
 
+#remoteVideo {
+	background-color: yellow;
+	float: left;
+	width: 75%;
+	height: 230px;
+	margin: 5px;
+	padding: 5px;
+}
+#startWebRTC {
+	clear: both;
+}
