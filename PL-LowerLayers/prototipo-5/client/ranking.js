@@ -151,7 +151,13 @@ Template.playerstemp.first=function(){
 	return Session.get("user_id_ranking")==undefined && Session.get("game_id_ranking")==undefined;
 }
 
-
+//Comprueba que hay jugadores
+Template.playerstemp.gotplayers=function(){
+	var gotplayers = false;
+	if (Ranking.find().count()!=0)
+		gotplayers=true;
+	return gotplayers;
+}
 
 //bygame//
 
@@ -191,6 +197,15 @@ Template.bygamerankingtemp.playersgame=function(){
 			playersgame.push({"username":elem.username,"user_id":elem._id});
 	});
 	return playersgame;	
+}
+
+//Comprueba si han jugado al juego
+Template.bygamerankingtemp.gotplayersgame=function(){
+	var gotplayersgame = false;
+	game_id = Session.get("game_id_ranking");
+	if (Ranking.find({game_id: game_id}).count()!=0)
+		gotplayersgame=true;
+	return gotplayersgame;
 }
 
 //by user//
