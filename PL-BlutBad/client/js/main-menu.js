@@ -31,6 +31,7 @@ Template.main_menu.events({
     // De otra manera apuntar nuevo id del tag seleccionado
       Session.set('current_stage', this.name);}
     	Session.set('load_game', null);
+      Session.set("partidaEnCursoMultiJuegos", null);
     }
 
 });

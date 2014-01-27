@@ -72,3 +72,44 @@
 	width: 94%;
 	margin: 20px;
 }
+
+.wellRanking {
+	width: 120%;
+}
+
+/* Torneos */
+
+#torneosContainer {
+	background-color: #F2F2F2;
+	border: #BDBDBD 1px solid;
+	border-radius: 3px;
+	width: 96%;
+	height: 10%;
+	margin: 10px;
+	padding: 10px;
+	text-align: center;
+}
+
+#torneos_container {
+	background-color: #F2F2F2;
+	border: #BDBDBD 1px solid;
+	border-radius: 3px;
+	margin-top: 20px;
+	margin-left: 10px;
+	width: 96%;
+	padding: 15px;
+}
+
+.torneoIndTwo {
+	width: 64%;
+}
+
+.torneoInd {
+	width: 90%;
+}
+
+.torneoOneThird {
+	margin: 8% 4%;
+	background-color: white;
+	padding: 15px;
+}

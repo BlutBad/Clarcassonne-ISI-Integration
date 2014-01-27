@@ -130,6 +130,9 @@ Template.hall_clarcassone.events({
                     terminada : false, 
                     game_id: gid
                 });
+                
+                Session.set("partidaEnCursoMultiJuegos", party_id);
+
                 PartidasVolatiles.update(this._id, {
                     $set: {jugadores : usersJoined,
                            listos: true,
