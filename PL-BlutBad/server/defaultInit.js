@@ -20,7 +20,10 @@ Meteor.startup(function() {
 
 				},{
 					name: "Premium",
-					menuType:"principal"
+					menuType:"principal",
+				},{
+					name: "Ayuda",
+					menuType: "principal"
 				},
 				//menu de etapas del torneo
 				{
