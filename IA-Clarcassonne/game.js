@@ -85,6 +85,17 @@
           cierraClaustro(ficha,1);
           cierraCastillo(ficha,1);
           endTablero[id_partida]=Tablero;
+
+	  if (Tablero.totalFichas == 0){
+		var puntuacion=[];
+		puntosFinal();
+		for (i=0; i< Tablero.listaJugadores.length; i++){
+			puntuacion.push({user_id: Tablero.listaJugadores[i].id, puntos: Tablero.listaJugadores[i].puntos});
+		}
+	  	Partidas.update(id_partida,{terminada: true, puntuacion: puntuacion});
+		matchMulti(id_partida);
+	  }
+
           return Tablero.listaJugadores;
       
       }

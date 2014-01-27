@@ -1,0 +1,74 @@
+/* Torneos Hall */
+
+#summary_torneos{
+	background-color: white;
+	margin: 10px;
+	padding: 15px;
+	border-radius: 4px;
+}
+
+/* Milti-torneos */
+
+.multi_torneo {
+	background-color: blue;
+}
+
+.multi_torneo_hall {
+	background-color: #E0F8E6;
+	border: #BDBDBD 1px solid;
+	border-radius: 3px;
+	padding: 15px;
+	width: 90%;
+}
+
+.btn_multi {
+	margin: 3% 5% 3% 18%;
+}
+
+#container-multi-hall {
+	width: 810px;
+}
+
+.btn_multi_second {
+	margin: 3% 5% 3% 13%;
+}
+
+/* Mono-Torneo */
+
+.mono_torneo {
+	background-color: red;
+}
+
+.mono_torneo_hall {
+	background-color: #FBEFF8;
+	border: #BDBDBD 1px solid;
+	border-radius: 3px;
+	padding: 15px;
+	width: 90%;
+}
+
+.btn_mono {
+	margin: 3% 5% 3% 20%;
+}
+
+#participantes-mono-torneo {
+	width: 95%;
+	margin: 10px;
+	padding: 10px;
+}
+
+.wellColumna {
+	width: 130%;
+	margin-left: 15%;
+}
+
+/* Ranking */
+
+.container_ranking {
+	background-color: #ECF8E0;
+	border: #BDBDBD 1px solid;
+	border-radius: 3px;
+	padding: 15px;
+	width: 94%;
+	margin: 20px;
+}

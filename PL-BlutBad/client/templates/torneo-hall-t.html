@@ -1,10 +1,17 @@
 <template name="hall_torneo">
 
 {{#if show}}
-  <div class="container_hall_tor"> 
-    {{#with torneo}}              
-      <div class="post-summary">
-        <h1>{{title}}</h1>
+
+  {{#if multiTorneo}}
+    <div class="container_hall_tor multi_torneo_hall">
+  {{else}}
+    <div class="container_hall_tor mono_torneo_hall">
+  {{/if}}
+
+    {{#with torneo}}    
+      <h1>{{title}}</h1>          
+      <div class="post-summary" id="summary_torneos">
+        <!-- <h1>{{title}}</h1> -->
         <img src="{{pic}}" alt="sample image" width="606" height="115" class="imgtor"/>
         <div class="post-detailss"> 
           Creado por <a href="">{{getUsername user_create}}</a> en <a href="#">Torneos</a> 
@@ -22,10 +29,10 @@
 
       
     {{#if multiTorneo}} 
-      <div class="container">
+      <div class="container" id="container-multi-hall">
 
       <h2>Menu del torneo </h2>
-        <div id="tab" class="btn-group" data="buttons-radio">
+        <div class="btn-group btn_multi" data="buttons-radio">
           {{#each multiMenuTorneo}} 
             <a href="" class="btn btn-large btn-info multiMenuTorneo {{multiMenuTorneoActive}}" data-toggle="tab">{{name}}</a>
           {{/each}}
@@ -66,7 +73,7 @@
 
 
             <h2>Etapas del torneo </h2>
-            <div id="tab" class="btn-group" data="buttons-radio">
+            <div class="btn-group btn_multi_second" data="buttons-radio">
               {{#each etapasTorneo}} 
                 <a href="" class="btn btn-large btn-info etapasTorneo {{etapasTorneoActive}}" data-toggle="tab">{{name}}</a>
               {{/each}}
@@ -93,7 +100,7 @@
 
       <h2>Menu del torneo </h2>
 
-      <div id="tab" class="btn-group" data="buttons-radio">
+      <div class="btn-group btn_mono" data="buttons-radio">
         {{#each soloMenuTorneo}} 
           <a href="" class="btn btn-large btn-info soloMenuTorneo {{soloMenuTorneoActive}}" data-toggle="tab">{{name}}</a>
         {{/each}}
@@ -118,10 +125,10 @@
 
 
 <template name="participantes">
-    <div class="container">   
+    <div class="container" id="participantes-mono-torneo">   
         <div class="row">
           <div class="span5">
-           <div class="well">
+           <div class="well wellColumna">
             <table class="table">                         
                 <h3>Participantes del torneo!</h3>
               <thead>
@@ -153,7 +160,7 @@
 <div class="container">   
   <div class="row">
       <div class="span5">
-       <div class="well">
+       <div class="well wellColumna">
         <table class="table"> 
               <thead>
                 <tr>
@@ -181,7 +188,7 @@
     <div class="container">   
       <div class="row">
         <div class="span5">
-         <div class="well">
+         <div class="well wellColumna">
             <p>Esta etapa no tiene partidas planificas, lo sentimos.</p>
           </div>
         </div>
@@ -259,7 +266,7 @@
 <div class="container">   
   <div class="row">
       <div class="span5">
-       <div class="well">
+       <div class="well wellColumna">
        {{#if multiRanking}}
           <table class="table">                         
               <h3>Ranking del torneo!</h3>

@@ -245,7 +245,7 @@ var  nextEtapa = function(tid){
 }
 
 
-var matchMulti = function(party_id){
+matchMulti = function(party_id){
 	//console.log("matchMultiFinish " + party_id);
 
 	var party = Partidas.findOne(party_id);

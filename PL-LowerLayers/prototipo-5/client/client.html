@@ -14,6 +14,7 @@
 		{{> friendsTemp}}
 		{{> chatsTabsTemp}}
    	</div>
+
 	<div id="dialog_birthdate" title="Rellena tu perfil.">
   		<p>Por favor, antes de unirte a una partida rellena tu perfil.</p>
 		<p>También puedes introducir tu fecha de nacimiento aquí(Recuerda que no se puede volver a modificar): <input type="text" readonly="readonly" id="datepickerprof_dialog"></p>
@@ -138,10 +139,14 @@
 		{{# if first}}
 			<p><input type='text' id='formplayer'/>
 			<button id='btnplayer'>Buscar</button></p>
-			<p>Por usuarios:</p>
-			{{# each players}}
-				<a style ="cursor:pointer;text-decoration:underline;" class="linkplayer">{{username}}</a>
-			{{/each}}
+			{{# if gotplayers}}
+				<p>Por usuarios:</p>
+				{{# each players}}
+					<a style ="cursor:pointer;text-decoration:underline;" class="linkplayer">{{username}}</a>
+				{{/each}}
+			{{else}}
+				Nadie ha jugado aun
+			{{/if}}
 		{{/ if}}
 	</div>
 </template>
@@ -150,28 +155,32 @@
 	<div id="bygameranking">
 		{{# if user_not_selected}} 
 			<p><a style ='cursor:pointer;text-decoration:underline;' class='linkback'>atras</a></p>
-			<input type='text' id='formplayergame'/>
-			<button id='btnplayergame'>Buscar</button>
-			<p>Usuarios:</p>
-			{{# each playersgame}}
-				<a style ="cursor:pointer;text-decoration:underline;" class="linkplayergame">{{username}}</a>
-			{{/each}}
-			<p>{{gameranking}}</p>
-			<table>
-				<thead>
-					<tr>
-						<th>Usuario</th>
-						<th>Puntuacion</th>
-					</tr>
-				</thead>
-				<tbody>
-					{{# each ranking}}
+			{{# if gotplayersgame}}
+				<input type='text' id='formplayergame'/>
+				<button id='btnplayergame'>Buscar</button>
+				<p>Usuarios:</p>
+				{{# each playersgame}}
+					<a style ="cursor:pointer;text-decoration:underline;" class="linkplayergame">{{username}}</a>
+				{{/each}}
+				<p>{{gameranking}}</p>
+				<table>
+					<thead>
 						<tr>
-							<td><a style ='cursor:pointer;text-decoration:underline;' class='linkuser'>{{user}}</a></td> <td>{{score}}</td>
+							<th>Usuario</th>
+							<th>Puntuacion</th>
 						</tr>
-					{{/ each}}
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						{{# each ranking}}
+							<tr>
+								<td><a style ='cursor:pointer;text-decoration:underline;' class='linkuser'>{{user}}</a></td> <td>{{score}}</td>
+							</tr>
+						{{/ each}}
+					</tbody>
+				</table>
+			{{else}}
+				No han jugado a este juego aun
+			{{/if}}
 		{{/ if}}
 	</div>
 </template>
