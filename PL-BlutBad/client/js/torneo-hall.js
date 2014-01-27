@@ -297,8 +297,8 @@ Template.hall_torneo.soloTorneo = function() {
     var tid = Session.get('showTorneoId');
     var tor = Torneos.findOne(tid);
     var gameM = Juegos.findOne(tor.game_id);
-    var tran = Torneos.findOne(tid).ranking;
-    return gameM.mode == "solo" && tran;
+    //var tran = Torneos.findOne(tid).ranking;
+    return gameM.mode == "solo";
 }
 
 

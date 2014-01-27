@@ -1,17 +1,17 @@
 <template name="torneos">
 	{{#if show}} 
         <h1>Creación de torneos</h1>
-		<div id = "torneosContainer">
-			
-            {{#if currentUser}}
-			     <input type="button" id="crear_torneo" value="Crear Torneos"> 
-            {{/if}}
-			{{#if showCreateDialog}}
-				{{> createDialog}}
-			{{else}} <!--para que salga debajo sino sale a un lado el boton crear_torneo-->
-				<p></p>
-			{{/if}}               
-        </div>
+         {{#if showIfAdmin}}
+    		<div id = "torneosContainer">
+    			     <input type="button" id="crear_torneo" value="Crear Torneos"> 
+                
+    			{{#if showCreateDialog}}
+    				{{> createDialog}}
+    			{{else}} <!--para que salga debajo sino sale a un lado el boton crear_torneo-->
+    				<p></p>
+    			{{/if}}               
+            </div>
+        {{/if}}
         <div id = "torneos_container">     
             <div class="one-third torneoOneThird">
                 <h3>Torneos por juego</h3> 
@@ -27,11 +27,11 @@
                     {{#each torneo}}
                         <div class="post-summary">
                             <h3 class="post-title">{{title}}</h3>
-                            <h5>Juego: {{getnamegame game_id}}</h5>
                             <div class="post-details"> 
                                 <span class="date">Disponible desde {{date_start}}</span>
                                 <span class="date">hasta {{date_finish}}</span> 
                                 (creado por {{getUsername user_create}})
+                                [Juego: {{getnamegame game_id}}]
                             </div>
                             
                             <img src={{pic}} class="post-image in_tor" alt="sample image" width="606" height="115" />

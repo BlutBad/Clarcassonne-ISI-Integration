@@ -113,9 +113,9 @@ Meteor.methods({
 		        console.log(u);
 		        if (u){
 		           Torneos.update({_id:opts.torneo_id, "ranking.user_id": user_id},
-		                           {$set : {"ranking.$.maxScore" : opts.score}});
+		                           {$set : {"ranking.$.score" : opts.score}});
 		        }else{
-		            Torneos.update(opts.torneo_id, {$push: { ranking: {user_id:user_id, maxScore:opts.score} } });
+		            Torneos.update(opts.torneo_id, {$push: { ranking: {user_id:user_id, score:opts.score} } });
 		        }
 		    }
 			
