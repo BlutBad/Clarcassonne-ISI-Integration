@@ -53,3 +53,13 @@ Template.input.events = {
 		}	
 	}
 }
+
+//Quita el chat si no es necesario
+Template.input.oneplayer = function (){
+	oneplayer = false;
+	if(Session.get("game_id")){
+		if (Games.findOne({_id : Session.get("game_id")}).players_max == 1)
+			oneplayer = true;
+	};
+	return oneplayer;
+}

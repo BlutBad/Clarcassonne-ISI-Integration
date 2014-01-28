@@ -7,7 +7,19 @@ Deps.autorun(function() {
 		if(empezada == 'true' && !Session.get("match_initiated")){
 			Session.set("match_initiated",true);
 			$('#clarcassonnecontainer').show();
-			ClarcassonneGameIU.initialize('#clarcassonnecanvas', Session.get('match_id'));			
+			ClarcassonneGameIU.initialize('#clarcassonnecanvas', Session.get('match_id'));		
+
+			console.log("Empiezo");
+			
+			/*Partidas.update(doc_partidas._id, {
+                            $push : {puntuacion : [ {user_id: doc_partidas.jugadores[0].user_id, puntos : 1000},
+                                                    {user_id: doc_partidas.jugadores[1].user_id, puntos : 2000},
+                                                    {user_id: doc_partidas.jugadores[2].user_id, puntos : 3000}]},
+                            $set  : {terminada: true}
+            });*/
+            
+            //Meteor.call("partyFinish", doc_partidas._id);	
+
 		};
 	};
 });
@@ -80,34 +92,52 @@ function sha1Hash(msg) {
 }
 
 //Código para la unión a una partida
-joinmatch = function(match_id) {
-		var lim = Games.findOne({_id : Session.get('game_id')}).players_max;
-		var no_limit = Partidas.findOne({_id : match_id}).num_players < lim;
-		var players_array = Partidas.findOne({_id : match_id}).jugadores;
-		var match_pass = Partidas.findOne({_id : match_id}).password;
-		var have_profile = Meteor.users.findOne({_id : Meteor.userId()}).birthday;
-		if(have_profile){
-			if(match_pass){
-				var in_pass = sha1Hash($(".linkmatch_pass." + match_id).val());
-			};
-			var already_into = Partidas.findOne({_id : match_id, jugadores : {user_id : Meteor.userId()}}) != undefined;
+joinmatch = function(match_id, viewer) {
+	var initiated = Partidas.findOne({_id : match_id}).initiated;
+	var lim = Games.findOne({_id : Session.get('game_id')}).players_max;
+	var no_limit = Partidas.findOne({_id : match_id}).num_players < lim;
+	var players_array = Partidas.findOne({_id : match_id}).jugadores;
+	var match_pass = Partidas.findOne({_id : match_id}).password;
+	var have_profile = Meteor.users.findOne({_id : Meteor.userId()}).birthday;
 
-			if(no_limit || already_into){
+	// Si tiene un perfil (con edad) puede entrar.
+	if(have_profile || viewer){
+		
+		// Si la partida tiene contraseña, guarda la introducida por el jugador que se quiere unir.
+		if(match_pass){
+			var in_pass = sha1Hash($(".linkmatch_pass." + match_id).val());
+		};
+		var already_into = Partidas.findOne({_id : match_id, jugadores : {user_id : Meteor.userId()}}) != undefined;
+
+		if(!initiated || already_into || viewer){
+			// Si está dentro o la partida no está llena o es un observador	
+			if(no_limit || already_into || viewer){
 				if(match_pass == in_pass || already_into){
 					Session.set('match_id', match_id);
 					$('#matches').hide();
 					$('#roomcontainer').fadeIn();
-					$('#empezarboton').hide();
-					if(Partidas.findOne({_id : Session.get('match_id')}).admin_by == Meteor.userId()){
-						$('#empezarboton').show();
-					};
-
 					if (Games.findOne({_id : Session.get('game_id')}).name=="Alien_Invasion")
 						$('#aliencontainer').show();
 					else if (Games.findOne({_id : Session.get('game_id')}).name=="Froot_Wars")
 						$('#frootwarscontainer').show();
-					if(!already_into){
+
+					// Si ya estaba dentro o es observador
+					if(!already_into && !viewer){
 						Partidas.update({_id : Session.get('match_id')}, {$push: {jugadores: {user_id: Meteor.userId()}},$inc: {num_players: 1}});
+						var full = Partidas.findOne({_id : Session.get('match_id')}).num_players >= Partidas.findOne({_id : Session.get('match_id')}).players_max;
+						Partidas.update({_id : Session.get('match_id')},{$set: {full : full}});
+					};
+
+					// Si ya estaba dentro e intenta entrar como observador
+					if(already_into && viewer){
+						$("#dialog_alreadyinto").dialog("open");
+					};
+
+					// Si es un observador
+					if(viewer){
+						if(Partidas.findOne({_id : Session.get("match_id")}).initiated){
+							ClarcassonneGameIU.initialize('#clarcassonnecanvas', Session.get('match_id'));
+						};
 					};
 				} else {
 					$( "#dialog_password" ).dialog("open");
@@ -117,10 +147,13 @@ joinmatch = function(match_id) {
 				$( "#dialog_fullmatch" ).dialog("open");
 			}
 		} else {
-			$( "#dialog_birthdate" ).dialog("open");
-			$("#error_birthdialog").remove();
+			$("#dialog_initiated").dialog("open");
 		};
-	}
+	} else {
+		$( "#dialog_birthdate" ).dialog("open");
+		$("#error_birthdialog").remove();
+	};
+}
 
 //Carga el nombre del juego
 Template.gamenametemp.gamename=function(){
@@ -194,13 +227,19 @@ Template.matchestemp.events = {
 		if(have_profile ){
 			if(!Partidas.findOne({name : $("#match_name").val()})){
 				if ($("#match_name").val()!=''){
+					var ugly_date =  new Date();
+					var pretty_date = ugly_date.toUTCString().split(" GMT")[0];
 					Partidas.insert({
 						name: $("#match_name").val(),
 						game_id: Session.get("game_id"),
-						created: new Date(),
+						created: ugly_date,
+						date: pretty_date,
 						initiated: false,
 						finish: false,
-						admin_by: Meteor.userId()
+						saved: false,
+						admin_by: Meteor.userId(),
+						players_max: Games.findOne({_id : Session.get("game_id")}).players_max,
+						full: false
 					});
 
 					var current_match_id = Partidas.findOne({name: $("#match_name").val()})._id;
@@ -218,6 +257,8 @@ Template.matchestemp.events = {
 						$('#frootwarscontainer').show();
 					}
 					Partidas.update({_id : Session.get('match_id')},{$push: {jugadores: {user_id: Meteor.userId()}},$inc:{num_players :1}});
+					var full = Partidas.findOne({_id : Session.get('match_id')}).num_players >= Partidas.findOne({_id : Session.get('match_id')}).players_max;
+					Partidas.update({_id : Session.get('match_id')},{$set: {full : full}});
 					$("#match_name").val('');
 					$("#match_pass").val('');
 				};
@@ -230,9 +271,9 @@ Template.matchestemp.events = {
 		};
 	},
 	// Entramos en una partida
-	'click a.linkmatch':function(event){
-		joinmatch($(this)[0]._id);
-
+	'click button.linkmatch':function(event){
+		viewer = false;
+		joinmatch($(this)[0]._id, viewer);
 	},
 	// Volvemos atrás para elegir otro juego
 	'click #match_back':function(event){
@@ -240,6 +281,12 @@ Template.matchestemp.events = {
 		$('#matches').hide();
 		$('#games').fadeIn();
 	},
+	// Iniciamos como observador
+	'click .viewmatch': function(event){
+		var viewer = true;
+		joinmatch($(this)[0]._id, viewer);
+	},
+	// Iniciamos una partida aleatoria
 	'click #random_button':function(event){
 		var game_id = Session.get('game_id');
 		var limit = Games.findOne({_id : game_id}).players_max;
@@ -278,6 +325,8 @@ Template.roomgametemp.events = {
 		if(found){
 			players_array = _.reject(players_array, function(player){ return player.user_id == quiter_id; });
 			Partidas.update({_id : quited_match_id}, {$set:{jugadores : players_array},$inc: {num_players: -1}});
+			var full = Partidas.findOne({_id : Session.get('match_id')}).num_players >= Partidas.findOne({_id : Session.get('match_id')}).players_max;
+			Partidas.update({_id : Session.get('match_id')},{$set: {full : full}});
 		};
 
 		if(Partidas.findOne({_id : quited_match_id}).num_players == 0){
@@ -293,14 +342,12 @@ Template.roomgametemp.events = {
 
 		if (weAreAlien =="Alien_Invasion"){
 			$('#aliencanvas').remove();
-/*---*/		GameAlien.desactivar();
+			GameAlien.desactivar();
 		}else if (weAreFroot =="Froot_Wars"){
 			game.ended = true;					
 			game.showEndingScreen();
 			$('#gamecanvas').remove();
 		}
-
-		
 
 		Session.set('match_id', undefined);
 		$('#clarcassonnecontainer').hide();
@@ -328,16 +375,15 @@ Template.roomgametemp.events = {
 // Pone la partida en "empezada"
 Template.roomplayerstemp.events = {
 	'click #EmpezarCarca' : function(event){
-				if(Partidas.findOne({_id : Session.get('match_id')}).admin_by == Meteor.userId()){
-					if(Partidas.findOne({_id : Session.get('match_id')}).num_players >= 3){
-						$('#empezarboton').hide();	
-						Partidas.update({_id: Session.get('match_id')}, {$set: {initiated: 'true'}});
-					} else {
-						$("#dialog_threeplayers").dialog("open");
-					}
-				} else {
-					$("#dialog_noadmin").dialog("open");
-				};
+		if(Partidas.findOne({_id : Session.get('match_id')}).admin_by == Meteor.userId()){
+			if(Partidas.findOne({_id : Session.get('match_id')}).num_players >= 3){
+				Partidas.update({_id: Session.get('match_id')}, {$set: {initiated: 'true'}});
+			} else {
+				$("#dialog_threeplayers").dialog("open");
+			}
+		} else {
+			$("#dialog_noadmin").dialog("open");
+		};
 	}
 };
 
@@ -361,17 +407,7 @@ Template.roomplayerstemp.carca = function() {
 
 //Encuentra partidas
 Template.matchestemp.matches = function(){
-/*
-	var partidas_doc = Partidas.find();
-	var lista = [];
-
-	partidas_doc.forEach(function(entry){
-		lista.push({name : entry.name, created : entry.created, num_players: entry.num_players});
-	});
-	return lista;
-	*/
 	return Partidas.find({},{sort:{created:-1}})
-
 }
 
 

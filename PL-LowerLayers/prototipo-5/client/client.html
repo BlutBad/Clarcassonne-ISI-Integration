@@ -60,6 +60,13 @@
   		<p>Introduzca una cuenta de correo electronico valida</p>
 	</div>
 
+	<div id="dialog_initiated" title="Partida empezada.">
+  		<p>La partida ya ha comenzado.</p>
+	</div>
+
+	<div id="dialog_alreadyinto" title="Acceso como observador.">
+  		<p>No eres observador: ¡Ya estabas dentro de esta partida!.</p>
+	</div>
 
 </body>
 
@@ -234,10 +241,14 @@
 
 <template name="input">
 	<div id="messagecont">
+		{{#if oneplayer}}
+
+		{{else}}
 		<a id="buttVideoSt"  style="cursor:pointer;" class="StartVC">
 			Start VideoChat
 		</a>
 		<p> Mensaje: <input type="text" id="message" style="width:50%"></p>
+		{{/if}}
 	</div>
 </template>
 
@@ -281,17 +292,42 @@
 <template name="matchestemp">
 	<div id="matches">
 		<h1> {{> gamenametemp}} </h1>
-		<table>
-			{{# each matches}}
-				<tr>
-					-
-					<td><a class="linkmatch {{_id}}">{{name}}</a></td>
-					<td> {{created}}</td>
-					<td> {{num_players}} Jugadores</td>
-					<td>{{#if password}}Clave: <input type="password" class="linkmatch_pass {{_id}}">{{/if}}</td>
-				</tr>
-			{{/ each}}
-		</table>
+			<table id="matches_table">
+				<thead style="vertical-align : top;">
+					<tr>
+						<th></th>
+						<th></th>
+						<th>Nombre</th>
+						<th>Creación</th>
+						<th>Jugadores</th>
+						<th>Clave</th>
+					</tr>
+				</thead>
+				{{# each matches}}
+					<tr style="padding : 5px;">
+						
+						<td style="width : 10%;"> <button style="margin-top : 10px; width : 90%;" class="linkmatch {{_id}} 
+						{{#if initiated}}not_able{{else}}{{#if full}} not_able{{/if}}{{/if}}"> 
+						{{#if initiated}}
+							Empezada
+						{{else}}
+							{{#if full}}
+								Llena
+							{{else}}
+								Jugar
+							{{/if}}
+						{{/ if}}
+						</button> </td>
+
+						<td style="width : 10%;"> <button style="margin-top : 10px; width : 90%;" class="viewmatch {{_id}}"> Observar </button> </td>
+						<td style="width : 18%;"> {{name}} </td>
+						<td style="width : 27%;"> {{date}} </td>
+						<td style="width : 10%;"> {{num_players}}/{{players_max}} </td>
+						<td style="width : 20%;"> {{#if password}} <input type="password" class="linkmatch_pass {{_id}}" style="width: 80%;">{{/if}} </td>
+					</tr>
+				{{/ each}}
+			</table>
+
 		<p> <table id="creator_table"> 
 			<tr><td> Nueva partida: <input type="text" id="match_name"> </td></tr> 
 			<tr><td> Contraseña: <input type="password" id="match_pass"> </td></tr> 
