@@ -24,9 +24,20 @@ button{
 	cursor: pointer;
 }
 
+
+.not_able{
+	background-color: #333;
+	border-color: #888;
+}
+
 button:hover{
 	background-color: #08C;
 }
+
+.not_able:hover{
+	background-color: #555;
+}
+
 
 a{
 	padding: 5px;
@@ -134,12 +145,22 @@ input:focus{
 
 .linkmatch{
 	cursor:pointer;
-	text-decoration:underline;
 }
 
-#matches table tr td{
+#creator_table tr td{
 	text-align: center;
 	width: 250px;
+}
+
+#matches_table{
+	position: absolute; 
+	left: 20%;
+	width: 80%;
+}
+
+#matches_table tr td{
+	text-align: center;
+	vertical-align: middle;
 }
 
 #bygameranking table,

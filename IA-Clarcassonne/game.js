@@ -13,8 +13,8 @@
 		Jugadores_ID= Partidas.findOne({_id: id_partida}).jugadores;
 	
 		for(i=0;i<Jugadores_ID.length;i++){
-			var player =resolverUser(Jugadores_ID[i].user_id);
-			Tablero.listaJugadores.push(new ObjetoJugador(Jugadores_ID[i].user_id,player.nombre,player.fecha));
+			var player =resolverUser(Jugadores_ID[i]);
+			Tablero.listaJugadores.push(new ObjetoJugador(Jugadores_ID[i],player.nombre,player.fecha));
 		}
 		
 		//ordenamos a los jugadores por edad

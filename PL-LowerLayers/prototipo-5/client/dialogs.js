@@ -120,9 +120,45 @@ $(document).ready(function() {
 			}
     	});
 
+		$( "#dialog_alreadyinto" ).dialog({
+      		autoOpen: false,
+     		show: {
+        		effect: "blind",
+        		duration: 300
+      		},
+     		hide: {
+      			effect: "explode",
+				duration: 200
+			}
+    	});
+
 		// Error deps autoFlush: si quito esta funcion, quito todos los divs o cambio las refs
 		// del id desaparece, pero si quito el div correspondiente no
 		$( "#dialog_bademail" ).dialog({
+      		autoOpen: false,
+     		show: {
+        		effect: "blind",
+        		duration: 300
+      		},
+     		hide: {
+      			effect: "explode",
+				duration: 200
+			}
+    	});
+
+		$("#dialog_initiated").dialog({
+      		autoOpen: false,
+     		show: {
+        		effect: "blind",
+        		duration: 300
+      		},
+     		hide: {
+      			effect: "explode",
+				duration: 200
+			}
+    	});
+
+		$("#dialog_iafullerror").dialog({
       		autoOpen: false,
      		show: {
         		effect: "blind",
