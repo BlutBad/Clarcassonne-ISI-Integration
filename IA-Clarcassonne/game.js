@@ -69,9 +69,9 @@
     
     
     ColocarSeguidor:function(id_partida, id_jugador, coordenada, seguidor){
-
+      Tablero= endTablero[id_partida];
       var ficha= Tablero.buscarxcoor(coordenada.x,coordenada.y);
-        Tablero= endTablero[id_partida];
+        
         //console.log("SEGUIDOR",seguidor,id_jugador);
 
         if (seguidor){
@@ -106,6 +106,27 @@
     
     //Coloca el seguidor en la ficha indicada y suma los correspondientes puntos. Acaba el turno. 
     
+      
+    JugadorArtificial: function(id_partida,id_jugador){
+        Tablero= endTablero[id_partida];
+        var fichaColocada=0;
+        while (fichaColocada==0){
+          var n_jugador = id_jugador.split("Jugador_IA");
+          console.log("NUMERO",n_jugador);
+          var x=jugadorIA(n_jugador[1]);
+          var nuevaficha= new ObjetoFicha(0,0,0,x[0]);
+          console.log("nuevaficha",nuevaficha);
+          for (var i=0; i<x[1].giros;i++){nuevaficha.girar()}
+          fichaColocada =Tablero.colocarficha(nuevaficha,x[1].coorx,x[1].coory);
+          console.log("FICHACOLOCADA",fichaColocada);
+        }
+        
+        cierraCamino(fichaColocada,1);
+        //cierraClaustro(fichaColocada,1);
+        cierraCastillo(fichaColocada,1);
+        endTablero[id_partida]=Tablero;
+        
+        return [nuevaficha.tipo,x[1].giros,x[1].coorx,x[1].coory,Tablero.listaJugadores]
     
 })
 
