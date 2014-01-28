@@ -368,6 +368,10 @@ Template.roomgametemp.events = {
 			Session.set("video_on",false);
 		};
 
+		///Remover compartir redes sociales
+		$(".tweetbtn").html("");
+		$(".fbsharebtn").html("");
+		$(".gsharebtn").html("");
 	}
 };
 
