@@ -48,9 +48,13 @@ Meteor.methods({
 				
 				insig = Insignias.findOne({	game_id:game_id,
 											timesPlayed:{$gte: curUser.timesPlayed}});
+
 				console.log("insig"  + insig);
 
-				insigToUser = InsigniasToUser.findOne({user_id:user_id, game_id:game_id});
+				//Comprobar si no la tiene ya, si la tiene no darsela otra vez!
+				insigToUser = InsigniasToUser.findOne({user_id:user_id,
+														 game_id:game_id,
+														 insignia_id: insig._id});
 				console.log("insigToUser"  + insigToUser);
 				if(!insigToUser){
 					console.log("go to insert");
@@ -76,6 +80,25 @@ Meteor.methods({
 
 				
 			}else{
+				insig = Insignias.findOne({	game_id:game_id,
+											timesPlayed:{$gte: 0}});
+				
+				console.log("insig"  + insig);
+
+				//Comprobar si no la tiene ya, si la tiene no darsela otra vez!
+				insigToUser = InsigniasToUser.findOne({user_id:user_id,
+														 game_id:game_id,
+														 insignia_id: insig._id});
+				console.log("insigToUser"  + insigToUser);
+				if(!insigToUser){
+					console.log("go to insert");
+					InsigniasToUser.insert({user_id:user_id,
+											game_id:game_id,
+											insignia_id: insig._id});
+				}
+
+
+
 				//console.log("kaka "  + game_id, "  ", opts.score);
 				var rango = Rangos.findOne({game_id:game_id, untilPoints:{$gte: opts.score}});
 				//console.log("kaka "  + rango);

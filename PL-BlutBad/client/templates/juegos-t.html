@@ -28,18 +28,23 @@
   	<div id="mis-torneos">
   		{{>misTorneos}}
   	</div>
+
+
+  	{{>webRTC}} 
+
 	{{>idnClarca}}
 	{{>idnAlien}}
 	{{>idnFroot}}
 
-	{{>rangos}}
-	{{>insignias}}
+	{{>gameAddons}}
+
+
   </div>
 </template>
 
 
-<template name="idnClarca">  
-  	{{>webRTC}} 
+<template name="idnClarca">
+  <div id="CanvasclarcaGameDIV">
     <canvas id='CanvasclarcaGame' width='800' height='600'></canvas>
 
         <audio id="sonidojuego">
@@ -60,6 +65,7 @@
         <audio id="sonido_ficha">
             <source src="/Clarcassonne/audio/GONG4.ogg" type = "audio/ogg"/>
         </audio>
+    </div>
 </template>
 
 <template name="idnAlien"> 
@@ -142,16 +148,25 @@
 </template>
 
 
-<!-- js esta en juegos.js al final del archivo -->
-<template name="rangos">
-	<div style="float:left; width: 40%">
-			<h4>Hola Rangos</h4>
+<template name="gameAddons">
+{{#if show}}
+
+
+
+
+
+
+
+<div style="float:left; width: 40%">
+			<h4>Rangos que puedes conseguir!</h4>
+			
+
 			<table class="table">
               <thead>
                 <tr>
                     <th>#</th>
                     <th>Rango</th>
-                    <th>Puntos</th> 
+                    <th>Total Puntos</th> 
                 </tr>
               </thead>
 
@@ -167,12 +182,8 @@
               </tbody>
             </table>
 	</div>
-</template>
-
-
-<template name="insignias">
 	<div style="float:right; width: 40%">
-			<h4>Hola Insignias</h4>
+			<h4>Consigue todas las insiginias!</h4>
 			<table class="table">
               <thead>
                 <tr>
@@ -200,4 +211,5 @@
               </tbody>
             </table>
 	</div>
+{{/if}}
 </template>

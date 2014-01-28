@@ -29,7 +29,7 @@ Meteor.startup(function() {
     $('#gamecontainer').hide();    
 	$('#gameFrootcontainer').hide();
 	$('#gamecanvasAlien').hide();
-	$('#CanvasclarcaGame').hide();
+	$('#CanvasclarcaGameDIV').hide();
 });
 
 

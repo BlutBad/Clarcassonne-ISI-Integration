@@ -73,7 +73,7 @@ Deps.autorun(function(c) {
 		    // Asi podemos tener muchos juego multi, cada uno con su HALL, y
 		    // cargarlo el hall si mucho sufrimiento.
 		    Session.set('current_stage', lg.hall);
-		    $('#gamecontainer').show();
+		    //$('#gamecontainer').show();
 		}
 	} else {
 	    CanvasGame = null;
@@ -106,12 +106,13 @@ Deps.autorun(function(c) {
     //console.log(Session.get("showGameIdn"))
     if (Session.equals('showGameIdn', 'clarki')) {
 		// Para los multijuegos, mostramos el contenedor junto con el juego.
-		
-		$('#CanvasclarcaGame').show();
+		$('#gamecontainer').show();
+		$('#CanvasclarcaGameDIV').show();
 		//$('#ClarcaGame').show();
 		
     } else {
-		$('#CanvasclarcaGame').hide();
+        $('#gamecontainer').hide();
+		$('#CanvasclarcaGameDIV').hide();
 		//$('#ClarcaGame').hide();
     }
 });
@@ -225,14 +226,15 @@ Template.misTorneos.tengoTorneos = function() {
 };
     
 
-Template.rangos.listRangos = function () {
+Template.gameAddons.listRangos = function () {
     var idn = Session.get('showGameIdn');
+        console.log("showGameIdn listRangos ", Session.get('showGameIdn'));
     if (idn){
         var gid = Juegos.findOne({idn:idn})._id;
         var rang = Rangos.find({game_id:gid});
         return rang;
     }
-    return false;
+    return [];
 }
 /*
     "game_id" : "BjvCThtn8r8M48pxp",
@@ -241,14 +243,16 @@ Template.rangos.listRangos = function () {
     "_id" : "aHjKnw2wBYFvTzdFq"
 */
 
-Template.insignias.listInsignias = function () {
+Template.gameAddons.listInsignias = function () {
+
     var idn = Session.get('showGameIdn');
+        console.log("showGameIdn listInsignias ", Session.get('showGameIdn'));
     if (idn){
         var gid = Juegos.findOne({idn:idn})._id;
         var rang = Insignias.find({game_id:gid});
         return rang;
     }
-    return false;
+    return [];
 };
 /*
     "game_id" : "jqs3iS3h8yrcrzzZx",
@@ -259,7 +263,7 @@ Template.insignias.listInsignias = function () {
 
 */
 
-Template.insignias.haveThisInsignia = function (insig_id) {
+Template.gameAddons.haveThisInsignia = function (insig_id) {
     var user_id = Meteor.userId();
     var insig = InsigniasToUser.findOne({user_id:user_id, insignia_id:insig_id}); 
 
@@ -274,3 +278,15 @@ Template.insignias.haveThisInsignia = function (insig_id) {
     "game_id" : "Au8e5eqA4TAh6HKn8",
     "insignia_id" : "fJz2xzSskmuJyiTYp",
 */
+
+
+Template.gameAddons.show = function () {
+    var idn = Session.get('showGameIdn');
+    console.log("showGameIdn gameAddons ", Session.get('showGameIdn'));
+    if (idn){
+        return idn != 'clarki';
+    }else{
+       return false; 
+    }
+    
+};
