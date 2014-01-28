@@ -213,31 +213,40 @@ Meteor.startup(function() {
 			    hall : 'alienHall',
 			    rangos : [ {
 					rango : "Xenomorfo",
-					minPoints : 0,
+					fromPoints:0,
+					untilPoints : 999,
 			    }, {
 					rango : "Huevo",
-					minPoints : 1000,
+					fromPoints:1000,
+					untilPoints : 1499,
 			    }, {
 					rango : "Abrazacaras",
-					minPoints : 1500,
+					fromPoints:1500,
+					untilPoints : 1999,
 			    }, {
 					rango : "Quebrantapechos",
-					minPoints : 2000,
+					fromPoints:2000,
+					untilPoints : 2999,
 			    }, {
 					rango : "Alien Oscuro",
-					minPoints : 3000,
+					fromPoints: 3000,
+					untilPoints : 3199,
 			    },{
 					rango : "Jock-Alien",
-					minPoints : 5000,
+					fromPoints:3200,
+					untilPoints : 3499,
 			    },{
 					rango : "Croc-Alien",
-					minPoints : 7000,
+					fromPoints: 3500,
+					untilPoints : 3999,
 			    },{
 					rango : "Pretoriano",
-					minPoints : 9000,
+					fromPoints:4000,
+					untilPoints : 4999,
 			    }, {
 					rango : "Reina",
-					minPoints : 999000,
+					fromPoints:5000,
+					untilPoints : 100000,
 			    } ],
 
 			    insignias : [
@@ -294,37 +303,37 @@ Meteor.startup(function() {
 			    hall : 'klarkiHall',
 			    rangos : [ {
 					rango : "Gentilhombre",
-					minPoints : 0,
+					untilPoints : 0,
 			    }, {
 					rango : "Escudero",
-					minPoints : 50,
+					untilPoints : 50,
 			    }, {
 					rango : "Caballero",
-					minPoints : 100,
+					untilPoints : 100,
 			    }, {
 					rango : "Ricohombre",
-					minPoints : 200,
+					untilPoints : 200,
 			    }, {
 					rango : "Conde",
-					minPoints : 300,
+					untilPoints : 300,
 			    }, {
 					rango : "Marqués",
-					minPoints : 400,
+					untilPoints : 400,
 			    },{
 					rango : "Duque",
-					minPoints : 500,
+					untilPoints : 500,
 			    },{
 					rango : "Archiduque",
-					minPoints : 600,
+					untilPoints : 600,
 			    },{
 					rango : "Infante",
-					minPoints : 700,
+					untilPoints : 700,
 			    },{
 					rango : "Vizconde",
-					minPoints : 800,
+					untilPoints : 800,
 			    },{
 					rango : "Barón",
-					minPoints : 900,
+					untilPoints : 900,
 			    },
 			     ],
 			    insignias : [
@@ -384,31 +393,31 @@ Meteor.startup(function() {
 			    hall : 'frootHall',
 			    rangos : [ {
 					rango : "Espinacas",
-					minPoints : 0,
+					untilPoints : 0,
 			    }, {
 					rango : "Brócoli",
-					minPoints : 1000,
+					untilPoints : 1000,
 			    }, {
 					rango : "Capitan Alcachofa",
-					minPoints : 3000,
+					untilPoints : 3000,
 			    }, {
 					rango : "Comandante Calabaza",
-					minPoints : 5000,
+					untilPoints : 5000,
 			    }, {
 					rango : "General Plátano",
-					minPoints : 7000,
+					untilPoints : 7000,
 			    }, {
 					rango : "Reina Zanahoria",
-					minPoints : 9000,
+					untilPoints : 9000,
 			    }, {
 					rango : "Granada",
-					minPoints : 12000,
+					untilPoints : 12000,
 			    }, {
 					rango : "Princesa Frambuesas",
-					minPoints : 15000,
+					untilPoints : 15000,
 			    }, {
 					rango : "Reina Fresa",
-					minPoints : 90000,
+					untilPoints : 90000,
 			    } ],
 			    insignias : [
 				    {
@@ -479,7 +488,8 @@ Meteor.startup(function() {
 				Rangos.insert({
 				    game_id : juego_id,
 				    rango : info.rango,
-				    minPoints : info.minPoints
+				    untilPoints : info.untilPoints,
+				    fromPoints: info.fromPoints,
 				});
 				timestamp += 1; // ensure unique timestamp.
 		    }

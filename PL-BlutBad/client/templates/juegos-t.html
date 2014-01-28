@@ -31,6 +31,9 @@
 	{{>idnClarca}}
 	{{>idnAlien}}
 	{{>idnFroot}}
+
+	{{>rangos}}
+	{{>insignias}}
   </div>
 </template>
 
@@ -136,4 +139,65 @@
 	     	<h5>Apúntate a un torneo, lo pasarás en grande!</h5>
 	    {{/if}}
     </div>     
+</template>
+
+
+<!-- js esta en juegos.js al final del archivo -->
+<template name="rangos">
+	<div style="float:left; width: 40%">
+			<h4>Hola Rangos</h4>
+			<table class="table">
+              <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Rango</th>
+                    <th>Puntos</th> 
+                </tr>
+              </thead>
+
+
+              <tbody>
+              	{{#each  listRangos}}
+                    <tr>
+                        <td>{{No}}</td>
+                        <td>{{rango}}</td> 
+                        <td>{{fromPoints}}</td> 
+                    </tr>
+                {{/each}}
+              </tbody>
+            </table>
+	</div>
+</template>
+
+
+<template name="insignias">
+	<div style="float:right; width: 40%">
+			<h4>Hola Insignias</h4>
+			<table class="table">
+              <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Insiginia</th>
+                    <th>Descripcion</th> 
+                </tr>
+              </thead>
+
+
+              <tbody>
+				{{#each  listInsignias}}
+                    <tr>
+                        <td>
+                        	{{#if haveThisInsignia _id}}
+                        		<img src="/images/tick_ok.jpg" alt="">
+                        	{{else}}
+                        		<img src="/images/tick_nop.jpg" alt="">
+                        	{{/if}}
+                        </td>
+                        <td><img src="{{insig_image_src}}" alt="{{description}}"></td> 
+                        <td>{{description}}</td> 
+                    </tr>
+                {{/each}}
+              </tbody>
+            </table>
+	</div>
 </template>

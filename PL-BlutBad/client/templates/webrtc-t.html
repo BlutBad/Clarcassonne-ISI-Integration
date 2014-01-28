@@ -1,15 +1,17 @@
 
 
 <template name="webRTC">
-	<div id="webRTC">
-		<div id="myVideo"> 
-			{{> my-video }}
+	{{#if show}}
+		<div id="webRTC">
+			<div id="myVideo"> 
+				{{> my-video }}
+			</div>
+			<div id="remoteVideo"> 
+				{{> remote-videos }}
+			</div>
 		</div>
-		<div id="remoteVideo"> 
-			{{> remote-videos }}
-		</div>
-	</div>
-	<button class="btn btn-primary" id="startWebRTC">Start WebRTC</button>
+		<button class="btn btn-primary" id="startWebRTC">Start WebRTC</button>
+	{{/if}}
 </template>
 
 

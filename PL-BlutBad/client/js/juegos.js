@@ -225,3 +225,52 @@ Template.misTorneos.tengoTorneos = function() {
 };
     
 
+Template.rangos.listRangos = function () {
+    var idn = Session.get('showGameIdn');
+    if (idn){
+        var gid = Juegos.findOne({idn:idn})._id;
+        var rang = Rangos.find({game_id:gid});
+        return rang;
+    }
+    return false;
+}
+/*
+    "game_id" : "BjvCThtn8r8M48pxp",
+    "rango" : "Vizconde",
+    "minPoints" : 800,
+    "_id" : "aHjKnw2wBYFvTzdFq"
+*/
+
+Template.insignias.listInsignias = function () {
+    var idn = Session.get('showGameIdn');
+    if (idn){
+        var gid = Juegos.findOne({idn:idn})._id;
+        var rang = Insignias.find({game_id:gid});
+        return rang;
+    }
+    return false;
+};
+/*
+    "game_id" : "jqs3iS3h8yrcrzzZx",
+    "insig_image_src" : "/insignias/6.jpg",
+    "description" : "Has jugado una vez a este juego",
+    "timesPlayed" : 5,
+    "_id" : "XFicQT5LrwdF9tHus"
+
+*/
+
+Template.insignias.haveThisInsignia = function (insig_id) {
+    var user_id = Meteor.userId();
+    var insig = InsigniasToUser.findOne({user_id:user_id, insignia_id:insig_id}); 
+
+    if (insig){
+       return true;
+    }
+    return false;
+};
+/*
+
+    "user_id" : "yA3rePPDRM3eXm2CW",
+    "game_id" : "Au8e5eqA4TAh6HKn8",
+    "insignia_id" : "fJz2xzSskmuJyiTYp",
+*/

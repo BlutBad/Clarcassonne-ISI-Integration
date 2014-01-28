@@ -48,3 +48,7 @@ Template.webRTC.events({
 		}
     }
 });
+
+Template.webRTC.show = function () {
+	return Session.equals('showGameIdn', 'clarki');
+}

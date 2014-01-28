@@ -41,7 +41,7 @@ Meteor.methods({
 
 				
 				var rango = Rangos.findOne({game_id:game_id,
-											minPoints:{$gte: curUser.totalScore}});
+											untilPoints:{$gte: curUser.totalScore}});
 
 				
 				
@@ -77,7 +77,7 @@ Meteor.methods({
 				
 			}else{
 				//console.log("kaka "  + game_id, "  ", opts.score);
-				var rango = Rangos.findOne({game_id:game_id, minPoints:{$lte: opts.score}});
+				var rango = Rangos.findOne({game_id:game_id, untilPoints:{$gte: opts.score}});
 				//console.log("kaka "  + rango);
 				
 				//insig = Insignias.findOne({game_id:gameId, timesPlayed:{$gte: 1}});	
