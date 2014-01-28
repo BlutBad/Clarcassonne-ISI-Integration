@@ -8,18 +8,6 @@ Deps.autorun(function() {
 			Session.set("match_initiated",true);
 			$('#clarcassonnecontainer').show();
 			ClarcassonneGameIU.initialize('#clarcassonnecanvas', Session.get('match_id'));		
-
-			console.log("Empiezo");
-			
-			/*Partidas.update(doc_partidas._id, {
-                            $push : {puntuacion : [ {user_id: doc_partidas.jugadores[0].user_id, puntos : 1000},
-                                                    {user_id: doc_partidas.jugadores[1].user_id, puntos : 2000},
-                                                    {user_id: doc_partidas.jugadores[2].user_id, puntos : 3000}]},
-                            $set  : {terminada: true}
-            });*/
-            
-            //Meteor.call("partyFinish", doc_partidas._id);	
-
 		};
 	};
 });
