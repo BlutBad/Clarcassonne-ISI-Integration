@@ -8,7 +8,6 @@ Template.imgmiperfiltemp.avatar = function () {
 		return Meteor.user().avatar;
 };
 
-
 Template.miperfiltemp.amigos = function () {
 	if (Meteor.user() && (Meteor.user().amigos!=undefined) ){
 		var nombresAmigos=new Array();
@@ -52,6 +51,12 @@ Template.imgmodmiperfiltemp.avatar = function () {
 	return Session.get("url");
 };
 
+Template.modmiperfiltemp.socialred = function() {
+	if (Meteor.user())
+		return Meteor.user().socialred;
+};
+
+
 
 
 Deps.autorun(function(){
@@ -76,7 +81,11 @@ function valEmail(email){
 }
 
 
+
+
+
 $(document).ready(function() {
+
 
 	$(document).on("click","a[href='#perfil']",function(){
 		if (Meteor.user())
@@ -85,38 +94,25 @@ $(document).ready(function() {
 		$("#moddataprofile").css("display","none");
 		$("#dataprofile").css("display","block");
 		$("#imgdataprofile").css("display","block");
-
 	});
 
-
 	var contadorAvatarSlider;	
-
 
 	$(document).on("click", "#nextavatar" ,function(){
 		contadorAvatarSlider++;
 		if(contadorAvatarSlider == 93)
 			contadorAvatarSlider = 0;
 		Session.set("url","Avatares/"+contadorAvatarSlider+".jpg");
-		
-
 	});
-
-
 
 	$(document).on("click", "#previousavatar" ,function(){
 		contadorAvatarSlider--;
 		if(contadorAvatarSlider == -1)
 			contadorAvatarSlider = 92;
 		Session.set("url","Avatares/"+contadorAvatarSlider+".jpg");
-
-
 	});
 	
-
-
 	$(document).on("click","#modifprof", function(){
-
-	
 		$(function() {
 			if (Meteor.user().birthday==undefined){
 				$("#datepickerprof").datepicker({
@@ -133,61 +129,49 @@ $(document).ready(function() {
 				$("#datepickerprof").datepicker("destroy");
 			}	
 		});
-
-
-		if (Meteor.user().avatar==undefined)
-			contadorAvatarSlider=0;
-		else
-			contadorAvatarSlider=parseInt( (Meteor.user().avatar).slice(9,-4) );
-
-		Session.set("url","Avatares/"+contadorAvatarSlider+".jpg");
-
 		$("#imgdataprofile").css("display","none");
 		$("#dataprofile").css("display","none");
 		$("#datepickerprof").val(Meteor.user().birthday);
-		$("#modemail").val(Meteor.user().address);
-		$("#moddataprofile").css("display","block");
-		$("#contenedorimagenes").css("display","block");
+		if (Meteor.user().socialred==undefined){
+			if (Meteor.user().avatar==undefined)
+				contadorAvatarSlider=0;
+			else
+				contadorAvatarSlider=parseInt( (Meteor.user().avatar).slice(9,-4) );
+			Session.set("url","Avatares/"+contadorAvatarSlider+".jpg");
+		
+			$("#modemail").val(Meteor.user().address);
+			$("#contenedorimagenes").css("display","block");
+		}	
+		$("#moddataprofile").css("display","block");	
 	});
-
-	
-
 
 	$(document).on("click","#saveprof", function(){
-		if( !valEmail($("#modemail").val()) ){
-			$("#dialog_bademail").dialog("open");
-		}else{	
-			if (Meteor.user().avatar != Session.get("url")){
-				Meteor.call("definirAvatar",Session.get("url"),function(error,result){
-					console.log(error)
-					console.log(result)
-				});
-			}
+		if (Meteor.user().socialred){
 			if ( Meteor.user().birthday == undefined ){
-				if ( $("#datepickerprof").val() != "" ){
-					Meteor.call("definirFecha",$("#datepickerprof").val(),function(error,result){
-						console.log(error)
-						console.log(result)
-					});
-				}
-			}	
-			if ( Meteor.user().address != $("#modemail").val() ){
-				if ( $("#modemail").val() != "" ){
-					Meteor.call("definirEmail",$("#modemail").val(),function(error,result){
-						console.log(error)
-						console.log(result)
-					});
+				if ( $("#datepickerprof").val() != "" )
+					Meteor.call("definirFecha",$("#datepickerprof").val(),function(error,result){console.log(error);console.log(result);});
+			}
+		}else{
+			if( !valEmail($("#modemail").val()) ){
+				$("#dialog_bademail").dialog("open");
+			}else{
+				if ( Meteor.user().birthday == undefined ){
+					if ( $("#datepickerprof").val() != "" )
+						Meteor.call("definirFecha",$("#datepickerprof").val(),function(error,result){console.log(error);console.log(result);});
 				}	
-			}	
-			
-			$("#contenedorimagenes").css("display","none");
-			$("#moddataprofile").css("display","none");
-			$("#dataprofile").fadeIn("slow");
-			$("#imgdataprofile").fadeIn("slow");
+				if (Meteor.user().avatar != Session.get("url"))
+					Meteor.call("definirAvatar",Session.get("url"),function(error,result){console.log(error);console.log(result);});
+				if ( Meteor.user().address != $("#modemail").val() ){
+					if ( $("#modemail").val() != "" )
+						Meteor.call("definirEmail",$("#modemail").val(),function(error,result){console.log(error);console.log(result)});	
+				}
+			}		
 		}
+		$("#contenedorimagenes").css("display","none");
+		$("#moddataprofile").css("display","none");
+		$("#dataprofile").fadeIn("slow");
+		$("#imgdataprofile").fadeIn("slow");
 	});
-
-
 
 	$(document).on("click","#nosaveprof", function(){
 		$("#contenedorimagenes").css("display","none");
@@ -195,7 +179,6 @@ $(document).ready(function() {
 		$("#dataprofile").css("display","block");
 		$("#imgdataprofile").css("display","block");
 	});
-
 
 	$(document).on("click","#birthbutton_dialog", function(){
 		if($("#datepickerprof_dialog").val() == ""){
@@ -207,8 +190,6 @@ $(document).ready(function() {
 			$( "#dialog_birthdate" ).dialog("close");
 		};
 	});
-
-
 
 
 });	

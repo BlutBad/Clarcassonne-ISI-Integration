@@ -106,23 +106,8 @@ Deps.autorun(function () {
 
 //Subscripcion a lista de usuarios
 
-var usersLoaded = false;
-Meteor.subscribe("users", function () { 
-	usersLoaded = true;
-});
+Meteor.subscribe("users");
 
-Meteor.users.find().observe({
-	added: function(user) { 
-		if (usersLoaded) { 
-			Meteor.defer(function () {
-				if((user.avatar == undefined) && (user._id == Meteor.user()._id)){
-					Meteor.call("definirAvatar","Avatares/0.jpg",function(error,result){console.log(error);console.log(result);})
-				}
-  			});
-			
-		}
-	}
-});
 
 //Subscripcion a lista de juegos
 Meteor.subscribe("games");
@@ -222,84 +207,8 @@ Deps.autorun(function(){
 
 //Configuracion cuentas
 Accounts.ui.config({
-/*	requestPermissions : {
-		facebook : [ 'user_likes' ]
-	}, */
 	passwordSignupFields: "USERNAME_AND_OPTIONAL_EMAIL"
 });
 
 
-if (typeof Handlebars !== 'undefined') {
-	Handlebars.registerHelper('getUsername', function (userId) {
-		var user = _extractProfile(userId);
-		if (user) {
-			if (user.name){
-				return user.name;
-			};
-			if (user.username)
-				return user.username;
-			if (user.twitterUsername)
-				return user.twitterUsername;
-			}
-			return ' ';
-	});
-	
-
-	Handlebars.registerHelper('getUserId', function () {
-		if (Meteor.user()){
-			return Meteor.user()._id;
-		}
-	});
-
-	//Admin panel/content
-	Handlebars.registerHelper('showIfAdmin', function () {
-		if (Meteor.user()){
-			if (Meteor.user().username == "admin"){
-				return true;
-			}
-		}
-		return false;
-	});
-
-
-	Handlebars.registerHelper('getUserEmail', function (userId) {
-		var user = _extractProfile(userId);
-		//console.log(user);
-		if (user) {
-			if (user.email){
-				//console.log(user.email);
-				return user.email;
-			}else if (user.services){
-				if (user.services.google.email){
-					return user.services.google.email;
-				}else if (user.services.facebook.email){
-					return user.services.facebook.email;
-				};
-			};
-		};
-			return ' ';
-
-	});
-	Handlebars.registerHelper('getUserDateBirth', function (userId) {
-		var user = _extractProfile(userId);
-		if (user) {
-			if (user.datebirth){
-				return user.datebirth;
-			};
-
-		};
-			return ' ';
-
-	});
-	Handlebars.registerHelper('getUserGender', function (userId) {
-		var user = _extractProfile(userId);
-		if (user) {
-			if (user.genero){
-				return user.genero;
-			};
-
-		};
-			return ' ';
-
-	}); 
-} 
+ 
