@@ -53,15 +53,15 @@ var GameAlien = new function() {
 		$(window).click(function(event){
 			if (event.target.id == "aliencanvas"){
 				$("#aliencanvas").css("border-color","#FF4000");
-				focusCanvas = true;
+				focusCanvax = true;
 			}else{
 				$("#aliencanvas").css("border-color","#848484");
-				focusCanvas = false;
+				focusCanvax = false;
 			}
 		});
 
 	$(window).keydown(function(event){
-		if (focusCanvas)
+		if (focusCanvax)
 			if (KEY_CODES_Alien[event.which]) {
 				GameAlien.keys[KEY_CODES_Alien[event.which]] = true;
 				return false;
@@ -69,7 +69,7 @@ var GameAlien = new function() {
 	});
 
 	$(window).keyup(function(event){	
-		if (focusCanvas)
+		if (focusCanvax)
 			if (KEY_CODES_Alien[event.which]) {
 				GameAlien.keys[KEY_CODES_Alien[event.which]] = false;
 				return false;

@@ -208,6 +208,12 @@ Template.gamestemp.events = {
 	}
 }
 
+$(document).on("click","a[tipo='Clarcassonne']", function(){
+			$('#games').hide();
+			$('#matches').fadeIn();
+
+});
+
 Template.matchestemp.events = {
 	// Creamos una partida nueva en la base de datos y nos unimos automáticamente
 	'click #match_creator':function(event){
