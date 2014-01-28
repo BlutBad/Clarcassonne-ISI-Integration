@@ -19,6 +19,8 @@ Meteor.startup(function () {
 	$('#bygameranking').hide();
 	$('#byuserranking').hide();
 	$('#byusergameranking').hide();
+	
+	//console.log(Games.find({name:"Alien_Invasion"}).profits);
 });
 
 
@@ -165,7 +167,7 @@ Template.gamestemp.games=function(){
 
 //Carga mensajes del chat
 Template.messagestemp.messages=function(){
-	return Messages.find();
+	return Messages.find({},{sort: {time:-1}});
 }
 //Encuentra usuarios conectados
 Template.loguserstemp.logusers = function(){

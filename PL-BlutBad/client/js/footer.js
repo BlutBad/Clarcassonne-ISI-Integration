@@ -1,12 +1,9 @@
-Template.ayuda.show = function() {
-  	return Session.get('current_stage') == 'Ayuda';
-};
 var openCreateTerm = function () {
 	Session.set("creatTError", null);
 	Session.set("showtermine", true);
 }; 
 
-Template.ayuda.events = {    
+Template.pie.events = {    
    
 	'click .terms': function() {
 		console.log("here");
@@ -14,10 +11,6 @@ Template.ayuda.events = {
 	}	 
 }; 
 
-
-
-
-Template.ayuda.showterms = function() {
+Template.pie.showterms = function() {
     return Session.get('showtermine'); 
 };
-

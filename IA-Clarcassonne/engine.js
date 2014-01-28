@@ -88,7 +88,7 @@ this.fichas = [ //72
       
       
         /////// borramos el hueco de la lista de candidatos
-        var pos = this.candidatos.indexOf( ( _.find(this.candidatos,function(obj){return (obj.x==ox-1 && obj.y==oy)})));
+        var pos = this.candidatos.indexOf( ( _.find(this.candidatos,function(obj){return (obj.x==ox && obj.y==oy)})));
         pos > -1 && this.candidatos.splice( pos,1 );
   
       
@@ -152,13 +152,9 @@ this.fichas = [ //72
 				else if (this.totalFichas == 72) { var n_rand=17}
 				else {var n_rand = Math.floor(Math.random() * this.fichas.length);}
         var rand = this.fichas[n_rand];
-  //      console.log("ficha robada: ",rand);
-  //      console.log("numero de esa ficha: ",this.n_fichas[rand]);
         this.n_fichas[rand] = this.n_fichas[rand]-1;
 		if (this.n_fichas[rand] == 0){this.fichas.splice(n_rand,1)}
-  //      console.log("numero de esa ficha actual: ",this.n_fichas[rand]);
         this.totalFichas--;
-  //      console.log("Total de fichas: ",this.totalFichas);
         return rand;
     }
 
@@ -223,7 +219,6 @@ this.fichas = [ //72
 				else if (fichatierra.lleno){tienecab3 = cierraCastillo(fichatierra);}
 				else if (!fichatierra.lleno){tienecab3 =[false,false]}
 
-console.log("Tenemos caballeros: ",tienecab0," | ",tienecab1," | ",tienecab2," | ",tienecab3);
 
 		for (var i=0;i<=8;i++){
 

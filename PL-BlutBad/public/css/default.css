@@ -35,7 +35,14 @@ canvas {
 }
 
 #login-buttons{
-	margin: 2%;
+	margin: 1%;
+	width: 80px;
+	background-color: #ECF8E0;
+	height: 20px;
+	border-radius: 3px;
+	text-align: center;
+	padding: 7px 2px 5px 2px;
+	border: #BDBDBD 1px solid;
 }
 /**** Link Styles ****/
 a:link,a:visited {
@@ -500,6 +507,7 @@ h2.layout {
 
 #footer-content a:hover,#footer-content a:active {
 	text-decoration: underline;
+	cursor:pointer; cursor: hand;
 }
 
 /* sub-navigation menu */
@@ -787,7 +795,7 @@ td, th {
 	margin-top: 10%;
 	float: right;
 	text-align: center;
-	width: 25%;
+	width: 22%;
 	background-color: white;
 	padding: 10px;
 }   
@@ -954,8 +962,8 @@ td, th {
     font-size: 24px;
     color: #d17581;
 }
-
-/*#remotesVideos video {
+/*
+#remotesVideos video {
   height: 120px;
   padding-bottom: 8px;
 	padding-top: 8px;
@@ -973,41 +981,68 @@ td, th {
 */
 
 #webRTC {
+	clear: both;
 	background-color: #F2F2F2;
 	border: #BDBDBD 1px solid;
-	width: 97%;
-	height: 250px;
+	border-radius: 3px;
+	width: 96%;
+	height: 310px;
 	margin: 10px;
 	padding: 10px;
 }
 
+/* Video local */
 #myVideo {
-	background-color: red;
+	background-color: white;
 	float: left;
 	width: 20%;
-	height: 230px;
-	margin: 5px;
+	height: 250px;
+	margin: 35px 3px 3px 3px;
 	padding: 5px;
 }
 
 #localVideo {
-	background-color: blue;
-	height: 220px;
-	width: 80;
-	padding-bottom: 8px;
-	padding-top: 8px;
-	padding-left: 5px;
-	padding-right: 5px;
+	background-color: white;
+	border: #BDBDBD 1px solid;
+	height: 79%;
+	width: 94%;
+	margin: 2px;
+	padding: 3px
 }
 
+/* Videos remoto */
 #remoteVideo {
-	background-color: yellow;
+	background-color: white;
 	float: left;
-	width: 75%;
-	height: 230px;
+	width: 76%;
+	height: 295px;
 	margin: 5px;
 	padding: 5px;
 }
+
+#remotesVideos video {
+	float: left;
+ 	background-color: white;
+	border: #BDBDBD 1px solid;
+	height: 100px;
+	width: 28%;
+	margin: 3px;
+	padding: 3px
+}
+
+/* Boton */
 #startWebRTC {
 	clear: both;
+}
+
+/* Torneos */
+
+#gamecontainer {
+    height: 1240px;
+    padding: 25px 2px 10px 2px;
+    background-color: #ECF8E0;
+    border: #BDBDBD 1px solid;
+    border-radius: 3px;
+    width: 101%;
+    margin: 1px;
 }

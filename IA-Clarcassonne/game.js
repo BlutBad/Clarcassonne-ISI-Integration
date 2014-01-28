@@ -13,8 +13,13 @@
 		Jugadores_ID= Partidas.findOne({_id: id_partida}).jugadores;
 	
 		for(i=0;i<Jugadores_ID.length;i++){
-			var player =resolverUser(Jugadores_ID[i]);
-			Tablero.listaJugadores.push(new ObjetoJugador(Jugadores_ID[i],player.nombre,player.fecha));
+			
+			if (Jugadores_ID[i].user_id.slice(0,10) == "Jugador_IA"){
+					Tablero.listaJugadores.push(new ObjetoJugador(Jugadores_ID[i],Jugadores_ID[i].user_id,"01/01/1800"));
+			}else{
+				var player =resolverUser(Jugadores_ID[i]);
+				Tablero.listaJugadores.push(new ObjetoJugador(Jugadores_ID[i],player.nombre,player.fecha));
+			}
 		}
 		
 		//ordenamos a los jugadores por edad
@@ -55,13 +60,12 @@
       
       var fichaColocada =Tablero.colocarficha(nuevaficha,coordenada.x,coordenada.y); 
       if (fichaColocada == 0){return 0}
-      console.log("fichaColocada", fichaColocada);
 	 		var seguidores = [];
 			var Jugador = _.find(Tablero.listaJugadores,function(obj){return (obj.id.user_id == id_jugador)});
 			if (Jugador.n_seguidores != 0){
-	      var seguidores=Tablero.colocarseguidor(fichaColocada);
-  	    endTablero[id_partida]=Tablero;
+	      var seguidores=Tablero.colocarseguidor(fichaColocada);	    
 			}
+			endTablero[id_partida]=Tablero;
       return seguidores; 
     },
     //Coloca la ficha en el tablero, devuelve la lista de los posibles seguidores o 0 si no se produce error
@@ -89,7 +93,7 @@
           cierraCastillo(ficha,1);
           endTablero[id_partida]=Tablero;
 
-	  if (Tablero.totalFichas == 71){
+	  if (Tablero.totalFichas == 0){
 		var puntuacion=[];
 		puntosFinal();
 		for (i=0; i< Tablero.listaJugadores.length; i++){
