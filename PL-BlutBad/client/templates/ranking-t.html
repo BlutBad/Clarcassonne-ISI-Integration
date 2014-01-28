@@ -25,11 +25,15 @@
 
 
     {{#if show3BestRanking}}
-    			{{>sigmaGraphic}}
+
+
+    	{{>sigmaGraphic}}
+    	
          {{#each juegos}}
-             {{#if anyGamer _id}}
+             
                 <div class="well wellRanking">
                 <h3>{{name}}</h3>
+                            {{#if anyGamer _id}}
                             <table class="table">
                               <thead>
                                 <tr>
@@ -40,6 +44,8 @@
                                     <th>RANGO</th> 
                                 </tr>
                               </thead>
+
+
                               <tbody>
                               {{#each bestPlayers3 _id}}
                                     <tr>
@@ -55,13 +61,17 @@
                         </div>
                     </div>  
                 </div>
-             {{/if}}
+            {{else}}
+				<p>Nadie ha jugado a este juego! {{name}} te esta esperando!</p>
+            {{/if}}
+    	
+    
         {{/each}}
 
     {{else}}
 				<div class="well">
 				<h3>{{gameName}}</h3>
-				
+				{{#if anyGamerName}}
 				    <table class="table">
 				      <thead>
 				        <tr>
@@ -84,16 +94,20 @@
 						{{/each}}
 				      </tbody>
 				    </table>
-				</div>
-				<div class="pagination">
-				    <ul>
-				        <li><a href="#">Prev</a></li>
-				        <li><a href="#">1</a></li>
-				        <li><a href="#">2</a></li>
-				        <li><a href="#">3</a></li>
-				        <li><a href="#">4</a></li>
-				        <li><a href="#">Next</a></li>
-				    </ul>
+				
+					<div class="pagination">
+					    <ul>
+					        <li><a href="#">Prev</a></li>
+					        <li><a href="#">1</a></li>
+					        <li><a href="#">2</a></li>
+					        <li><a href="#">3</a></li>
+					        <li><a href="#">4</a></li>
+					        <li><a href="#">Next</a></li>
+					    </ul>
+					</div>
+					{{else}}
+						<p>Nadie ha jugado a este juego! {{gameName}} te esta esperando!</p>
+					{{/if}}
 				</div>
 			</div>	
 		</div>

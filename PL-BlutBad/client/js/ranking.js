@@ -86,6 +86,12 @@ Template.ranking.gameName=function(){
     return Juegos.findOne({_id: idgame_session}).name; 
 };
 
+Template.ranking.anyGamerName=function(){
+    idgame_session = Session.get("gamerank");
+    var ran = Ranking.find({game_id: idgame_session}).count();
+    return ran > 0;
+};
+
 
 
 

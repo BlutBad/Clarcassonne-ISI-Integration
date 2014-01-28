@@ -4,60 +4,63 @@ var sigInst = null;
 var isRunning = true;
 
 Template.sigmaGraphic.show = function(){
-	return Session.equals("gamerank", null);
+	rank= Ranking.find().count();
+	return Session.equals("gamerank", null) && rank;
 };
 
 
 Template.sigmaGraphic.rendered =function(){
-	sigInst = sigma.init(document.getElementById('sigmaGraphic')).drawingProperties({
-														    defaultLabelColor: '#ccd',
-														    defaultEdgeType: 'curve',
-													  	}).mouseProperties({
-														    maxRatio: 1,
-														});
+	if (Session.equals("gamerank", null) && rank){
+		sigInst = sigma.init(document.getElementById('sigmaGraphic')).drawingProperties({
+															    defaultLabelColor: '#ccd',
+															    defaultEdgeType: 'curve',
+														  	}).mouseProperties({
+															    maxRatio: 1,
+															});
 
 
-	var greyColor = '#666';
-  	sigInst.bind('overnodes',function(event){
-	    var nodes = event.content;
-	    var neighbors = {};
-	    sigInst.iterEdges(function(e){
-	      if(nodes.indexOf(e.source)<0 && nodes.indexOf(e.target)<0){
-	        if(!e.attr['grey']){
-	          e.attr['true_color'] = e.color;
-	          e.color = greyColor;
-	          e.attr['grey'] = 1;
-	        }
-	      }else{
-	        e.color = e.attr['grey'] ? e.attr['true_color'] : e.color;
-	        e.attr['grey'] = 0;
-	 
-	        neighbors[e.source] = 1;
-	        neighbors[e.target] = 1;
-	      }
-	    }).iterNodes(function(n){
-	      if(!neighbors[n.id]){
-	        if(!n.attr['grey']){
-	          n.attr['true_color'] = n.color;
-	          n.color = greyColor;
-	          n.attr['grey'] = 1;
-	        }
-	      }else{
-	        n.color = n.attr['grey'] ? n.attr['true_color'] : n.color;
-	        n.attr['grey'] = 0;
-	      }
-	    }).draw(2,2,2);
-	  }).bind('outnodes',function(){
-	    sigInst.iterEdges(function(e){
-	      e.color = e.attr['grey'] ? e.attr['true_color'] : e.color;
-	      e.attr['grey'] = 0;
-	    }).iterNodes(function(n){
-	      n.color = n.attr['grey'] ? n.attr['true_color'] : n.color;
-	      n.attr['grey'] = 0;
-	    }).draw(2,2,2);
-	});
+		var greyColor = '#666';
+	  	sigInst.bind('overnodes',function(event){
+		    var nodes = event.content;
+		    var neighbors = {};
+		    sigInst.iterEdges(function(e){
+		      if(nodes.indexOf(e.source)<0 && nodes.indexOf(e.target)<0){
+		        if(!e.attr['grey']){
+		          e.attr['true_color'] = e.color;
+		          e.color = greyColor;
+		          e.attr['grey'] = 1;
+		        }
+		      }else{
+		        e.color = e.attr['grey'] ? e.attr['true_color'] : e.color;
+		        e.attr['grey'] = 0;
+		 
+		        neighbors[e.source] = 1;
+		        neighbors[e.target] = 1;
+		      }
+		    }).iterNodes(function(n){
+		      if(!neighbors[n.id]){
+		        if(!n.attr['grey']){
+		          n.attr['true_color'] = n.color;
+		          n.color = greyColor;
+		          n.attr['grey'] = 1;
+		        }
+		      }else{
+		        n.color = n.attr['grey'] ? n.attr['true_color'] : n.color;
+		        n.attr['grey'] = 0;
+		      }
+		    }).draw(2,2,2);
+		  }).bind('outnodes',function(){
+		    sigInst.iterEdges(function(e){
+		      e.color = e.attr['grey'] ? e.attr['true_color'] : e.color;
+		      e.attr['grey'] = 0;
+		    }).iterNodes(function(n){
+		      n.color = n.attr['grey'] ? n.attr['true_color'] : n.color;
+		      n.attr['grey'] = 0;
+		    }).draw(2,2,2);
+		});
 
-	drawSigma();
+		drawSigma();
+	}
 };
 
 function forceResetGraph (argument) {
