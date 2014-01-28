@@ -174,18 +174,23 @@ Template.hall_clarcassone.events({
         });
         if (userInparty.length == 0) {
             // UNIRSE A PARTIDA!
-            PartidasVolatiles.update(this._id, {
-                $push : {
-                    jugadores : {
-                        user_id : Meteor.userId(),
-                        estado : estadosU.pendiente,
+            party = PartidasVolatiles.findOne(this._id);
+            if (party.jugadores.length < 5) {  
+                PartidasVolatiles.update(this._id, {
+                    $push : {
+                        jugadores : {
+                            user_id : Meteor.userId(),
+                            estado : estadosU.pendiente,
+                        }
                     }
+                });
+                if (userA) {
+                    UsersInHall.remove(userA._id);
                 }
-            });
-            if (userA) {
-                UsersInHall.remove(userA._id);
+                Session.set("createError", undefined);
+            } else {
+                Session.set("createError", "Partida llena, prueba con otra!");                
             }
-            Session.set("createError", undefined);
         } else { 
             // ABANDONAR PARTIDA! 
             PartidasVolatiles.update(this._id, {
@@ -227,22 +232,27 @@ Template.hall_clarcassone.events({
     },
 
     'click .playIa' : function() {  
-        ia = Session.get("JugadoresIa");
-        if (ia == undefined || ia == 4) {
-            ia = 0;
-        } else {
-            ia += 1;
-        }
-        Session.set("JugadoresIa", ia);
-        PartidasVolatiles.update(this._id, {
-            $push : {
-                jugadores : {
-                    user_id : playersIa[ia],
-                    estado : estadosU.listo,
-                    user_ia: true
-                }
+        party = PartidasVolatiles.findOne(this._id);
+        if (party.jugadores.length < 5) {  
+            ia = Session.get("JugadoresIa");
+            if (ia == undefined || ia == 4) {
+                ia = 0;
+            } else {
+                ia += 1;
             }
-        });
+            Session.set("JugadoresIa", ia);
+            PartidasVolatiles.update(this._id, {
+                $push : {
+                    jugadores : {
+                        user_id : playersIa[ia],
+                        estado : estadosU.listo,
+                        user_ia: true
+                    }
+                }
+            });
+        } else {
+            Session.set("createError", "Partida llena, no añadas más Jugadores IA!");    
+        }
     }
 });
 

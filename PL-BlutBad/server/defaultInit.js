@@ -111,9 +111,10 @@ Meteor.startup(function() {
 		    	{$set:{fakeUser:true}
 		    });
 		};
-
-		for (var i = 0; i <= 5; i++) {
-			partidasV[i] = {
+		
+		var i = 0;
+		for (var j = 0; j <= 9; j++) {
+			partidasV[j] = {
 				creator_id : fakeUsersId[i],
 				jugadores : [
 					{
@@ -132,6 +133,7 @@ Meteor.startup(function() {
 				listos : false,
 				torneo_id : false,  
 			};
+			i+=3;
 		};
 		
 		// USUARIOS POR DEFECTOs 
