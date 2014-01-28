@@ -388,6 +388,20 @@ Template.roomplayerstemp.events = {
 		} else {
 			$("#dialog_noadmin").dialog("open");
 		};
+	},
+	// Añade jugador sintético
+	'click #add_ia' : function(event){
+		var initiated = Partidas.findOne({_id : Session.get("match_id")}).initiated;
+		var full = Partidas.findOne({_id : Session.get("match_id")}).full;
+		var i_am_admin = Partidas.findOne({_id : Session.get("match_id")}).admin_by == Meteor.userId();
+		if(!initiated && !full && i_am_admin){
+			var ia_id = "ia_player_" + (Math.floor((Math.random()*100000000))).toString();
+			console.log(ia_id);
+			Partidas.update({_id : Session.get("match_id")},{$push: {jugadores: {user_id: ia_id}},$inc:{num_players :1}});
+		} else {
+			if(full)
+				$("#dialog_iafullerror").dialog("open");
+		};
 	}
 };
 

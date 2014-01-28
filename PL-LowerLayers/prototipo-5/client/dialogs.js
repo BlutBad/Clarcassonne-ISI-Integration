@@ -158,6 +158,18 @@ $(document).ready(function() {
 			}
     	});
 
+		$("#dialog_iafullerror").dialog({
+      		autoOpen: false,
+     		show: {
+        		effect: "blind",
+        		duration: 300
+      		},
+     		hide: {
+      			effect: "explode",
+				duration: 200
+			}
+    	});
+
 		$("#datepickerprof_dialog").datepicker({
 			dateFormat: "dd/mm/yy",
 			changeMonth: true,

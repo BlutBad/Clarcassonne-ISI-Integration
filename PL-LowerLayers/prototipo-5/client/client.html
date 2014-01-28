@@ -68,6 +68,10 @@
   		<p>No eres observador: ¡Ya estabas dentro de esta partida!.</p>
 	</div>
 
+	<div id="dialog_iafullerror" title="Partida llena.">
+  		<p>No puedes introducir más jugadores IA.</p>
+	</div>
+
 </body>
 
 <template name="cointemp">
@@ -440,7 +444,8 @@
 	{{#if carca}}
 		{{#if admin}}
 			<div id="empezarboton">
-				<p ><button id="EmpezarCarca"> Empezar </button></p>
+				<p><button id="add_ia"> Añadir jugador IA </button></p>
+				<p><button id="EmpezarCarca"> Empezar </button></p>
 			</div>
 		{{/if}}
 	{{/if}}
