@@ -131,6 +131,7 @@
         endTablero[id_partida]=Tablero;
         
         return [nuevaficha.tipo,x[1].giros,x[1].coorx,x[1].coory,Tablero.listaJugadores]
+      }
     
 })
 
