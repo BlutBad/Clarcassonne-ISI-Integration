@@ -7,8 +7,7 @@ Meteor.startup(function () {
 	if(Games.find({name:"Alien_Invasion"}).count() == 0){
 		Games.insert({name:"Alien_Invasion", players_max : 1});
 		//Logros
-		var alien_id = Games.findOne({name:"Alien_Invasion"})._id;
-		Games.update({_id: alien_id},{$push: {profits: [ {title:"Has hecho 2000 pts", users:[] } ] } });
+		Games.update({name: "Alien_Invasion"},{$push: {profits: {title:"Has hecho 10000 pts", users:[]} } });
 	};
 	if(Games.find({name:"Clarcassonne"}).count() == 0){
 		Games.insert({name:"Clarcassonne", players_max : 5});

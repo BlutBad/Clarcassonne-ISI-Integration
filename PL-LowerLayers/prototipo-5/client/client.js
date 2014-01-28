@@ -19,8 +19,6 @@ Meteor.startup(function () {
 	$('#bygameranking').hide();
 	$('#byuserranking').hide();
 	$('#byusergameranking').hide();
-	
-	//console.log(Games.find({name:"Alien_Invasion"}).profits);
 });
 
 
