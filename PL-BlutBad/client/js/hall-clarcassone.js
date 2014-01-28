@@ -4,6 +4,13 @@ var estadosU = {
     inactivo : 'Inactivo'
 };
 
+var playersIa = [
+    'Jugador_IA1',
+    'Jugador_IA2',
+    'Jugador_IA3',
+    'Jugador_IA4',
+];
+
 Template.hall_clarcassone.show = function() {
     // Mostrar el hall de clarcassone si ...
     userA = UsersInHall.findOne({
@@ -88,6 +95,7 @@ Template.hall_clarcassone.events({
             notRegister();
         }
     },
+
     'click .removeparty' : function() { 
         // Sólo se muestra el botón borrar partida al creador!!
         if (Meteor.userId()) { 
@@ -95,6 +103,7 @@ Template.hall_clarcassone.events({
             Session.set("createError", undefined); 
         } 
     },
+
     'click .startparty' : function() { 
         usersJoined = PartidasVolatiles.findOne({
             _id : this._id
@@ -189,6 +198,7 @@ Template.hall_clarcassone.events({
             Session.set("createError", undefined);
         } 
     },
+
     'click .ready' : function() {   
         usersJoined = PartidasVolatiles.findOne({
             _id : this._id
@@ -210,9 +220,29 @@ Template.hall_clarcassone.events({
             } 
         }); 
     },
+
     'click .continue' : function() {   
         party_id = this._id;
         cargaClarca(party_id); 
+    },
+
+    'click .playIa' : function() {  
+        ia = Session.get("JugadoresIa");
+        if (ia == undefined || ia == 4) {
+            ia = 0;
+        } else {
+            ia += 1;
+        }
+        Session.set("JugadoresIa", ia);
+        PartidasVolatiles.update(this._id, {
+            $push : {
+                jugadores : {
+                    user_id : playersIa[ia],
+                    estado : estadosU.listo,
+                    user_ia: true
+                }
+            }
+        });
     }
 });
 
@@ -259,6 +289,13 @@ Template.hall_clarcassone.partidasVolatiles = function() {
     } else {
         return PartidasVolatiles.find({ torneo_id: false });
     }    
+} 
+
+Template.hall_clarcassone.userIa = function() {
+    if (_.contains(playersIa, this.user_id)) {
+        return true;
+    }
+    return false;
 } 
 
 Template.hall_clarcassone.CurrentParty = function() { 
