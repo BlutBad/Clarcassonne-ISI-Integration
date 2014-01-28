@@ -375,10 +375,10 @@ Meteor.startup(function() {
 			{
 			    name : 'Froot Wars',
 			    wrapf : 'null', //'gameFroot.init()',
-			    logo_src : '/images/splashscreen.png',
-			    logo_alt : 'Juega a este juego!',
+			    logo_src : '/images/splashscreen.png', 
+			    logo_alt : 'Juega a este juego',
 			    title_desc : 'Froot Wars el juego con el que podrás vengarte de las frutas',
-			    description : 'Véngate, aplasta todas las frutas que puedas y consigue puntos',
+			    description : 'Véngate, aplasta todas las frutas que puedas y consigue todos los puntos', 
 			    idn : 'froot',
 			    mode : 'solo',
 			    hall : 'frootHall',
