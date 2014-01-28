@@ -4,14 +4,29 @@
 		<div id="tiendacontainer">
   			{{#if currentUser}}
   				<div id="shop">
-  					<p>Aquí podrás cambiar tus puntos por <img src="/images/isi-coin.jpg" alt="ISI-COIN" width="32" height="32" />nuestra moneda oficial con la que podrás comprar un montón de ventajas para tus juegos favoritos</p>
-  					<p>Cada 100 puntos se cambiarán por 1 <img src="/images/isi-coin.jpg" alt="ISI-COIN" width="32" height="32" />, por cada 10 <img src="/images/isi-coin.jpg" alt="ISI-COIN" width="32" height="32" /> podrás comprar una ventaja. Cada vez que tengas los puntos y/o <img src="/images/isi-coin.jpg" alt="ISI-COIN" width="32" height="32" /> se mostrarán botones donde poder cambiarlos </p>
-  					<p>Aprovechate con nuestras ventajas</p>
+  					<h4>
+  					Aquí podrás cambiar tus puntos por <img src="/images/isi-coin.jpg" alt="ISI-COIN" width="32" height="32" />, nuestra moneda oficial con la que podrás comprar un montón de ventajas para tus juegos favoritos.
+  					</h4>
+  					<p></p>
+  					<h4>Cada 100 puntos se cambiarán por 1 <img src="/images/isi-coin.jpg" alt="ISI-COIN" width="32" height="32" />.
+  					</h4>
+  					<p></p>
+  					<h4>Con cada 10 <img src="/images/isi-coin.jpg" alt="ISI-COIN" width="32" height="32" /> podrás comprar una ventaja.
+  					</h4>
+  					<p></p>
+  					<h4>Cada vez que tengas los puntos y/o <img src="/images/isi-coin.jpg" alt="ISI-COIN" width="32" height="32" /> se mostrarán botones donde poder cambiarlos.
+  					</h4>
+  					<p></p>
+  					<h4>Aprovéchate con nuestras ventajas.</h4> 
 					<h2>Total puntos: {{total}}</h2>
-					<h2> Total <img src="/images/isi-coin.jpg" alt="ISI-Coin" width="100" height="100" />: {{isicoins}}</h2>
+  					<p></p>
+					<h2> 
+						Total <img src="/images/isi-coin.jpg" alt="ISI-Coin" width="100" height="100" />: {{isicoins}}
+					</h2> 
 					{{#if icambiar}}
 						<input type="button" id="ichange" value="Cambiar 100 puntos por 1 <img src="/images/isi-coin.jpg" alt="ISI-COIN" width="32" height="32" />"> 
 					{{/if}}
+  					<p></p>
 					<h2>Bonos disponibles: </h2>
 					{{#each bono}}
 						{{nome}}
@@ -21,6 +36,7 @@
 						{{/if}}
 						<p></p>
 					{{/each}}}
+  					<p></p>
 				</div>		
 			{{else}}	
 				<div id="notRegisterDialog">

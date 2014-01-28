@@ -111,7 +111,7 @@ Meteor.startup(function() {
 		    	{$set:{fakeUser:true}
 		    });
 		};
-		
+
 		var i = 0;
 		for (var j = 0; j <= 9; j++) {
 			partidasV[j] = {
@@ -169,15 +169,15 @@ Meteor.startup(function() {
 
     if (Bono.find().count() === 0) {
     	var data = [ {
-		    name : "Vida para AlienInvasion",
+		    name : "Vida para AlienInvasion: ",
 		    description: "Da una vida extra en el juego de AlienInvasion",
 		    numeracion: 1 //este campo servira para que lo pueda reconoce dentro del juego porque no se me ocurre otra forma de hacerlo de momento
 		}, {
-		    name : "Nivel extra en AlienInvasion",
+		    name : "Nivel extra en AlienInvasion: ",
 		    description: "Descubre un nivel secreto nuevo al finalizar la partida",
 		    numeracion: 2
 		}, {
-		    name : "Doble Puntuacion para AlienInvasion",
+		    name : "Doble Puntuación para AlienInvasion: ",
 		    description: "La puntuacion será el doble",
 		    numeracion: 3 
 		}, ];
