@@ -112,8 +112,9 @@ Meteor.startup(function() {
 		    });
 		};
 
-		for (var i = 0; i <= 5; i++) {
-			partidasV[i] = {
+		var i = 0;
+		for (var j = 0; j <= 9; j++) {
+			partidasV[j] = {
 				creator_id : fakeUsersId[i],
 				jugadores : [
 					{
@@ -132,6 +133,7 @@ Meteor.startup(function() {
 				listos : false,
 				torneo_id : false,  
 			};
+			i+=3;
 		};
 		
 		// USUARIOS POR DEFECTOs 
@@ -167,15 +169,15 @@ Meteor.startup(function() {
 
     if (Bono.find().count() === 0) {
     	var data = [ {
-		    name : "Vida para AlienInvasion",
+		    name : "Vida para AlienInvasion: ",
 		    description: "Da una vida extra en el juego de AlienInvasion",
 		    numeracion: 1 //este campo servira para que lo pueda reconoce dentro del juego porque no se me ocurre otra forma de hacerlo de momento
 		}, {
-		    name : "Nivel extra en AlienInvasion",
+		    name : "Nivel extra en AlienInvasion: ",
 		    description: "Descubre un nivel secreto nuevo al finalizar la partida",
 		    numeracion: 2
 		}, {
-		    name : "Doble Puntuacion para AlienInvasion",
+		    name : "Doble Puntuación para AlienInvasion: ",
 		    description: "La puntuacion será el doble",
 		    numeracion: 3 
 		}, ];
@@ -205,9 +207,9 @@ Meteor.startup(function() {
 			    name : 'AlienInvasion',
 			    wrapf : 'null', //'gameAlien.initialize("gamecanvasAlien",spritesAlien,startGameAlien)',
 			    logo_src : '/images/games_logo/alieninvasion.jpg',
-			    logo_alt : 'Juega es este juego',
-			    title_desc : 'Titulo para la descripcion del juego',
-			    description : 'Descripcion del juego!',
+			    logo_alt : 'Juega a este juego',
+			    title_desc : 'AlienInvasion donde podrás detener la invasión alienígena',
+			    description : 'Un juego llegado desde el espacio exterior donde podrás acabar con las nave enemigas y tripular tu propia nave espacial. ¿A qué estas esperando? Entra y acaba con todos los enemigos',
 			    idn : 'alien',
 			    mode : 'solo',
 			    hall : 'alienHall',
@@ -282,7 +284,7 @@ Meteor.startup(function() {
 	                    date_start : "11/29/2013",
 	                    date_finish : "12/29/2013",
 	                    pic : '/images/games_logo/alieninvasion.jpg',
-	                    description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel',
+	                    description : 'El ganador se lleva una copa y puntos para subir de nivel',
 	                    description_long:'Id vel sensibus honestatis omittantur, vel cu nobis commune patrioque. In accusata definiebas qui, id tale malorum dolorem sed, solum clita phaedrum ne his. Eos mutat ullum forensibus ex, wisi perfecto urbanitas cu eam, no vis dicunt impetus. Assum novum in pri, vix an suavitate moderatius, id has reformidans referrentur. Elit inciderint omittantur duo ut, dicit democritum signiferumque eu est, ad suscipit delectus mandamus duo. An harum equidem maiestatis nec.',
 	                	participantes:[],
 	                	etapas : {octavos:{}, cuartos:{}, semifinal:{}, final:{}},
@@ -295,9 +297,9 @@ Meteor.startup(function() {
 			    name : 'Clarcassone',
 			    wrapf : 'ClarcassonneGameIU.initialize(idCanvasElement, party_id);',
 			    logo_src : '/images/games_logo/clarkasone.jpg',
-			    logo_alt : 'Juega es este juego',
-			    title_desc : 'Titulo para la descripcion del juego',
-			    description : 'Descripcion del juego!',
+			    logo_alt : 'Juega a este juego',
+			    title_desc : 'Si quieres jugar en compañía este es tu juego Clarcassone',
+			    description : 'El juego del que todo el mundo habla llegado recientemente desde Pakistán Clarcassone donde te adentraras en un mundo medievale con tus amigos o con desconocidos',
 			    idn : 'klarki',
 			    mode : 'multi',
 			    hall : 'klarkiHall',
@@ -370,7 +372,7 @@ Meteor.startup(function() {
                         date_start : "11/29/2013",
                         date_finish : "12/29/2013",
                         pic : '/images/games_logo/clarkasone.jpg',
-                        description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel',
+                        description : 'El ganador se lleva una copa y puntos para subir de nivel',
                         description_long:'Id vel sensibus honestatis omittantur, vel cu nobis commune patrioque. In accusata definiebas qui, id tale malorum dolorem sed, solum clita phaedrum ne his. Eos mutat ullum forensibus ex, wisi perfecto urbanitas cu eam, no vis dicunt impetus. Assum novum in pri, vix an suavitate moderatius, id has reformidans referrentur. Elit inciderint omittantur duo ut, dicit democritum signiferumque eu est, ad suscipit delectus mandamus duo. An harum equidem maiestatis nec.',
                         participantes:[],
 	                	etapas : {	octavos: 	{start:false,finish:false, maxPlayersNextEtapa: 64, partidas:[]},
@@ -384,10 +386,10 @@ Meteor.startup(function() {
 			{
 			    name : 'Froot Wars',
 			    wrapf : 'null', //'gameFroot.init()',
-			    logo_src : '/images/splashscreen.png',
-			    logo_alt : 'Juega es este juego',
-			    title_desc : 'Titulo para la descripcion del juego',
-			    description : 'Descripcion del juego!',
+			    logo_src : '/images/splashscreen.png', 
+			    logo_alt : 'Juega a este juego',
+			    title_desc : 'Froot Wars el juego con el que podrás vengarte de las frutas',
+			    description : 'Véngate, aplasta todas las frutas que puedas y consigue todos los puntos', 
 			    idn : 'froot',
 			    mode : 'solo',
 			    hall : 'frootHall',
@@ -451,7 +453,7 @@ Meteor.startup(function() {
                         date_start : "11/29/2013",
                         date_finish : "12/29/2013",
                         pic : '/images/splashscreen.png',
-                        description : 'Descripcion del juego!, el ganador se lleva una copa y puntos para subir de nivel',
+                        description : 'El ganador se lleva una copa y puntos para subir de nivel',
                         description_long:'Id vel sensibus honestatis omittantur, vel cu nobis commune patrioque. In accusata definiebas qui, id tale malorum dolorem sed, solum clita phaedrum ne his. Eos mutat ullum forensibus ex, wisi perfecto urbanitas cu eam, no vis dicunt impetus. Assum novum in pri, vix an suavitate moderatius, id has reformidans referrentur. Elit inciderint omittantur duo ut, dicit democritum signiferumque eu est, ad suscipit delectus mandamus duo. An harum equidem maiestatis nec.',
                         participantes:[],
 	                	etapas : {octavos:{}, cuartos:{}, semifinal:{}, final:{}},

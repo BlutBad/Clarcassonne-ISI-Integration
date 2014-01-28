@@ -285,7 +285,7 @@
 <template name="gamestemp" >
 	<div id="games">
 		{{# each games}}	
-			<a style ="cursor:pointer;text-decoration:underline;" class="linkgame">{{name}}</a><br>
+			<a style ="cursor:pointer;text-decoration:underline;" class="linkgame" tipo={{name}}>{{name}}</a><br>
 			<IMG  SRC =FotosPeq/{{name}} class="linkgame"><br>
 		{{/ each}}
 	</div>
@@ -515,8 +515,11 @@
 
 <template name='miperfiltemp'>
 	<div  id="dataprofile">
-		<div><span id="nombreperfil" style='font: small-caps 185% serif; '>{{mi.username}}</span></div>
-		<br>
+		<div><span id="nombreperfil" style='font: small-caps 185% serif; '>{{mi.username}}</span>
+			{{#if mi.socialred}}
+				<span>(Provided by {{mi.socialred}})</span> 
+			{{/if}}	
+		</div><br>
 		<b>Fecha de nacimiento:</b> {{mi.birthday}}<br>
 		<b>Correo electronico:</b> {{mi.address}}<br>
 		<b>Amigos:</b> {{amigos}}<br>
@@ -549,10 +552,17 @@
 </template>
 
 <template name='modmiperfiltemp'>
-	<div  id="moddataprofile">
+	<div style="display:none" id="moddataprofile">
 		<br><br>
 		Fecha de nacimiento: <input type="text" readonly="readonly" id="datepickerprof"> (Una vez guardado no se puede modificar)<br>
-		Direccion de email:   <input id="modemail" type="email"><br><br><br>
+		{{#if socialred}}
+			<br>
+			<br>
+			(Si quieres personalizar tu perfil mas, registrate sin una red social)
+		{{else}}
+			Direccion de email:   <input id="modemail" type="email">	
+		{{/if}}	
+		<br><br><br>
 		<button id="saveprof"> Guardar </button>
 		<button id="nosaveprof"> Cancelar </button>
 	</div>	

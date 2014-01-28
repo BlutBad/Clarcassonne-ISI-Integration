@@ -6,7 +6,7 @@ http://bootsnipp.com/snippets/featured/condensed-table-example -->
   {{#if show}}
 		<div class="full-page">		
 		<h5 id = "hidden">Juegos disponibles en la plataforma</h5>			
-		<h2>¡Creacion de partidas para el juego Clarcassone!</h2>
+		<h2>¡Creación de partidas para el juego Clarcassone!</h2>
 		<div class="gallery">
     <div class="container">
       <div class="span3 jugad_hall">
@@ -51,7 +51,11 @@ http://bootsnipp.com/snippets/featured/condensed-table-example -->
             <tbody>
               {{#each jugadores}}
                 <tr>
-                  <td>{{getUsername this.user_id}}</td>
+                  {{#if userIa}}
+                    <td>Jugador IA</td>
+                  {{else}}
+                    <td>{{getUsername this.user_id}}</td>
+                  {{/if}}
                   <td>{{userRango this.user_id}}</td> 
                   <td>{{point this.user_id ../this}}</td> 
                   <td><span class="label label-important">Jugando</span>
@@ -84,7 +88,11 @@ http://bootsnipp.com/snippets/featured/condensed-table-example -->
               <tbody>
                 {{#each jugadores}}
                   <tr>
-                    <td>{{getUsername this.user_id}}</td>
+                    {{#if userIa}}
+                      <td>Jugador IA</td>
+                    {{else}}
+                      <td>{{getUsername this.user_id}}</td>
+                    {{/if}}
                     <td>{{userRango this.user_id}}</td>
                     <td>{{rol this.user_id ../this._id}}</td>
                     <td><span class="{{estadoUser this.estado}}">{{this.estado}}</span>
@@ -104,6 +112,7 @@ http://bootsnipp.com/snippets/featured/condensed-table-example -->
                   {{/if}}
                   <button id = "{{muestro_oculto this._id}}" class="btn startparty">Empezar</button>
                   <button id = "{{muestro_oculto this._id}}" class="btn removeparty">Descartar</button>
+                  <button id = "{{muestro_oculto this._id}}" class="btn playIa">Jugador IA</button>
                 {{/if}}
     	        </div>
             {{/if}}

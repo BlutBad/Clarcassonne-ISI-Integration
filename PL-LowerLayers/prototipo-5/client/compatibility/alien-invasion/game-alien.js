@@ -111,7 +111,7 @@ var playGameAlien1 = function() {
     // ganado el juego
     board.add(new LevelAlien(LevelAlien1, nextLevel));
     GameAlien.setBoard(3,board);
-	GameAlien.points =0;
+	GameAlien.points=0;
 };
 
 var playGameAlien2 = function() {
@@ -122,23 +122,45 @@ var playGameAlien2 = function() {
     GameAlien.setBoard(3,board);
 };
 
+var share = function() {
+	$(".tweetbtn").html("<iframe allowtransparency='true' frameborder='0' scrolling='no'"+
+                        "src='https://platform.twitter.com/widgets/tweet_button.html?text=He jugado a Alien Invasion en lowerlayers.meteor.com y he obtenido "+GameAlien.points+" puntos"+"'"+
+                         "style='width:130px; height:20px;'></iframe>");                   
+	$(".fbsharebtn").html("<iframe src='//www.facebook.com/plugins/like.php?href=https%3A%2F%2Flowerlayers.meteor.com&amp;width&amp;ref=hola&amp;layout=standard&amp;action=like&amp;show_faces=true&amp;share=true&amp;height=80' scrolling='no' frameborder='0' style='border:none; overflow:hidden; height:80px;' allowTransparency='true'></iframe>");
+	$(".gsharebtn").html("<a href='https://plus.google.com/share?url=http://lowerlayers.meteor.com/' onclick='javascript:window.open(this.href,"+
+                          "'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;'><img src='https://www.gstatic.com/images/icons/gplus-32.png' alt='Share on Google+'/></a>");
+}
+
+var profits = function() {	
+	if (GameAlien.points == 10000){
+		var userid = Partidas.findOne({_id:Session.get("match_id")}).jugadores[0].user_id;
+		var gameid = Partidas.findOne({_id:Session.get("match_id")}).game_id;
+		var profits = Games.findOne({name: "Alien_Invasion"}).profits;
+		var profitusers;
+		var saved = false;
+		profits.forEach(function(elem) {
+			if (elem.title=="Has hecho 10000 pts")
+				profitusers=elem.users;
+		});
+		profitusers.forEach(function(elem) {
+			if (elem==userid){
+				saved=true;
+			}
+		});
+		if (saved==false){
+			$.ambiance({message: "Has obtenido 10000 puntos!", title: "Has desbloqueado un logro!",type: "success"});
+			profitusers.push(userid);
+			Games.update({_id: gameid }, {$set: {profits: [{title:"Has hecho 10000 pts", users:profitusers }] } });
+		}
+	}
+};
+
 // Llamada cuando han desaparecido todos los enemigos del nivel sin
 // que alcancen a la nave del jugador
 var winGameAlien = function() {
 	Meteor.call("matchFinish", Session.get("match_id"), Session.get("game_id"), GameAlien.points);
-	
-	$(".tweetbtn").html("<iframe allowtransparency='true' frameborder='0' scrolling='no'"+
-                        "src='https://platform.twitter.com/widgets/tweet_button.html?text=He jugado a Alien Invasion en lowerlayers.meteor.com y he obtenido "+GameAlien.points+" puntos"+"'"+
-                         "style='width:130px; height:20px;'></iframe>");
-                         
-	$(".fbsharebtn").html("<iframe src='//www.facebook.com/plugins/like.php?href=https%3A%2F%2Flowerlayers.meteor.com&amp;width&amp;ref=hola&amp;layout=standard&amp;action=like&amp;show_faces=true&amp;share=true&amp;height=80' scrolling='no' frameborder='0' style='border:none; overflow:hidden; height:80px;' allowTransparency='true'></iframe>");
-	
-	$(".gsharebtn").html("<a href='https://plus.google.com/share?url=http://lowerlayers.meteor.com/' onclick='javascript:window.open(this.href,"+
-                          "'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;'><img src='https://www.gstatic.com/images/icons/gplus-32.png' alt='Share on Google+'/></a>");
-	
-    GameAlien.setBoard(3,new TitleScreenAlien("You win!", 
-                                    "Press fire to play again",
-                                    playGameAlien1));
+	share();
+    GameAlien.setBoard(3,new TitleScreenAlien("You win!", "Press fire to play again", playGameAlien1));
 };
 
 
@@ -146,29 +168,12 @@ var winGameAlien = function() {
 // finalizar el juego
 var loseGameAlien = function() {
 	Meteor.call("matchFinish", Session.get("match_id"), Session.get("game_id"), GameAlien.points);
-	
-	$(".tweetbtn").html("<iframe allowtransparency='true' frameborder='0' scrolling='no'"+
-                        "src='https://platform.twitter.com/widgets/tweet_button.html?text=He jugado a Alien Invasion en lowerlayers.meteor.com y he obtenido "+GameAlien.points+" puntos"+"'"+
-                        "style='width:130px; height:20px;'></iframe>");
-                        	
-	$(".fbsharebtn").html("<iframe src='//www.facebook.com/plugins/like.php?href=https%3A%2F%2Flowerlayers.meteor.com&amp;width&amp;ref=hola&amp;layout=standard&amp;action=like&amp;show_faces=true&amp;share=true&amp;height=80' scrolling='no' frameborder='0' style='border:none; overflow:hidden; height:80px;' allowTransparency='true'></iframe>");
-	
-	/*$(".gsharebtn").html('<a href="https://plus.google.com/share?url={URL}" onclick="javascript:window.open(this.href,'+
-                          "  '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');"+
-                          'return false;"><img src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"/></a>');*/
-	
-	$(".gsharebtn").html("<a href='https://plus.google.com/share?url=http://lowerlayers.meteor.com/' onclick='javascript:window.open(this.href,"+
-                          "'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;'><img src='https://www.gstatic.com/images/icons/gplus-32.png' alt='Share on Google+'/></a>");
-	
-    GameAlien.setBoard(3,new TitleScreenAlien("You lose!", 
-                                    "Press fire to play again",
-                                    playGameAlien1));
+	share();
+    GameAlien.setBoard(3,new TitleScreenAlien("You lose!", "Press fire to play again", playGameAlien1));
 };
 
 var nextLevel = function() {
-    GameAlien.setBoard(3,new TitleScreenAlien("LevelAlien 1 Completed!",
-                                    "Press fire to play LevelAlien 2",
-                                    playGameAlien2));
+    GameAlien.setBoard(3,new TitleScreenAlien("LevelAlien 1 Completed!", "Press fire to play LevelAlien 2", playGameAlien2));
 };
 
 
@@ -470,6 +475,7 @@ Enemy.prototype.hit = function(damage) {
     if(this.health <=0) {
 	if(this.board.remove(this)) {
 	    GameAlien.points += this.points || 100;
+	    profits(GameAlien.points);
 	    this.board.add(new Explosion(this.x + this.w/2, 
 					 this.y + this.h/2));
 	}

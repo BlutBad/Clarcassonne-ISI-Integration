@@ -137,6 +137,8 @@ function menuAmInv(esto) {
 		});
 		if(foundUser){
 			$.ambiance({message: "user: "+$(esto).attr("hreflang")+" is already in", type: "error", fade: false});
+		}else if(partida.initiated){
+			$.ambiance({message: "Match is already initiated", type: "error", fade: false});
 		}else if( game_current.name != "Clarcassonne" ){
 			$.ambiance({message: "This is a single player game!", type: "error", fade: false});
 		}else if(partida.admin_by != Meteor.userId()){
@@ -148,6 +150,7 @@ function menuAmInv(esto) {
 			if (invitacion == undefined){
 				Invitations.insert({
 					match_id: partida._id,
+					game_id:game_current._id,
 					orig: Meteor.user()._id,
 					dest: userIddestino,
 					sent: 0,
@@ -164,42 +167,56 @@ function menuAmInv(esto) {
 	}
 }
 
-/*Deps.autorun(function () {
+Deps.autorun(function () {
 	if(Meteor.user()){
 		var invitaciones = Invitations.find().fetch();
 		if (invitaciones != undefined && invitaciones.length >0){			
 			invitaciones.forEach(function(inv) {			
 				if(inv.dest == Meteor.user()._id && inv.sent==0){
+					$(".ambiance").remove();
 					managerInvitations(inv);
 				}
 			});
 		}
 	}
-});*/
-
-//Quiero que se queden fijas.timeout 0; cuando le des a aceptar se borre.
-//que no este el receptor en una partida
-//llamar a la funcion de joinmatch 
-//poner invitacion sent a true
-//rellenar bien el ambiance de llegada con nombre de partida, Juego, quien te invita... boton aceptar
-//cumpleaños
+});
+//hechas:
 //que la partida actual no esté iniciada
+//rellenar bien el ambiance de llegada con nombre de partida, Juego, quien te invita... boton aceptar
+//que no este el receptor en una partida
+//poner invitacion sent a true
+//Quiero que se queden fijas.timeout 0; cuando le des a aceptar se borre.
+//llamar a la funcion de joinmatch 
+
+//no hechas:
 //caso en el que invite y me salga de la partida xD
 
 function managerInvitations(inv){
-	var usernameOrig = Meteor.users.findOne({_id: inv.orig}).username;
+	var usernameOrig = Meteor.users.findOne({_id: inv.orig});
 	var button = $(window.document.createElement('button'))
 		.attr('id', 'AddButtLinkMatch').addClass("btn btn-primary").html("Aceptar");
-	$.ambiance({message: button ,title: "Unirse a la partida ",type: "success", timeout: 0});
-	$("#AddButtLinkMatch").click(function() {	
-		console.log(inv.match_id);
-		$(".ambiance").remove();
-		//joinmatch(inv.match_id, false, true)
+	
+	$.ambiance({message: button ,title: usernameOrig.username+" has invited you to play Carcassonne",type: "success", timeout: 0});
+	Session.set('game_id', inv.game_id);
+	$("#AddButtLinkMatch").click(function() {		
+		AceptarInvitacion(inv);
 	});
-	//var partida = Partidas.find({_id: inv.match_id}).fetch();
-	//console.log(partida)
-	//var gamename = Games.findOne({_id: partida[0].game_id}).name;
-	//$.ambiance({message: "Invitation from "+usernameOrig+" to the game "+gamename+". Match name: "+partida.name ,type: "success", timeout: 0});
+}
+
+function AceptarInvitacion(inv,usernameOrig){
+	if(Session.get('match_id')){
+		$.ambiance({message: "Close current game to join", type: "error", fade: false});
+	}else{
+		$("#ui-id-1").trigger('click');
+		$("a[tipo='Clarcassonne']").trigger('click');
+		if(Meteor.user().birthday){
+			Invitations.update({_id: inv._id}, {$set: {sent: 1}});			
+			$(".ambiance").remove();
+			joinmatch(inv.match_id, false, true);
+		}else{
+			$.ambiance({message: "Fill in your birthday first", type: "error", fade: false});
+		}
+	}
 }
 
 /////////////////////////////////Bloqueo///////////////////////////////////////////////////////

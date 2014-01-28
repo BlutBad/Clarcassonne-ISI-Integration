@@ -88,7 +88,7 @@ Template.byuserrankingtemp.events = {
 		$("#gamesranking").fadeIn();
 		Session.set('user_id_ranking', undefined);
 	},
-	'click a.linkgame':function(event){
+	'click a.linkedgame':function(event){
 		$("#byuserranking").hide();
 		Session.set('game_id_ranking', $(this)[0].game_id);
 		$("#byusergameranking").fadeIn();
