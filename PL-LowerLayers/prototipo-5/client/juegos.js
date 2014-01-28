@@ -92,7 +92,7 @@ function sha1Hash(msg) {
 }
 
 //Código para la unión a una partida
-joinmatch = function(match_id, viewer) {
+joinmatch = function(match_id, viewer, invited) {
 	var initiated = Partidas.findOne({_id : match_id}).initiated;
 	var lim = Games.findOne({_id : Session.get('game_id')}).players_max;
 	var no_limit = Partidas.findOne({_id : match_id}).num_players < lim;
@@ -111,8 +111,8 @@ joinmatch = function(match_id, viewer) {
 
 		if(!initiated || already_into || viewer){
 			// Si está dentro o la partida no está llena o es un observador	
-			if(no_limit || already_into || viewer){
-				if(match_pass == in_pass || already_into){
+			if(no_limit || already_into || viewer || invited){
+				if(match_pass == in_pass || already_into || invited){
 					Session.set('match_id', match_id);
 					$('#matches').hide();
 					$('#roomcontainer').fadeIn();
