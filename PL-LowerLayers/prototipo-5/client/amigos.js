@@ -120,47 +120,87 @@ menuAmigosFunc = function (){
 
 function menuAmInv(esto) {
 	var partida = Partidas.findOne({_id : Session.get('match_id')});
+	
+
 	if (partida == undefined){
 		$.ambiance({message: "You are not in a match!", type: "error", fade: false});
-	}else if( Games.findOne({_id : partida.game_id}).name != "Clarcassonne" ){
-		$.ambiance({message: "This is a single player game!", type: "error", fade: false});
-	}else if(partida.admin_by != Meteor.userId()){
-		$.ambiance({message: "You are not the admin", type: "error", fade: false});
 	}else{
-		var invitacion = Invitations.findOne({match_id : partida._id});
-		if (invitacion == undefined){
-			Invitations.insert({
-				match_id: partida._id,
-				orig: Meteor.user().username,
-				dest: $(esto).attr("hreflang"),
-				sent: 0,
-				when: new Date()
-			});
+		var game_current = Games.findOne({_id : partida.game_id});
+		var no_limit = partida.num_players <= partida.players_max;
+		var userIddestino = Meteor.users.findOne({username: $(esto).attr("hreflang")})._id
+		var foundUser = false;
+		partida.jugadores.forEach(function(playersito_id) {
+						
+			if(userIddestino == playersito_id.user_id){
+				foundUser = true;
+			}
+		});
+		if(foundUser){
+			$.ambiance({message: "user: "+$(esto).attr("hreflang")+" is already in", type: "error", fade: false});
+		}else if( game_current.name != "Clarcassonne" ){
+			$.ambiance({message: "This is a single player game!", type: "error", fade: false});
+		}else if(partida.admin_by != Meteor.userId()){
+			$.ambiance({message: "You are not the admin", type: "error", fade: false});
+		}else if(!no_limit){
+			$.ambiance({message: "Partida llena", type: "error", fade: false});
+		}else{
+			var invitacion = Invitations.findOne({match_id : partida._id});
+			if (invitacion == undefined){
+				Invitations.insert({
+					match_id: partida._id,
+					orig: Meteor.user()._id,
+					dest: userIddestino,
+					sent: 0,
+					when: new Date()
+				});
 			
-			$.ambiance({message: "Invitation sent to " + $(esto).attr("hreflang"),type: "success"});
+				$.ambiance({message: "Invitation sent to " + $(esto).attr("hreflang"),type: "success"});
 			
 
-		}else {
-			$.ambiance({message: $(esto).attr("hreflang")+ " has already invited" ,type: "success"});
+			}else {
+				$.ambiance({message: $(esto).attr("hreflang")+ " has already invited" ,type: "success"});
+			}
 		}
 	}
 }
 
-//problema: que este jugando a otro juego. pues que se salga
-//Quiero que se queden fijas.timeout 0;
-
 /*Deps.autorun(function () {
-	console.log("antes de user")
-	
-		console.log("antes de find")
-		//var invitaciones = Invitations.find().fetch();
-		
-		console.log(invitaciones);
-		//var invitacion = Invitations.findOne({requester : Meteor.user().username});
-		//var pene = invitacion.sent;
-		//alert("caca");
-		//$.ambiance({message: "Invitation",type: "success", timeout: 0});	
+	if(Meteor.user()){
+		var invitaciones = Invitations.find().fetch();
+		if (invitaciones != undefined && invitaciones.length >0){			
+			invitaciones.forEach(function(inv) {			
+				if(inv.dest == Meteor.user()._id && inv.sent==0){
+					managerInvitations(inv);
+				}
+			});
+		}
+	}
 });*/
+
+//Quiero que se queden fijas.timeout 0; cuando le des a aceptar se borre.
+//que no este el receptor en una partida
+//llamar a la funcion de joinmatch 
+//poner invitacion sent a true
+//rellenar bien el ambiance de llegada con nombre de partida, Juego, quien te invita... boton aceptar
+//cumpleaños
+//que la partida actual no esté iniciada
+//caso en el que invite y me salga de la partida xD
+
+function managerInvitations(inv){
+	var usernameOrig = Meteor.users.findOne({_id: inv.orig}).username;
+	var button = $(window.document.createElement('button'))
+		.attr('id', 'AddButtLinkMatch').addClass("btn btn-primary").html("Aceptar");
+	$.ambiance({message: button ,title: "Unirse a la partida ",type: "success", timeout: 0});
+	$("#AddButtLinkMatch").click(function() {	
+		console.log(inv.match_id);
+		$(".ambiance").remove();
+		//joinmatch(inv.match_id, false, true)
+	});
+	//var partida = Partidas.find({_id: inv.match_id}).fetch();
+	//console.log(partida)
+	//var gamename = Games.findOne({_id: partida[0].game_id}).name;
+	//$.ambiance({message: "Invitation from "+usernameOrig+" to the game "+gamename+". Match name: "+partida.name ,type: "success", timeout: 0});
+}
 
 /////////////////////////////////Bloqueo///////////////////////////////////////////////////////
 

@@ -5,19 +5,15 @@
  Meteor.methods({
 
     InicioJuego:function(id_partida){
-	console.log(id_partida);      
 	if (endTablero[id_partida]==undefined){
 		endTablero[id_partida]=true;
 	       	Tablero= new ObjTablero(id_partida);
 		Tablero.iniciar();
-			console.log("LLLAMMAAADAAAA",Tablero.listaJugadores);
+
 		Jugadores_ID= Partidas.findOne({_id: id_partida}).jugadores;
 	
 		for(i=0;i<Jugadores_ID.length;i++){
-			console.log("objetoJug"+Jugadores_ID);
-			console.log("LLLAMMAAADAAAA",Tablero.listaJugadores);
 			var player =resolverUser(Jugadores_ID[i]);
-			
 			Tablero.listaJugadores.push(new ObjetoJugador(Jugadores_ID[i],player.nombre,player.fecha));
 		}
 		
@@ -52,7 +48,7 @@
     
     
     
-    ColocarFicha:function(id_partida,tipoFicha, coordenada, n_giros){
+    ColocarFicha:function(id_partida,tipoFicha, coordenada, n_giros,id_jugador){
       Tablero= endTablero[id_partida];
       var nuevaficha = new ObjetoFicha(0,0,0,tipoFicha);
       for (var i=0; i<n_giros;i++){nuevaficha.girar()}
@@ -60,8 +56,12 @@
       var fichaColocada =Tablero.colocarficha(nuevaficha,coordenada.x,coordenada.y); 
       if (fichaColocada == 0){return 0}
       console.log("fichaColocada", fichaColocada);
-      var seguidores=Tablero.colocarseguidor(fichaColocada);
-      endTablero[id_partida]=Tablero;
+	 		var seguidores = [];
+			var Jugador = _.find(Tablero.listaJugadores,function(obj){return (obj.id.user_id == id_jugador)});
+			if (Jugador.n_seguidores != 0){
+	      var seguidores=Tablero.colocarseguidor(fichaColocada);
+  	    endTablero[id_partida]=Tablero;
+			}
       return seguidores; 
     },
     //Coloca la ficha en el tablero, devuelve la lista de los posibles seguidores o 0 si no se produce error
@@ -88,9 +88,21 @@
           cierraClaustro(ficha,1);
           cierraCastillo(ficha,1);
           endTablero[id_partida]=Tablero;
+
+	  if (Tablero.totalFichas == 71){
+		var puntuacion=[];
+		puntosFinal();
+		for (i=0; i< Tablero.listaJugadores.length; i++){
+			puntuacion.push({user_id: Tablero.listaJugadores[i].id.user_id, puntos: Tablero.listaJugadores[i].puntos});
+		}
+	  	Partidas.update(id_partida,{$set:{terminada: true, puntuacion: puntuacion}});
+		matchMulti(id_partida);
+	  }
+
+
           return Tablero.listaJugadores;
       
-      }
+      },
     
     //Coloca el seguidor en la ficha indicada y suma los correspondientes puntos. Acaba el turno. 
     

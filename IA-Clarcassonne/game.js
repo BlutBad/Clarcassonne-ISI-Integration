@@ -13,10 +13,11 @@
 		Jugadores_ID= Partidas.findOne({_id: id_partida}).jugadores;
 	
 		for(i=0;i<Jugadores_ID.length;i++){
-			var player =resolverUser(Jugadores_ID[i]);
-			if (Jugadores_ID[i].slice(0,10) == "Jugador_IA"){
-					Tablero.listaJugadores.push(new ObjetoJugador(Jugadores_ID[i],Jugadores_ID[i],"01/01/1800"));
+			
+			if (Jugadores_ID[i].user_id.slice(0,10) == "Jugador_IA"){
+					Tablero.listaJugadores.push(new ObjetoJugador(Jugadores_ID[i],Jugadores_ID[i].user_id,"01/01/1800"));
 			}else{
+				var player =resolverUser(Jugadores_ID[i]);
 				Tablero.listaJugadores.push(new ObjetoJugador(Jugadores_ID[i],player.nombre,player.fecha));
 			}
 		}
