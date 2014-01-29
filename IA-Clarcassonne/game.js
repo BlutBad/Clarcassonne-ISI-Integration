@@ -111,8 +111,8 @@
     //Coloca el seguidor en la ficha indicada y suma los correspondientes puntos. Acaba el turno. 
     
       
-    JugadorArtificial: function(id_partida,id_jugador){
-        Tablero= endTablero[id_partida];
+   	JugadorArtificial: function(id_partida,id_jugador){
+				Tablero= endTablero[id_partida];
         var fichaColocada=0;
         while (fichaColocada==0){
           var n_jugador = id_jugador.split("Jugador_IA");
@@ -124,13 +124,37 @@
           fichaColocada =Tablero.colocarficha(nuevaficha,x[1].coorx,x[1].coory);
           console.log("FICHACOLOCADA",fichaColocada);
         }
+		  var nuevoSeguidor = {t:undefined, n:undefined, j:undefined, f:undefined}
+        var Jugador = _.find(Tablero.listaJugadores,function(obj){return (obj.id.user_id == id_jugador)})
+        if (Jugador.n_seguidores!=0){
+                
+                if (fichaColocada.tipo=="Catedral" || fichaColocada.tipo=="Posada"){
+                    nuevoSeguidor = {t:"Monje", n:8, j:Jugador.numero, f:fichaColocada}
+                    Tablero.colocaSeguidor(fichaColocada,nuevoSeguidor,Jugador);
+                }
+								
+                else{
+                
+										 var n_rand = Math.floor(Math.random() * 3);
+										 if (n_rand ==1){
+										      	seguidores=Tablero.colocarseguidor(fichaColocada);
+														var s_rand = Math.floor(Math.random()* seguidores.length) //A lo mejor no es -1
+														seguidor = seguidores[s_rand];
+														nuevoSeguidor = {t:seguidor.t, n:seguidor.n, j:Jugador.numero, f:fichaColocada}
+														Tablero.colocaSeguidor(fichaColocada,nuevoSeguidor,Jugador);
+					console.log("DENTRO DEL IF NUEVO SEGUIDOR--->",nuevoSeguidor);
+								 }
+							}
+        }
+        
+        
         
         cierraCamino(fichaColocada,1);
-        //cierraClaustro(fichaColocada,1);
+        cierraClaustro(fichaColocada,1);
         cierraCastillo(fichaColocada,1);
-        endTablero[id_partida]=Tablero;
-        
-        return [nuevaficha.tipo,x[1].giros,x[1].coorx,x[1].coory,Tablero.listaJugadores]
+				endTablero[id_partida]=Tablero;
+        console.log("NUEVOSEGUIDOR-------->>>",nuevoSeguidor);
+        return [nuevaficha.tipo,x[1].giros,x[1].coorx,x[1].coory,Tablero.listaJugadores,nuevoSeguidor.t, nuevoSeguidor.n]
       }
     
 })
