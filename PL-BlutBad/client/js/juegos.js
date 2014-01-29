@@ -106,7 +106,7 @@ Deps.autorun(function(c) {
     //console.log(Session.get("showGameIdn"))
     if (Session.equals('showGameIdn', 'clarki')) {
 		// Para los multijuegos, mostramos el contenedor junto con el juego.
-		$('#gamecontainer').show();
+		//$('#gamecontainer').show();
 		$('#CanvasclarcaGameDIV').show();
 		//$('#ClarcaGame').show();
 		

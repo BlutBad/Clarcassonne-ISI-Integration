@@ -30,12 +30,14 @@ Template.webRTC.events({
 		if(isRunning){
 			//webrtc = null;
 			isRunning = false;
+			Session.set("isRunningWebRTC", false);
 			webrtc.stopLocalVideo();
 			$("#localVideo").attr("src","");
 			//document.getElementById('startWebRTC').style.visibility = 'hidden';
 			document.getElementById('startWebRTC').childNodes[0].nodeValue = 'Start WebRTC';
 		}else{
 			isRunning = true;
+			Session.set("isRunningWebRTC", true);
 			var room_id = Session.get('current_party_id_webRTC'); 
 			if(room_id){
 				goWebRTC(room_id);
@@ -51,4 +53,9 @@ Template.webRTC.events({
 
 Template.webRTC.show = function () {
 	return Session.equals('showGameIdn', 'clarki');
+}
+
+
+Template.webRTC.isRunning = function () {
+	return Session.get("isRunningWebRTC");
 }

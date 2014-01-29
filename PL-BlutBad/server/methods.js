@@ -1,4 +1,105 @@
 
+
+var darInsignias = function (user_id, game_id, curUser) {
+
+	var yalatiene = function (insignia_id) {
+		console.log("yalatiene");
+		//Comprobar si no la tiene ya, si la tiene no darsela otra vez!
+		insigToUser = InsigniasToUser.findOne({user_id:user_id,
+												 game_id:game_id,
+												 insignia_id: insig._id});
+		return insigToUser;
+	};
+
+	var darsela = function (insignia_id) {
+		console.log("darsela");
+		return InsigniasToUser.insert({user_id:user_id,
+								game_id:game_id,
+								insignia_id: insig._id});
+	};
+
+
+
+	var curUser = Ranking.findOne({	game_id : game_id,
+									user_id : user_id});
+
+
+	//3 veces jugadas y 3000 puntos
+	var insig = Insignias.findOne({	game_id:game_id,
+									minPoint:{$lte: curUser.totalScore},
+									timesPlayed:{$lte: curUser.timesPlayed}
+									});
+	if (insig){
+		console.log(insig)
+		if(!yalatiene(insig._id)){
+			darsela(insig._id);
+		}
+	}
+	
+
+	// x partidas ganas seguidas
+	var insig = Insignias.findOne({	game_id:game_id,
+									timesPlayed:{$lte: curUser.timesPlayed},
+									winStreak:{$lte: curUser.winStreak}});
+	if (insig){
+		if(!yalatiene(insig._id)){
+			darsela(insig._id);
+		}
+	}	
+
+	//ser el 1 en el ranking
+	var insig = Insignias.findOne({	game_id:game_id,
+									firstInRankingScore:true});
+
+	var ranking = Ranking.find({},{sort:{maxScore: -1}}).fetch();
+	console.log(ranking[0].user_id, user_id);
+	if(ranking[0].user_id == user_id){
+		if (insig){
+			if(!yalatiene(insig._id)){
+				var ins_id = darsela(insig._id);
+				if (insig.owner != ins_id)
+				//insig.owner = ins_id; //id de la insignia asignada al user.
+
+				InsigniasToUser.remove(insig.owner);
+
+				Insignias.update(insig._id, {$set:{owner: ins_id}});
+			}
+		}
+	}else{
+		InsigniasToUser.remove({user_id:user_id,
+								game_id:game_id,
+								insignia_id: insig._id});
+	}	
+
+
+	//tener el rango mas alto
+	var insig = Insignias.findOne({	game_id:game_id,
+									firstInRankingTotalScore:true});
+
+	var ranking = Ranking.find({},{sort:{totalScore: -1}}).fetch();
+	console.log(ranking[0].user_id, user_id);
+	if(ranking[0].user_id == user_id){
+		if (insig){
+			if(!yalatiene(insig._id)){
+				var ins_id = darsela(insig._id);
+				if (insig.owner != ins_id)
+				//insig.owner = ins_id; //id de la insignia asignada al user.
+
+				InsigniasToUser.remove(insig.owner);
+
+				Insignias.update(insig._id, {$set:{owner: ins_id}});
+			}
+		}
+	}else{
+		InsigniasToUser.remove({user_id:user_id,
+								game_id:game_id,
+								insignia_id: insig._id});
+	}		
+
+
+};
+
+
 Meteor.methods({
 
 	// Hay un bug, de vez en cuando sale nul en el id del game :(
@@ -33,40 +134,20 @@ Meteor.methods({
 				
 				if (opts.win){
 				    curUser.winTimes +=1;
+				    curUser.winStreak +=1; 
 				}else{
 				    curUser.loseTimes +=1;
+				    curUser.winStreak = 0;
 				}
 				curUser.timesPlayed +=1;
 				curUser.totalScore +=opts.score;
 
 				
+				
+
 				var rango = Rangos.findOne({game_id:game_id,
 											untilPoints:{$gte: curUser.totalScore}});
 
-				
-				
-				
-				insig = Insignias.findOne({	game_id:game_id,
-											timesPlayed:{$gte: curUser.timesPlayed}});
-
-				console.log("insig"  + insig);
-
-				//Comprobar si no la tiene ya, si la tiene no darsela otra vez!
-				insigToUser = InsigniasToUser.findOne({user_id:user_id,
-														 game_id:game_id,
-														 insignia_id: insig._id});
-				console.log("insigToUser"  + insigToUser);
-				if(!insigToUser){
-					console.log("go to insert");
-					InsigniasToUser.insert({user_id:user_id,
-											game_id:game_id,
-											insignia_id: insig._id});
-				}
-				
-				
-				
-				
-				
 				Ranking.update(curUser._id, {$set : {
 												rango_id:rango._id,
 												totalScore:curUser.totalScore,
@@ -74,45 +155,26 @@ Meteor.methods({
 												timesPlayed: curUser.timesPlayed,
 												winTimes: curUser.winTimes,
 											    loseTimes: curUser.loseTimes,
+											    winStreak: curUser.winStreak,
 								}});
+				
 				
 				
 
 				
 			}else{
-				insig = Insignias.findOne({	game_id:game_id,
-											timesPlayed:{$gte: 0}});
-				
-				console.log("insig"  + insig);
-
-				//Comprobar si no la tiene ya, si la tiene no darsela otra vez!
-				insigToUser = InsigniasToUser.findOne({user_id:user_id,
-														 game_id:game_id,
-														 insignia_id: insig._id});
-				console.log("insigToUser"  + insigToUser);
-				if(!insigToUser){
-					console.log("go to insert");
-					InsigniasToUser.insert({user_id:user_id,
-											game_id:game_id,
-											insignia_id: insig._id});
-				}
-
-
-
 				//console.log("kaka "  + game_id, "  ", opts.score);
 				var rango = Rangos.findOne({game_id:game_id, untilPoints:{$gte: opts.score}});
 				//console.log("kaka "  + rango);
-				
-				//insig = Insignias.findOne({game_id:gameId, timesPlayed:{$gte: 1}});	
-				
-				//InsigniasToUser.insert({user_id:userId,game_id:gameId,insignia_id: insig._id});
-			
+
 				if (opts.win){
 				    var winTimes=1;
 				    var loseTimes=0;
+				    var winStreak= 1;
 				}else{
 				    var loseTimes = 1;
 				    var winTimes = 0;
+				    var winStreak = 0;
 				}
 				
 				Ranking.insert({
@@ -124,8 +186,13 @@ Meteor.methods({
 							timesPlayed: 1,
 							winTimes:winTimes,
 							loseTimes:loseTimes,
+							winStreak: winStreak,
 						});
+
+
 			}
+
+			darInsignias(user_id, game_id);
 			
 			
 

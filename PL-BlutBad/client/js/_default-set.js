@@ -21,8 +21,8 @@ Session.setDefault('current_party_id_webRTC', null);
 
 
 
-Session.set("partidaEnCursoMultiJuegos", null);
-
+Session.setDefault("partidaEnCursoMultiJuegos", null);
+Session.setDefault("isRunningWebRTC", false);
 
 
 Meteor.startup(function() {

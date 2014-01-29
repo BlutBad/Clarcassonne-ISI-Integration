@@ -204,7 +204,7 @@ Meteor.startup(function() {
 		var admin = Accounts.createUser({username:"admin",email:"admin@kaka.aka", password:"123"});   
 		var data = [
 			{
-			    name : 'AlienInvasion',
+			    name : 'Alien Invasion',
 			    wrapf : 'null', //'gameAlien.initialize("gamecanvasAlien",spritesAlien,startGameAlien)',
 			    logo_src : '/images/games_logo/alieninvasion.jpg',
 			    logo_alt : 'Juega a este juego',
@@ -253,28 +253,24 @@ Meteor.startup(function() {
 
 			    insignias : [
 				    {
-						description : "Has jugado una vez a este juego",
-						timesPlayed : 1,
+						description : "Conseguir 50 puntos en 3 partidas.",
+						timesPlayed : 3,
+						minPoint: 50, 
 						insig_image_src : '/insignias/3.jpg'
 				    },
 				    {
-						description : "Has jugado dos veces a este juego",
-						timesPlayed : 2,
-						insig_image_src : '/insignias/6.jpg'
-				    },
-				    {
-						description : "Has jugado tres veces a este juego",
-						timesPlayed : 3,
+						description : "Ganar 3 veces seguidas",
+						winStreak : 3,
 						insig_image_src : '/insignias/7.jpg'
 				    },
 				    {
-						description : "Has jugado 4 veces a este juego",
-						timesPlayed : 4,
+						description : "Ser el primero en el ranking de puntuacion mas alta!",
+						firstInRankingScore : true,
 						insig_image_src : '/insignias/8.jpg'
 				    },
 				    {
-						description : "Has jugado 5 veces a este juego",
-						timesPlayed : 5,
+						description : "Tener el rango mas alto, ser primeto en puntuacion acumulada!",
+						firstInRankingTotalScore: true,
 						insig_image_src : '/insignias/9.jpg'
 				    }, 
 				],
@@ -305,64 +301,71 @@ Meteor.startup(function() {
 			    hall : 'klarkiHall',
 			    rangos : [ {
 					rango : "Gentilhombre",
-					untilPoints : 0,
+					fromPoints: 0,
+					untilPoints : 20,
 			    }, {
 					rango : "Escudero",
-					untilPoints : 50,
+					fromPoints: 100,
+					untilPoints : 149,
 			    }, {
 					rango : "Caballero",
-					untilPoints : 100,
+					fromPoints: 150,
+					untilPoints : 249,
 			    }, {
 					rango : "Ricohombre",
-					untilPoints : 200,
+					untilPoints : 349,
+					fromPoints:250,
 			    }, {
 					rango : "Conde",
-					untilPoints : 300,
+					untilPoints : 399,
+					fromPoints:350,
 			    }, {
 					rango : "Marqués",
-					untilPoints : 400,
+					untilPoints : 449,
+					fromPoints: 400,
 			    },{
 					rango : "Duque",
-					untilPoints : 500,
+					untilPoints : 499,
+					fromPoints:450,
 			    },{
 					rango : "Archiduque",
-					untilPoints : 600,
+					untilPoints : 549,
+					fromPoints:500,
 			    },{
 					rango : "Infante",
-					untilPoints : 700,
+					untilPoints : 599,
+					fromPoints:550,
 			    },{
 					rango : "Vizconde",
-					untilPoints : 800,
+					untilPoints : 799,
+					fromPoints: 600,
 			    },{
 					rango : "Barón",
-					untilPoints : 900,
+					untilPoints : 2000,
+					fromPoints: 800,
 			    },
 			     ],
 			    insignias : [
 				    {
-						description : "Has jugado una vez a este juego",
-						timesPlayed : 1,
-						insig_image_src : '/insignias/1.jpg'
-				    },
-				    {
-						description : "Has jugado una vez a este juego",
-						timesPlayed : 2,
-						insig_image_src : '/insignias/2.jpg'
-				    },
-				    {
-						description : "Has jugado una vez a este juego",
+						description : "Conseguir 3000 puntos en 3 partidas.",
 						timesPlayed : 3,
+						minPoint: 3000, 
 						insig_image_src : '/insignias/3.jpg'
 				    },
 				    {
-						description : "Has jugado una vez a este juego",
-						timesPlayed : 4,
-						insig_image_src : '/insignias/4.jpg'
+						description : "Ganar 2 veces seguidas",
+						winStreak : 2,
+						insig_image_src : '/insignias/7.jpg'
 				    },
 				    {
-						description : "Has jugado una vez a este juego",
-						timesPlayed : 5,
-						insig_image_src : '/insignias/5.jpg'
+						description : "Ser el primero en el ranking de puntuacion mas alta!",
+						firstInRankingScore : true,
+						insig_image_src : '/insignias/8.jpg'
+				    },
+				    {
+						description : "Tener el rango mas alto, ser primeto en puntuacion acumulada!",
+						firstInRankingTotalScore: true,
+						insig_image_src : '/insignias/9.jpg'
 				    }, 
 				],
 
@@ -395,58 +398,64 @@ Meteor.startup(function() {
 			    hall : 'frootHall',
 			    rangos : [ {
 					rango : "Espinacas",
-					untilPoints : 0,
+					fromPoints: 0,
+					untilPoints : 199,
 			    }, {
 					rango : "Brócoli",
-					untilPoints : 1000,
+					fromPoints: 200,
+					untilPoints : 399,
 			    }, {
 					rango : "Capitan Alcachofa",
-					untilPoints : 3000,
+					fromPoints: 400,
+					untilPoints : 599,
 			    }, {
 					rango : "Comandante Calabaza",
-					untilPoints : 5000,
+					fromPoints: 600,
+					untilPoints : 999,
 			    }, {
 					rango : "General Plátano",
-					untilPoints : 7000,
+					fromPoints: 1000,
+					untilPoints : 1599,
 			    }, {
 					rango : "Reina Zanahoria",
-					untilPoints : 9000,
+					fromPoints: 1600,
+					untilPoints : 4999,
 			    }, {
 					rango : "Granada",
-					untilPoints : 12000,
+					fromPoints: 5000,
+					untilPoints : 11999,
 			    }, {
 					rango : "Princesa Frambuesas",
-					untilPoints : 15000,
+					fromPoints: 12000,
+					untilPoints : 15999,
 			    }, {
 					rango : "Reina Fresa",
-					untilPoints : 90000,
+					fromPoints: 16000,
+					untilPoints : 190000,
 			    } ],
 			    insignias : [
 				    {
-						description : "Has jugado una vez a este juego",
-						timesPlayed : 1,
+						description : "Conseguir 3500 puntos en 3 partidas.",
+						timesPlayed : 3,
+						minPoint: 3500, 
 						insig_image_src : '/insignias/3.jpg'
 				    },
 				    {
-						description : "Has jugado una vez a este juego",
-						timesPlayed : 2,
-						insig_image_src : '/insignias/2.jpg'
+						description : "Ganar 2 veces seguidas",
+						winStreak : 2,
+						insig_image_src : '/insignias/7.jpg'
 				    },
 				    {
-						description : "Has jugado una vez a este juego",
-						timesPlayed : 3,
-						insig_image_src : '/insignias/4.jpg'
+						description : "Ser el primero en el ranking de puntuacion mas alta!",
+						firstInRankingScore : true,
+						insig_image_src : '/insignias/8.jpg'
 				    },
 				    {
-						description : "Has jugado una vez a este juego",
-						timesPlayed : 4,
-						insig_image_src : '/insignias/5.jpg'
-				    },
-				    {
-						description : "Has jugado una vez a este juego",
-						timesPlayed : 5,
-						insig_image_src : '/insignias/6.jpg'
-				    }, ],
+						description : "Tener el rango mas alto, ser primeto en puntuacion acumulada!",
+						firstInRankingTotalScore: true,
+						insig_image_src : '/insignias/9.jpg'
+				    }, 
+				],
 			    torneos : [ 
 			    	{
                         title : "Torneo Froot War", 
@@ -505,10 +514,15 @@ Meteor.startup(function() {
 				    insig_image_src : info.insig_image_src,
 				    description : info.description,
 				    timesPlayed : info.timesPlayed,
+				    minPoint: info.minPoint,
+				    winStreak: info.winStreak,
+				    firstInRankingScore: info.firstInRankingScore,
+				    firstInRankingTotalScore:info.firstInRankingTotalScore,
+
 				});
 				timestamp += 1; // ensure unique timestamp.
 		    }		    
-		    
+
 		    
 		    //////////////////////TORNEOS//////////////////////////
 		    function ApuntameUsuariosFakes(torneoId) {
