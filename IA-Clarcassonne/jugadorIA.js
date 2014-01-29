@@ -52,7 +52,7 @@ jugadorIA=function(nJugador){
             cierraCamino(colocado,1);
             cierraClaustro(colocado,1);
             cierraCastillo(colocado,1);       
-            var jugador= _.find(Tablero.listaJugadores,function(obj){return (obj.numero==nJugador)});
+            var jugador= _.find(Tablero.listaJugadores,function(obj){return (obj.id.user_id==nJugador)});
             if (jugador.puntos >= jugada.puntos){
                 jugada={
                   puntos:jugador.puntos,

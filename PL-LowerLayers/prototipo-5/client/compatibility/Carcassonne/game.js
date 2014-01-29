@@ -201,7 +201,7 @@ function SetPlayers (err, data) {
 		
 		if (Partidas.findOne({_id:idParty}).terminada){
 			CurrentMove = 3;
-			Game.setBoard(10, Blank);
+			Juego.setBoard(10, Blank);
 			sonidojuego.pause();
 			alert("Fin de partida.Gracias por Jugar!");
 			return;
@@ -463,11 +463,38 @@ Ficha_abajo = function(cx,cy) {
 	
 	if (CurrentMove == 0 && getTurno().id.slice(0,10) == "Jugador_IA" && Meteor.userId() == Jugador1.id) {
 		Meteor.call('JugadorArtificial', idParty, getTurno().id, function (err, data) {
+			console.log(data);
+			
+		
+		if (data[5] && data[6]) {
+			var pos = Seguidortraducir(data[6]);
+			
+			setSeguidorType = function () {
+		var color = (function () { 
+							var ficha_color = getTurno().color; 
+							var color = ficha_color.indexOf("_") + 1; 
+							return ficha_color.slice(color);
+						})(); 
+
+			if (data[5] == "Granjero"){
+				return 'granjero_' + color;
+			} else if (data[5] == "Ladron"){
+				return 'ladron_' + color;
+			} else if (data[5] == "Caballero"){
+				return 'caballero_' + color;
+			} else if (data[5] == "Monje"){
+				return 'cura_' + color;
+			}
+		}
+
 			Partidas.update(idParty, {
+                            $push : {movimientos: {jugador: getTurno(), ficha: {x: data[2], y: data[3], sprite: data[0], rotation: data[1]*-90}, seguidor: {fx: data[2]-CurrentScroll.x , fy: data[3] - CurrentScroll.y,t: setSeguidorType() ,sx: pos.x,sy:pos.y}, puntos: data[4]}}
+                          });
+			} else {
+				Partidas.update(idParty, {
                             $push : {movimientos: {jugador: getTurno(), ficha: {x: data[2], y: data[3], sprite: data[0], rotation: data[1]*-90}, seguidor: 0, puntos: data[4]}}
                           });
-			console.log(data, 'IAAAA');
-		
+            }
 			
 		}); 
 		CurrentMove = 2;
@@ -733,7 +760,9 @@ Seguidor = function (cx,cy, sprite, posx, posy) {
 	this.type = 'Seguidor';
 	
 	this.draw = function (ctx) {
-		SpriteSh.draw(ctx,this.sprite,this.x + this.posx,this.y + this.posy,1,0,0.5);
+		if (this.y < 500 && this.y >= 0 && this.x >= 0 && this.x < 800) {
+			SpriteSh.draw(ctx,this.sprite,this.x + this.posx,this.y + this.posy,1,0,0.5);
+		}
 	}
 	
 	this.step = function () {
@@ -1113,5 +1142,3 @@ ClarcassonneGameIU = new function ()  {
 	}
 	
 }
-
-

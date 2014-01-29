@@ -115,9 +115,9 @@
 				Tablero= endTablero[id_partida];
         var fichaColocada=0;
         while (fichaColocada==0){
-          var n_jugador = id_jugador.split("Jugador_IA");
-          console.log("NUMERO",n_jugador);
-          var x=jugadorIA(n_jugador[1]);
+         // var n_jugador = id_jugador.split("Jugador_IA");
+         // console.log("NUMERO",n_jugador);
+          var x=jugadorIA(id_jugador);
           var nuevaficha= new ObjetoFicha(0,0,0,x[0]);
           console.log("nuevaficha",nuevaficha);
           for (var i=0; i<x[1].giros;i++){nuevaficha.girar()}
