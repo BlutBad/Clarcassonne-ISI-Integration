@@ -307,7 +307,8 @@ var game = {
 									saved=true;
 							});
 							if (saved==false){
-								$.ambiance({message: "Has terminado las dos primeras pantallas!", title: "Has desbloqueado un logro!",type: "success"});
+								var icon = $(window.document.createElement('img')).attr('src', 'awardicon.png');				
+								$.ambiance({message: icon, title: "Has terminado las dos primeras pantallas!",type: "success"});
 								profitusers.push(userid);
 								Games.update({_id: gameid }, {$set: {profits: [{title:"Has terminado las dos primeras pantallas", users:profitusers }] } });
 							}
