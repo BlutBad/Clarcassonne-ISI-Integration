@@ -148,7 +148,8 @@ var profits = function() {
 			}
 		});
 		if (saved==false){
-			$.ambiance({message: "Has obtenido 10000 puntos!", title: "Has desbloqueado un logro!",type: "success"});
+            var icon = $(window.document.createElement('img')).attr('src', 'awardicon.png');
+			$.ambiance({message: icon, title: "Has obtenido 10000 puntos!",type: "success"});
 			profitusers.push(userid);
 			Games.update({_id: gameid }, {$set: {profits: [{title:"Has hecho 10000 pts", users:profitusers }] } });
 		}
