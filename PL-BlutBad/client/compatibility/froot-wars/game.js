@@ -523,10 +523,9 @@ var levels = {
 	// Initialize level selection screen
 	init:function(){
 		var html = "";
-		id_bono=Bono.findOne({numeracion:4})._id;
-    	if (Meteor.user()!=null && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}) && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}).n_bono>=1 ){
+    	if (Meteor.user()!=null && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: Bono.findOne({numeracion:4})._id}) && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: Bono.findOne({numeracion:4})._id}).n_bono>=1 ){
         	//actualizo el bono
-        	bobj=User_Bono.findOne({user_id:Meteor.user()._id, bono_id:id_bono});
+        	bobj=User_Bono.findOne({user_id:Meteor.user()._id, bono_id:Bono.findOne({numeracion:4})._id});
         	User_Bono.update(bobj._id,{
             	$set: {
             	    'n_bono':bobj.n_bono-1,
@@ -541,7 +540,7 @@ var levels = {
 				var level = levels.data[i];
 				html += '<input type="button" value="'+(i+1)+'">';
 			};
-		}
+		};
 		$('#levelselectscreen').html(html);
 		
 		// Set the button click event handlers to load level

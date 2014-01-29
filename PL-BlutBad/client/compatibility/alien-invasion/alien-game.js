@@ -157,10 +157,23 @@ var winGame = function() {
     
     Meteor.call("matchFinish", opt);
   //**********************************************************//    
-    
-    gameAlien.setBoard(3,new AlienTitleScreen("You win!", 
+    id_bono=Bono.findOne({numeracion:3})._id;
+    if (Meteor.user()!=null && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}) && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}).n_bono>= 1){
+        //actualizo el bono
+        bobj=User_Bono.findOne({user_id:Meteor.user()._id, bono_id:id_bono});
+        User_Bono.update(bobj._id,{
+            $set: {
+                'n_bono':bobj.n_bono-1,
+            }
+        });
+        gameAlien.setBoard(3,new AlienTitleScreen("You win!", 
+                                    "Press fire to play again with double pnts",
+                                    playGameAlien));
+    }else{
+        gameAlien.setBoard(3,new AlienTitleScreen("You win!", 
                                     "Press fire to play again",
                                     playGameAlien));
+    };
 };
 
 
@@ -189,12 +202,23 @@ var loseGame = function() {
     
     Meteor.call("matchFinish", opt);
 //**********************************************************//   
-    
-    
-    gameAlien.setBoard(3,new AlienTitleScreen("You lose!", 
+    id_bono=Bono.findOne({numeracion:3})._id;
+    if (Meteor.user()!=null && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}) && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}).n_bono>=1 ){
+        //actualizo el bono
+        bobj=User_Bono.findOne({user_id:Meteor.user()._id, bono_id:id_bono});
+        User_Bono.update(bobj._id,{
+            $set: {
+                'n_bono':bobj.n_bono-1,
+            }
+        });
+        gameAlien.setBoard(3,new AlienTitleScreen("You lose!", 
+                                    "Press fire to play again with double pnts",
+                                    playGameAlien));
+    }else{
+        gameAlien.setBoard(3,new AlienTitleScreen("You lose!", 
                                     "Press fire to play again",
                                     playGameAlien));
-    
+    }; 
 };
 
 

@@ -10,7 +10,7 @@ Template.chat.estasRegistrado = function() {
 }
 
 Template.chat.chatName = function () {
-	return "ISI-Pakistan Chat Game";
+	return "ISI-Pakistán Chat Gaming";
 }
 
 Template.messages.messages = function () {
