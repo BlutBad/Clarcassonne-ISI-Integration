@@ -239,7 +239,8 @@ Template.matchestemp.events = {
 						saved: false,
 						admin_by: Meteor.userId(),
 						players_max: Games.findOne({_id : Session.get("game_id")}).players_max,
-						full: false
+						full: false,
+						ia_players: 0
 					});
 
 					var current_match_id = Partidas.findOne({name: $("#match_name").val()})._id;
@@ -329,7 +330,7 @@ Template.roomgametemp.events = {
 			Partidas.update({_id : Session.get('match_id')},{$set: {full : full}});
 		};
 
-		if(Partidas.findOne({_id : quited_match_id}).num_players <= 0){
+		if(Partidas.findOne({_id : quited_match_id}).num_players - Partidas.findOne({_id : quited_match_id}).ia_players <= 0){
 			Partidas.remove({_id : quited_match_id});
 		} else {
 			if(quiter_id == Partidas.findOne({_id : quited_match_id}).admin_by){
@@ -397,7 +398,7 @@ Template.roomplayerstemp.events = {
 		if(!initiated && !full && i_am_admin){
 			var ia_id = "ia_player_" + (Math.floor((Math.random()*100000000))).toString();
 			console.log(ia_id);
-			Partidas.update({_id : Session.get("match_id")},{$push: {jugadores: {user_id: ia_id}},$inc:{num_players :1}});
+			Partidas.update({_id : Session.get("match_id")},{$push: {jugadores: {user_id: ia_id}},$inc:{num_players :1},$inc:{ia_players :1}});
 		} else {
 			if(full)
 				$("#dialog_iafullerror").dialog("open");
