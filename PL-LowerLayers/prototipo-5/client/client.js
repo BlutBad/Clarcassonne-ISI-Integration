@@ -55,12 +55,13 @@ $(document).ready(function() {
 			}	
 		});
 
-		$("#buttVideoSt").click(function() {
+		$(document).on("click","#buttVideoSt",function() {
 			if ($("#buttVideoSt").hasClass("StartVC")){
 				$("#buttVideoSt").html("Stop VideoChat");
 				$("#buttVideoSt").css("background-color","#DF0101");
 				$("#buttVideoSt").css("border","2px solid #DF0101");
 				$("#buttVideoSt").removeClass();
+				alert("nabos")
 				var nameRoom = Partidas.findOne({_id : Session.get('match_id')}).name;
 				startVideoChat(nameRoom);
 			}else{

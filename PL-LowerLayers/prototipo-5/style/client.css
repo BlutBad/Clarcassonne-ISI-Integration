@@ -9,6 +9,7 @@ html{
 body{
 	background-image: url("/backgrounds/wallpaper.jpg");
 	background-color: #2E2E2E; 
+	font-size: 85%;
 }
 
 button{
@@ -121,6 +122,15 @@ input:focus{
 	position: absolute;
 }
 
+.linkgame, #exitgame{
+	background-color: #608ED8;
+	border: 2px solid #608ED8;
+	border-radius:4px;
+	text-decoration: none;
+}
+
+
+
 #buttVideoSt {
 	width: 176px;
 	height:	40px;
@@ -133,7 +143,8 @@ input:focus{
 }
 
 #tabs{
-	margin-top: 15px;
+	margin-top: 30px;
+
 
 }
 
@@ -214,24 +225,32 @@ input:focus{
 
 
 .alaputaizq{
+
 	float:left;
 	width:20%;
 }
 
 .alaputader{
+
 	float:right;
 	width:80%;
 }
 
 .alaputaizqtop{
+
 	float:left;
 	width:30%;
 	
 }
 
 .alaputadertop{
+
 	float:right;
-	width:70%;
+		width:70%;
+}
+
+.titulogame{
+	margin-left: 20%;
 }
 
 .coin-slider { overflow: hidden; zoom: 1; position: relative;z-index:-1; margin-top: 15px;}
