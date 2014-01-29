@@ -85,7 +85,7 @@
                 var Jugador = _.find(Tablero.listaJugadores,function(obj){return (obj.id.user_id == id_jugador)})
         //console.log("Juga" + Jugador);        
                 var nuevoSeguidor = {t:seguidor.t, n:seguidor.n, j:Jugador.numero, f:ficha}
-                ficha.seguidores.push(nuevoSeguidor);
+		Tablero.colocaSeguidor(ficha,nuevoSeguidor,Jugador);
         }
                 
           cierraCamino(ficha,1);
