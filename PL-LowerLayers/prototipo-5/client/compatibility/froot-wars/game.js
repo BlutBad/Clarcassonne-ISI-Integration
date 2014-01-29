@@ -292,6 +292,28 @@ var game = {
 						$(".gsharebtn").html("<a href='https://plus.google.com/share?url=http://lowerlayers.meteor.com/' onclick='javascript:window.open(this.href,"+
                           "'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;'><img src='https://www.gstatic.com/images/icons/gplus-32.png' alt='Share on Google+'/></a>");
 
+						(function() {	
+							var userid = Partidas.findOne({_id:Session.get("match_id")}).jugadores[0].user_id;
+							var gameid = Partidas.findOne({_id:Session.get("match_id")}).game_id;
+							var profits = Games.findOne({name: "Froot_Wars"}).profits;
+							var profitusers;
+							var saved = false;
+							profits.forEach(function(elem) {
+								if (elem.title=="Has terminado las dos primeras pantallas")
+									profitusers=elem.users;
+							});
+							profitusers.forEach(function(elem) {
+								if (elem==userid)
+									saved=true;
+							});
+							if (saved==false){
+								$.ambiance({message: "Has terminado las dos primeras pantallas!", title: "Has desbloqueado un logro!",type: "success"});
+								profitusers.push(userid);
+								Games.update({_id: gameid }, {$set: {profits: [{title:"Has terminado las dos primeras pantallas", users:profitusers }] } });
+							}
+						})();
+
+
 				}
 			} else if (game.mode=="level-failure"){			
    			    Meteor.call("matchFinish", Session.get("current_game"), game.score);				        

@@ -2,7 +2,9 @@
 // Crea las bases de datos de los juegos si no están creadas.
 Meteor.startup(function () {
 	if(Games.find({name:"Froot_Wars"}).count() == 0){
-		Games.insert({name:"Froot_Wars", players_max : 1});   
+		Games.insert({name:"Froot_Wars", players_max : 1});
+		//Logros
+		Games.update({name: "Froot_Wars"},{$push: {profits: {title:"Has terminado las dos primeras pantallas", users:[]} } });   
 	};
 	if(Games.find({name:"Alien_Invasion"}).count() == 0){
 		Games.insert({name:"Alien_Invasion", players_max : 1});
