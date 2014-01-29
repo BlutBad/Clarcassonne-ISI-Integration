@@ -86,14 +86,14 @@ var level1 = [
 
 var level2 = [
     //  Comienzo, Fin,   Frecuencia,  Tipo,       Override
-    [ 0,        4000,  300,         'step'                 ],
-    [ 6000,     13000, 600,         'ltr'                  ],
-    [ 10000,    16000, 100,         'circle'               ],
-    [ 17800,    20000, 300,         'straight', { x: 50  } ],
-    [ 18200,    20000, 200,         'straight', { x: 90  } ],
-    [ 18200,    20000, 300,         'straight', { x: 10  } ],
-    [ 22000,    25000, 200,         'wiggle',   { x: 150 } ],
-    [ 22000,    25000, 200,         'wiggle',   { x: 100 } ]
+    [ 0,        16000, 400,         'circle'               ],
+    [ 1000,     4000,  500,         'step'                 ],
+    [ 5000,     25000, 300,         'wiggle',   { x: 150 } ],
+    [ 6000,     13000, 800,         'ltr'                  ],
+    [ 17800,    20000, 500,         'straight', { x: 50  } ],
+    [ 18200,    20000, 500,         'straight', { x: 90  } ],
+    [ 19200,    20000, 500,         'straight', { x: 10  } ],
+    [ 22000,    25000, 400,         'wiggle',   { x: 100 } ]
 ];
 
 
@@ -157,10 +157,23 @@ var winGame = function() {
     
     Meteor.call("matchFinish", opt);
   //**********************************************************//    
-    
-    gameAlien.setBoard(3,new AlienTitleScreen("You win!", 
+    id_bono=Bono.findOne({numeracion:3})._id;
+    if (Meteor.user()!=null && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}) && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}).n_bono>= 1){
+        //actualizo el bono
+        bobj=User_Bono.findOne({user_id:Meteor.user()._id, bono_id:id_bono});
+        User_Bono.update(bobj._id,{
+            $set: {
+                'n_bono':bobj.n_bono-1,
+            }
+        });
+        gameAlien.setBoard(3,new AlienTitleScreen("You win!", 
+                                    "Press fire to play again with double pnts",
+                                    playGameAlien));
+    }else{
+        gameAlien.setBoard(3,new AlienTitleScreen("You win!", 
                                     "Press fire to play again",
                                     playGameAlien));
+    };
 };
 
 
@@ -189,12 +202,23 @@ var loseGame = function() {
     
     Meteor.call("matchFinish", opt);
 //**********************************************************//   
-    
-    
-    gameAlien.setBoard(3,new AlienTitleScreen("You lose!", 
+    id_bono=Bono.findOne({numeracion:3})._id;
+    if (Meteor.user()!=null && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}) && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}).n_bono>=1 ){
+        //actualizo el bono
+        bobj=User_Bono.findOne({user_id:Meteor.user()._id, bono_id:id_bono});
+        User_Bono.update(bobj._id,{
+            $set: {
+                'n_bono':bobj.n_bono-1,
+            }
+        });
+        gameAlien.setBoard(3,new AlienTitleScreen("You lose!", 
+                                    "Press fire to play again with double pnts",
+                                    playGameAlien));
+    }else{
+        gameAlien.setBoard(3,new AlienTitleScreen("You lose!", 
                                     "Press fire to play again",
                                     playGameAlien));
-    
+    }; 
 };
 
 
