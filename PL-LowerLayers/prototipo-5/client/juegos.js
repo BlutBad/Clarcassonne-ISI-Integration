@@ -164,10 +164,16 @@ Template.roomplayerstemp.players=function(){
 	var matches_document = Partidas.findOne({_id : Session.get('match_id')});
 	var players_list;
 	var players_names = [];
+	var iter = 1;
 	if(matches_document){
 		players_list = matches_document.jugadores;
 		players_list.forEach(function(entry){
-			players_names.push({"name" : Meteor.users.findOne({_id:entry.user_id}).username});
+			if(Meteor.users.findOne({_id:entry.user_id})){
+				players_names.push({"name" : Meteor.users.findOne({_id:entry.user_id}).username});
+			} else {
+				players_names.push({"name" : "COM" + iter.toString()});
+				iter++;
+			}
 		});
 	};
 	return players_names;
@@ -323,7 +329,7 @@ Template.roomgametemp.events = {
 			Partidas.update({_id : Session.get('match_id')},{$set: {full : full}});
 		};
 
-		if(Partidas.findOne({_id : quited_match_id}).num_players == 0){
+		if(Partidas.findOne({_id : quited_match_id}).num_players <= 0){
 			Partidas.remove({_id : quited_match_id});
 		} else {
 			if(quiter_id == Partidas.findOne({_id : quited_match_id}).admin_by){
@@ -421,6 +427,4 @@ Template.roomplayerstemp.carca = function() {
 Template.matchestemp.matches = function(){
 	return Partidas.find({},{sort:{created:-1}})
 }
-
-
 
