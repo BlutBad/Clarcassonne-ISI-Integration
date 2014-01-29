@@ -132,7 +132,7 @@ var share = function() {
 }
 
 var profits = function() {	
-	if (GameAlien.points == 10000){
+	if (GameAlien.points == 1000){
 		var userid = Partidas.findOne({_id:Session.get("match_id")}).jugadores[0].user_id;
 		var gameid = Partidas.findOne({_id:Session.get("match_id")}).game_id;
 		var profits = Games.findOne({name: "Alien_Invasion"}).profits;

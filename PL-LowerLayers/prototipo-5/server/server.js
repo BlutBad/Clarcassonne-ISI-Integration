@@ -14,6 +14,9 @@ Meteor.startup(function () {
 	if(Games.find({name:"Clarcassonne"}).count() == 0){
 		Games.insert({name:"Clarcassonne", players_max : 5});
 	};
+	if(Games.find({name:"The_Hero"}).count() == 0){
+		Games.insert({name:"The_Hero", players_max : 1});
+	};
 	
 });
 

@@ -27,7 +27,7 @@ var darInsignias = function (user_id, game_id, curUser) {
 	//3 veces jugadas y 3000 puntos
 	var insig = Insignias.findOne({	game_id:game_id,
 									minPoint:{$lte: curUser.totalScore},
-									timesPlayed:{$lte: curUser.timesPlayed}
+									timesPlayed:{$gte: curUser.timesPlayed}
 									});
 	if (insig){
 		console.log(insig)
@@ -51,7 +51,7 @@ var darInsignias = function (user_id, game_id, curUser) {
 	var insig = Insignias.findOne({	game_id:game_id,
 									firstInRankingScore:true});
 
-	var ranking = Ranking.find({},{sort:{maxScore: -1}}).fetch();
+	var ranking = Ranking.find({game_id:game_id},{sort:{maxScore: -1}}).fetch();
 	console.log(ranking[0].user_id, user_id);
 	if(ranking[0].user_id == user_id){
 		if (insig){
@@ -65,18 +65,13 @@ var darInsignias = function (user_id, game_id, curUser) {
 				Insignias.update(insig._id, {$set:{owner: ins_id}});
 			}
 		}
-	}else{
-		InsigniasToUser.remove({user_id:user_id,
-								game_id:game_id,
-								insignia_id: insig._id});
-	}	
-
+	}
 
 	//tener el rango mas alto
 	var insig = Insignias.findOne({	game_id:game_id,
 									firstInRankingTotalScore:true});
 
-	var ranking = Ranking.find({},{sort:{totalScore: -1}}).fetch();
+	var ranking = Ranking.find({game_id:game_id},{sort:{totalScore: -1}}).fetch();
 	console.log(ranking[0].user_id, user_id);
 	if(ranking[0].user_id == user_id){
 		if (insig){
@@ -90,13 +85,7 @@ var darInsignias = function (user_id, game_id, curUser) {
 				Insignias.update(insig._id, {$set:{owner: ins_id}});
 			}
 		}
-	}else{
-		InsigniasToUser.remove({user_id:user_id,
-								game_id:game_id,
-								insignia_id: insig._id});
-	}		
-
-
+	}	
 };
 
 

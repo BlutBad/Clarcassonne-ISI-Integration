@@ -258,9 +258,9 @@ Meteor.startup(function() {
 
 			    insignias : [
 				    {
-						description : "Conseguir 50 puntos en 3 partidas.",
+						description : "Conseguir 3000 puntos en 3 partidas.",
 						timesPlayed : 3,
-						minPoint: 50, 
+						minPoint: 3000, 
 						insig_image_src : '/insignias/3.jpg'
 				    },
 				    {
@@ -352,9 +352,9 @@ Meteor.startup(function() {
 			     ],
 			    insignias : [
 				    {
-						description : "Conseguir 3000 puntos en 3 partidas.",
+						description : "Conseguir 50 puntos en 3 partidas.",
 						timesPlayed : 3,
-						minPoint: 3000, 
+						minPoint: 50, 
 						insig_image_src : '/insignias/3.jpg'
 				    },
 				    {

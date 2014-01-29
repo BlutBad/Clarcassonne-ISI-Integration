@@ -91,7 +91,7 @@ input:focus{
     color: white;
     background-color: #1C1C1C;
     border: 5px solid #1C1C1C;
-    border-radius:3px;" 
+    border-radius:3px;
 
 }
 
@@ -169,8 +169,8 @@ input:focus{
 
 #matches_table{
 	position: absolute; 
-	left: 20%;
-	width: 80%;
+	left: 30%;
+	width: 70%;
 }
 
 #matches_table tr td{
@@ -181,9 +181,12 @@ input:focus{
 #bygameranking table,
 #byuserranking table,
 #byusergameranking table {
-	border: 1px solid #666;
 	margin: 20px 0 20px 0 !important;
 }
+
+#ranking a:hover {
+	color: #FAB948;
+} 
 
 #bygameranking th, #bygameranking td,
 #byuserranking th, #byuserranking td,
@@ -192,6 +195,7 @@ input:focus{
 	text-align: center;
 	vertical-align: top;
 	background-color: #10B787;
+	border: 1px solid #12693C;
 }
 
 #bygameranking th,
