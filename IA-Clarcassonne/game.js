@@ -93,7 +93,7 @@
           cierraCastillo(ficha,1);
           endTablero[id_partida]=Tablero;
 
-	  if (Tablero.totalFichas == 71){
+	  if (Tablero.totalFichas == 0){
 		var puntuacion=[];
 		puntosFinal();
 		for (i=0; i< Tablero.listaJugadores.length; i++){
