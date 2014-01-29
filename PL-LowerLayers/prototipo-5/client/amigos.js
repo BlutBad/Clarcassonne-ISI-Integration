@@ -104,6 +104,7 @@ menuAmigosFunc = function (){
 
 	$(".menuAInv").click(function() {
 		menuAmInv(this);
+		
 	});
 
 	$(".menuAPer").click(function() {
@@ -127,16 +128,16 @@ function menuAmInv(esto) {
 	}else{
 		var game_current = Games.findOne({_id : partida.game_id});
 		var no_limit = partida.num_players <= partida.players_max;
-		var userIddestino = Meteor.users.findOne({username: $(esto).attr("hreflang")})._id
+		var userIddestino = Meteor.users.findOne({_id: $(esto).attr("hreflang")});
 		var foundUser = false;
 		partida.jugadores.forEach(function(playersito_id) {
 						
-			if(userIddestino == playersito_id.user_id){
+			if(userIddestino._id == playersito_id.user_id){
 				foundUser = true;
 			}
 		});
 		if(foundUser){
-			$.ambiance({message: "user: "+$(esto).attr("hreflang")+" is already in", type: "error", fade: false});
+			$.ambiance({message: "user: "+userIddestino.username+" is already in", type: "error", fade: false});
 		}else if(partida.initiated){
 			$.ambiance({message: "Match is already initiated", type: "error", fade: false});
 		}else if( game_current.name != "Clarcassonne" ){
@@ -146,22 +147,28 @@ function menuAmInv(esto) {
 		}else if(!no_limit){
 			$.ambiance({message: "Partida llena", type: "error", fade: false});
 		}else{
-			var invitacion = Invitations.findOne({match_id : partida._id});
-			if (invitacion == undefined){
+			var invitacion = Invitations.find().fetch();
+			var sentInv = false;
+			invitacion.forEach(function(inv) {			
+				if(inv.match_id == partida._id && inv.dest==userIddestino._id){
+					sentInv = true;
+				}
+			});
+			if (!sentInv){
 				Invitations.insert({
 					match_id: partida._id,
 					game_id:game_current._id,
 					orig: Meteor.user()._id,
-					dest: userIddestino,
+					dest: userIddestino._id,
 					sent: 0,
 					when: new Date()
 				});
 			
-				$.ambiance({message: "Invitation sent to " + $(esto).attr("hreflang"),type: "success"});
+				$.ambiance({message: "Invitation sent to " + userIddestino.username,type: "success"});
 			
 
 			}else {
-				$.ambiance({message: $(esto).attr("hreflang")+ " has already invited" ,type: "success"});
+				$.ambiance({message: userIddestino.username+ " has already invited" ,type: "success"});
 			}
 		}
 	}
@@ -215,6 +222,8 @@ function AceptarInvitacion(inv,usernameOrig){
 			joinmatch(inv.match_id, false, true);
 		}else{
 			$.ambiance({message: "Fill in your birthday first", type: "error", fade: false});
+			$( "#dialog_birthdate" ).dialog("open");
+			$("#error_birthdialog").remove();
 		}
 	}
 }
@@ -223,11 +232,11 @@ function AceptarInvitacion(inv,usernameOrig){
 
 function menuAmBloq(esto) {
 	
-	var idblk = Meteor.users.findOne({username: $(esto).attr("hreflang")})._id;
-	deleteFriend(idblk,Meteor.userId());
-	deleteFriend(Meteor.userId(),idblk);
-	Meteor.users.update({_id: Meteor.userId()}, {$push: {bloqueados: idblk}});
-	$.ambiance({message: $(esto).attr("hreflang")+ " blocked and removed of friends" ,type: "success"});
+	var idblk = Meteor.users.findOne({_id: $(esto).attr("hreflang")});
+	deleteFriend(idblk._id,Meteor.userId());
+	deleteFriend(Meteor.userId(),idblk._id);
+	Meteor.users.update({_id: Meteor.userId()}, {$push: {bloqueados: idblk._id}});
+	$.ambiance({message: idblk.username+ " blocked and removed of friends" ,type: "success"});
 }
 
 function unbloking(user,id) {
@@ -253,8 +262,9 @@ function UnblockFriend(idUser,idAborrar) {
 function menuAmPer(esto) {
 	
 	//alert($(esto).attr("hreflang"));
+	var idblk = Meteor.users.findOne({_id: $(esto).attr("hreflang")});
 	$("#ui-id-3").trigger('click');
-	$("#usersearcher").prop('value', $(esto).attr("hreflang"));
+	$("#usersearcher").prop('value', idblk.username);
 	$("#userSearch").trigger('click');
 }
 

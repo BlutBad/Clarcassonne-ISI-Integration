@@ -116,6 +116,5 @@ Accounts.onCreateUser(function(options, user) {
 	}else{
 		user.avatar="Avatares/0.jpg"
 	}	
-	console.log(user)
 	return user;
 });

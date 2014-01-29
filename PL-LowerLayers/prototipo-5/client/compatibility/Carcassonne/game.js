@@ -1,4 +1,4 @@
-sprites = {
+spritesC = {
         Rrecta: { sx: 0, sy: 0, w:100, h: 100, frames: 1 },
         Rcurva: { sx: 0, sy: 400, w: 100, h: 100, frames: 1 },
         Catedral: { sx: 0, sy: 500, w: 100, h: 100, frames: 1 },
@@ -156,9 +156,10 @@ function SetFichaEn (NuevaPieza, Posiciones) {
 }
 
 
+LastData = undefined;
 
 function SetPlayers (err, data) {
-
+	console.log(data);
 	Jugador1 = {nombre: data[0].nombre.slice(0,6), color: "ficha_rojo", puntos: data[0].puntos, id:data[0].id.user_id, turno:1};
 	Jugador2 = {nombre: data[1].nombre.slice(0,6) , color: "ficha_azul", puntos:data[1].puntos, id: data[1].id.user_id, turno: 0};
 	Jugador3 = {nombre: data[2].nombre.slice(0,6)  , color: "ficha_amarillo", puntos:data[2].puntos, id: data[2].id.user_id, turno: 0};
@@ -188,6 +189,7 @@ function SetPlayers (err, data) {
 				Tablero.add(new Seguidor (u.movimientos[moves].seguidor.fx, u.movimientos[moves].seguidor.fy,u.movimientos[moves].seguidor.t,u.movimientos[moves].seguidor.sx,u.movimientos[moves].seguidor.sy));
 			}
 			setPoint (u.movimientos[moves].puntos);
+			LastData = u.movimientos[moves];
 		
 		}
 	
@@ -197,11 +199,23 @@ function SetPlayers (err, data) {
 	
 	Deps.autorun(function(){
 		
+		if (Partidas.findOne({_id:idParty}).terminada){
+			CurrentMove = 3;
+			Game.setBoard(10, Blank);
+			sonidojuego.pause();
+			alert("Fin de partida.Gracias por Jugar!");
+			return;
+		}
 		
 		console.log (Partidas.findOne({_id:idParty}));
 		var last = Partidas.findOne({_id:idParty}).movimientos;
 		if (last != undefined) {
 			var ultimo = last.pop();
+			
+			if (ultimo == LastData) {
+				return;
+			}
+			LastData = ultimo;
 			if (ultimo.ficha != 0) {
 			NP = new PiezaMapa(ultimo.ficha.x,ultimo.ficha.y, ultimo.ficha.sprite,ultimo.ficha.rotation);
 			NP.colocada = true;
@@ -217,7 +231,7 @@ function SetPlayers (err, data) {
 		
 	});
 
-	Game.initialize(idCanvas.slice(1),sprites,startGame);
+	Juego.initialize(idCanvas.slice(1),spritesC,startGameC);
 }
 
 
@@ -306,21 +320,21 @@ function pasarTurno () {
 
 
 //loader.init(); 
-startGame = function() {   
+startGameC = function() {   
 	
 	
-	Game.setBoard(0,new Background());
-	Game.setBoard(1,new Jugadores());
-	Game.setBoard(2,new Rejilla()); 
-	Game.setBoard(3,new Scroll()); 
+	Juego.setBoard(0,new Background());
+	Juego.setBoard(1,new Jugadores());
+	Juego.setBoard(2,new Rejilla()); 
+	Juego.setBoard(3,new Scroll()); 
 	
-	Tablero = new GameBoard();
-	Game.setBoard(4,Tablero);
+	Tablero = new TableroJuego();
+	Juego.setBoard(4,Tablero);
 	
-	Game.setBoard(5,new Ficha_abajo());
-	Game.setBoard(9,new Helptext()); 
-	Game.setBoard(10, new Time());	
-	Game.setBoard(11, new HelpScreen());
+	Juego.setBoard(5,new Ficha_abajo());
+	Juego.setBoard(9,new Helptext()); 
+	Juego.setBoard(10, new Time());	
+	Juego.setBoard(11, new HelpScreen());
 
 	
 	
@@ -358,8 +372,8 @@ Time = function () {
             //Session.set("turno", CurrentTurn+1);
 			
 			turno = CurrentTurn;
-			Game.setBoard(7, Blank);
-			Game.setBoard(8, Blank);
+			Juego.setBoard(7, Blank);
+			Juego.setBoard(8, Blank);
 		}
 		
 		if (turno != CurrentTurn) {
@@ -412,8 +426,8 @@ Helptext = function () {
 	
 	var up = false;
 	this.step = function () {
-		if(!Game.keys['help']) up = true;
-    	if(up && Game.keys['help']) {
+		if(!Juego.keys['help']) up = true;
+    	if(up && Juego.keys['help']) {
     		up = false;
     		this.enabled = !this.enabled;
     	}
@@ -440,38 +454,59 @@ Ficha_abajo = function(cx,cy) {
     this.draw = function(ctx) {
 		ctx.drawImage(img2, 700, 500);
 	}
-    var sonido = true;
-	var up = false;
-	var NuevaPieza;
+	
+    	var sonido = true;
+		var up = false;
+		var NuevaPieza;
+		
 	this.step = function(dt) {
-    if(Game.keys['silenciar']){
+	
+	if (CurrentMove == 0 && getTurno().id.slice(0,10) == "Jugador_IA" && Meteor.userId() == Jugador1.id) {
+		Meteor.call('JugadorArtificial', idParty, getTurno().id, function (err, data) {
+			Partidas.update(idParty, {
+                            $push : {movimientos: {jugador: getTurno(), ficha: {x: data[2], y: data[3], sprite: data[0], rotation: data[1]*-90}, seguidor: 0, puntos: data[4]}}
+                          });
+			console.log(data, 'IAAAA');
+		
+			
+		}); 
+		CurrentMove = 2;
+	}
+    if(Juego.keys['silenciar']){
     	sonido = !sonido;
    	}
-	if(!Game.keys['sacar_ficha']) up = true;
+	if(!Juego.keys['sacar_ficha']) up = true;
 	
-    	if(up && Game.keys['sacar_ficha']) {
+    	if(up && Juego.keys['sacar_ficha']) {
     		up = false;
     		//console.log(Meteor.userId());
     		if (CurrentMove == 0 && getTurno().id == Meteor.userId())  {
     			
     			Meteor.call("Robar", idParty, function(err, data) { 
-    				NuevaPieza = new PiezaMapa(CurrentScroll.x + 7,CurrentScroll.y + 5, data[0],0);
-			
-						//sonido_ladron.play();
-						//if (data[1].length != 0 || ) {
-						Game.setBoard(7, NuevaPieza);
+    					if (data == 0) {
+    						alert("Fin de partida");
+    						return;
+    					}
+    						NuevaPieza = new PiezaMapa(CurrentScroll.x + 7,CurrentScroll.y + 5, data[0],0);
+						if(Juego.keys['silenciar']){
+    							sonar = !sonar;
+   						}
+        					if (sonar){
+							sonido_ficha.play();
+						}
+						Juego.setBoard(7, NuevaPieza);
 						CurrentMove = 1; 
 						Posiciones = data[1];
 						console.log(data);
-						Game.setBoard(6, new Highlight(data[1]));
+						Juego.setBoard(6, new Highlight(data[1]));
 						 
 			});
 
 		} else if (CurrentMove == 1 && getTurno().id == Meteor.userId()) {
 			if (SetFichaEn(NuevaPieza, Posiciones)) {
-				Meteor.call("ColocarFicha", idParty, NuevaPieza.sprite, {x: NuevaPieza.x/100 + CurrentScroll.x, y: NuevaPieza.y/100 +CurrentScroll.y}, (NuevaPieza.rotation / -90), function(err, data) { 
+				Meteor.call("ColocarFicha", idParty, NuevaPieza.sprite, {x: NuevaPieza.x/100 + CurrentScroll.x, y: NuevaPieza.y/100 +CurrentScroll.y}, (NuevaPieza.rotation / -90), getTurno().id, function(err, data) { 
 					if (data != 0) {
-    					Game.setBoard(8,new Set(NuevaPieza));
+    					Juego.setBoard(8,new Set(NuevaPieza));
 						CurrentMove = 2;
 						PosicionesSeg = data;
 						console.log(data);
@@ -524,29 +559,29 @@ Jugadores = function() {
       
       ctx.fillStyle="rgb(255,255," + Jugador1.turno * 255 +")";
       ctx.fillText(Jugador1.nombre,45,540);
-      SpriteSheet.draw(ctx, Jugador1.color ,20,520,1,0,0.5);
+      SpriteSh.draw(ctx, Jugador1.color ,20,520,1,0,0.5);
       ctx.fillText(Jugador1.puntos,50,570);
       
       ctx.fillStyle="rgb(255,255," + Jugador2.turno * 255 +")";
       ctx.fillText(Jugador2.nombre,175,540);
-      SpriteSheet.draw(ctx,Jugador2.color,150,520,1,0,0.5);
+      SpriteSh.draw(ctx,Jugador2.color,150,520,1,0,0.5);
       ctx.fillText(Jugador2.puntos,180,570);
       
       ctx.fillStyle="rgb(255,255," + Jugador3.turno * 255 +")";
       ctx.fillText(Jugador3.nombre,305,540);
-      SpriteSheet.draw(ctx,Jugador3.color,280,520,1,0,0.5);
+      SpriteSh.draw(ctx,Jugador3.color,280,520,1,0,0.5);
       ctx.fillText(Jugador3.puntos,310,570);
       
       if (nJugadores >= 4) {
       	 ctx.fillStyle="rgb(255,255," + Jugador4.turno * 255 +")";
      	 ctx.fillText(Jugador4.nombre,435,540);
-      	 SpriteSheet.draw(ctx,Jugador4.color,410,520,1,0,0.5);
+      	 SpriteSh.draw(ctx,Jugador4.color,410,520,1,0,0.5);
      	 ctx.fillText(Jugador4.puntos,440,570);
       }
       if (nJugadores == 5) {
       	 ctx.fillStyle="rgb(255,255," + Jugador5.turno * 255 +")";
       	 ctx.fillText(Jugador5.nombre,565,540);
-      	 SpriteSheet.draw(ctx,Jugador5.color,540,520,1,0,0.5);
+      	 SpriteSh.draw(ctx,Jugador5.color,540,520,1,0,0.5);
       	 ctx.fillText(Jugador5.puntos,570,570);
       }
 
@@ -594,10 +629,10 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 	this.draw = function (ctx) {
 		if (this.colocada == true) {
 			if (this.y < 500 && this.y >= 0 && this.x >= 0 && this.x < 800) {
-				SpriteSheet.draw(ctx,this.sprite,this.x,this.y,1,this.rotation,1);
+				SpriteSh.draw(ctx,this.sprite,this.x,this.y,1,this.rotation,1);
 			}
 		} else {
-			SpriteSheet.draw(ctx,this.sprite,this.x,this.y,1,this.rotation,1);
+			SpriteSh.draw(ctx,this.sprite,this.x,this.y,1,this.rotation,1);
 		}
 	}
 	
@@ -612,8 +647,8 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 		if (this.colocada == false ) {
 		
 		
-			if(!Game.keys['rotar']) rotacion = true;
-			if(rotacion && Game.keys['rotar']) {
+			if(!Juego.keys['rotar']) rotacion = true;
+			if(rotacion && Juego.keys['rotar']) {
 				rotacion = false;
 				this.rotation = this.rotation -90;
 			}
@@ -621,7 +656,8 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 			if (init == false) {
 				$(idCanvas).mousedown(function(e){
 					console.log(e);
-	          	  	if (that.colocada == false ) {
+	          	  	if (that.colocada == false && CurrentMove == 1) {
+	         				
 						if ((e.pageX - e.currentTarget.offsetLeft) > that.x &&
 							 (e.pageY - e.currentTarget.offsetTop) > that.y &&
 							 (e.pageX - e.currentTarget.offsetLeft) < that.x + 100 &&
@@ -636,9 +672,9 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 		
 				$(idCanvas).mouseup(function(e){
        		 	 // cuando mueves. soltar ficha en una casilla
-                	if (that.colocada == false ) {
+                		if (that.colocada == false && CurrentMove == 1) {
 						that.x = Math.floor((e.pageX - e.currentTarget.offsetLeft)/100)* 100;
-						that.y = Math.floor((e.pageY- e.currentTarget.offsetTop)/100)* 100 -100;
+						that.y = Math.floor((e.pageY- e.currentTarget.offsetTop)/100)* 100-100;
 					}
 					mouseIsDown = false;
 				})
@@ -647,7 +683,7 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 				$(idCanvas).mousemove(function(e){
              
 					if(!mouseIsDown) return;
-   					if (that.colocada == false ) {
+   					if (that.colocada == false && CurrentMove == 1) {
 						that.x = (e.pageX - e.currentTarget.offsetLeft) - posicion_x;
 						that.y = (e.pageY - e.currentTarget.offsetTop) - posicion_y;
                 	}
@@ -679,8 +715,8 @@ HelpScreen = function() {
 		 var up = false;
 
 	this.step = function (dt) {
-    	if(!Game.keys['ayuda']) up = true;
-    	if(up && Game.keys['ayuda']) {
+    	if(!Juego.keys['ayuda']) up = true;
+    	if(up && Juego.keys['ayuda']) {
          	up = false;
          	this.enabled = !this.enabled;
     	}
@@ -697,7 +733,7 @@ Seguidor = function (cx,cy, sprite, posx, posy) {
 	this.type = 'Seguidor';
 	
 	this.draw = function (ctx) {
-		SpriteSheet.draw(ctx,this.sprite,this.x + this.posx,this.y + this.posy,1,0,0.5);
+		SpriteSh.draw(ctx,this.sprite,this.x + this.posx,this.y + this.posy,1,0,0.5);
 	}
 	
 	this.step = function () {
@@ -736,7 +772,7 @@ Set = function (PiezaMapa) {
 
 		ctx.fillRect(350,170,190,2);
 		if (this.menu < 0) {
-			Game.setBoard(8,Blank);
+			Juego.setBoard(8,Blank);
 			CurrentScroll.active = true;
 			CurrentMove = 1;
 		}
@@ -744,7 +780,7 @@ Set = function (PiezaMapa) {
 			ctx.fillText("Colocar la pieza",350,160);
 			ctx.font="bold 20px Arial";
 			ctx.fillText("- Colocar sin seguidor",270,215);
-		
+			
 			ctx.fillText("- Colocar granjero",270,245);
 			ctx.fillText("- Colocar ladrón",270,275);
 			ctx.fillText("- Colocar caballero",270,305);
@@ -760,13 +796,13 @@ Set = function (PiezaMapa) {
 			
 			ctx.fillText("Colocar seguidor",350,160);
 			if (this.pieza.rotation == 0) {
-                		SpriteSheet.draw(ctx,this.pieza.sprite,370,195,1,this.pieza.rotation,1.5);
+                		SpriteSh.draw(ctx,this.pieza.sprite,370,195,1,this.pieza.rotation,1.5);
             		} else if (this.pieza.rotation == -90) {
-                		SpriteSheet.draw(ctx,this.pieza.sprite,370,245,1,this.pieza.rotation,1.5);
+                		SpriteSh.draw(ctx,this.pieza.sprite,370,245,1,this.pieza.rotation,1.5);
             		} else if (this.pieza.rotation == -180) {
-                		SpriteSheet.draw(ctx,this.pieza.sprite,420,245,1,this.pieza.rotation,1.5);
+                		SpriteSh.draw(ctx,this.pieza.sprite,420,245,1,this.pieza.rotation,1.5);
             		} else if (this.pieza.rotation == -270) {
-                		SpriteSheet.draw(ctx,this.pieza.sprite,420,195,1,this.pieza.rotation,1.5);
+                		SpriteSh.draw(ctx,this.pieza.sprite,420,195,1,this.pieza.rotation,1.5);
             		}
 			//SpriteSheet.draw(ctx,this.pieza.sprite,420,195,1,this.pieza.rotation,1.5);
 			ctx.font="bold 20px Arial";
@@ -802,34 +838,36 @@ Set = function (PiezaMapa) {
 		
 		if (CurrentScroll.active) CurrentScroll.active = false;
 		
-		if(!Game.keys['back']) up6 = true;
-		if(up6 && Game.keys['back']) {
+		if(!Juego.keys['back']) up6 = true;
+		if(up6 && Juego.keys['back']) {
 			up6 = false;
-			this.menu -= 1;
-			this.option = 0; 
-			this.optionx = 0;
-			this.optiony = 0; 
+			if (this.menu != 0) {
+				this.menu -= 1;
+				this.option = 0; 
+				this.optionx = 0;
+				this.optiony = 0; 
+			}
 		}
 		
 		if (this.menu == 0) {
-			if(!Game.keys['up']) up1 = true;
-			if(up1 && Game.keys['up']) {
+			if(!Juego.keys['up']) up1 = true;
+			if(up1 && Juego.keys['up']) {
 				up1 = false;
 				if (this.option > 0) {
 					this.option -= 1;
 				}
 			}
 			
-			if(!Game.keys['down']) up2 = true;
-			if(up2 && Game.keys['down']) {
+			if(!Juego.keys['down']) up2 = true;
+			if(up2 && Juego.keys['down']) {
 				up2 = false;
 				if (this.option < 4) {
 					this.option += 1;
 				}
 			}
 			
-			if(!Game.keys['sacar_ficha']) up3 = true;
-			if(up3 && Game.keys['sacar_ficha']) {
+			if(!Juego.keys['sacar_ficha']) up3 = true;
+			if(up3 && Juego.keys['sacar_ficha']) {
 				up3 = false;
 				if (this.option > 0) {
 					this.menu += 1;
@@ -838,8 +876,8 @@ Set = function (PiezaMapa) {
 					Meteor.call("ColocarSeguidor", idParty, getTurno ().id, {x: this.pieza.x/100 + CurrentScroll.x, y: this.pieza.y/100 +CurrentScroll.y}, 0, function(err, data) { 				// Coloco la ficha en el mapa
 						that.pieza.colocada = true;
 						//Tablero.add(that.pieza);
-						Game.setBoard(8,Blank);
-						Game.setBoard(7, Blank);
+						Juego.setBoard(8,Blank);
+						Juego.setBoard(7, Blank);
 						CurrentScroll.active = true;
 						Partidas.update(idParty, {
                             $push : {movimientos: {jugador: getTurno(), ficha: {x: that.pieza.x/100 + CurrentScroll.x, y: that.pieza.y/100 +CurrentScroll.y, sprite: that.pieza.sprite, rotation: that.pieza.rotation}, seguidor: 0, puntos: data}}
@@ -867,39 +905,39 @@ Set = function (PiezaMapa) {
 		
 		if (this.menu == 1) {
 		
-			if(!Game.keys['up']) up1 = true;
-			if(up1 && Game.keys['up']) {
+			if(!Juego.keys['up']) up1 = true;
+			if(up1 && Juego.keys['up']) {
 				up1 = false;
 				if (this.optiony > 0) {
 					this.optiony -= 1;
 				}
 			}
 			
-			if(!Game.keys['down']) up2 = true;
-			if(up2 && Game.keys['down']) {
+			if(!Juego.keys['down']) up2 = true;
+			if(up2 && Juego.keys['down']) {
 				up2 = false;
 				if (this.optiony < 2) {
 					this.optiony += 1;
 				}
 			}
-			if(!Game.keys['left']) up4 = true;
-			if(up4 && Game.keys['left']) {
+			if(!Juego.keys['left']) up4 = true;
+			if(up4 && Juego.keys['left']) {
 				up4 = false;
 				if (this.optionx > 0) {
 					this.optionx -= 1;
 				}
 			}
 			
-			if(!Game.keys['right']) up5 = true;
-			if(up5 && Game.keys['right']) {
+			if(!Juego.keys['right']) up5 = true;
+			if(up5 && Juego.keys['right']) {
 				up5 = false;
 				if (this.optionx < 2) {
 					this.optionx += 1;
 				}
 			}
 			
-			if(!Game.keys['sacar_ficha']) up3 = true;
-			if(up3 && Game.keys['sacar_ficha']) {
+			if(!Juego.keys['sacar_ficha']) up3 = true;
+			if(up3 && Juego.keys['sacar_ficha']) {
 				up3 = false;
 				// Coloco la ficha en el mapa en la posicion optionx,optiony
 				if (SetSeguidorEn ( {x: this.optionx, y: this.optiony, t: this.option}, PosicionesSeg)) {
@@ -914,8 +952,8 @@ Set = function (PiezaMapa) {
                             $push : {movimientos: {jugador: getTurno(), ficha: {x: that.pieza.x/100 + CurrentScroll.x, y: that.pieza.y/100 +CurrentScroll.y, sprite: that.pieza.sprite, rotation: that.pieza.rotation}, seguidor: {fx: that.pieza.x/100 , fy: that.pieza.y/100,t: that.setSeguidorType(),sx:that.optionx,sy:that.optiony}, puntos: data}}
                           });
                          //Session.set("turno", CurrentTurn+1);
-						Game.setBoard(8,Blank);
-						Game.setBoard(7, Blank);
+						Juego.setBoard(8,Blank);
+						Juego.setBoard(7, Blank);
 						CurrentScroll.active = true;
 						
 						$(idCanvas).unbind("mousedown");
@@ -937,7 +975,7 @@ Set = function (PiezaMapa) {
 							var color = ficha_color.indexOf("_") + 1; 
 							return ficha_color.slice(color);
 						})(); 
-		if(Game.keys['silenciar']){
+		if(Juego.keys['silenciar']){
     		sonar = !sonar;
    		}
         if (sonar){
@@ -959,10 +997,13 @@ Set = function (PiezaMapa) {
 				sonido_granjero.pause();
 				return 'granjero_' + color;
 			} else if (this.option == 2){
+				sonido_ladron.pause();
 				return 'ladron_' + color;
 			} else if (this.option == 3){
+				sonido_caballero.pause();
 				return 'caballero_' + color;
 			} else if (this.option == 4){
+				sonido_monje.pause();
 				return 'cura_' + color;
 			}
 		}
@@ -998,8 +1039,8 @@ Scroll = function() {
 	
 	this.step = function () {
 		if(!CurrentScroll.active) return;
-		if(!Game.keys['left']) up1 = true;
-		if(up1 && Game.keys['left']) {
+		if(!Juego.keys['left']) up1 = true;
+		if(up1 && Juego.keys['left']) {
 			up1 = false;
 			if (this.scrollx != 0) {
 				this.scrollx -= 1;
@@ -1008,8 +1049,8 @@ Scroll = function() {
 				
 			}
 		}
-		if(!Game.keys['right']) up2 = true;
-		if(up2 && Game.keys['right']) {
+		if(!Juego.keys['right']) up2 = true;
+		if(up2 && Juego.keys['right']) {
 			up2 = false;
 			if (this.scrollx != this.width) {
 				this.scrollx += 1;
@@ -1018,8 +1059,8 @@ Scroll = function() {
 				
 			}
 		}
-		if(!Game.keys['up']) up3 = true;
-		if(up3 && Game.keys['up']) {
+		if(!Juego.keys['up']) up3 = true;
+		if(up3 && Juego.keys['up']) {
 			up3 = false;
 			if (this.scrolly != 0) {
 				this.scrolly -= 1;
@@ -1028,8 +1069,8 @@ Scroll = function() {
 				
 			}
 		}
-		if(!Game.keys['down']) up4 = true;
-		if(up4 && Game.keys['down']) {
+		if(!Juego.keys['down']) up4 = true;
+		if(up4 && Juego.keys['down']) {
 			up4 = false;
 			if (this.scrolly != this.height) {
 				this.scrolly += 1;
@@ -1053,6 +1094,16 @@ Blank = new function () {
 ClarcassonneGameIU = new function ()  {
 	
 	this.initialize = function (idCanvasElement, party_id) {
+		console.log(Meteor.userId());
+		var cnvs = document.getElementById(idCanvasElement.slice(1));
+		var cnvsctx = cnvs.getContext && cnvs.getContext('2d');
+		if(!cnvsctx) { return alert("Please upgrade your browser to play"); }
+		cnvsctx.save();
+		cnvsctx.fillRect(0,0,800,600);
+		cnvsctx.fillStyle="rgb(255,255,255)";
+		cnvsctx.font="bold 50px Arial";
+		cnvsctx.fillText("Loading...", 270,355);  
+		cnvsctx.restore();
 		console.log("Estoy siendo llamado IU");
 		Meteor.call("InicioJuego", party_id, SetPlayers);
 		idCanvas = idCanvasElement;
@@ -1062,3 +1113,5 @@ ClarcassonneGameIU = new function ()  {
 	}
 	
 }
+
+
