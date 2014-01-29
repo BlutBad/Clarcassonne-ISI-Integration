@@ -180,7 +180,12 @@ Meteor.startup(function() {
 		    name : "Doble Puntuación para AlienInvasion: ",
 		    description: "La puntuacion será el doble",
 		    numeracion: 3 
-		}, ];
+		}, 
+		{
+		    name : "Nivel extra para Froot Wars: ",
+		    description: "Descubre un nivel secreto",
+		    numeracion: 4 
+		},];
 
 		for ( var i = 0; i < data.length; i++) {
 		    var list_id = Bono.insert({
@@ -379,8 +384,8 @@ Meteor.startup(function() {
 			    wrapf : 'null', //'gameFroot.init()',
 			    logo_src : '/images/splashscreen.png', 
 			    logo_alt : 'Juega a este juego',
-			    title_desc : 'Froot Wars el juego con el que podrás vengarte de las frutas',
-			    description : 'Véngate, aplasta todas las frutas que puedas y consigue todos los puntos', 
+			    title_desc : 'Froot Wars el juego con el que podrás dejar a un lado la comida basura',
+			    description : 'Junto a las frutas podrás acabar con la comida basura y adelgazar esos kilos de más', 
 			    idn : 'froot',
 			    mode : 'solo',
 			    hall : 'frootHall',

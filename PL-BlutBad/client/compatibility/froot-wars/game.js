@@ -38,7 +38,7 @@ var b2DebugDraw = Box2D.Dynamics.b2DebugDraw;
 
 //Lanzar frootWars
 $(window).load(function() {
-    gameFroot.init();
+	gameFroot.init();
 });
 
 
@@ -178,7 +178,7 @@ var gameFroot = {
 			}
 		}
 	},
-  	mouseOnCurrentHero:function(){
+	mouseOnCurrentHero:function(){
 		if(!gameFroot.currentHero){
 			return false;
 		}
@@ -259,8 +259,8 @@ var gameFroot = {
 			if(!gameFroot.currentHero){
 				gameFroot.currentHero = gameFroot.heroes[gameFroot.heroes.length-1];
 				gameFroot.currentHero.SetPosition({x:180/box2d.scale,y:200/box2d.scale});
-	 			gameFroot.currentHero.SetLinearVelocity({x:0,y:0});
-	 			gameFroot.currentHero.SetAngularVelocity(0);
+				gameFroot.currentHero.SetLinearVelocity({x:0,y:0});
+				gameFroot.currentHero.SetAngularVelocity(0);
 				gameFroot.currentHero.SetAwake(true);				
 			} else {
 				// Wait for hero to stop bouncing and fall asleep and then switch to wait-for-firing
@@ -279,7 +279,7 @@ var gameFroot = {
 			}
 			
 
-	  	},
+		},
 		showEndingScreen:function(){
 			gameFroot.stopBackgroundMusic();				
 			if (gameFroot.mode=="level-success"){			
@@ -287,16 +287,16 @@ var gameFroot = {
 					$('#endingmessage').html('Level Complete. Well Done!!!');
 					$("#playnextlevel").show();
 					
-                    //**************************CALL TO API********************************//
-                    ifg = Session.get('infoForGame');
-                    opt = {game_id: ifg.game_id,
-                           torneo_id: ifg.torneo_id,
-                           score:  gameFroot.score,
-                           win: true,
-                           }
-                    
-                    Meteor.call("matchFinish", opt);
-                  //**********************************************************// 
+					//**************************CALL TO API********************************//
+					ifg = Session.get('infoForGame');
+					opt = {game_id: ifg.game_id,
+						   torneo_id: ifg.torneo_id,
+						   score:  gameFroot.score,
+						   win: true,
+						   }
+					
+					Meteor.call("matchFinish", opt);
+				  //**********************************************************// 
 					
 					
 				} else {
@@ -304,37 +304,37 @@ var gameFroot = {
 					$("#playnextlevel").hide();
 
 
-   				        
-   				   //**************************CALL TO API********************************//
-   				     ifg = Session.get('infoForGame');
-   				     opt = {game_id: ifg.game_id,
-   				            torneo_id: ifg.torneo_id,
-   				            score:  gameFroot.score,
-   				            win: true,
-   				            }
-   				     
-   				     Meteor.call("matchFinish", opt);
-   				   //**********************************************************//    		        
-   				        
-   				        
-   				        
+						
+				   //**************************CALL TO API********************************//
+					 ifg = Session.get('infoForGame');
+					 opt = {game_id: ifg.game_id,
+							torneo_id: ifg.torneo_id,
+							score:  gameFroot.score,
+							win: true,
+							}
+					 
+					 Meteor.call("matchFinish", opt);
+				   //**********************************************************//    		        
+						
+						
+						
 
 				}
 			} else if (gameFroot.mode=="level-failure"){			
-			    
-                //**************************CALL TO API********************************//
-                ifg = Session.get('infoForGame');
-                opt = {game_id: ifg.game_id,
-                       torneo_id: ifg.torneo_id,
-                       score:  gameFroot.score,
-                       win: false,
-                       }
-                
-                Meteor.call("matchFinish", opt);
-              //**********************************************************//    			        
-			    
-			    $('#endingmessage').html('Failed. Play Again?');
-			    $("#playnextlevel").hide();
+				
+				//**************************CALL TO API********************************//
+				ifg = Session.get('infoForGame');
+				opt = {game_id: ifg.game_id,
+					   torneo_id: ifg.torneo_id,
+					   score:  gameFroot.score,
+					   win: false,
+					   }
+				
+				Meteor.call("matchFinish", opt);
+			  //**********************************************************//    			        
+				
+				$('#endingmessage').html('Failed. Play Again?');
+				$("#playnextlevel").hide();
 			}		
 	
 			$('#endingscreen').show();
@@ -439,11 +439,11 @@ var gameFroot = {
 	},
 
 }
-
 var levels = {
 	// Level data
+
 	data:[
-	 {   // First level 
+	{   // First level 
 		foreground:'desert-foreground',
 		background:'clouds-background',
 		entities:[
@@ -461,7 +461,7 @@ var levels = {
 			{type:"hero", name:"orange",x:80,y:405},
 			{type:"hero", name:"apple",x:140,y:405},
 		]
-	 },
+	},
 		{   // Second level 
 			foreground:'desert-foreground',
 			background:'clouds-background',
@@ -487,16 +487,61 @@ var levels = {
 				{type:"hero", name:"orange",x:80,y:405},
 				{type:"hero", name:"apple",x:140,y:405},
 			]
-		}
+		},
+		//tercer nivel si tienes el bono
+		
+			{   // Third level 
+				foreground:'desert-foreground',
+				background:'clouds-background',
+				entities:[
+					{type:"ground", name:"dirt", x:500,y:440,width:1000,height:20,isStatic:true},
+
+					{type:"ground", name:"wood", x:185,y:390,width:30,height:80,isStatic:true},
+					{type:"block", name:"wood", x:820,y:380,angle:90,width:100,height:25},
+					{type:"block", name:"wood", x:720,y:380,angle:90,width:100,height:25},
+					{type:"block", name:"wood", x:620,y:380,angle:90,width:100,height:25},
+
+					{type:"block", name:"glass", x:670,y:317.5,width:100,height:25},
+					{type:"block", name:"glass", x:770,y:317.5,width:100,height:25},				
+					{type:"block", name:"glass", x:670,y:255,angle:90,width:100,height:25},
+					{type:"block", name:"glass", x:770,y:255,angle:90,width:100,height:25},
+					
+					{type:"block", name:"wood", x:720,y:192.5,width:100,height:25},	
+
+					{type:"villain", name:"burger",x:715,y:155,calories:590},
+					{type:"villain", name:"fries",x:670,y:405,calories:420},
+					{type:"villain", name:"sodacan",x:765,y:400,calories:150},
+					{type:"villain", name:"pizza", x:715, y:200, calories: 300},
+
+					{type:"hero", name:"strawberry",x:30,y:415},
+					{type:"hero", name:"orange",x:80,y:405},
+					{type:"hero", name:"apple",x:140,y:405},
+				]
+			}
 	],
 
 	// Initialize level selection screen
 	init:function(){
 		var html = "";
-		for (var i=0; i < levels.data.length; i++) {
-			var level = levels.data[i];
-			html += '<input type="button" value="'+(i+1)+'">';
-		};
+		id_bono=Bono.findOne({numeracion:4})._id;
+    	if (Meteor.user()!=null && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}) && User_Bono.findOne({user_id: Meteor.user()._id, bono_id: id_bono}).n_bono>=1 ){
+        	//actualizo el bono
+        	bobj=User_Bono.findOne({user_id:Meteor.user()._id, bono_id:id_bono});
+        	User_Bono.update(bobj._id,{
+            	$set: {
+            	    'n_bono':bobj.n_bono-1,
+          	  }
+       		});
+			for (var i=0; i < levels.data.length; i++) {
+				var level = levels.data[i];
+				html += '<input type="button" value="'+(i+1)+'">';
+			};
+		}else{
+			for (var i=0; i < levels.data.length-1; i++) {
+				var level = levels.data[i];
+				html += '<input type="button" value="'+(i+1)+'">';
+			};
+		}
 		$('#levelselectscreen').html(html);
 		
 		// Set the button click event handlers to load level
@@ -540,6 +585,7 @@ var levels = {
 	}
 }
 
+
 var entities = {
 	definitions:{
 		"glass":{
@@ -575,6 +621,15 @@ var entities = {
 			density:1,
 			friction:0.5,
 			restitution:0.7,	
+		},
+		"pizza":{
+			shape:"rectangle",
+			fullHealth:80,
+			width:40,
+			height:40,
+			density:1,
+			friction:0.5,
+			restitution:0.5,	
 		},
 		"fries":{
 			shape:"rectangle",
@@ -796,9 +851,9 @@ var loader = {
 		var mp3Support,oggSupport;
 		var audio = document.createElement('audio');
 		if (audio.canPlayType) {
-	   		// Currently canPlayType() returns: "", "maybe" or "probably" 
-	  		mp3Support = "" != audio.canPlayType('audio/mpeg');
-	  		oggSupport = "" != audio.canPlayType('audio/ogg; codecs="vorbis"');
+			// Currently canPlayType() returns: "", "maybe" or "probably" 
+			mp3Support = "" != audio.canPlayType('audio/mpeg');
+			oggSupport = "" != audio.canPlayType('audio/ogg; codecs="vorbis"');
 		} else {
 			//The audio tag is not supported
 			mp3Support = false;
