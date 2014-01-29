@@ -169,8 +169,8 @@ input:focus{
 
 #matches_table{
 	position: absolute; 
-	left: 25%;
-	width: 75%;
+	left: 30%;
+	width: 70%;
 }
 
 #matches_table tr td{
