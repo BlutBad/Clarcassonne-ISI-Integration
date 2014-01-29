@@ -140,7 +140,7 @@
 	<div id="gamesranking">
 		<p>Por juegos:</p>
 		{{# each games}}
-			<a style ="cursor:pointer;text-decoration:none;" class="linkgameranking">{{name}}</a><br>
+			<a style ="cursor:pointer;text-decoration:none;" class="linkgameranking">· {{name}}</a><br>
 		{{/ each}}
 	</div>
 </template>
@@ -148,13 +148,16 @@
 <template name="playerstemp">
 	<div id="players" >
 		{{# if first}}
+			<p>Introduce el jugador para ver sus puntuaciones</p>
 			<p><input type='text' id='formplayer'/>
 			<button id='btnplayer'>Buscar</button></p>
 			{{# if gotplayers}}
 				<p>Por usuarios:</p>
+				<div style="overflow:auto">
 				{{# each players}}
-					<a style ="cursor:pointer;text-decoration:none;" class="linkplayer">{{username}}</a>
+					<a style ="cursor:pointer;text-decoration:none;" class="linkplayer">· {{username}}</a>
 				{{/each}}
+				</div>
 			{{else}}
 				Nadie ha jugado aun
 			{{/if}}
@@ -167,13 +170,16 @@
 		{{# if user_not_selected}} 
 			<p><button style ='cursor:pointer;text-decoration:none;' class='linkback'>atras</button></p>
 			{{# if gotplayersgame}}
+				<p>Puntuaciones en {{gameranking}}</p>
+				<p>Introduce el jugador para ver sus puntuaciones en este juego</p>
 				<input type='text' id='formplayergame'/>
 				<button id='btnplayergame'>Buscar</button>
-				<p>Usuarios:</p>
+				<p>Usuarios que han jugado a este juego:</p>
+				<div style="overflow:auto">
 				{{# each playersgame}}
-					<a style ="cursor:pointer;text-decoration:none;" class="linkplayergame">{{username}}</a>
+					<a style ="cursor:pointer;text-decoration:none;" class="linkplayergame">· {{username}}</a>
 				{{/each}}
-				<p>{{gameranking}}</p>
+				</div>
 				<table>
 					<thead>
 						<tr>
@@ -200,7 +206,7 @@
 	<div id="byuserranking">
 		{{# if game_not_selected}}
 			<p><button style ='cursor:pointer;text-decoration:none;' class='linkback'>atras</button></p>
-			<p>{{playerranking}}</p>
+			<p>Puntuaciones para {{playerranking}}</p>
 			<table>
 				<thead>
 					<tr>
@@ -224,7 +230,7 @@
 	<div id="byusergameranking">
 		{{# if user_selected}}
 		<button style ='cursor:pointer;text-decoration:none;' class='linkback'>atras</button>
-		<p>{{gameranking.user}} - {{gameranking.name}}</p>
+		<p>Puntuaciones de {{gameranking.user}} en {{gameranking.name}}</p>
 		<table>
 			<thead>
 				<tr>
