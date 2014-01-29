@@ -61,7 +61,6 @@ $(document).ready(function() {
 				$("#buttVideoSt").css("background-color","#DF0101");
 				$("#buttVideoSt").css("border","2px solid #DF0101");
 				$("#buttVideoSt").removeClass();
-				alert("nabos")
 				var nameRoom = Partidas.findOne({_id : Session.get('match_id')}).name;
 				startVideoChat(nameRoom);
 			}else{

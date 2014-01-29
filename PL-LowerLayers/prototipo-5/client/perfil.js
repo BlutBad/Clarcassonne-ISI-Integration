@@ -47,6 +47,22 @@ Template.miperfiltemp.rank = function(){
 	}
 };
 
+Template.miperfiltemp.profitslist = function () {
+	var listgames = Games.find({});
+	var profitslist=[];
+	listgames.forEach(function(game){
+		if (game.profits!=undefined){
+			(game.profits).forEach(function(profit){
+				if ( (profit.users).indexOf(Meteor.userId() )!=-1)
+					profitslist.push({"game":game.name,"title":profit.title});
+			});			
+		}
+	});
+	return profitslist;
+
+};
+
+
 Template.imgmodmiperfiltemp.avatar = function () {
 	return Session.get("url");
 };

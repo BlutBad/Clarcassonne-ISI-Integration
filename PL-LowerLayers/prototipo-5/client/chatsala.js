@@ -22,8 +22,8 @@ startVideoChat=function (nameRoom){
 
 endVideoChat = function (){
 	$("#buttVideoSt").html("Start VideoChat");
-	$("#buttVideoSt").css("background-color","#2EFE2E");
-	$("#buttVideoSt").css("border","2px solid #2EFE2E");
+	$("#buttVideoSt").css("background-color","#45A654");
+	$("#buttVideoSt").css("border","2px solid #45A654");
 	$("#buttVideoSt").addClass("StartVC");
 	webrtc.stopLocalVideo();
 	$("#localVideo").attr("src", "");

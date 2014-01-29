@@ -43,7 +43,7 @@ Template.playerstemp.events = {
 
 Template.bygamerankingtemp.events = {
 	//Volvemos atras
-	'click a.linkback':function(event){
+	'click button.linkback':function(event){
 		$("#bygameranking").hide();
 		$("#players").fadeIn();
 		$("#gamesranking").fadeIn();
@@ -82,7 +82,7 @@ Template.bygamerankingtemp.events = {
 }
 
 Template.byuserrankingtemp.events = {
-	'click a.linkback':function(event){
+	'click button.linkback':function(event){
 		$("#byuserranking").hide();
 		$("#players").fadeIn();
 		$("#gamesranking").fadeIn();
@@ -100,7 +100,7 @@ Template.byuserrankingtemp.events = {
 
 Template.byusergamerankingtemp.events = {
 	//Volvemos atras
-	'click a.linkback':function(event){
+	'click button.linkback':function(event){
 		$("#byusergameranking").hide();
 		if (pathranking==1){
 			Session.set('user_id_ranking', undefined);

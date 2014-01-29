@@ -78,6 +78,20 @@ Template.userperfiltemp.amigos = function () {
 	return listaAmigosUserFound;
 };
 
+Template.userperfiltemp.profitslist = function () {
+	var listgames = Games.find({});
+	var profitslist=[];
+	listgames.forEach(function(game){
+		if (game.profits!=undefined){
+			(game.profits).forEach(function(profit){
+				if ( (profit.users).indexOf(Session.get("IdPerfilBackUp"))!=-1)
+					profitslist.push({"game":game.name,"title":profit.title});
+			});			
+		}
+	});
+	return profitslist;
+
+};
 
 Template.userperfiltemp.rank = function(){
 	if(Ranking.find().count()!=0){

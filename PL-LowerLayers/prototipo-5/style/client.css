@@ -8,7 +8,8 @@ html{
 
 body{
 	background-image: url("/backgrounds/wallpaper.jpg");
-	background-color: #2E2E2E; 
+	background-repeat: repeat-x;
+	background-color: #0B0E15; 
 	font-size: 85%;
 }
 
@@ -63,14 +64,15 @@ input:focus{
 	padding: 5px;
 }
 
-#titulo{	
+#titulo{
 	text-align:center;
 	font-weight:bold;
-	font-size:170%;
+	font-size:180%;
 	text-shadow: 0.1em 0.1em 0.1em #2E9AFE, 0.3em 0.2em 0.5em black;
 }
 #subtitulo{	
 	text-align:center;
+	font-weight:bold;
 	font-size:100%;
 }
 
@@ -84,15 +86,17 @@ input:focus{
 #div-login-button{
     float: right;
     position: fixed;
-    right: 15%;
+    right: 16%;
     font-size:120%;
     color: white;
-    transition: color 1s;
+    background-color: #1C1C1C;
+    border: 5px solid #1C1C1C;
+    border-radius:3px;" 
 
 }
 
 #div-login-button:hover {
-    color: #2E9AFE;
+    color: #1C1C1C;
 }
 
 #coin-slider{
@@ -100,14 +104,14 @@ input:focus{
     width: 800px;
     height:400px;
     margin: auto;
-    border: 8px solid #848484;
+    border: 8px solid #1C1C1C;
     box-shadow: 10px 10px 5px #1C1C1C;
     transition: border-color 1s;
 
 }
 
 #coin-slider:hover {
-    border-color: #2E9AFE;
+    border-color: #1C1C1C;
 }
 
 #friends {
@@ -122,10 +126,10 @@ input:focus{
 	position: absolute;
 }
 
-.linkgame, #exitgame{
-	background-color: #608ED8;
-	border: 2px solid #608ED8;
-	border-radius:4px;
+.linkgame{
+	background-color: #43749D;
+	border: 2px solid #43749D;
+	border-radius:20px;
 	text-decoration: none;
 }
 
@@ -138,12 +142,12 @@ input:focus{
 	text-align: center;
 	line-height: 50px;
 	border-radius:7px;	
-	background-color: #2EFE2E;
-	border: 2px solid #2EFE2E;
+	background-color: #45A654;
+	border: 2px solid #45A654;
 }
 
 #tabs{
-	margin-top: 30px;
+	margin-top: 35px;
 
 
 }
@@ -257,13 +261,13 @@ input:focus{
 .coin-slider a{ text-decoration: none; outline: none; border: none; }
 
 .cs-buttons { font-size: 0px; padding: 10px; float: left; }
-.cs-buttons a { margin-left: 5px; height: 10px; width: 10px; float: left; border: 1px solid #B8C4CF; color: #B8C4CF; text-indent: -1000px; }
-.cs-active { background-color: #B8C4CF; color: #FFFFFF; }
+.cs-buttons a { margin-left: 5px; height: 10px; width: 10px; float: left; border: 1px solid #1C1C1C; color: #1C1C1C; text-indent: -1000px; }
+.cs-active { background-color: #1C1C1C; color: #1C1C1C; }
 
-.cs-title { width: 545px; padding: 10px; background-color: #000000; color: #FFFFFF; }
+.cs-title { width: 545px; padding: 10px; background-color: #1C1C1C; color: #1C1C1C; }
 
 .cs-prev,
-.cs-next { background-color: #000000; color: #FFFFFF; padding: 0px 10px; }
+.cs-next { background-color: #1C1C1C; color: #1C1C1C; padding: 0px 10px; }
 
 
 #avatar-slider img{

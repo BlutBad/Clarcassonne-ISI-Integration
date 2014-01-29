@@ -6,7 +6,7 @@
 
 <body>
 	<div id="div-login-button">{{> iconLoginTemp}}<br>{{loginButtons}}</div>
-	<div id="titulo" Size="6">LowerLayers' Games</div>
+	<div id="titulo">LowerLayers' Games</div>
 	<div id="subtitulo">Welcome to LL platform</div><br>
 	<div id="container">
    		{{> cointemp}}
@@ -165,7 +165,7 @@
 <template name="bygamerankingtemp">
 	<div id="bygameranking">
 		{{# if user_not_selected}} 
-			<p><a style ='cursor:pointer;text-decoration:none;' class='linkback'>atras</a></p>
+			<p><button style ='cursor:pointer;text-decoration:none;' class='linkback'>atras</button></p>
 			{{# if gotplayersgame}}
 				<input type='text' id='formplayergame'/>
 				<button id='btnplayergame'>Buscar</button>
@@ -199,7 +199,7 @@
 <template name="byuserrankingtemp">
 	<div id="byuserranking">
 		{{# if game_not_selected}}
-			<p><a style ='cursor:pointer;text-decoration:none;' class='linkback'>atras</a></p>
+			<p><button style ='cursor:pointer;text-decoration:none;' class='linkback'>atras</button></p>
 			<p>{{playerranking}}</p>
 			<table>
 				<thead>
@@ -223,7 +223,7 @@
 <template name="byusergamerankingtemp">
 	<div id="byusergameranking">
 		{{# if user_selected}}
-		<a style ='cursor:pointer;text-decoration:none;' class='linkback'>atras</a>
+		<button style ='cursor:pointer;text-decoration:none;' class='linkback'>atras</button>
 		<p>{{gameranking.user}} - {{gameranking.name}}</p>
 		<table>
 			<thead>
@@ -411,7 +411,7 @@
 	<div id="roomcontainer">
 		<div class="alaputaizqtop">
 			<br> 
-			<a style ="cursor:pointer;text-decoration:none;" id="exitgame"> Salir </a>
+			<button style ="cursor:pointer;text-decoration:none;" id="exitgame"> Salir </button>
 			<br><br><br>
 			{{> roomplayerstemp}}
 		</div>
@@ -538,6 +538,10 @@
 		{{# each rank}}
 			<div>{{game}} - {{points}}</div>
 		{{/ each}}
+		<b>Trofeos: </b>
+		{{# each profitslist}}
+			<div>{{game}} - {{title}}</div>
+		{{/ each}}
 		<br><br>
 		<button id="modifprof"> Modificar </button>
 	</div>	
@@ -618,6 +622,10 @@
 		<b>Mejores puntuaciones: </b>
 		{{# each rank}}
 			<div>{{game}} - {{points}}</div>
+		{{/ each}}
+		<b>Trofeos: </b>
+		{{# each profitslist}}
+			<div>{{game}} - {{title}}</div>
 		{{/ each}}
 		</div>
 	</div>	
