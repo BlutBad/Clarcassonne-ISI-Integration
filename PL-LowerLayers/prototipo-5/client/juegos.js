@@ -108,6 +108,8 @@ joinmatch = function(match_id, viewer, invited) {
 						$('#aliencontainer').show();
 					else if (Games.findOne({_id : Session.get('game_id')}).name=="Froot_Wars")
 						$('#frootwarscontainer').show();
+					else if (Games.findOne({_id : Session.get('game_id')}).name=="The_Hero")
+						$('#theherocontainer').show();
 
 					// Si ya estaba dentro o es observador
 					if(!already_into && !viewer){
@@ -184,7 +186,9 @@ Template.roomplayerstemp.players=function(){
 Template.gamestemp.events = {
 	'click .linkgame':function(event){
 		Session.set('game_id', $(this)[0]._id);
-		if(Games.findOne({_id : Session.get("game_id")}).name=="Alien_Invasion" || Games.findOne({_id : Session.get("game_id")}).name=="Froot_Wars"){
+		if(Games.findOne({_id : Session.get("game_id")}).name=="Alien_Invasion" || 
+		Games.findOne({_id : Session.get("game_id")}).name=="Froot_Wars" || 
+		Games.findOne({_id : Session.get("game_id")}).name=="The_Hero"){
 			$('#games').hide();
 			var current_match_id = Partidas.insert({
 				game_id: Session.get("game_id"),
@@ -205,7 +209,12 @@ Template.gamestemp.events = {
 				$('#frootwarscontainer').prepend("<canvas id='gamecanvas' width='640' height='480' class='gamelayer'></canvas>");
 				game.init();
 
+			}else if (Games.findOne({_id :Session.get("game_id")}).name=="The_Hero"){
+				$('#theherocontainer').show();
+				$('#theherocontainer').append("<canvas id='gamecanvasHero' width='512' height='480' ></canvas>");
+				canvasApp();
 			}
+
 			Partidas.update({_id : Session.get('match_id')},{$push: {jugadores: {user_id: Meteor.userId()}},$inc:{num_players :1}});
 		} else {
 			$('#games').hide();
@@ -239,7 +248,8 @@ Template.matchestemp.events = {
 						saved: false,
 						admin_by: Meteor.userId(),
 						players_max: Games.findOne({_id : Session.get("game_id")}).players_max,
-						full: false
+						full: false,
+						ia_players: 0
 					});
 
 					var current_match_id = Partidas.findOne({name: $("#match_name").val()})._id;
@@ -255,6 +265,8 @@ Template.matchestemp.events = {
 						$('#aliencontainer').show();
 					}else if (Games.findOne({_id :Session.get("game_id")}).name=="Froot_Wars"){
 						$('#frootwarscontainer').show();
+					}else if (Games.findOne({_id :Session.get("game_id")}).name=="The_Hero"){
+						$('#theherocontainer').show();
 					}
 					Partidas.update({_id : Session.get('match_id')},{$push: {jugadores: {user_id: Meteor.userId()}},$inc:{num_players :1}});
 					var full = Partidas.findOne({_id : Session.get('match_id')}).num_players >= Partidas.findOne({_id : Session.get('match_id')}).players_max;
@@ -329,7 +341,7 @@ Template.roomgametemp.events = {
 			Partidas.update({_id : Session.get('match_id')},{$set: {full : full}});
 		};
 
-		if(Partidas.findOne({_id : quited_match_id}).num_players <= 0){
+		if(Partidas.findOne({_id : quited_match_id}).num_players - Partidas.findOne({_id : quited_match_id}).ia_players <= 0){
 			Partidas.remove({_id : quited_match_id});
 		} else {
 			if(quiter_id == Partidas.findOne({_id : quited_match_id}).admin_by){
@@ -339,6 +351,7 @@ Template.roomgametemp.events = {
 
 		var weAreAlien = Games.findOne({_id : quited_game_id}).name;
 		var weAreFroot = Games.findOne({_id : quited_game_id}).name;
+		var weAreHero = Games.findOne({_id : quited_game_id}).name;
 
 		if (weAreAlien =="Alien_Invasion"){
 			$('#aliencanvas').remove();
@@ -347,7 +360,11 @@ Template.roomgametemp.events = {
 			game.ended = true;					
 			game.showEndingScreen();
 			$('#gamecanvas').remove();
+		}else if(weAreHero =="The_Hero"){
+			$('#gamecanvasHero').remove();
+			clearTimeout(timerPrin);
 		}
+
 
 		Session.set('match_id', undefined);
 		$('#clarcassonnecontainer').hide();
@@ -356,7 +373,7 @@ Template.roomgametemp.events = {
 		$('#frootwarscontainer').hide();
 		$('#matches').fadeIn();
 
-		if (weAreAlien =="Alien_Invasion" || weAreFroot =="Froot_Wars"){
+		if (weAreAlien =="Alien_Invasion" || weAreFroot =="Froot_Wars" || weAreHero =="The_Hero"){
 			Session.set('game_id', undefined);
 			$('#matches').hide();
 			$('#games').fadeIn();
@@ -397,7 +414,7 @@ Template.roomplayerstemp.events = {
 		if(!initiated && !full && i_am_admin){
 			var ia_id = "ia_player_" + (Math.floor((Math.random()*100000000))).toString();
 			console.log(ia_id);
-			Partidas.update({_id : Session.get("match_id")},{$push: {jugadores: {user_id: ia_id}},$inc:{num_players :1}});
+			Partidas.update({_id : Session.get("match_id")},{$push: {jugadores: {user_id: ia_id}},$inc:{num_players :1},$inc:{ia_players :1}});
 		} else {
 			if(full)
 				$("#dialog_iafullerror").dialog("open");
